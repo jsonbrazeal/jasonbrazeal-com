@@ -11,6 +11,7 @@ SSH_KEY_FILE = '/Users/jsonbrazeal/.ssh/id_rsa.pub'
 SECRETS_DMG = '/Users/jsonbrazeal/Dropbox/Credentials/jasonbrazeal.com.dmg'
 SERVER_ADMIN = 'jsonbrazeal@gmail.com'
 WEB_ROOT = '/opt/jasonbrazeal.com/web'
+PROJECT_ROOT = '/opt/jasonbrazeal.com'
 
 @task
 def dev():
@@ -59,7 +60,6 @@ def provision_do():
     sudo('chmod 0600 /swapfile')
     sudo('sysctl vm.swappiness=10')
     append('/etc/sysctl.conf', 'vm.swappiness=10', use_sudo=True)
-
 
     # set up firewall rules
     # flush rules
@@ -175,7 +175,15 @@ def new_wp(wp_name="wordpress"):
         sudo('tar -xzvf latest.tar.gz')
         sudo('mv wordpress/* ' + WP_HOME)
 
-    # # create /tmp/wp_config by deleting default lines for auth keys and such that we don't need
+    execute(setup_wp_configs)
+    execute(setup_mysql)
+    execute(start_apache)
+    execute(start_mysqld)
+    # also need to change AllowOverride None to AllowOverride All in <Directory "/var/www/html"> section of httpd.conf (or wherever WP is served from)
+
+@task
+def setup_wp_configs():
+    # create /tmp/wp_config by deleting default lines for auth keys and such that we don't need
     CONFIG_SAMPLE = WP_HOME + '/wp-config-sample.php'
     CONFIG = WP_HOME + '/wp-config.php'
     sudo('grep -vwE "(AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|NONCE_KEY|AUTH_SALT|SECURE_AUTH_SALT|LOGGED_IN_SALT|NONCE_SALT)" ' + CONFIG_SAMPLE + ' > /tmp/wp_config')
@@ -202,11 +210,6 @@ def new_wp(wp_name="wordpress"):
 
     # clean up after sed
     sudo('rm ' + WP_HOME + '/wp-config.php.bak')
-
-    execute(setup_mysql)
-    execute(start_apache)
-    execute(start_mysqld)
-    # also need to change AllowOverride None to AllowOverride All in <Directory "/var/www/html"> section of httpd.conf (or wherever WP is served from)
 
 @task
 def setup_mysql():
@@ -263,18 +266,24 @@ def setup_git_vagrant(webapp):
         sudo('git push origin master')
 
 @task
-def setup_git_do(wp_name="wordpress"):
-    '''Must be run after Wordpress has been installed
-    '''
-    with cd(WEB_ROOT):
-        sudo('git clone git@github.com:jsonbrazeal/jasonbrazeal-com.git .')
-    with cd(WEB_ROOT + '/' + wp_name + '/wp-content/themes'):
-        sudo('git clone git@github.com:jsonbrazeal/jasonbrazeal-com-blog.git jasonbrazeal-com-blog')
+def setup_git_do(wp_name='blog'):
+    with cd(PROJECT_ROOT):
+        sudo('git init')
+        sudo('git remote add -f origin https://github.com/jsonbrazeal/jasonbrazeal-com.git')
+        sudo('git config core.sparsecheckout true')
+        sudo('echo web/ >> .git/info/sparse-checkout')
+        sudo('git checkout master')
+    THEME_ROOT = WEB_ROOT + '/' + wp_name + '/wp-content/themes/jasonbrazeal-com-blog'
+    with cd(THEME_ROOT):
+        # sudo('git init')
+        sudo('git remote add -f origin https://github.com/jsonbrazeal/jasonbrazeal-com-blog.git')
+        sudo('git checkout master')
 
 # @task
 # def deploy_do(tag="master"):
 #     with cd(WEB_ROOT):
 #         sudo('git checkout ' + tag)
+#     execute(setup_wp_configs)
 
 # @task
 # def deploy_wp_do(tag="master"):
