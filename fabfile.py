@@ -162,7 +162,7 @@ def setup_git_do(wp_name='blog'):
         sudo('git checkout master')
     THEME_ROOT = WEB_ROOT + '/' + wp_name + '/wp-content/themes/jasonbrazeal-com-blog'
     with cd(THEME_ROOT):
-        # sudo('git init')
+        sudo('git init')
         sudo('git remote add -f origin ' + BLOG_REPO_URL)
         sudo('git checkout master')
 
