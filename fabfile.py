@@ -10,8 +10,12 @@ SSH_PORT = '4217'
 SSH_KEY_FILE = '/Users/jsonbrazeal/.ssh/id_rsa.pub'
 SECRETS_DMG = '/Users/jsonbrazeal/Dropbox/Credentials/jasonbrazeal.com.dmg'
 SERVER_ADMIN = 'jsonbrazeal@gmail.com'
-WEB_ROOT = '/opt/jasonbrazeal.com/web'
 PROJECT_ROOT = '/opt/jasonbrazeal.com'
+WEB_ROOT = '/opt/jasonbrazeal.com/web'
+REPO_URL = 'https://github.com/jsonbrazeal/jasonbrazeal-com.git'
+BLOG_REPO_URL = 'https://github.com/jsonbrazeal/jasonbrazeal-com-blog.git'
+
+############################# Environment Setters #############################
 
 @task
 def dev():
@@ -25,10 +29,22 @@ def web1():
     env.hosts = [':' + SSH_PORT]
     env.hostname = 'web1.jasonbrazeal.com'
 
+############################ All-in-One Functions ############################
+
+@task
+def new_server():
+    # execute(provision_do)
+    execute(setup_git_do)
+    execute(setup_mysql)
+    execute(run_db_script, script='conf/init.sql')
+    execute(run_db_script, script='conf/blog.bak.sql')
+
+########################### Provisioning Functions ###########################
+
 @task
 @with_settings(user='root')
 def provision_do():
-    '''Sets up clean CentOS VPS on Digital Ocean. Host must be specified on command line with the config function, e.g. `fab dev provision_do:host=162.243.39.189`
+    '''Sets up clean CentOS VPS on Digital Ocean. Host (standard ssh port) must be specified on command line with the config function, e.g. `fab dev provision_do:host=162.243.39.189`
     '''
 
     # get credentials
@@ -132,9 +148,73 @@ def provision_do():
     sudo('semanage port -a -t ssh_port_t -p tcp ' + SSH_PORT) # requires policycoreutils-python package
     sudo('service sshd reload')
 
+    sudo('mkdir -p ' + PROJECT_ROOT)
+
 @task
-def provision_vagrant(webapp):
-    '''Assumes a clean CentOS install on a Vagrant-managed VM
+def setup_git_do(wp_name='blog'):
+    '''Configures Git and checks out master of 'web' directory and Wordpress blog theme.
+    '''
+    with cd(PROJECT_ROOT):
+        sudo('git init')
+        sudo('git remote add -f origin ' + REPO_URL)
+        sudo('git config core.sparsecheckout true')
+        sudo('echo web/ >> .git/info/sparse-checkout')
+        sudo('git checkout master')
+    THEME_ROOT = WEB_ROOT + '/' + wp_name + '/wp-content/themes/jasonbrazeal-com-blog'
+    with cd(THEME_ROOT):
+        # sudo('git init')
+        sudo('git remote add -f origin ' + BLOG_REPO_URL)
+        sudo('git checkout master')
+
+@task
+def setup_mysql():
+    '''Installs MySQL database.
+    '''
+    # get credentials
+    SECRETS = get_secrets()
+    if not SECRETS:
+        sys.exit()
+
+    # The prompts dictionary is supported beginning in Fabric 1.8.1
+    # Run `pip install https://github.com/fabric/fabric/zipball/master` to pull down the latest version
+    # The function works fine with earlier version, but you have to respond to the prompts manually
+    with settings(prompts = {
+                             'Enter current password for root (enter for none): ': '',
+                             'Set root password? [Y/n] ': 'Y',
+                             'New password: ': SECRETS.get('db_root_password', ''),
+                             'Re-enter new password: ': SECRETS.get('db_root_password', ''),
+                             'Remove anonymous users? [Y/n] ': 'Y',
+                             'Disallow root login remotely? [Y/n] ': 'Y',
+                             'Remove test database and access to it? [Y/n] ': 'Y',
+                             'Reload privilege tables now? [Y/n] ': 'Y'
+                             }):
+        sudo('/sbin/service mysqld start')
+        sudo('/usr/bin/mysql_secure_installation')
+    sudo('/sbin/chkconfig mysqld on')
+    sudo('/sbin/service mysqld start')
+
+@task
+def run_db_script(script='conf/init.sql'):
+    '''Puts the script given on the server and runs it as root. Defaults to the init script, but a db dump file can be used to restore the db (e.g. conf/blog.bak.sql)
+    '''
+    put(script, '/tmp/tmp.sql', use_sudo=True)
+
+    # replace database credentials in init.sql
+    sed('/tmp/tmp.sql', 'db_name', SECRETS.get('db_name', ''), use_sudo=True)
+    sed('/tmp/tmp.sql', 'db_user', SECRETS.get('db_user', ''), use_sudo=True)
+    sed('/tmp/tmp.sql', 'db_password', SECRETS.get('db_password', ''), use_sudo=True)
+    sed('/tmp/tmp.sql', 'db_host', SECRETS.get('db_host', ''), use_sudo=True)
+
+    # run script
+    with settings(prompts = {
+                             'Enter password: ': SECRETS.get('db_root_password', '')
+                             }):
+        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p < /tmp/tmp.sql')
+    sudo('rm /tmp/tmp.sql')
+
+@task
+def provision_vagrant(project):
+    '''Sets up a development machine from a clean CentOS install on a Vagrant-managed VM.
     '''
     run('chmod ugo+x /home/vagrant')
     put('conf/.bashrc', '/home/vagrant', use_sudo=True)
@@ -160,11 +240,29 @@ def provision_vagrant(webapp):
     put('conf/template.vm_centos.httpd.conf', '/etc/httpd/conf/httpd.conf', use_sudo=True)
 
     # make project folder
-    sudo('mkdir /opt/' + webapp)
+    sudo('mkdir /opt/' + project)
+
+@task
+def setup_git_vagrant(project):
+    '''Sets up Git on a local Vagrant VM for development.
+    '''
+    with cd('/opt/' + project):
+        sudo('git config --global user.name "Jason Brazeal"')
+        sudo('git config --global user.email jsonbrazeal@gmail.com')
+        # if the repo already exists we only need to run `git clone`, not the rest of this
+        sudo('git init')
+        sudo('git add .')
+        sudo("git commit -am 'initial commit'")
+        sudo('git remote add origin ' + REPO_URL)
+        sudo('git push origin master')
+
+############################# Wordpress Functions #############################
 
 @task
 # must escape certain characters in passwords with two backslashes: &, $ (or avoid them!)
 def new_wp(wp_name="wordpress"):
+    '''Downloads and installs Wordpress.
+    '''
     WP_HOME = WEB_ROOT + wp_name
 
     sudo('mkdir -p ' + WP_HOME, warn_only=True)
@@ -183,6 +281,8 @@ def new_wp(wp_name="wordpress"):
 
 @task
 def setup_wp_configs():
+    '''Configures Wordpress installation.
+    '''
     # create /tmp/wp_config by deleting default lines for auth keys and such that we don't need
     CONFIG_SAMPLE = WP_HOME + '/wp-config-sample.php'
     CONFIG = WP_HOME + '/wp-config.php'
@@ -211,73 +311,7 @@ def setup_wp_configs():
     # clean up after sed
     sudo('rm ' + WP_HOME + '/wp-config.php.bak')
 
-@task
-def setup_mysql():
-    # get credentials
-    SECRETS = get_secrets()
-    if not SECRETS:
-        sys.exit()
-
-    # The prompts dictionary is supported beginning in Fabric 1.8.1
-    # Run 'pip install https://github.com/fabric/fabric/zipball/master' to pull down the latest version
-    # The function works fine with earlier version, but you have to respond to the prompts manually
-    with settings(prompts = {
-                             'Enter current password for root (enter for none): ': '',
-                             'Set root password? [Y/n] ': 'Y',
-                             'New password: ': SECRETS.get('db_root_password', ''),
-                             'Re-enter new password: ': SECRETS.get('db_root_password', ''),
-                             'Remove anonymous users? [Y/n] ': 'Y',
-                             'Disallow root login remotely? [Y/n] ': 'Y',
-                             'Remove test database and access to it? [Y/n] ': 'Y',
-                             'Reload privilege tables now? [Y/n] ': 'Y'
-                             }):
-        sudo('/sbin/service mysqld start')
-        sudo('/usr/bin/mysql_secure_installation')
-    sudo('/sbin/chkconfig mysqld on')
-    sudo('/sbin/service mysqld start')
-
-    put('conf/init.sql', '/tmp/init.sql', use_sudo=True)
-    # replace database credentials in init.sql
-    sed('/tmp/init.sql', 'db_name', SECRETS.get('db_name', ''), use_sudo=True)
-    sed('/tmp/init.sql', 'db_user', SECRETS.get('db_user', ''), use_sudo=True)
-    sed('/tmp/init.sql', 'db_password', SECRETS.get('db_password', ''), use_sudo=True)
-    sed('/tmp/init.sql', 'db_host', SECRETS.get('db_host', ''), use_sudo=True)
-
-    # run init script to create database
-    with settings(prompts = {
-                             'Enter password: ': SECRETS.get('db_root_password', '')
-                             }):
-        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p < /tmp/init.sql')
-    sudo('rm /tmp/init.sql')
-
-@task
-def setup_git_vagrant(webapp):
-    with cd('/opt/' + webapp + '/' + webapp):
-        sudo('git config --global user.name "Jason Brazeal"')
-        sudo('git config --global user.email jsonbrazeal@gmail.com')
-        # if the repo already exists we only need the following line
-        # sudo('git clone ssh://jason379@web388.webfaction.com/~/webapps/git/repos/' + webapp + '.git')
-        sudo('git init')
-        sudo('git add .')
-        sudo("git commit -am 'initial commit'")
-        ##git
-        # run('git remote add origin ssh://jason379@web388.webfaction.com/~/webapps/' + webapp + '_git/repos/' + webapp + '.git')
-        sudo('git remote add origin ssh://jason379@web388.webfaction.com/~/webapps/git/repos/' + webapp + '.git')
-        sudo('git push origin master')
-
-@task
-def setup_git_do(wp_name='blog'):
-    with cd(PROJECT_ROOT):
-        sudo('git init')
-        sudo('git remote add -f origin https://github.com/jsonbrazeal/jasonbrazeal-com.git')
-        sudo('git config core.sparsecheckout true')
-        sudo('echo web/ >> .git/info/sparse-checkout')
-        sudo('git checkout master')
-    THEME_ROOT = WEB_ROOT + '/' + wp_name + '/wp-content/themes/jasonbrazeal-com-blog'
-    with cd(THEME_ROOT):
-        # sudo('git init')
-        sudo('git remote add -f origin https://github.com/jsonbrazeal/jasonbrazeal-com-blog.git')
-        sudo('git checkout master')
+############################ Deployment Functions ############################
 
 # @task
 # def deploy_do(tag="master"):
@@ -289,6 +323,8 @@ def setup_git_do(wp_name='blog'):
 # def deploy_wp_do(tag="master"):
 #     with cd(WEB_ROOT + '/blog/wp-content/themes/jasonbrazeal-com-blog'):
 #         sudo('git checkout ' + tag)
+
+############################ Maintenance Functions ############################
 
 @task
 def restart_apache():
@@ -324,7 +360,7 @@ def backup_mysql():
 def reset_httpd_conf_vm():
     put('conf/default_centos.httpd.conf', '/etc/httpd/conf/httpd.conf', use_sudo=True)
 
-############### Helper Functions ###############
+############################## Helper Functions ##############################
 
 def install_package(name, option=''):
     sudo('yum -y ' + option + ' install ' + name, shell=False)
@@ -349,7 +385,7 @@ def get_secrets():
     finally:
         local('hdiutil detach "$PWD/secrets"')
 
-############### Webfaction Scripts ###############
+############################# Webfaction Scripts #############################
 
 @hosts('jason379@web388.webfaction.com')
 @task
