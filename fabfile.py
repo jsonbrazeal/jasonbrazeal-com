@@ -9,42 +9,66 @@ USER_NAME = 'jsonbrazeal'
 SSH_PORT = '4217'
 SSH_KEY_FILE = '/Users/jsonbrazeal/.ssh/id_rsa.pub'
 SECRETS_DMG = '/Users/jsonbrazeal/Dropbox/Credentials/jasonbrazeal.com.dmg'
-SERVER_ADMIN = 'jsonbrazeal@gmail.com'
 PROJECT_ROOT = '/opt/jasonbrazeal.com'
 WEB_ROOT = '/opt/jasonbrazeal.com/web'
 REPO_URL = 'https://github.com/jsonbrazeal/jasonbrazeal-com.git'
 BLOG_REPO_URL = 'https://github.com/jsonbrazeal/jasonbrazeal-com-blog.git'
+WP_HOME = '/opt/jasonbrazeal.com/web/blog'
+SERVER_IP_DEV = '162.243.39.189'
+HOSTNAME_DEV = 'dev.jasonbrazeal.com'
+SERVER_IP_WEB1 = ''
+HOSTNAME_WEB1 = 'web1.jasonbrazeal.com'
+ADMIN_EMAIL = 'jsonbrazeal@gmail.com'
+ADMIN_NAME = 'Jason Brazeal'
 
 ############################# Environment Setters #############################
 
 @task
 def dev():
     env.user = USER_NAME
-    env.hosts = ['162.243.39.189:' + SSH_PORT]
-    env.hostname = 'dev.jasonbrazeal.com'
+    env.hosts = [SERVER_IP_DEV + ':' + SSH_PORT]
+    env.hostname = HOSTNAME_DEV
+
+@task
+def dev_setup():
+    '''Initial provisioning of server requires root login to the standard SSh port 22.
+    '''
+    env.user = 'root'
+    env.hosts = [SERVER_IP_DEV]
+    env.hostname = HOSTNAME_DEV
 
 @task
 def web1():
     env.user = USER_NAME
-    env.hosts = [':' + SSH_PORT]
-    env.hostname = 'web1.jasonbrazeal.com'
+    env.hosts = [SERVER_IP_WEB1 + ':' + SSH_PORT]
+    env.hostname = HOSTNAME_WEB1
+
+@task
+def web1_setup():
+    '''Standard SSH port must be used during initial provisioning.
+    '''
+    env.user = 'root'
+    env.hosts = [SERVER_IP_WEB1]
+    env.hostname = HOSTNAME_WEB1
 
 ############################ All-in-One Functions ############################
 
 @task
 def new_server():
-    # execute(provision_do)
+    execute(dev_setup)
+    execute(provision_do)
+    execute(dev)
     execute(setup_git_do)
     execute(setup_mysql)
-    execute(run_db_script, script='conf/init.sql')
-    execute(run_db_script, script='conf/blog.bak.sql')
+    execute(create_db)
+    execute(restore_db, 'conf/blog.bak.sql')
+    execute(setup_wp_config)
 
 ########################### Provisioning Functions ###########################
 
 @task
-@with_settings(user='root')
 def provision_do():
-    '''Sets up clean CentOS VPS on Digital Ocean. Host (standard ssh port) must be specified on command line with the config function, e.g. `fab dev provision_do:host=162.243.39.189`
+    '''Sets up clean CentOS VPS on Digital Ocean. This task is ran at root and connects through the standard SSH port. During this task, the default SSH port is changed and a new user created.
     '''
 
     # get credentials
@@ -56,11 +80,11 @@ def provision_do():
         install_package(package)
 
     # configure git
-    sudo('git config --global user.name "Jason Brazeal"')
-    sudo('git config --global user.email jsonbrazeal@gmail.com')
+    sudo('git config --global user.name "' + ADMIN_NAME + '"')
+    sudo('git config --global user.email ' + ADMIN_EMAIL)
 
     # configure apache
-    local("sed -e 's/<SERVER_NAME>/" + env.hostname + "/g' -e 's/<SERVER_ADMIN>/" + SERVER_ADMIN + "/g' conf/template.vm_centos.httpd.conf > conf/httpd.conf")
+    local("sed -e 's/<SERVER_NAME>/" + env.hostname + "/g' -e 's/<SERVER_ADMIN>/" + ADMIN_EMAIL + "/g' conf/template.vm_centos.httpd.conf > conf/httpd.conf")
     put('conf/httpd.conf', '/etc/httpd/conf/httpd.conf', use_sudo=True)
     # disable welcome page
     sudo('mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.off')
@@ -173,7 +197,7 @@ def setup_mysql():
     # get credentials
     SECRETS = get_secrets()
     if not SECRETS:
-        sys.exit()
+        sys.exit('Credentials not available.')
 
     # The prompts dictionary is supported beginning in Fabric 1.8.1
     # Run `pip install https://github.com/fabric/fabric/zipball/master` to pull down the latest version
@@ -194,22 +218,45 @@ def setup_mysql():
     sudo('/sbin/service mysqld start')
 
 @task
-def run_db_script(script='conf/init.sql'):
-    '''Puts the script given on the server and runs it as root. Defaults to the init script, but a db dump file can be used to restore the db (e.g. conf/blog.bak.sql)
+def create_db():
+    '''Puts the init.sql script on the server and runs it as root to create a new database.
     '''
-    put(script, '/tmp/tmp.sql', use_sudo=True)
+    # get credentials
+    SECRETS = get_secrets()
+    if not SECRETS:
+        sys.exit('Credentials not available.')
+
+    put('conf/init.sql', '/tmp/tmp.sql', use_sudo=True)
 
     # replace database credentials in init.sql
     sed('/tmp/tmp.sql', 'db_name', SECRETS.get('db_name', ''), use_sudo=True)
     sed('/tmp/tmp.sql', 'db_user', SECRETS.get('db_user', ''), use_sudo=True)
-    sed('/tmp/tmp.sql', 'db_password', SECRETS.get('db_password', ''), use_sudo=True)
-    sed('/tmp/tmp.sql', 'db_host', SECRETS.get('db_host', ''), use_sudo=True)
+    sed('/tmp/tmp.sql', 'db_password', SECRETS.get('db_root_password', ''), use_sudo=True)
+    sed('/tmp/tmp.sql', 'localhost', SECRETS.get('db_host', ''), use_sudo=True)
 
-    # run script
+    # run init.sql script
     with settings(prompts = {
                              'Enter password: ': SECRETS.get('db_root_password', '')
                              }):
         sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p < /tmp/tmp.sql')
+    sudo('rm /tmp/tmp.sql')
+
+@task
+def restore_db(dump_file):
+    '''Puts the script given on the server and runs it as root to restore a database.
+    '''
+    # get credentials
+    SECRETS = get_secrets()
+    if not SECRETS:
+        sys.exit('Credentials not available.')
+
+    put(dump_file, '/tmp/restore.sql', use_sudo=True)
+
+    # run script from mysqldump
+    with settings(prompts = {
+                             'Enter password: ': SECRETS.get('db_root_password', '')
+                             }):
+        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p ' + SECRETS.get('db_name', '') + ' < /tmp/tmp.sql')
     sudo('rm /tmp/tmp.sql')
 
 @task
@@ -240,15 +287,15 @@ def provision_vagrant(project):
     put('conf/template.vm_centos.httpd.conf', '/etc/httpd/conf/httpd.conf', use_sudo=True)
 
     # make project folder
-    sudo('mkdir /opt/' + project)
+    sudo('mkdir -p ' + PROJECT_ROOT)
 
 @task
 def setup_git_vagrant(project):
     '''Sets up Git on a local Vagrant VM for development.
     '''
-    with cd('/opt/' + project):
-        sudo('git config --global user.name "Jason Brazeal"')
-        sudo('git config --global user.email jsonbrazeal@gmail.com')
+    with cd(PROJECT_ROOT):
+        sudo('git config --global user.name "' + ADMIN_NAME + '"')
+        sudo('git config --global user.email ' + ADMIN_EMAIL)
         # if the repo already exists we only need to run `git clone`, not the rest of this
         sudo('git init')
         sudo('git add .')
@@ -260,10 +307,9 @@ def setup_git_vagrant(project):
 
 @task
 # must escape certain characters in passwords with two backslashes: &, $ (or avoid them!)
-def new_wp(wp_name="wordpress"):
+def new_wp():
     '''Downloads and installs Wordpress.
     '''
-    WP_HOME = WEB_ROOT + wp_name
 
     sudo('mkdir -p ' + WP_HOME, warn_only=True)
 
@@ -273,14 +319,13 @@ def new_wp(wp_name="wordpress"):
         sudo('tar -xzvf latest.tar.gz')
         sudo('mv wordpress/* ' + WP_HOME)
 
-    execute(setup_wp_configs)
-    execute(setup_mysql)
+    execute(setup_wp_config)
     execute(start_apache)
     execute(start_mysqld)
     # also need to change AllowOverride None to AllowOverride All in <Directory "/var/www/html"> section of httpd.conf (or wherever WP is served from)
 
 @task
-def setup_wp_configs():
+def setup_wp_config():
     '''Configures Wordpress installation.
     '''
     # create /tmp/wp_config by deleting default lines for auth keys and such that we don't need
@@ -302,11 +347,11 @@ def setup_wp_configs():
         print('Please update wp-config.php manually to set up database.')
 
     # replace database credentials
-    sed(WP_HOME + '/wp-config.php', 'db_name', SECRETS.get('db_name', ''), use_sudo=True)
-    sed(WP_HOME + '/wp-config.php', 'db_user', SECRETS.get('db_user', ''), use_sudo=True)
-    sed(WP_HOME + '/wp-config.php', 'db_password', SECRETS.get('db_password', ''), use_sudo=True)
+    sed(WP_HOME + '/wp-config.php', 'database_name_here', SECRETS.get('db_name', ''), use_sudo=True)
+    sed(WP_HOME + '/wp-config.php', 'username_here', SECRETS.get('db_user', ''), use_sudo=True)
+    sed(WP_HOME + '/wp-config.php', 'password_here', SECRETS.get('db_user_password', ''), use_sudo=True)
     sed(WP_HOME + '/wp-config.php', 'localhost', SECRETS.get('db_host', ''), use_sudo=True)
-    sed(WP_HOME + '/wp-config.php', 'wp_', wp_name + '_', use_sudo=True)
+    sed(WP_HOME + '/wp-config.php', 'wp_', SECRETS.get('db_name', ''), use_sudo=True)
 
     # clean up after sed
     sudo('rm ' + WP_HOME + '/wp-config.php.bak')
@@ -317,7 +362,7 @@ def setup_wp_configs():
 # def deploy_do(tag="master"):
 #     with cd(WEB_ROOT):
 #         sudo('git checkout ' + tag)
-#     execute(setup_wp_configs)
+#     execute(setup_wp_config)
 
 # @task
 # def deploy_wp_do(tag="master"):
@@ -350,14 +395,15 @@ def stop_mysqld():
     sudo('/sbin/service mysqld stop', shell=False)
 
 @task
-def backup_mysql():
+def backup_mysql(db_name):
     execute(stop_mysqld)
-    with cd('/Users/vagrant'):
-        sudo('mysqldump --add-drop-table -h localhost -u root -p wpdb | bzip2 -c > blog.bak.sql.bz2')
-        sudo('mv blog.bak.sql.bz2 /opt/jasonbrazeal.com/db_backup/blog.bak.sql.bz2')
+    sudo('mysqldump --add-drop-table -h localhost -u root -p ' + db_name + ' | bzip2 -c > /tmp/' + db_name + '.bak.sql.bz2')
+    get('/tmp/' + db_name + '.bak.sql.bz2 ', '/Users/jsonbrazeal/Desktop')
+    sudo('rm /tmp/' + db_name + '.bak.sql.bz2 ')
+    execute(start_mysqld)
 
 @task
-def reset_httpd_conf_vm():
+def reset_httpd_conf():
     put('conf/default_centos.httpd.conf', '/etc/httpd/conf/httpd.conf', use_sudo=True)
 
 ############################## Helper Functions ##############################
