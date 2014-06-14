@@ -61,8 +61,10 @@ def new_server():
     execute(setup_git_do)
     execute(setup_mysql)
     execute(create_db)
-    execute(restore_db, 'conf/blog.bak.sql')
+    execute(restore_db, 'conf/blog.prod-replaced.sql')
     execute(setup_wp_config)
+    execute(restart_mysqld)
+    execute(restart_apache)
 
 ########################### Provisioning Functions ###########################
 
@@ -88,7 +90,8 @@ def provision_do():
     put('conf/httpd.conf', '/etc/httpd/conf/httpd.conf', use_sudo=True)
     # disable welcome page
     sudo('mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.off')
-    # configure php
+
+    # configure php (don't show version)
     sed('/etc/ssh/sshd_config','expose_php = On','expose_php = Off', use_sudo=True)
 
     # set up swap file
@@ -139,7 +142,8 @@ def provision_do():
     sudo('service iptables restart')
 
     # disable postfix email service (daemon listens on port 25 by default)
-    sudo('/sbin/chkconfig postfix off')
+    sudo('chkconfig postfix off')
+    sudo('service postfix stop')
 
     # create non-root user
     sudo('adduser ' + USER_NAME)
@@ -226,20 +230,20 @@ def create_db():
     if not SECRETS:
         sys.exit('Credentials not available.')
 
-    put('conf/init.sql', '/tmp/tmp.sql', use_sudo=True)
+    put('conf/init.sql', '/tmp/init.sql', use_sudo=True)
 
     # replace database credentials in init.sql
-    sed('/tmp/tmp.sql', 'db_name', SECRETS.get('db_name', ''), use_sudo=True)
-    sed('/tmp/tmp.sql', 'db_user', SECRETS.get('db_user', ''), use_sudo=True)
-    sed('/tmp/tmp.sql', 'db_password', SECRETS.get('db_root_password', ''), use_sudo=True)
-    sed('/tmp/tmp.sql', 'localhost', SECRETS.get('db_host', ''), use_sudo=True)
+    sed('/tmp/init.sql', 'db_name', SECRETS.get('db_name', ''), use_sudo=True)
+    sed('/tmp/init.sql', 'db_user', SECRETS.get('db_user', ''), use_sudo=True)
+    sed('/tmp/init.sql', 'db_password', SECRETS.get('db_user_password', ''), use_sudo=True)
+    sed('/tmp/init.sql', 'db_host', SECRETS.get('db_host', ''), use_sudo=True)
 
     # run init.sql script
     with settings(prompts = {
-                             'Enter password: ': SECRETS.get('db_root_password', '')
+                             'Enter password:': SECRETS.get('db_root_password', '')
                              }):
-        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p < /tmp/tmp.sql')
-    sudo('rm /tmp/tmp.sql')
+        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p < /tmp/init.sql')
+    sudo('rm /tmp/init.sql')
 
 @task
 def restore_db(dump_file):
@@ -254,10 +258,10 @@ def restore_db(dump_file):
 
     # run script from mysqldump
     with settings(prompts = {
-                             'Enter password: ': SECRETS.get('db_root_password', '')
+                             'Enter password:': SECRETS.get('db_root_password', '')
                              }):
-        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p ' + SECRETS.get('db_name', '') + ' < /tmp/tmp.sql')
-    sudo('rm /tmp/tmp.sql')
+        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p ' + SECRETS.get('db_name', '') + ' < /tmp/restore.sql')
+    sudo('rm /tmp/restore.sql')
 
 @task
 def provision_vagrant(project):
@@ -351,7 +355,7 @@ def setup_wp_config():
     sed(WP_HOME + '/wp-config.php', 'username_here', SECRETS.get('db_user', ''), use_sudo=True)
     sed(WP_HOME + '/wp-config.php', 'password_here', SECRETS.get('db_user_password', ''), use_sudo=True)
     sed(WP_HOME + '/wp-config.php', 'localhost', SECRETS.get('db_host', ''), use_sudo=True)
-    sed(WP_HOME + '/wp-config.php', 'wp_', SECRETS.get('db_name', ''), use_sudo=True)
+    sed(WP_HOME + '/wp-config.php', 'wp_', SECRETS.get('db_name', '') + '_', use_sudo=True)
 
     # clean up after sed
     sudo('rm ' + WP_HOME + '/wp-config.php.bak')
@@ -386,6 +390,11 @@ def stop_apache():
     sudo('/sbin/service httpd stop', shell=False)
 
 @task
+def restart_mysqld():
+    sudo('/sbin/chkconfig mysqld on', shell=False)
+    sudo('/sbin/service mysqld restart', shell=False)
+
+@task
 def start_mysqld():
     sudo('/sbin/chkconfig mysqld on', shell=False)
     sudo('/sbin/service mysqld start', shell=False)
@@ -397,9 +406,9 @@ def stop_mysqld():
 @task
 def backup_mysql(db_name):
     execute(stop_mysqld)
-    sudo('mysqldump --add-drop-table -h localhost -u root -p ' + db_name + ' | bzip2 -c > /tmp/' + db_name + '.bak.sql.bz2')
-    get('/tmp/' + db_name + '.bak.sql.bz2 ', '/Users/jsonbrazeal/Desktop')
-    sudo('rm /tmp/' + db_name + '.bak.sql.bz2 ')
+    sudo('mysqldump --add-drop-table -h localhost -u root -p ' + db_name + ' | bzip2 -c > /tmp/' + db_name + '.sql.bz2')
+    get('/tmp/' + db_name + '.sql.bz2 ', '/Users/jsonbrazeal/Desktop')
+    sudo('rm /tmp/' + db_name + '.sql.bz2 ')
     execute(start_mysqld)
 
 @task
