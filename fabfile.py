@@ -1,4 +1,7 @@
+import sys
 import json
+
+from functools import wraps
 
 from fabric.api import task, sudo, env, local, run, put,cd, prefix, hosts, lcd, execute, path, settings, with_settings
 from fabric.contrib.files import sed, append
@@ -14,12 +17,33 @@ WEB_ROOT = '/opt/jasonbrazeal.com/web'
 REPO_URL = 'https://github.com/jsonbrazeal/jasonbrazeal-com.git'
 BLOG_REPO_URL = 'https://github.com/jsonbrazeal/jasonbrazeal-com-blog.git'
 WP_HOME = '/opt/jasonbrazeal.com/web/blog'
-SERVER_IP_DEV = '162.243.39.189'
+SERVER_IP_DEV = '107.170.56.244'
 HOSTNAME_DEV = 'dev.jasonbrazeal.com'
 SERVER_IP_WEB1 = ''
 HOSTNAME_WEB1 = 'web1.jasonbrazeal.com'
 ADMIN_EMAIL = 'jsonbrazeal@gmail.com'
 ADMIN_NAME = 'Jason Brazeal'
+
+################################# Decorators #################################
+
+def get_secrets(func):
+    global SECRETS
+    try:
+        local('hdiutil attach -stdinpass -mountpoint "$PWD/secrets" ' + SECRETS_DMG)
+        with open('secrets/secrets.json') as file:
+            SECRETS = json.load(file)
+    except:
+        sys.exit('Secrets file unavailable. Could not open ' + SECRETS_DMG)
+    try:
+        local('hdiutil detach "$PWD/secrets"')
+    except:
+        sys.exit('Could not close ' + SECRETS_DMG)
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        global SECRETS
+        func(*args, **kwargs)
+        del SECRETS
+    return wrapper
 
 ############################# Environment Setters #############################
 
@@ -54,6 +78,7 @@ def web1_setup():
 ############################ All-in-One Functions ############################
 
 @task
+@get_secrets
 def new_server():
     execute(dev_setup)
     execute(provision_do)
@@ -72,10 +97,6 @@ def new_server():
 def provision_do():
     '''Sets up clean CentOS VPS on Digital Ocean. This task is ran at root and connects through the standard SSH port. During this task, the default SSH port is changed and a new user created.
     '''
-
-    # get credentials
-    SECRETS = get_secrets()
-
     # update os and install packages
     sudo('yum -y update', shell=False)
     for package in ['policycoreutils-python', 'httpd', 'php', 'php-mysql', 'php-xml', 'wget', 'nano', 'mysql-server', 'git']:
@@ -198,11 +219,6 @@ def setup_git_do(wp_name='blog'):
 def setup_mysql():
     '''Installs MySQL database.
     '''
-    # get credentials
-    SECRETS = get_secrets()
-    if not SECRETS:
-        sys.exit('Credentials not available.')
-
     # The prompts dictionary is supported beginning in Fabric 1.8.1
     # Run `pip install https://github.com/fabric/fabric/zipball/master` to pull down the latest version
     # The function works fine with earlier version, but you have to respond to the prompts manually
@@ -225,11 +241,6 @@ def setup_mysql():
 def create_db():
     '''Puts the init.sql script on the server and runs it as root to create a new database.
     '''
-    # get credentials
-    SECRETS = get_secrets()
-    if not SECRETS:
-        sys.exit('Credentials not available.')
-
     put('conf/init.sql', '/tmp/init.sql', use_sudo=True)
 
     # replace database credentials in init.sql
@@ -240,7 +251,7 @@ def create_db():
 
     # run init.sql script
     with settings(prompts = {
-                             'Enter password:': SECRETS.get('db_root_password', '')
+                             'Enter password: ': SECRETS.get('db_root_password', '')
                              }):
         sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p < /tmp/init.sql')
     sudo('rm /tmp/init.sql')
@@ -249,16 +260,11 @@ def create_db():
 def restore_db(dump_file):
     '''Puts the script given on the server and runs it as root to restore a database.
     '''
-    # get credentials
-    SECRETS = get_secrets()
-    if not SECRETS:
-        sys.exit('Credentials not available.')
-
     put(dump_file, '/tmp/restore.sql', use_sudo=True)
 
     # run script from mysqldump
     with settings(prompts = {
-                             'Enter password:': SECRETS.get('db_root_password', '')
+                             'Enter password: ': SECRETS.get('db_root_password', '')
                              }):
         sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p ' + SECRETS.get('db_name', '') + ' < /tmp/restore.sql')
     sudo('rm /tmp/restore.sql')
@@ -340,15 +346,10 @@ def setup_wp_config():
     # get random secret keys from wordpress, add them to /tmp/wp_config, and copy them to CONFIG
     sudo('wget https://api.wordpress.org/secret-key/1.1/salt/ -O /tmp/wp_secrets')
     sudo(r'csplit -f wp /tmp/wp_config "/\*\*#@-\*/"')
-    sudo('cat wp00 /tmp/wp_secrets wp01  >> ' + CONFIG)
+    sudo('cat wp_00 /tmp/wp_secrets wp_01  >> ' + CONFIG)
 
     # sudo('echo "?>" >> ' + CONFIG)
     sudo('rm /tmp/wp_*')
-
-    # get credentials
-    SECRETS = get_secrets()
-    if not SECRETS:
-        print('Please update wp-config.php manually to set up database.')
 
     # replace database credentials
     sed(WP_HOME + '/wp-config.php', 'database_name_here', SECRETS.get('db_name', ''), use_sudo=True)
@@ -359,6 +360,10 @@ def setup_wp_config():
 
     # clean up after sed
     sudo('rm ' + WP_HOME + '/wp-config.php.bak')
+
+    # set file permissions and ownership
+    sudo('chown -R ' + USER_NAME + ':' + USER_NAME + ' ' + PROJECT_ROOT)
+    sudo('chmod -v 666 ' + WP_HOME + '/.htaccess')
 
 ############################ Deployment Functions ############################
 
@@ -428,17 +433,6 @@ def replace_in_file(file_name, old, new):
 
 def _escape_string_for_sed(str):
     return str.replace('/', '\\/').replace('\'', '\'"\'"\'')
-
-def get_secrets():
-    try:
-        local('hdiutil attach -stdinpass -mountpoint "$PWD/secrets" ' + SECRETS_DMG)
-        with open('secrets/secrets.json') as file:
-            return json.load(file)
-    except:
-        print('Secrets file unavailable. Could not open ' + SECRETS_DMG)
-        return None
-    finally:
-        local('hdiutil detach "$PWD/secrets"')
 
 ############################# Webfaction Scripts #############################
 
