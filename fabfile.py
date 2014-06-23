@@ -254,7 +254,7 @@ def create_db():
                              'Enter password: ': SECRETS.get('db_root_password', '')
                              }):
         sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p < /tmp/init.sql')
-    sudo('rm /tmp/init.sql')
+    sudo('rm /tmp/init.sql /tmp/init.sql.bak')
 
 @task
 def restore_db(dump_file):
@@ -345,11 +345,10 @@ def setup_wp_config():
 
     # get random secret keys from wordpress, add them to /tmp/wp_config, and copy them to CONFIG
     sudo('wget https://api.wordpress.org/secret-key/1.1/salt/ -O /tmp/wp_secrets')
-    sudo(r'csplit -f wp /tmp/wp_config "/\*\*#@-\*/"')
-    sudo('cat wp_00 /tmp/wp_secrets wp_01  >> ' + CONFIG)
-
-    # sudo('echo "?>" >> ' + CONFIG)
-    sudo('rm /tmp/wp_*')
+    with cd('/tmp'):
+        sudo(r'csplit -f wp_ wp_config "/\*\*#@-\*/"')
+        sudo('cat wp_00 wp_secrets wp_01  >> ' + CONFIG)
+        sudo('rm wp_*')
 
     # replace database credentials
     sed(WP_HOME + '/wp-config.php', 'database_name_here', SECRETS.get('db_name', ''), use_sudo=True)
@@ -361,9 +360,8 @@ def setup_wp_config():
     # clean up after sed
     sudo('rm ' + WP_HOME + '/wp-config.php.bak')
 
-    # set file permissions and ownership
+    # set ownership of files
     sudo('chown -R ' + USER_NAME + ':' + USER_NAME + ' ' + PROJECT_ROOT)
-    sudo('chmod -v 666 ' + WP_HOME + '/.htaccess')
 
 ############################ Deployment Functions ############################
 

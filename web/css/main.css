@@ -252,8 +252,13 @@ h2 {
     text-align: center;
 }
 
-#work, #about {
+.center {
     max-width: 1100px;
+    margin: 0 auto;
+}
+
+#blog_articles {
+    max-width: 1200px;
     margin: 0 auto;
 }
 
