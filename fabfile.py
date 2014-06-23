@@ -234,6 +234,7 @@ def setup_mysql():
                              }):
         sudo('/sbin/service mysqld start')
         sudo('/usr/bin/mysql_secure_installation')
+    sed('/etc/my.cnf', '\[mysqld\]', '\[mysqld\]\\nbind-address=127.0.0.1', use_sudo=True)
     sudo('/sbin/chkconfig mysqld on')
     sudo('/sbin/service mysqld start')
 
@@ -360,8 +361,12 @@ def setup_wp_config():
     # clean up after sed
     sudo('rm ' + WP_HOME + '/wp-config.php.bak')
 
-    # set ownership of files
+    # set file permissions and ownership
     sudo('chown -R ' + USER_NAME + ':' + USER_NAME + ' ' + PROJECT_ROOT)
+    with cd(WP_HOME):
+        sudo('touch .htaccess')
+        sudo('chown ' + USER_NAME + ':' + USER_NAME + ' .htaccess')
+        sudo('chmod 666 .htaccess')
 
 ############################ Deployment Functions ############################
 

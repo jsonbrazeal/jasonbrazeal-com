@@ -390,6 +390,22 @@ article p {
     margin: 0 auto;
 }
 
+#blog_error {
+    font-family: 'Gafata', Verdana, Helvetica, sans-serif;
+    margin: 2em auto;
+    width: 33%;
+}
+
+#blog_error a {
+    cursor: pointer;
+}
+
+#blog_error img {
+    float: left;
+    position: relative;
+    top: -4px;
+}
+
 body a {
     color: #3d8899;
     text-decoration: none;
