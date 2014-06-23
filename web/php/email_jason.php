@@ -1,9 +1,9 @@
 <?php
-  $name = $_REQUEST['name'];
-  $email = $_REQUEST['email'];
-  $message = $_REQUEST['message'];
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $message = $_POST['message'];
 
   mail( "jsonbrazeal@gmail.com", "message from $name",
     $message, "From: $email" );
-  header( "Location: http://jasonbrazeal.com/" );
+  header( "Location: http://localhost:8008/" );
 ?>

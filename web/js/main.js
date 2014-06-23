@@ -40,6 +40,29 @@ $(document).ready(function() {
         $(this).next().next().slideToggle();
     });
 
+    $('#contact_form').submit(function(e) {
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: '../' + formURL,
+            type: 'POST',
+            data: '',
+            dataType: 'html',
+            beforeSend: function(){
+            },
+            success: function(data){
+                alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
+                $('#name, #email, #message').val('');
+                $.scrollTo($('#top'), {duration: 2000});
+            }, /* success */
+            error: function(){
+                alert('The was an error submitting the form, and your message was not sent. You can try it again or just email me directly at jsonbrazeal@gmail.com\n-Jason');
+            }, /* error */
+            complete: function(){
+            } /* complete */
+        }); /* ajax call */
+        e.preventDefault(); // to stop default action
+    });
+
     $(window).scroll(function(e){
       parallax();
     });
