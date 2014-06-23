@@ -46,14 +46,18 @@ $(document).ready(function() {
             url: '../' + formURL,
             type: 'POST',
             data: $('#contact_form').serialize(),
-            dataType: 'html',
+            dataType: 'text',
             beforeSend: function(){
             },
             success: function(data){
-                alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
-                alert(data);
-                $('#name, #email, #message').val('');
-                $.scrollTo($('#top'), {duration: 2000});
+                if (data.substr(0,5) == 'ERROR') {
+                    data = data.substr(5);
+                    alert(data);
+                } else {
+                    alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
+                    $('#name, #email, #message').val('');
+                    $.scrollTo($('#top'), {duration: 2000});
+                }
             }, /* success */
             error: function(){
                 alert('The was an error submitting the form, and your message was not sent. You can try it again or just email me directly at jsonbrazeal@gmail.com\n-Jason');

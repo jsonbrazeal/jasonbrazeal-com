@@ -18,10 +18,18 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $error[] = "Unrecognized email format.";
 }
 
-if (!empty($error[]) {
-    alert = implode('\n', $error[]);
-    echo alert;
+if (count($error) != 0) {
+    $alert = implode('\n', $error);
+    echo 'ERROR' + $alert;
     exit();
+}
+
+if (strlen($email) > 200) {
+    $email = substr($email, 0, 40);
+}
+
+if (strlen($name) > 200) {
+    $name = substr($name, 0, 40);
 }
 
 require 'PHPMailerAutoload.php';

@@ -297,10 +297,8 @@ def provision_vagrant(project):
     put('conf/template.vm_centos.httpd.conf', '/etc/httpd/conf/httpd.conf', use_sudo=True)
 
     # configure php
-    # add extension=php_openssl.so to php.ini?
     # set time zone in php.ini
     append('/etc/php.ini', 'date.timezone = "America/New_York"', use_sudo=True)
-
 
     # make project folder
     sudo('mkdir -p ' + PROJECT_ROOT)
