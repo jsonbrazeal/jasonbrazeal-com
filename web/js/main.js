@@ -45,7 +45,7 @@ $(document).ready(function() {
         $.ajax({
             url: '../' + formURL,
             type: 'POST',
-            data: '',
+            data: $('#contact_form').serialize(),
             dataType: 'html',
             beforeSend: function(){
             },

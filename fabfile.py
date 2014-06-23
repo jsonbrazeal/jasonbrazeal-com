@@ -85,6 +85,7 @@ def new_server():
     execute(provision_do)
     execute(dev)
     execute(setup_git_do)
+    execute(deploy_php_config)
     execute(setup_mysql)
     execute(create_db)
     execute(restore_db, 'conf/blog.prod.sql')
@@ -175,18 +176,15 @@ def provision_do():
     sudo('echo -e "\n' + USER_NAME + '\tALL=(ALL)\tALL" >> /etc/sudoers')
 
     put('conf/.bashrc', '/home/' + USER_NAME, mode=0754, use_sudo=True)
-    sudo('chown ' + USER_NAME + ' /home/' + USER_NAME + '/.bashrc')
-    sudo('chgrp ' + USER_NAME + ' /home/' + USER_NAME + '/.bashrc')
+    sudo('chown ' + USER_NAME + ':' + USER_NAME + ' /home/' + USER_NAME + '/.bashrc')
 
     # set up ssh keys
     sudo('mkdir /home/' + USER_NAME + '/.ssh')
-    sudo('chown ' + USER_NAME + ' /home/' + USER_NAME + '/.ssh')
-    sudo('chgrp ' + USER_NAME + ' /home/' + USER_NAME + '/.ssh')
+    sudo('chown ' + USER_NAME + ':' + USER_NAME + ' /home/' + USER_NAME + '/.ssh')
 
     put(SSH_KEY_FILE, '/tmp/id_rsa.pub', use_sudo=True)
     sudo('cat /tmp/id_rsa.pub > /home/' + USER_NAME + '/.ssh/authorized_keys')
-    sudo('chown ' + USER_NAME + ' /home/' + USER_NAME + '/.ssh/authorized_keys')
-    sudo('chgrp ' + USER_NAME + ' /home/' + USER_NAME + '/.ssh/authorized_keys')
+    sudo('chown ' + USER_NAME + ':' + USER_NAME + ' /home/' + USER_NAME + '/.ssh/authorized_keys')
     sudo('rm /tmp/id_rsa.pub')
     sudo('chmod 700 /home/' + USER_NAME + '/.ssh')
     sudo('chmod 600 /home/' + USER_NAME + '/.ssh/authorized_keys')
@@ -226,8 +224,8 @@ def setup_mysql():
     with settings(prompts = {
                              'Enter current password for root (enter for none): ': '',
                              'Set root password? [Y/n] ': 'Y',
-                             'New password: ': SECRETS.get('db_root_password', ''),
-                             'Re-enter new password: ': SECRETS.get('db_root_password', ''),
+                             'New password: ': SECRETS['db_root_password'],
+                             'Re-enter new password: ': SECRETS['db_root_password'],
                              'Remove anonymous users? [Y/n] ': 'Y',
                              'Disallow root login remotely? [Y/n] ': 'Y',
                              'Remove test database and access to it? [Y/n] ': 'Y',
@@ -246,16 +244,16 @@ def create_db():
     put('conf/init.sql', '/tmp/init.sql', use_sudo=True)
 
     # replace database credentials in init.sql
-    sed('/tmp/init.sql', 'db_name', SECRETS.get('db_name', ''), use_sudo=True)
-    sed('/tmp/init.sql', 'db_user', SECRETS.get('db_user', ''), use_sudo=True)
-    sed('/tmp/init.sql', 'db_password', SECRETS.get('db_user_password', ''), use_sudo=True)
-    sed('/tmp/init.sql', 'db_host', SECRETS.get('db_host', ''), use_sudo=True)
+    sed('/tmp/init.sql', 'db_name', SECRETS['db_name'], use_sudo=True)
+    sed('/tmp/init.sql', 'db_user', SECRETS['db_user'], use_sudo=True)
+    sed('/tmp/init.sql', 'db_password', SECRETS['db_user_password'], use_sudo=True)
+    sed('/tmp/init.sql', 'db_host', SECRETS['db_host'], use_sudo=True)
 
     # run init.sql script
     with settings(prompts = {
-                             'Enter password: ': SECRETS.get('db_root_password', '')
+                             'Enter password: ': SECRETS['db_root_password']
                              }):
-        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p < /tmp/init.sql')
+        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS['db_host'] + ' -u root -p < /tmp/init.sql')
     sudo('rm /tmp/init.sql /tmp/init.sql.bak')
 
 @task
@@ -266,9 +264,9 @@ def restore_db(dump_file):
 
     # run script from mysqldump
     with settings(prompts = {
-                             'Enter password: ': SECRETS.get('db_root_password', '')
+                             'Enter password: ': SECRETS['db_root_password']
                              }):
-        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS.get('db_host', '') + ' -u root -p ' + SECRETS.get('db_name', '') + ' < /tmp/restore.sql')
+        sudo('/usr/bin/mysql -vvv --show-warnings -h ' + SECRETS['db_host'] + ' -u root -p ' + SECRETS['db_name'] + ' < /tmp/restore.sql')
     sudo('rm /tmp/restore.sql')
 
 @task
@@ -297,6 +295,10 @@ def provision_vagrant(project):
 
     # configure apache
     put('conf/template.vm_centos.httpd.conf', '/etc/httpd/conf/httpd.conf', use_sudo=True)
+
+    # configure php
+    # add extension=php_openssl.so to php.ini?
+    # set time zone in php.ini
 
     # make project folder
     sudo('mkdir -p ' + PROJECT_ROOT)
@@ -353,11 +355,11 @@ def setup_wp_config():
         sudo('rm wp_*')
 
     # replace database credentials
-    sed(WP_HOME + '/wp-config.php', 'database_name_here', SECRETS.get('db_name', ''), use_sudo=True)
-    sed(WP_HOME + '/wp-config.php', 'username_here', SECRETS.get('db_user', ''), use_sudo=True)
-    sed(WP_HOME + '/wp-config.php', 'password_here', SECRETS.get('db_user_password', ''), use_sudo=True)
-    sed(WP_HOME + '/wp-config.php', 'localhost', SECRETS.get('db_host', ''), use_sudo=True)
-    sed(WP_HOME + '/wp-config.php', 'wp_', SECRETS.get('db_name', '') + '_', use_sudo=True)
+    sed(WP_HOME + '/wp-config.php', 'database_name_here', SECRETS['db_name'], use_sudo=True)
+    sed(WP_HOME + '/wp-config.php', 'username_here', SECRETS['db_user'], use_sudo=True)
+    sed(WP_HOME + '/wp-config.php', 'password_here', SECRETS['db_user_password'], use_sudo=True)
+    sed(WP_HOME + '/wp-config.php', 'localhost', SECRETS['db_host'], use_sudo=True)
+    sed(WP_HOME + '/wp-config.php', 'wp_', SECRETS['db_name'] + '_', use_sudo=True)
 
     # clean up after sed
     sudo('rm ' + WP_HOME + '/wp-config.php.bak')
@@ -381,6 +383,10 @@ def setup_wp_config():
 # def deploy_wp_do(tag="master"):
 #     with cd(WEB_ROOT + '/blog/wp-content/themes/jasonbrazeal-com-blog'):
 #         sudo('git checkout ' + tag)
+
+@task
+def deploy_php_config():
+    sed('/opt/jasonbrazeal.com/web/php/email_jason.php', '<gmail_password>', SECRETS['gmail_password'], use_sudo=True)
 
 ############################ Maintenance Functions ############################
 
@@ -415,7 +421,7 @@ def stop_mysqld():
 @task
 def backup_mysql(db_name):
     with settings(prompts = {
-                             'Enter password: ': SECRETS.get('db_root_password', '')
+                             'Enter password: ': SECRETS['db_root_password']
                              }):
         sudo('mysqldump --add-drop-table -h localhost -u root -p ' + db_name + ' > /tmp/' + db_name + '.sql')
     get('/tmp/' + db_name + '.sql', '/Users/jsonbrazeal/Desktop')
