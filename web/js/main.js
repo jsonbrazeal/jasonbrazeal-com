@@ -51,6 +51,7 @@ $(document).ready(function() {
             },
             success: function(data){
                 alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
+                alert(data);
                 $('#name, #email, #message').val('');
                 $.scrollTo($('#top'), {duration: 2000});
             }, /* success */

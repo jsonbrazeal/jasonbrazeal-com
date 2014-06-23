@@ -1,7 +1,30 @@
 <?php
+/* validate form */
+if (!empty($_POST)) {
+    $message = $_POST["message"];
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+}
+
+if (empty($name) or empty($email) or empty($message)) {
+    $error[] = "All fields are required.";
+}
+
+if (strlen($message) > 2000) {
+    $error[] = "Message must be fewer than 2000 characters.";
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $error[] = "Unrecognized email format.";
+}
+
+if (!empty($error[]) {
+    alert = implode('\n', $error[]);
+    echo alert;
+    exit();
+}
 
 require 'PHPMailerAutoload.php';
-
 $mail = new PHPMailer();
 
 $mail->isSMTP(); // Set mailer to use SMTP
@@ -12,7 +35,7 @@ $mail->Username = 'jasonbrazeal.com@gmail.com'; // SMTP username
 $mail->Password = '<gmail_password>'; // SMTP password
 $mail->SMTPSecure = 'tls'; // Enable encryption, 'ssl' also accepted
 
-$mail->From = filter_var($_POST["email"], FILTER_SANITIZE_STRING);
+$mail->From = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
 $mail->FromName = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
 $mail->addAddress('jsonbrazeal@gmail.com');
 

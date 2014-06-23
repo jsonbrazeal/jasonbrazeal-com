@@ -11,7 +11,7 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-        <script src="js/modernizr-2.7.1.min.js"></script>
+        <script src="js/modernizr-2.8.2.custom.js"></script>
 
         <!-- Google Universal Analytics -->
         <script>
@@ -122,11 +122,11 @@
         <form id="contact_form" method="post" action="php/email_jason.php">
             <p class="name">
               <label for="name">name</label>
-              <input name="name" type="text" id="name">
+              <input name="name" type="text" id="name" maxlength="40">
             </p>
             <p class="email">
               <label for="email">email</label>
-              <input name="email" type="text" id="email">
+              <input name="email" type="email" id="email" maxlength="40">
             </p>
             <p class="text">
               <label for="message">message</label>

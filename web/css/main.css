@@ -211,7 +211,7 @@ header h2 {
     display: inline-block;
     width: 150px;
     height: 150px;
-    margin: 5em 3em 6em 7em;
+    margin: 5em 3em 6em 6.5em;
     vertical-align: top;
 }
 
@@ -419,7 +419,7 @@ form {
     margin: 2em auto;
 }
 
-input[type="text"], textarea {
+input[type="text"], input[type="email"], textarea {
     border-radius: 5px;
     border: 3px solid #3d8899;
     background: #f2f1e7;
@@ -440,7 +440,7 @@ input[type="submit"]:hover {
     color: #f2f1e7;
 }
 
-input:focus, textarea:focus, input[type="text"]:hover, textarea:hover {
+input:focus, textarea:focus, input[type="text"]:hover, input[type="email"]:hover, textarea:hover {
     outline: none;
     box-shadow: 0 0 10px #874341;
 }

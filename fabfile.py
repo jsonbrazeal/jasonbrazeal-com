@@ -299,6 +299,8 @@ def provision_vagrant(project):
     # configure php
     # add extension=php_openssl.so to php.ini?
     # set time zone in php.ini
+    append('/etc/php.ini', 'date.timezone = "America/New_York"', use_sudo=True)
+
 
     # make project folder
     sudo('mkdir -p ' + PROJECT_ROOT)
@@ -419,7 +421,7 @@ def stop_mysqld():
     sudo('/sbin/service mysqld stop', shell=False)
 
 @task
-def backup_mysql(db_name):
+def backup_db(db_name):
     with settings(prompts = {
                              'Enter password: ': SECRETS['db_root_password']
                              }):
