@@ -5,6 +5,7 @@ from functools import wraps
 
 from fabric.api import task, sudo, env, local, run, put,cd, prefix, hosts, lcd, execute, path, settings, with_settings
 from fabric.contrib.files import sed, append
+from fabric.operations import get
 
 from fabtools.vagrant import vagrant # allows us to use any of these tasks on a vagrant vm with the command fab vagrant task_name
 
@@ -86,7 +87,7 @@ def new_server():
     execute(setup_git_do)
     execute(setup_mysql)
     execute(create_db)
-    execute(restore_db, 'conf/blog.prod-replaced.sql')
+    execute(restore_db, 'conf/blog.prod.sql')
     execute(setup_wp_config)
     execute(restart_mysqld)
     execute(restart_apache)
@@ -291,7 +292,7 @@ def provision_vagrant(project):
     # install packages
     sudo('yum -y update', shell=False)
     sudo('yum -y groupinstall development')
-    for package in ['openssl-devel', 'sqlite-devel', 'bzip2-devel', 'httpd', 'mod_wsgi', 'php', 'php-mysql', 'php-xml', 'wget', 'nano', 'mysql-server']:
+    for package in ['openssl-devel', 'sqlite-devel', 'httpd', 'mod_wsgi', 'php', 'php-mysql', 'php-xml', 'wget', 'nano', 'mysql-server']:
         install_package(package)
 
     # configure apache
@@ -413,11 +414,12 @@ def stop_mysqld():
 
 @task
 def backup_mysql(db_name):
-    execute(stop_mysqld)
-    sudo('mysqldump --add-drop-table -h localhost -u root -p ' + db_name + ' | bzip2 -c > /tmp/' + db_name + '.sql.bz2')
-    get('/tmp/' + db_name + '.sql.bz2 ', '/Users/jsonbrazeal/Desktop')
-    sudo('rm /tmp/' + db_name + '.sql.bz2 ')
-    execute(start_mysqld)
+    with settings(prompts = {
+                             'Enter password: ': SECRETS.get('db_root_password', '')
+                             }):
+        sudo('mysqldump --add-drop-table -h localhost -u root -p ' + db_name + ' > /tmp/' + db_name + '.sql')
+    get('/tmp/' + db_name + '.sql', '/Users/jsonbrazeal/Desktop')
+    sudo('rm /tmp/' + db_name + '.sql')
 
 @task
 def reset_httpd_conf():

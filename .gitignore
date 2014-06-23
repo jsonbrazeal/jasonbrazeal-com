@@ -59,7 +59,8 @@ sftp-config.json
 # Logs and databases #
 ######################
 *.log
-*.sql
+# commenting this out because we do want to back up init.sql and db backups
+# *.sql
 *.sqlite
 
 # OS generated files #
