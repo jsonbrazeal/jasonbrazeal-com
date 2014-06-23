@@ -298,7 +298,7 @@ def provision_vagrant(project):
 
     # configure php
     # set time zone in php.ini
-    append('/etc/php.ini', 'date.timezone = "America/New_York"', use_sudo=True)
+    sed('/etc/php.ini', ';date.timezone =', 'date.timezone = "America/New_York"', use_sudo=True)
 
     # make project folder
     sudo('mkdir -p ' + PROJECT_ROOT)

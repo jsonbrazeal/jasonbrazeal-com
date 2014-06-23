@@ -1,35 +1,33 @@
 <?php
 /* validate form */
 if (!empty($_POST)) {
-    $message = $_POST["message"];
+    $message = filter_var($_POST["message"], FILTER_SANITIZE_STRING);
     $name = $_POST["name"];
     $email = $_POST["email"];
 }
 
+/* return an error if someone bypasses the html5 validation */
 if (empty($name) or empty($email) or empty($message)) {
-    $error[] = "All fields are required.";
-}
-
-if (strlen($message) > 2000) {
-    $error[] = "Message must be fewer than 2000 characters.";
+   header('HTTP/1.1 500 Internal Server Error');
+   exit();
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $error[] = "Unrecognized email format.";
-}
-
-if (count($error) != 0) {
-    $alert = implode('\n', $error);
-    echo 'ERROR' + $alert;
+    header('HTTP/1.1 500 Internal Server Error');
     exit();
 }
 
+/* clip if suspiciously long */
 if (strlen($email) > 200) {
     $email = substr($email, 0, 40);
 }
 
 if (strlen($name) > 200) {
     $name = substr($name, 0, 40);
+}
+
+if (strlen($message) > 2000) {
+    $$message = substr($message, 0, 2000);
 }
 
 require 'PHPMailerAutoload.php';
@@ -43,8 +41,8 @@ $mail->Username = 'jasonbrazeal.com@gmail.com'; // SMTP username
 $mail->Password = '<gmail_password>'; // SMTP password
 $mail->SMTPSecure = 'tls'; // Enable encryption, 'ssl' also accepted
 
-$mail->From = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
-$mail->FromName = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
+$mail->From = $email;
+$mail->FromName = $name;
 $mail->addAddress('jsonbrazeal@gmail.com');
 
 $mail->WordWrap = 50; // Set word wrap to 50 characters
@@ -53,7 +51,7 @@ $mail->WordWrap = 50; // Set word wrap to 50 characters
 // $mail->isHTML(true); // Set email format to HTML
 
 $mail->Subject = 'message from jasonbrazeal.com';
-$mail->Body = filter_var($_POST["message"], FILTER_SANITIZE_STRING);
+$mail->Body = $message;
 // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 if(!$mail->send()) {

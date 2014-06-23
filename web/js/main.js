@@ -50,10 +50,6 @@ $(document).ready(function() {
             beforeSend: function(){
             },
             success: function(data){
-                if (data.substr(0,5) == 'ERROR') {
-                    data = data.substr(5);
-                    alert(data);
-                } else {
                     alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
                     $('#name, #email, #message').val('');
                     $.scrollTo($('#top'), {duration: 2000});
