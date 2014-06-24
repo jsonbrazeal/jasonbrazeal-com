@@ -6,13 +6,15 @@ if (!empty($_POST)) {
     $email = $_POST["email"];
 }
 
-/* return an error if someone bypasses the html5 validation */
+/* return an error if someone gets past the html5 validation */
 if (empty($name) or empty($email) or empty($message)) {
+   error_log('Error: $name, $email, and/or $message empty');
    header('HTTP/1.1 500 Internal Server Error');
    exit();
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    error_log('Error: $email failed FILTER_VALIDATE_EMAIL');
     header('HTTP/1.1 500 Internal Server Error');
     exit();
 }
@@ -42,7 +44,7 @@ $mail->Password = '<gmail_password>'; // SMTP password
 $mail->SMTPSecure = 'tls'; // Enable encryption, 'ssl' also accepted
 
 $mail->From = $email;
-$mail->FromName = $name;
+//$mail->FromName = $name;
 $mail->addAddress('jsonbrazeal@gmail.com');
 
 $mail->WordWrap = 50; // Set word wrap to 50 characters
@@ -51,7 +53,7 @@ $mail->WordWrap = 50; // Set word wrap to 50 characters
 // $mail->isHTML(true); // Set email format to HTML
 
 $mail->Subject = 'message from jasonbrazeal.com';
-$mail->Body = $message;
+$mail->Body = 'message from' . $name . '\n' . $message;
 // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 if(!$mail->send()) {

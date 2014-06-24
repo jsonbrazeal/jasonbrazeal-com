@@ -53,7 +53,6 @@ $(document).ready(function() {
                     alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
                     $('#name, #email, #message').val('');
                     $.scrollTo($('#top'), {duration: 2000});
-                }
             }, /* success */
             error: function(){
                 alert('The was an error submitting the form, and your message was not sent. You can try it again or just email me directly at jsonbrazeal@gmail.com\n-Jason');
