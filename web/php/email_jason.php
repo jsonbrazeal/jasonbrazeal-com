@@ -2,7 +2,7 @@
 /* validate form */
 if (!empty($_POST)) {
     $message = filter_var($_POST["message"], FILTER_SANITIZE_STRING);
-    $name = $_POST["name"];
+    $name = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
     $email = $_POST["email"];
 }
 
@@ -44,7 +44,7 @@ $mail->Password = '<gmail_password>'; // SMTP password
 $mail->SMTPSecure = 'tls'; // Enable encryption, 'ssl' also accepted
 
 $mail->From = $email;
-//$mail->FromName = $name;
+$mail->FromName = $name;
 $mail->addAddress('jsonbrazeal@gmail.com');
 
 $mail->WordWrap = 50; // Set word wrap to 50 characters
@@ -53,7 +53,7 @@ $mail->WordWrap = 50; // Set word wrap to 50 characters
 // $mail->isHTML(true); // Set email format to HTML
 
 $mail->Subject = 'message from jasonbrazeal.com';
-$mail->Body = 'message from' . $name . '\n' . $message;
+$mail->Body = 'message from ' . $name . "\n" . $message;
 // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 if(!$mail->send()) {
