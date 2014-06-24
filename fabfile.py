@@ -18,9 +18,9 @@ WEB_ROOT = '/opt/jasonbrazeal.com/web'
 REPO_URL = 'https://github.com/jsonbrazeal/jasonbrazeal-com.git'
 BLOG_REPO_URL = 'https://github.com/jsonbrazeal/jasonbrazeal-com-blog.git'
 WP_HOME = '/opt/jasonbrazeal.com/web/blog'
-SERVER_IP_DEV = '107.170.56.244'
+SERVER_IP_DEV = ''
 HOSTNAME_DEV = 'dev.jasonbrazeal.com'
-SERVER_IP_WEB1 = ''
+SERVER_IP_WEB1 = '107.170.246.58'
 HOSTNAME_WEB1 = 'web1.jasonbrazeal.com'
 ADMIN_EMAIL = 'jsonbrazeal@gmail.com'
 ADMIN_NAME = 'Jason Brazeal'
@@ -56,7 +56,7 @@ def dev():
 
 @task
 def dev_setup():
-    '''Initial provisioning of server requires root login to the standard SSh port 22.
+    '''Standard SSH port must be used during initial provisioning.
     '''
     env.user = 'root'
     env.hosts = [SERVER_IP_DEV]
@@ -81,9 +81,9 @@ def web1_setup():
 @task
 @get_secrets
 def new_server():
-    execute(dev_setup)
+    execute(web1_setup)
     execute(provision_do)
-    execute(dev)
+    execute(web1)
     execute(setup_git_do)
     execute(deploy_php_config)
     execute(setup_mysql)
