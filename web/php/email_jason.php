@@ -29,7 +29,7 @@ if (strlen($name) > 200) {
 }
 
 if (strlen($message) > 1000) {
-    $$message = substr($message, 0, 1000);
+    $message = substr($message, 0, 1000);
 }
 
 require 'PHPMailerAutoload.php';
@@ -53,7 +53,7 @@ $mail->WordWrap = 50; // Set word wrap to 50 characters
 // $mail->isHTML(true); // Set email format to HTML
 
 $mail->Subject = 'message from jasonbrazeal.com';
-$mail->Body = 'message from ' . $name . "\n" . $message;
+$mail->Body = 'message from ' . $name . ":\n" . $message;
 // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 if(!$mail->send()) {
