@@ -55,7 +55,9 @@ $(document).ready(function() {
                     $.scrollTo($('#top'), {duration: 2000});
             }, /* success */
             error: function(){
-                alert('The was an error submitting the form, and your message was not sent. You can try it again or just email me directly at jsonbrazeal@gmail.com\n-Jason');
+                u = 'jsonbrazeal';
+                d = 'gmail.com';
+                alert('The was an error submitting the form, and your message was not sent. You can try it again or just email me directly at ' + u + '@' + d + '\n-Jason');
             }, /* error */
             complete: function(){
             } /* complete */
