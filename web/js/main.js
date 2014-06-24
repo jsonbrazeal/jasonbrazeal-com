@@ -7,7 +7,7 @@ $(document).ready(function() {
             data: '',
             dataType: 'html',
             beforeSend: function(){
-                $('.loader').show();
+                $('#article_loader').show();
             },
             success: function(data){
                 setTimeout(function(){
@@ -22,7 +22,7 @@ $(document).ready(function() {
             }, /* error */
             complete: function(){
                 setTimeout(function(){
-                    $('.loader').hide();
+                    $('#article_loader').hide();
                 }, 2000); /* set timeout */
             } /* complete */
         }); /* ajax call */
@@ -48,13 +48,16 @@ $(document).ready(function() {
             data: $('#contact_form').serialize(),
             dataType: 'text',
             beforeSend: function(){
+                $('#form_loader').show();
             },
             success: function(data){
-                    alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
-                    $('#name, #email, #message').val('');
-                    $.scrollTo($('#top'), {duration: 2000});
+                $('#form_loader').hide();
+                alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
+                $('#name, #email, #message').val('');
+                $.scrollTo($('#top'), {duration: 2000});
             }, /* success */
             error: function(){
+                $('#form_loader').hide();
                 u = 'jsonbrazeal';
                 d = 'gmail.com';
                 alert('The was an error submitting the form, and your message was not sent. You can try it again or just email me directly at ' + u + '@' + d + '\n-Jason');

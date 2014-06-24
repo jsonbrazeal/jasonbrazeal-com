@@ -376,16 +376,16 @@ article p {
     vertical-align: top;
 }
 
-.loader {
+#article_loader {
     display: block;
     margin: 2em auto;
 }
 
-.loader p {
+#article_loader p {
     padding-left: 3em;
 }
 
-.loader img {
+#article_loader img {
     display: block;
     margin: 0 auto;
 }
@@ -452,6 +452,13 @@ textarea {
 label {
     vertical-align: top;
     display: inline-block;
+}
+
+#form_loader {
+    display: none;
+    position: absolute;
+    left: 46%;
+    z-index: 4;
 }
 
 footer {
