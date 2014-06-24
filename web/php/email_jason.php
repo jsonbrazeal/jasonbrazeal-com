@@ -28,8 +28,8 @@ if (strlen($name) > 200) {
     $name = substr($name, 0, 40);
 }
 
-if (strlen($message) > 2000) {
-    $$message = substr($message, 0, 2000);
+if (strlen($message) > 1000) {
+    $$message = substr($message, 0, 1000);
 }
 
 require 'PHPMailerAutoload.php';
