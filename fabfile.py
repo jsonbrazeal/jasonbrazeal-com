@@ -28,23 +28,24 @@ ADMIN_NAME = 'Jason Brazeal'
 ################################# Decorators #################################
 
 def get_secrets(func):
-    global SECRETS
-    try:
-        local('hdiutil attach -stdinpass -mountpoint "$PWD/secrets" ' + SECRETS_DMG)
-        with open('secrets/secrets.json') as file:
-            SECRETS = json.load(file)
-    except:
-        sys.exit('Secrets file unavailable. Could not open ' + SECRETS_DMG)
-    try:
-        local('hdiutil detach "$PWD/secrets"')
-    except:
-        sys.exit('Could not close ' + SECRETS_DMG)
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        global SECRETS
-        func(*args, **kwargs)
-        del SECRETS
-    return wrapper
+    pass
+    # global SECRETS
+    # try:
+    #     local('hdiutil attach -stdinpass -mountpoint "$PWD/secrets" ' + SECRETS_DMG)
+    #     with open('secrets/secrets.json') as file:
+    #         SECRETS = json.load(file)
+    # except:
+    #     sys.exit('Secrets file unavailable. Could not open ' + SECRETS_DMG)
+    # try:
+    #     local('hdiutil detach "$PWD/secrets"')
+    # except:
+    #     sys.exit('Could not close ' + SECRETS_DMG)
+    # @wraps(func)
+    # def wrapper(*args, **kwargs):
+    #     global SECRETS
+    #     func(*args, **kwargs)
+    #     del SECRETS
+    # return wrapper
 
 ############################# Environment Setters #############################
 
