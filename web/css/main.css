@@ -411,6 +411,12 @@ body a {
     text-decoration: none;
 }
 
+/* .formfield is used to hide honeypot fields from users */
+.formfield {
+    display: none !important;
+    visibility: hidden;
+}
+
 form {
     font-family: 'Comfortaa', Verdana, Helvetica, sans-serif;
     font-weight: 300;

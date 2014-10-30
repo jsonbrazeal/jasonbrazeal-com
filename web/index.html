@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/modernizr-2.8.2.custom.js"></script>
+        <script src="js/md5.min.js"></script>
 
         <!-- Google Universal Analytics -->
         <script>
@@ -128,20 +129,20 @@
         <img src="img/form_loader.gif" alt="animated loading spinner from http://www.chimply.com" id="form_loader">
 
         <form id="contact_form" method="post" action="php/email_jason.php">
-            <p class="name">
+            <p>
               <label for="name">name</label>
               <input name="name" type="text" id="name" maxlength="40" required>
             </p>
-            <p class="email">
+            <p>
               <label for="email">email</label>
               <input name="email" type="email" id="email" maxlength="40" required>
             </p>
-            <p class="text">
+            <p>
               <label for="message">message</label>
               <textarea name="message" id="message" required></textarea>
             </p>
-            <p class="submit">
-              <input type="submit" value="submit" id="submit_message">
+            <p>
+              <input type="submit" value="submit">
             </p>
         </form>
 

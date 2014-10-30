@@ -40,6 +40,63 @@ $(document).ready(function() {
         $(this).next().next().slideToggle();
     });
 
+    $.get('http://jsonip.com', function (resp) {
+        var ip =  resp.ip;
+        var timestamp = String($.now());
+        var secretKey = 'AzL#gT;z@p6ffL+:|)K/9(zd-s%VOA>j``m4>Ej*6p!-3)sVwG}^w|BI]$KY`ZNr';
+        var hash = md5(ip + secretKey + timestamp);
+        var hashIndex = Math.floor(Math.random() * $('#contact_form').children().length);
+
+        // insert hash field randomly in form and add hash
+        if (Math.floor(Math.random()*2)) {
+            $('#contact_form').children().eq(hashIndex).after('<input type="hidden" value="hash" id="phone">');
+        }
+        else {
+            $('#contact_form').children().eq(hashIndex).before('<input type="hidden" value="hash" id="email">');
+        }
+        $('#hash').val(hash);
+
+        var messageField = md5(hash + secretKey + 'message')
+        var nameField = md5(hash + secretKey + 'name')
+        var emailField = md5(hash + secretKey + 'email')
+        var submitField = md5(hash + secretKey + 'submit')
+
+        //put names in place
+
+        injectHoneypots()
+    });
+
+    function injectHoneypots(){
+        var honeypots = ['message', 'name', 'email']
+
+        honeypots.forEach(function(name) {
+
+            // figure out type
+            switch(name) {
+                case 'message':
+                    type = 'text'
+                    break;
+                case 'name':
+                    type = 'text'
+                    break;
+                case 'email':
+                    type = 'email'
+                    break;
+                default:
+                    type = 'text'
+            }
+
+            var honeypotIndex = Math.floor(Math.random() * $('#contact_form').children().length);
+
+            if (Math.floor(Math.random()*2)) {
+                $('#contact_form').children().eq(honeypotIndex).after('<input type="' + type + '" id="' + name + '" name="' + name + '" class="formfield">');
+            }
+            else {
+                $('#contact_form').children().eq(honeypotIndex).before('<input type="' + type + '" id="' + name + '" name="' + name + '" class="formfield">');
+            }
+        });
+    } /* injectHoneypots function */
+
     $('#contact_form').submit(function(e) {
         var formURL = $(this).attr("action");
         $.ajax({
@@ -58,7 +115,7 @@ $(document).ready(function() {
             }, /* success */
             error: function(){
                 $('#form_loader').hide();
-                u = 'jsonbrazeal';
+                u = 'jasonbrazeal.com';
                 d = 'gmail.com';
                 alert('The was an error submitting the form, and your message was not sent. You can try it again or just email me directly at ' + u + '@' + d + '\n-Jason');
             }, /* error */
