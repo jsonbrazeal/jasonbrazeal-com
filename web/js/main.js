@@ -40,28 +40,55 @@ $(document).ready(function() {
         $(this).next().next().slideToggle();
     });
 
+    // the honeypot form security stuff start with a request to get the ip address of the client; this should be changed so the form security doesn't rely on the request being successful
     $.get('http://jsonip.com', function (resp) {
         var ip =  resp.ip;
-        var timestamp = String($.now());
         var secretKey = 'AzL#gT;z@p6ffL+:|)K/9(zd-s%VOA>j``m4>Ej*6p!-3)sVwG}^w|BI]$KY`ZNr';
+
+        var timestamp = String($.now());
+        var timestampIndex = Math.floor(Math.random() * $('#contact_form').children().length);
+
+        // insert timestamp field randomly in form and add timestamp
+        if (Math.floor(Math.random()*2)) {
+            $('#contact_form').children().eq(timestampIndex).after('<p><label for="address" class="formfield">address</label><input type="hidden" value="timestamp" id="address" name="address"></p>');
+        }
+        else {
+            $('#contact_form').children().eq(timestampIndex).before('<p><label for="address" class="formfield">address</label><input type="hidden" value="timestamp" id="address" name="address"></p>');
+        }
+        $('#address').val(timestamp);
+
         var hash = md5(ip + secretKey + timestamp);
         var hashIndex = Math.floor(Math.random() * $('#contact_form').children().length);
 
         // insert hash field randomly in form and add hash
         if (Math.floor(Math.random()*2)) {
-            $('#contact_form').children().eq(hashIndex).after('<input type="hidden" value="hash" id="phone">');
+            $('#contact_form').children().eq(hashIndex).after('<p><label for="phone" class="formfield">phone</label><input type="hidden" value="hash" id="phone" name="phone"></p>');
         }
         else {
-            $('#contact_form').children().eq(hashIndex).before('<input type="hidden" value="hash" id="email">');
+            $('#contact_form').children().eq(hashIndex).before('<p><label for="phone" class="formfield">phone</label><input type="hidden" value="hash" id="phone" name="phone"></p>');
         }
-        $('#hash').val(hash);
+        $('#phone').val(hash);
 
         var messageField = md5(hash + secretKey + 'message')
         var nameField = md5(hash + secretKey + 'name')
         var emailField = md5(hash + secretKey + 'email')
         var submitField = md5(hash + secretKey + 'submit')
 
-        //put names in place
+        $('#message').attr('name', messageField);
+        $('#message').prev().attr('for', messageField);
+        $('#message').attr('id', messageField);
+
+        $('#name').attr('name', nameField);
+        $('#name').prev().attr('for', nameField);
+        $('#name').attr('id', nameField);
+
+        $('#email').attr('name', emailField);
+        $('#email').prev().attr('for', emailField);
+        $('#email').attr('id', emailField);
+
+        $('#submit').attr('name', submitField);
+        $('#submit').prev().attr('for', submitField);
+        $('#submit').attr('id', submitField);
 
         injectHoneypots()
     });
@@ -89,16 +116,16 @@ $(document).ready(function() {
             var honeypotIndex = Math.floor(Math.random() * $('#contact_form').children().length);
 
             if (Math.floor(Math.random()*2)) {
-                $('#contact_form').children().eq(honeypotIndex).after('<input type="' + type + '" id="' + name + '" name="' + name + '" class="formfield">');
+                $('#contact_form').children().eq(honeypotIndex).after('<p><label for="' + name + '" class="formfield">' + name + '</label><input type="' + type + '" id="' + name + '" name="' + name + '" class="formfield"></p>');
             }
             else {
-                $('#contact_form').children().eq(honeypotIndex).before('<input type="' + type + '" id="' + name + '" name="' + name + '" class="formfield">');
+                $('#contact_form').children().eq(honeypotIndex).before('<p><label for="' + name + '" class="formfield">' + name + '</label><input type="' + type + '" id="' + name + '" name="' + name + '" class="formfield"></p>');
             }
         });
     } /* injectHoneypots function */
 
     $('#contact_form').submit(function(e) {
-        var formURL = $(this).attr("action");
+        var formURL = $(this).attr('action');
         $.ajax({
             url: '../' + formURL,
             type: 'POST',
