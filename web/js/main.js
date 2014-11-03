@@ -40,27 +40,17 @@ $(document).ready(function() {
         $(this).next().next().slideToggle();
     });
 
-    // the honeypot form security stuff start with a request to get the ip address of the client; this should be changed so the form security doesn't rely on the request being successful
+    /* the honeypot form security stuff start with a request to get the ip address of the client; this should be changed so the form security doesn't rely on the request being successful */
     $.get('http://jsonip.com', function (resp) {
         var ip =  resp.ip;
+
+        /* not making this global so it's not available in the console. */
         var secretKey = 'AzL#gT;z@p6ffL+:|)K/9(zd-s%VOA>j``m4>Ej*6p!-3)sVwG}^w|BI]$KY`ZNr';
-
-        var timestamp = String($.now());
-        var timestampIndex = Math.floor(Math.random() * $('#contact_form').children().length);
-
-        // insert timestamp field randomly in form and add timestamp
-        if (Math.floor(Math.random()*2)) {
-            $('#contact_form').children().eq(timestampIndex).after('<p><label for="address" class="formfield">address</label><input type="hidden" value="timestamp" id="address" name="address"></p>');
-        }
-        else {
-            $('#contact_form').children().eq(timestampIndex).before('<p><label for="address" class="formfield">address</label><input type="hidden" value="timestamp" id="address" name="address"></p>');
-        }
-        $('#address').val(timestamp);
 
         var hash = md5(ip + secretKey + timestamp);
         var hashIndex = Math.floor(Math.random() * $('#contact_form').children().length);
 
-        // insert hash field randomly in form and add hash
+        /* insert hash field randomly in form and add hash, disguised as a phone number */
         if (Math.floor(Math.random()*2)) {
             $('#contact_form').children().eq(hashIndex).after('<p><label for="phone" class="formfield">phone</label><input type="hidden" value="hash" id="phone" name="phone"></p>');
         }
@@ -68,6 +58,18 @@ $(document).ready(function() {
             $('#contact_form').children().eq(hashIndex).before('<p><label for="phone" class="formfield">phone</label><input type="hidden" value="hash" id="phone" name="phone"></p>');
         }
         $('#phone').val(hash);
+
+        var timestamp = String($.now());
+        var timestampIndex = Math.floor(Math.random() * $('#contact_form').children().length);
+        var timestampField = md5(hash + secretKey + 'timestamp')
+
+        /* insert hashed timestamp field randomly in form */
+        if (Math.floor(Math.random()*2)) {
+            $('#contact_form').children().eq(timestampIndex).after('<p><label for="' + timestampField + '" class="formfield">' + timestampField + '</label><input type="hidden" value="' + timestamp + '" id="' + timestampField + '" name="' + timestampField + '"></p>');
+        }
+        else {
+            $('#contact_form').children().eq(timestampIndex).before('<p><label for="' + timestampField + '" class="formfield">' + timestampField + '</label><input type="hidden" value="' + timestamp + '" id="' + timestampField + '" name="' + timestampField + '"></p>');
+        }
 
         var messageField = md5(hash + secretKey + 'message')
         var nameField = md5(hash + secretKey + 'name')
@@ -86,31 +88,27 @@ $(document).ready(function() {
         $('#email').prev().attr('for', emailField);
         $('#email').attr('id', emailField);
 
-        $('#submit').attr('name', submitField);
-        $('#submit').prev().attr('for', submitField);
-        $('#submit').attr('id', submitField);
-
-        injectHoneypots()
+        injectHoneypots();
     });
 
     function injectHoneypots(){
-        var honeypots = ['message', 'name', 'email']
+        var honeypots = ['message', 'name', 'email'];
 
         honeypots.forEach(function(name) {
 
-            // figure out type
+            /* figure out type */
             switch(name) {
                 case 'message':
-                    type = 'text'
+                    type = 'text';
                     break;
                 case 'name':
-                    type = 'text'
+                    type = 'text';
                     break;
                 case 'email':
-                    type = 'email'
+                    type = 'email';
                     break;
                 default:
-                    type = 'text'
+                    type = 'text';
             }
 
             var honeypotIndex = Math.floor(Math.random() * $('#contact_form').children().length);
@@ -125,32 +123,106 @@ $(document).ready(function() {
     } /* injectHoneypots function */
 
     $('#contact_form').submit(function(e) {
-        var formURL = $(this).attr('action');
-        $.ajax({
-            url: '../' + formURL,
-            type: 'POST',
-            data: $('#contact_form').serialize(),
-            dataType: 'text',
-            beforeSend: function(){
-                $('#form_loader').show();
-            },
-            success: function(data){
-                $('#form_loader').hide();
-                alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
-                $('#name, #email, #message').val('');
-                $.scrollTo($('#top'), {duration: 2000});
-            }, /* success */
-            error: function(){
-                $('#form_loader').hide();
-                u = 'jasonbrazeal.com';
-                d = 'gmail.com';
-                alert('The was an error submitting the form, and your message was not sent. You can try it again or just email me directly at ' + u + '@' + d + '\n-Jason');
-            }, /* error */
-            complete: function(){
-            } /* complete */
-        }); /* ajax call */
-        e.preventDefault(); // to stop default action
-    });
+        $('#form_loader').show();
+
+        /* this will be set to true if any of security features are tripped */
+        spam = false;
+
+        /* check honeypot fields */
+        if (($('#email').val() != '') || ($('#message').val() != '') || ($('#name').val() != '')) {
+            spam = true;
+        }
+
+        /* get hash (posing as phone) */
+        hash = $('#phone').val();
+
+        /* same key as above function. not making this global so it's not available in the console. */
+        var secretKey = 'AzL#gT;z@p6ffL+:|)K/9(zd-s%VOA>j``m4>Ej*6p!-3)sVwG}^w|BI]$KY`ZNr';
+
+        /* get hashed fields */
+        var timestampField = md5(hash + secretKey + 'timestamp');
+        timestamp = $('#'+ timestampField).val();
+
+        /* debug */
+        // var messageField = md5(hash + secretKey + 'message');
+        // var nameField = md5(hash + secretKey + 'name');
+        // var emailField = md5(hash + secretKey + 'email');
+        // message = $('#'+ messageField).val();
+        // name = $('#'+ nameField).val();
+        // email = $('#'+ emailField).val();
+        // console.log('message=' + message);
+        // console.log('name=' +  name);
+        // console.log('email=' + email);
+
+        /* check timestamp; users have 15 minutes to fill out the form from page load */
+        try {
+            formLoadTimeDate = new Date(parseInt(timestamp));
+            formLoadTime = formLoadTimeDate.getTime();
+            submitTime = $.now();
+            submitByTime = formLoadTimeDate.setMinutes(formLoadTimeDate.getMinutes() + 15);
+
+            if (formLoadTime > submitTime) {
+                throw 'timestampInFutureException';
+            }
+
+            if (submitTime > submitByTime) {
+                throw 'tooMuchTimeElapsedException';
+            }
+        }
+        catch (e) {
+            spam = true;
+            console.log(e);
+            /* debug */
+            // console.log('formLoadTime=' + formLoadTime);
+            // console.log('submitTime=' + submitTime);
+            // console.log('submitByTime=' + submitByTime);
+        }
+
+        /* only make ajax call if all the security test above passed */
+        if (spam) {
+            showErrorPopup();
+            console.log('reloading...');
+            location.reload();
+        }
+        else {
+            var formURL = $(this).attr('action');
+            $.ajax({
+                url: '../' + formURL,
+                type: 'POST',
+                data: {
+                    message: $('#'+ md5(hash + secretKey + 'message')).val(),
+                    name: $('#'+ md5(hash + secretKey + 'name')).val(),
+                    email: $('#'+ md5(hash + secretKey + 'email')).val()
+                },
+                dataType: 'text',
+                beforeSend: function(){
+                    // console.log('sending this ' + this.type + ' data: ');
+                    // console.log(this.data);
+                },
+                success: function(data){
+                    $('#form_loader').hide();
+                    alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
+                    $('#'+ md5(hash + secretKey + 'message')).val('');
+                    $('#'+ md5(hash + secretKey + 'name')).val('');
+                    $('#'+ md5(hash + secretKey + 'email')).val('');
+                    $.scrollTo($('#top'), {duration: 2000});
+                }, /* success */
+                error: function(){
+                    $('#form_loader').hide();
+                    showErrorPopup();
+                }, /* error */
+                complete: function(){
+                } /* complete */
+            }); /* ajax call */
+        } /* else (no spam, do ajax call) */
+        e.preventDefault(); /* to stop default action */
+    }); /* #contact_form submit button */
+
+    function showErrorPopup(){
+        u = 'jasonbrazeal.com';
+        d = 'gmail.com';
+        alert('The was an error submitting the form, and your message was not sent. You can refresh the page and try it again or just email me directly at ' + u + '@' + d + '\n-Jason');
+    }
 
     $(window).scroll(function(e){
       parallax();
