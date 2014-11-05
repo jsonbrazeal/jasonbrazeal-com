@@ -45,9 +45,9 @@ $(document).ready(function() {
         var ip =  resp.ip;
 
         /* not making this global so it's not available in the console. */
-        var secretKey = 'AzL#gT;z@p6ffL+:|)K/9(zd-s%VOA>j``m4>Ej*6p!-3)sVwG}^w|BI]$KY`ZNr';
+        var da_key = 'AzL#gT;z@p6ffL+:|)K/9(zd-s%VOA>j``m4>Ej*6p!-3)sVwG}^w|BI]$KY`ZNr';
 
-        var hash = md5(ip + secretKey + timestamp);
+        var hash = md5(ip + da_key + timestamp);
         var hashIndex = Math.floor(Math.random() * $('#contact_form').children().length);
 
         /* insert hash field randomly in form and add hash, disguised as a phone number */
@@ -61,7 +61,7 @@ $(document).ready(function() {
 
         var timestamp = String($.now());
         var timestampIndex = Math.floor(Math.random() * $('#contact_form').children().length);
-        var timestampField = md5(hash + secretKey + 'timestamp')
+        var timestampField = md5(hash + da_key + 'timestamp')
 
         /* insert hashed timestamp field randomly in form */
         if (Math.floor(Math.random()*2)) {
@@ -71,10 +71,10 @@ $(document).ready(function() {
             $('#contact_form').children().eq(timestampIndex).before('<p class="formfield"><label for="' + timestampField + '">' + timestampField + '</label><input type="hidden" value="' + timestamp + '" id="' + timestampField + '" name="' + timestampField + '"></p>');
         }
 
-        var messageField = md5(hash + secretKey + 'message')
-        var nameField = md5(hash + secretKey + 'name')
-        var emailField = md5(hash + secretKey + 'email')
-        var submitField = md5(hash + secretKey + 'submit')
+        var messageField = md5(hash + da_key + 'message')
+        var nameField = md5(hash + da_key + 'name')
+        var emailField = md5(hash + da_key + 'email')
+        var submitField = md5(hash + da_key + 'submit')
 
         $('#message').attr('name', messageField);
         $('#message').prev().attr('for', messageField);
@@ -96,28 +96,13 @@ $(document).ready(function() {
 
         honeypots.forEach(function(name) {
 
-            /* figure out type */
-            switch(name) {
-                case 'message':
-                    type = 'text';
-                    break;
-                case 'name':
-                    type = 'text';
-                    break;
-                case 'email':
-                    type = 'email';
-                    break;
-                default:
-                    type = 'text';
-            }
-
             var honeypotIndex = Math.floor(Math.random() * $('#contact_form').children().length);
 
             if (Math.floor(Math.random()*2)) {
-                $('#contact_form').children().eq(honeypotIndex).after('<p class="formfield"><label for="' + name + '">' + name + '</label><input type="' + type + '" id="' + name + '" name="' + name + '"></p>');
+                $('#contact_form').children().eq(honeypotIndex).after('<p class="formfield"><label for="' + name + '">' + name + '</label><input type="text" id="' + name + '" name="' + name + '"></p>');
             }
             else {
-                $('#contact_form').children().eq(honeypotIndex).before('<p class="formfield"><label for="' + name + '">' + name + '</label><input type="' + type + '" id="' + name + '" name="' + name + '"></p>');
+                $('#contact_form').children().eq(honeypotIndex).before('<p class="formfield"><label for="' + name + '">' + name + '</label><input type="text" id="' + name + '" name="' + name + '"></p>');
             }
         });
     } /* injectHoneypots function */
@@ -129,7 +114,7 @@ $(document).ready(function() {
         spam = false;
 
         /* check honeypot fields */
-        if (($('#email').val() != '') || ($('#message').val() != '') || ($('#name').val() != '')) {
+        if ($('#email').val() || $('#message').val() || $('#name').val()) {
             spam = true;
         }
 
@@ -137,16 +122,16 @@ $(document).ready(function() {
         hash = $('#phone').val();
 
         /* same key as above function. not making this global so it's not available in the console. */
-        var secretKey = 'AzL#gT;z@p6ffL+:|)K/9(zd-s%VOA>j``m4>Ej*6p!-3)sVwG}^w|BI]$KY`ZNr';
+        var da_key = 'AzL#gT;z@p6ffL+:|)K/9(zd-s%VOA>j``m4>Ej*6p!-3)sVwG}^w|BI]$KY`ZNr';
 
         /* get hashed fields */
-        var timestampField = md5(hash + secretKey + 'timestamp');
+        var timestampField = md5(hash + da_key + 'timestamp');
         timestamp = $('#'+ timestampField).val();
 
         /* debug */
-        // var messageField = md5(hash + secretKey + 'message');
-        // var nameField = md5(hash + secretKey + 'name');
-        // var emailField = md5(hash + secretKey + 'email');
+        // var messageField = md5(hash + da_key + 'message');
+        // var nameField = md5(hash + da_key + 'name');
+        // var emailField = md5(hash + da_key + 'email');
         // message = $('#'+ messageField).val();
         // name = $('#'+ nameField).val();
         // email = $('#'+ emailField).val();
@@ -178,7 +163,7 @@ $(document).ready(function() {
             // console.log('submitByTime=' + submitByTime);
         }
 
-        /* only make ajax call if all the security test above passed */
+        /* only make ajax call if all the security tests above passed */
         if (spam) {
             showErrorPopup();
             console.log('reloading...');
@@ -190,9 +175,9 @@ $(document).ready(function() {
                 url: '../' + formURL,
                 type: 'POST',
                 data: {
-                    message: $('#'+ md5(hash + secretKey + 'message')).val(),
-                    name: $('#'+ md5(hash + secretKey + 'name')).val(),
-                    email: $('#'+ md5(hash + secretKey + 'email')).val()
+                    message: $('#'+ md5(hash + da_key + 'message')).val(),
+                    name: $('#'+ md5(hash + da_key + 'name')).val(),
+                    email: $('#'+ md5(hash + da_key + 'email')).val()
                 },
                 dataType: 'text',
                 beforeSend: function(){
@@ -202,9 +187,9 @@ $(document).ready(function() {
                 success: function(data){
                     $('#form_loader').hide();
                     alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
-                    $('#'+ md5(hash + secretKey + 'message')).val('');
-                    $('#'+ md5(hash + secretKey + 'name')).val('');
-                    $('#'+ md5(hash + secretKey + 'email')).val('');
+                    $('#'+ md5(hash + da_key + 'message')).val('');
+                    $('#'+ md5(hash + da_key + 'name')).val('');
+                    $('#'+ md5(hash + da_key + 'email')).val('');
                     $.scrollTo($('#top'), {duration: 2000});
                 }, /* success */
                 error: function(){
