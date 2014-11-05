@@ -15,8 +15,6 @@ if !(empty($honeypot_name) and empty($honeypot_email) and empty($honeypot_messag
    header('HTTP/1.1 500 Internal Server Error');
    exit();
 }
-}
-
 
 /* return an error if someone gets past the html5 validation */
 if (empty($name) or empty($email) or empty($message)) {
