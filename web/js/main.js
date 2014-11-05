@@ -52,10 +52,10 @@ $(document).ready(function() {
 
         /* insert hash field randomly in form and add hash, disguised as a phone number */
         if (Math.floor(Math.random()*2)) {
-            $('#contact_form').children().eq(hashIndex).after('<p><label for="phone" class="formfield">phone</label><input type="hidden" value="hash" id="phone" name="phone"></p>');
+            $('#contact_form').children().eq(hashIndex).after('<p class="formfield"><label for="phone">phone</label><input type="hidden" value="hash" id="phone" name="phone"></p>');
         }
         else {
-            $('#contact_form').children().eq(hashIndex).before('<p><label for="phone" class="formfield">phone</label><input type="hidden" value="hash" id="phone" name="phone"></p>');
+            $('#contact_form').children().eq(hashIndex).before('<p class="formfield"><label for="phone">phone</label><input type="hidden" value="hash" id="phone" name="phone"></p>');
         }
         $('#phone').val(hash);
 
@@ -65,10 +65,10 @@ $(document).ready(function() {
 
         /* insert hashed timestamp field randomly in form */
         if (Math.floor(Math.random()*2)) {
-            $('#contact_form').children().eq(timestampIndex).after('<p><label for="' + timestampField + '" class="formfield">' + timestampField + '</label><input type="hidden" value="' + timestamp + '" id="' + timestampField + '" name="' + timestampField + '"></p>');
+            $('#contact_form').children().eq(timestampIndex).after('<p class="formfield"><label for="' + timestampField + '">' + timestampField + '</label><input type="hidden" value="' + timestamp + '" id="' + timestampField + '" name="' + timestampField + '"></p>');
         }
         else {
-            $('#contact_form').children().eq(timestampIndex).before('<p><label for="' + timestampField + '" class="formfield">' + timestampField + '</label><input type="hidden" value="' + timestamp + '" id="' + timestampField + '" name="' + timestampField + '"></p>');
+            $('#contact_form').children().eq(timestampIndex).before('<p class="formfield"><label for="' + timestampField + '">' + timestampField + '</label><input type="hidden" value="' + timestamp + '" id="' + timestampField + '" name="' + timestampField + '"></p>');
         }
 
         var messageField = md5(hash + secretKey + 'message')
@@ -114,10 +114,10 @@ $(document).ready(function() {
             var honeypotIndex = Math.floor(Math.random() * $('#contact_form').children().length);
 
             if (Math.floor(Math.random()*2)) {
-                $('#contact_form').children().eq(honeypotIndex).after('<p><label for="' + name + '" class="formfield">' + name + '</label><input type="' + type + '" id="' + name + '" name="' + name + '" class="formfield"></p>');
+                $('#contact_form').children().eq(honeypotIndex).after('<p class="formfield"><label for="' + name + '">' + name + '</label><input type="' + type + '" id="' + name + '" name="' + name + '"></p>');
             }
             else {
-                $('#contact_form').children().eq(honeypotIndex).before('<p><label for="' + name + '" class="formfield">' + name + '</label><input type="' + type + '" id="' + name + '" name="' + name + '" class="formfield"></p>');
+                $('#contact_form').children().eq(honeypotIndex).before('<p class="formfield"><label for="' + name + '">' + name + '</label><input type="' + type + '" id="' + name + '" name="' + name + '"></p>');
             }
         });
     } /* injectHoneypots function */
