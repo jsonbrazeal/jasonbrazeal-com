@@ -76,17 +76,17 @@ $(document).ready(function() {
         var emailField = md5(hash + da_key + 'email')
         var submitField = md5(hash + da_key + 'submit')
 
-        $('#message').attr('name', messageField);
-        $('#message').prev().attr('for', messageField);
-        $('#message').attr('id', messageField);
+        $('#rando1').attr('name', messageField);
+        $('#rando1').prev().attr('for', messageField);
+        $('#rando1').attr('id', messageField);
 
-        $('#name').attr('name', nameField);
-        $('#name').prev().attr('for', nameField);
-        $('#name').attr('id', nameField);
+        $('#rando2').attr('name', nameField);
+        $('#rando2').prev().attr('for', nameField);
+        $('#rando2').attr('id', nameField);
 
-        $('#email').attr('name', emailField);
-        $('#email').prev().attr('for', emailField);
-        $('#email').attr('id', emailField);
+        $('#rando3').attr('name', emailField);
+        $('#rando3').prev().attr('for', emailField);
+        $('#rando3').attr('id', emailField);
 
         injectHoneypots();
     });
@@ -177,7 +177,10 @@ $(document).ready(function() {
                 data: {
                     message: $('#'+ md5(hash + da_key + 'message')).val(),
                     name: $('#'+ md5(hash + da_key + 'name')).val(),
-                    email: $('#'+ md5(hash + da_key + 'email')).val()
+                    email: $('#'+ md5(hash + da_key + 'email')).val(),
+                    honeypot-message: $('#message')).val(),
+                    honeypot-name: $('#name')).val(),
+                    honeypot-email: $('#email')).val()
                 },
                 dataType: 'text',
                 beforeSend: function(){

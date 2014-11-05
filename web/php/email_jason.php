@@ -4,7 +4,19 @@ if (!empty($_POST)) {
     $message = filter_var($_POST["message"], FILTER_SANITIZE_STRING);
     $name = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
     $email = $_POST["email"];
+    $honeypot_message = $_POST["honeypot-message"];
+    $honeypot_name = $_POST["honeypot-name"];
+    $honeypot_email = $_POST["honeypot-email"];
 }
+
+/* return an error if honeypots are filled */
+if !(empty($honeypot_name) and empty($honeypot_email) and empty($honeypot_message)) {
+   error_log('Error: honeypot tripped');
+   header('HTTP/1.1 500 Internal Server Error');
+   exit();
+}
+}
+
 
 /* return an error if someone gets past the html5 validation */
 if (empty($name) or empty($email) or empty($message)) {
