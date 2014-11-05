@@ -71,28 +71,27 @@ $(document).ready(function() {
             $('#contact_form').children().eq(timestampIndex).before('<p class="formfield"><label for="' + timestampField + '">' + timestampField + '</label><input type="hidden" value="' + timestamp + '" id="' + timestampField + '" name="' + timestampField + '"></p>');
         }
 
-        var messageField = md5(hash + da_key + 'message')
-        var nameField = md5(hash + da_key + 'name')
-        var emailField = md5(hash + da_key + 'email')
-        var submitField = md5(hash + da_key + 'submit')
+        var nameField = md5(hash + da_key + 'name');
+        var emailField = md5(hash + da_key + 'email');
+        var messageField = md5(hash + da_key + 'message');
 
-        $('#rando1').attr('name', messageField);
-        $('#rando1').prev().attr('for', messageField);
-        $('#rando1').attr('id', messageField);
+        $('#rando1').attr('name', nameField);
+        $('#rando1').prev().attr('for', nameField);
+        $('#rando1').attr('id', nameField);
 
-        $('#rando2').attr('name', nameField);
-        $('#rando2').prev().attr('for', nameField);
-        $('#rando2').attr('id', nameField);
+        $('#rando2').attr('name', emailField);
+        $('#rando2').prev().attr('for', emailField);
+        $('#rando2').attr('id', emailField);
 
-        $('#rando3').attr('name', emailField);
-        $('#rando3').prev().attr('for', emailField);
-        $('#rando3').attr('id', emailField);
+        $('#rando3').attr('name', messageField);
+        $('#rando3').prev().attr('for', messageField);
+        $('#rando3').attr('id', messageField);
 
         injectHoneypots();
     });
 
     function injectHoneypots(){
-        var honeypots = ['message', 'name', 'email'];
+        var honeypots = ['name', 'email', 'message'];
 
         honeypots.forEach(function(name) {
 
@@ -114,7 +113,7 @@ $(document).ready(function() {
         spam = false;
 
         /* check honeypot fields */
-        if ($('#email').val() || $('#message').val() || $('#name').val()) {
+        if ($('#name').val() || $('#email').val() || $('#message').val()) {
             spam = true;
         }
 
@@ -175,12 +174,12 @@ $(document).ready(function() {
                 url: '../' + formURL,
                 type: 'POST',
                 data: {
-                    message: $('#'+ md5(hash + da_key + 'message')).val(),
                     name: $('#'+ md5(hash + da_key + 'name')).val(),
                     email: $('#'+ md5(hash + da_key + 'email')).val(),
-                    honeypot_message: $('#message').val(),
+                    message: $('#'+ md5(hash + da_key + 'message')).val(),
                     honeypot_name: $('#name').val(),
-                    honeypot_email: $('#email').val()
+                    honeypot_email: $('#email').val(),
+                    honeypot_message: $('#message').val()
                 },
                 dataType: 'text',
                 beforeSend: function(){
@@ -190,9 +189,9 @@ $(document).ready(function() {
                 success: function(data){
                     $('#form_loader').hide();
                     alert('Your message has been sent!\nI\'ll get back with you ASAP.\n-Jason');
-                    $('#'+ md5(hash + da_key + 'message')).val('');
                     $('#'+ md5(hash + da_key + 'name')).val('');
                     $('#'+ md5(hash + da_key + 'email')).val('');
+                    $('#'+ md5(hash + da_key + 'message')).val('');
                     $.scrollTo($('#top'), {duration: 2000});
                 }, /* success */
                 error: function(){

@@ -10,7 +10,7 @@ if (!empty($_POST)) {
 }
 
 /* return an error if honeypots are filled */
-if (!(empty($honeypot_name) and empty($honeypot_email) and empty($honeypot_message))) {
+if (!empty($honeypot_name) and empty($honeypot_email) and empty($honeypot_message)) {
    error_log('Error: honeypot tripped');
    header('HTTP/1.1 500 Internal Server Error');
    exit();
@@ -24,17 +24,17 @@ if (empty($name) or empty($email) or empty($message)) {
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    error_log('Error: $email failed FILTER_VALIDATE_EMAIL');
+    error_log("Error: $email failed FILTER_VALIDATE_EMAIL");
     header('HTTP/1.1 500 Internal Server Error');
     exit();
 }
 
 /* clip if suspiciously long */
-if (strlen($email) > 200) {
+if (strlen($email) > 100) {
     $email = substr($email, 0, 40);
 }
 
-if (strlen($name) > 200) {
+if (strlen($name) > 100) {
     $name = substr($name, 0, 40);
 }
 
