@@ -178,9 +178,9 @@ $(document).ready(function() {
                     message: $('#'+ md5(hash + da_key + 'message')).val(),
                     name: $('#'+ md5(hash + da_key + 'name')).val(),
                     email: $('#'+ md5(hash + da_key + 'email')).val(),
-                    honeypot-message: $('#message').val(),
-                    honeypot-name: $('#name').val(),
-                    honeypot-email: $('#email').val()
+                    honeypot_message: $('#message').val(),
+                    honeypot_name: $('#name').val(),
+                    honeypot_email: $('#email').val()
                 },
                 dataType: 'text',
                 beforeSend: function(){
