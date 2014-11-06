@@ -174,9 +174,9 @@ $(document).ready(function() {
                 url: '../' + formURL,
                 type: 'POST',
                 data: {
-                    name: $('#'+ md5(hash + da_key + 'name')).val(),
-                    email: $('#'+ md5(hash + da_key + 'email')).val(),
-                    message: $('#'+ md5(hash + da_key + 'message')).val(),
+                    ye_name: $('#'+ md5(hash + da_key + 'name')).val(),
+                    ya_email: $('#'+ md5(hash + da_key + 'email')).val(),
+                    yo_message: $('#'+ md5(hash + da_key + 'message')).val(),
                     honeypot_name: $('#name').val(),
                     honeypot_email: $('#email').val(),
                     honeypot_message: $('#message').val()

@@ -1,12 +1,12 @@
 <?php
 /* validate form */
 if (!empty($_POST)) {
-    $message = filter_var($_POST["message"], FILTER_SANITIZE_STRING);
-    $name = filter_var($_POST["name"], FILTER_SANITIZE_STRING);
-    $email = $_POST["email"];
-    $honeypot_message = $_POST["honeypot_message"];
+    $name = filter_var($_POST["ye_name"], FILTER_SANITIZE_STRING);
+    $email = $_POST["ya_email"];
+    $message = filter_var($_POST["yo_message"], FILTER_SANITIZE_STRING);
     $honeypot_name = $_POST["honeypot_name"];
     $honeypot_email = $_POST["honeypot_email"];
+    $honeypot_message = $_POST["honeypot_message"];
 }
 
 /* return an error if honeypots are filled */
@@ -38,7 +38,7 @@ if (strlen($name) > 100) {
     $name = substr($name, 0, 40);
 }
 
-if (strlen($message) > 1000) {
+if (strlen($message) > 500) {
     $message = substr($message, 0, 1000);
 }
 
@@ -55,7 +55,7 @@ $mail->SMTPSecure = 'tls'; // Enable encryption, 'ssl' also accepted
 
 $mail->From = $email;
 $mail->FromName = $name;
-$mail->addAddress('jsonbrazeal@gmail.com');
+$mail->addAddress('jasonbrazeal.com@gmail.com');
 
 $mail->WordWrap = 50; // Set word wrap to 50 characters
 // $mail->addAttachment('/var/tmp/file.tar.gz'); // Add attachments
