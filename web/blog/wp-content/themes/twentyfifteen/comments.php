@@ -20,6 +20,7 @@ if ( post_password_required() ) {
 }
 ?>
 
+<div class="separator"></div>
 <div id="comments" class="comments-area clearfix">
 
 	<?php if ( have_comments() ) : ?>
@@ -52,6 +53,8 @@ if ( post_password_required() ) {
 	?>
 		<p class="no-comments"><?php _e( 'Comments are closed.', 'twentyfifteen' ); ?></p>
 	<?php endif; ?>
+
+	<div class="separator"></div>
 
 	<?php
 		$fields =  array(
