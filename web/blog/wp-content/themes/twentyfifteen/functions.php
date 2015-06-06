@@ -255,8 +255,6 @@ function twentyfifteen_scripts() {
 		'expand'   => '<span class="screen-reader-text">' . __( 'expand child menu', 'twentyfifteen' ) . '</span>',
 		'collapse' => '<span class="screen-reader-text">' . __( 'collapse child menu', 'twentyfifteen' ) . '</span>',
 	) );
-
-    wp_enqueue_script( 'main', get_stylesheet_directory_uri() . "/js/main.js", array('jquery') );
 }
 add_action( 'wp_enqueue_scripts', 'twentyfifteen_scripts' );
 
@@ -360,4 +358,19 @@ require get_template_directory() . '/inc/customizer.php';
 // JB added
 if ( function_exists('register_sidebar')) {
     register_sidebar('search_only');
+}
+
+// Replaces the excerpt "more" text by a link
+function new_excerpt_more($more) {
+       global $post;
+    return '...<a class="moretag" href="'. get_permalink($post->ID) . '">Continue Reading</a>';
+}
+add_filter('excerpt_more', 'new_excerpt_more');
+
+
+add_action( 'wp_enqueue_scripts', 'js_enqueue' );
+
+function js_enqueue() {
+	$ss_url = get_stylesheet_directory_uri();
+  	wp_enqueue_script( 'main', "{$ss_url}/js/main.js", array('jquery') );
 }
