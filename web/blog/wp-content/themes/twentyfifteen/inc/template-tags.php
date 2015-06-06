@@ -79,9 +79,9 @@ function twentyfifteen_entry_meta() {
 			$time_string
 		);
 
-		printf( '%1$s',
-				comments_popup_link( __( 'Leave a comment', 'twentyfifteen' ), __( '1 Comment', 'twentyfifteen' ), __( '% Comments', 'twentyfifteen' ) )
-		);
+		// printf( '%1$s',
+		// 		comments_popup_link( __( 'Leave a comment', 'twentyfifteen' ), __( '1 Comment', 'twentyfifteen' ), __( '% Comments', 'twentyfifteen' ) )
+		// );
 	}
 
 	// if ( 'post' == get_post_type() ) {
