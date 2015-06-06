@@ -1,6 +1,7 @@
 (function($) {
 $(document).ready(function() {
 
+$('.comment-metadata a').click(function() { return false; });
 
 $('#up_arrow').click(function() {
     $.scrollTo($('#top'), {duration: 1000});

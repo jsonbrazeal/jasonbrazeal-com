@@ -612,3 +612,16 @@ header h1 {
 .says {
     display: none;
 }
+
+.comment-metadata a {
+    color: #222 !important;
+    cursor: text;
+}
+
+ol.comment-list {
+    list-style-type: none;
+}
+
+.comment-author b {
+    font-size: 1.5em !important;
+}
