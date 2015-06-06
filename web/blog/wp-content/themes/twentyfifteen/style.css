@@ -600,3 +600,12 @@ header h1 {
     }
 }
 
+
+/* Jason Brazeal - JB
+   upgrade to WP 4.2.2
+   6/6/15 */
+
+.screen-reader-text {
+    display: none;
+}
+
