@@ -89,10 +89,27 @@ if ( ! comments_open( $comment_post_ID ) ) {
 	do_action( 'pre_comment_on_post', $comment_post_ID );
 }
 
-$comment_author       = ( isset($_POST['author']) )  ? trim(strip_tags($_POST['author'])) : null;
-$comment_author_email = ( isset($_POST['email']) )   ? trim($_POST['email']) : null;
+/* validate form */
+if (!empty($_POST)) {
+
+    $honeypot_name = $_POST["name"];
+    $honeypot_email = $_POST["email"];
+    $honeypot_message = $_POST["message"];
+
+    /* return an error if honeypots are filled */
+	if (!empty($honeypot_name) and empty($honeypot_email) and empty($honeypot_message)) {
+	   error_log('Error: honeypot tripped');
+	   // header('HTTP/1.1 500 Internal Server Error');
+	   // exit();
+	   wp_die( __( '<strong>ERROR</strong>: Please retry your comment.' ), 500 );
+	}
+
+}
+
+$comment_author       = ( isset($_POST['rando1']) )  ? trim(strip_tags($_POST['rando1'])) : null;
+$comment_author_email = ( isset($_POST['rando2']) )   ? trim($_POST['rando2']) : null;
 $comment_author_url   = ( isset($_POST['url']) )     ? trim($_POST['url']) : null;
-$comment_content      = ( isset($_POST['comment']) ) ? trim($_POST['comment']) : null;
+$comment_content      = ( isset($_POST['rando3']) ) ? trim($_POST['rando3']) : null;
 
 // If the user is logged in
 $user = wp_get_current_user();
