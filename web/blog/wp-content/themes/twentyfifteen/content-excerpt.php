@@ -54,7 +54,7 @@
 	?>
 
 	<footer class="entry-footer">
-	<?php edit_post_link( __( 'Edit', 'twentyfifteen' ), '<span class="edit-link">', '</span>' ); ?>
+	<!-- <?php edit_post_link( __( 'Edit', 'twentyfifteen' ), '<span class="edit-link">', '</span>' ); ?> -->
 	</footer><!-- .entry-footer -->
 
 </article><!-- #post-## -->

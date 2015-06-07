@@ -8,6 +8,7 @@
  * @subpackage Twenty_Fifteen
  * @since Twenty Fifteen 1.0
  */
+get_sidebar();
 ?>
 
 <section class="no-results not-found">
@@ -23,8 +24,8 @@
 
 		<?php elseif ( is_search() ) : ?>
 
-			<p><?php _e( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'twentyfifteen' ); ?></p>
-			<?php get_search_form(); ?>
+			<p><?php _e( 'Sorry, but nothing matched your search terms. Please try again with different keywords.', 'twentyfifteen' ); ?></p>
+			<!-- <?php get_search_form(); ?> -->
 
 		<?php else : ?>
 

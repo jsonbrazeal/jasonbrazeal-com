@@ -379,3 +379,14 @@ function js_enqueue() {
 	$ss_url = get_stylesheet_directory_uri();
   	wp_enqueue_script( 'main', "{$ss_url}/js/main.js", array('jquery') );
 }
+
+add_filter( 'get_the_archive_title', function ( $title ) {
+
+	$title_array = explode(" ", $title);
+	$tag = $title_array[1];
+    if( is_tag() ) {
+        $new_title = 'Tag: <span class=search-term-jb>' . $tag . '</span>';
+    }
+
+    return $new_title;
+});

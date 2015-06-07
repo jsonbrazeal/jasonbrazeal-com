@@ -647,13 +647,25 @@ ol.comment-list {
     margin: 0;
 }
 
-.search-results .page-title {
+.search-results .page-title, .archive.tag .page-title {
     color: #222 !important;
     margin-left: 25%;
 }
 
-.search-results .page-title .search-termmm {
+.search-results .page-title .search-term-jb, .archive.tag .page-title .search-term-jb {
   font-family: 'Comfortaa', Verdana, Helvetica, sans-serif;
   font-weight: bold;
   color: #3d8899;
+}
+
+#tag_cloud-2 {
+    margin-bottom: 5em;
+}
+
+.search-no-results section.no-results {
+    padding-left: 20%;
+}
+
+.error404 section.not-found {
+    padding-left: 20%;
 }
