@@ -333,11 +333,6 @@ function twentyfifteen_search_form_modify( $html ) {
 }
 add_filter( 'get_search_form', 'twentyfifteen_search_form_modify' );
 
-function twentyfifteen_search_form_modify_placeholder( $html ) {
-	return str_replace( 'placeholder', 'data-trash', $html );
-}
-add_filter( 'get_search_form', 'twentyfifteen_search_form_modify_placeholder' );
-
 /**
  * Implement the Custom Header feature.
  *
@@ -358,35 +353,3 @@ require get_template_directory() . '/inc/template-tags.php';
  * @since Twenty Fifteen 1.0
  */
 require get_template_directory() . '/inc/customizer.php';
-
-// Jason Brazeal
-// JB added
-if ( function_exists('register_sidebar')) {
-    register_sidebar('search_only');
-}
-
-// Replaces the excerpt "more" text by a link
-function new_excerpt_more($more) {
-       global $post;
-    return '...<a class="moretag" href="'. get_permalink($post->ID) . '">Continue Reading</a>';
-}
-add_filter('excerpt_more', 'new_excerpt_more');
-
-
-add_action( 'wp_enqueue_scripts', 'js_enqueue' );
-
-function js_enqueue() {
-	$ss_url = get_stylesheet_directory_uri();
-  	wp_enqueue_script( 'main', "{$ss_url}/js/main.js", array('jquery') );
-}
-
-add_filter( 'get_the_archive_title', function ( $title ) {
-
-	$title_array = explode(" ", $title);
-	$tag = $title_array[1];
-    if( is_tag() ) {
-        $new_title = 'Tag: <span class=search-term-jb>' . $tag . '</span>';
-    }
-
-    return $new_title;
-});

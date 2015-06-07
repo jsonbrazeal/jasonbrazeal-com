@@ -20,7 +20,7 @@ get_header(); ?>
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 					<nav id="image-navigation" class="navigation image-navigation">
-						<div class="nav-links">
+						<div class="nav-links clearfix">
 							<div class="nav-previous"><?php previous_image_link( false, __( 'Previous Image', 'twentyfifteen' ) ); ?></div><div class="nav-next"><?php next_image_link( false, __( 'Next Image', 'twentyfifteen' ) ); ?></div>
 						</div><!-- .nav-links -->
 					</nav><!-- .image-navigation -->

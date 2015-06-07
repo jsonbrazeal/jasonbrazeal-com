@@ -2,44 +2,33 @@
 /**
  * The template for displaying the footer
  *
- * Contains footer content and the closing of the #main and #page div elements.
+ * Contains the closing of the "site-content" div and all content after.
  *
  * @package WordPress
- * @subpackage Twenty_Twelve
- * @since Twenty Twelve 1.0
+ * @subpackage Twenty_Fifteen
+ * @since Twenty Fifteen 1.0
  */
 ?>
 
-    <div class="separator"></div>
+	</div><!-- .site-content -->
 
-    </div><!-- #main .wrapper -->
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+			<?php
+				/**
+				 * Fires before the Twenty Fifteen footer text for footer customization.
+				 *
+				 * @since Twenty Fifteen 1.0
+				 */
+				do_action( 'twentyfifteen_credits' );
+			?>
+			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'twentyfifteen' ) ); ?>"><?php printf( __( 'Proudly powered by %s', 'twentyfifteen' ), 'WordPress' ); ?></a>
+		</div><!-- .site-info -->
+	</footer><!-- .site-footer -->
 
-      </div><!-- #page -->
-
-        <footer id="page_footer">
-            <div id="copyright">
-                <small>Copyright © Jason Brazeal</small>
-                <img class="logo" src="<?php echo get_stylesheet_directory_uri() ?>/img/logo.png" />
-            </div>
-        </footer>
-
-        <div id="footer_links">
-            <a href="https://github.com/jsonbrazeal">
-                <span id="github" class="sink"></span>
-            </a>
-            <a href="https://twitter.com/jsonbrazeal">
-                <span id="twitter" class="sink"></span>
-            </a>
-            <a href="https://linkedin.com/in/jsonbrazeal">
-                <span id="linkedin" class="sink"></span>
-            </a>
-
-            <span id="up_arrow" class="sink"></span>
-
-        </div>
-
-        <div class="thin_strip"></div>
+</div><!-- .site -->
 
 <?php wp_footer(); ?>
+
 </body>
 </html>

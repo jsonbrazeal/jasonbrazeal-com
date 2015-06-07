@@ -24,6 +24,12 @@
 				the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' );
 			endif;
 		?>
+		<?php twentyfifteen_entry_meta();
+			  echo '<span class="comments-link">';
+			  comments_popup_link( __( '', 'twentyfifteen' ), __( '1 Comment', 'twentyfifteen' ), __( '% Comments', 'twentyfifteen' ) );
+  			  echo '</span>';
+  		?>
+
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
@@ -45,16 +51,19 @@
 		?>
 	</div><!-- .entry-content -->
 
-	<?php
-		// Author bio.
-		if ( is_single() && get_the_author_meta( 'description' ) ) :
-			get_template_part( 'author-bio' );
-		endif;
-	?>
-
 	<footer class="entry-footer">
-		<?php twentyfifteen_entry_meta(); ?>
-		<?php edit_post_link( __( 'Edit', 'twentyfifteen' ), '<span class="edit-link">', '</span>' ); ?>
+	<!-- <?php twentyfifteen_entry_meta(); ?> -->
+     <!-- <?php edit_post_link( __( 'Edit', 'twentyfifteen' ), '<span class="edit-link">', '</span>' ); ?> -->
+		<?php // Previous/next post navigation.
+			the_post_navigation( array(
+				'next_text' => '<span class="meta-nav" aria-hidden="true">' . __( '→', 'twentyfifteen' ) . '</span> ' .
+					'<span class="screen-reader-text">' . __( 'Next post:', 'twentyfifteen' ) . '</span> ' .
+					'<span class="post-title">%title</span>',
+				'prev_text' => '<span class="meta-nav" aria-hidden="true">' . __( '←', 'twentyfifteen' ) . '</span> ' .
+					'<span class="screen-reader-text">' . __( 'Previous post:', 'twentyfifteen' ) . '</span> ' .
+					'<span class="post-title">%title</span>',
+			) );
+		?>
 	</footer><!-- .entry-footer -->
 
 </article><!-- #post-## -->

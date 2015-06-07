@@ -20,13 +20,12 @@ if ( post_password_required() ) {
 }
 ?>
 
-<div class="separator"></div>
-<div id="comments" class="comments-area clearfix">
+<div id="comments" class="comments-area">
 
 	<?php if ( have_comments() ) : ?>
 		<h2 class="comments-title">
 			<?php
-				printf( _nx( '1 comment', '%1$s comments', get_comments_number(), 'comments title', 'twentyfifteen' ),
+				printf( _nx( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'comments title', 'twentyfifteen' ),
 					number_format_i18n( get_comments_number() ), get_the_title() );
 			?>
 		</h2>
@@ -44,42 +43,16 @@ if ( post_password_required() ) {
 		</ol><!-- .comment-list -->
 
 		<?php twentyfifteen_comment_nav(); ?>
-		<div class="separator"></div>
+
 	<?php endif; // have_comments() ?>
 
-	<!-- if comments are closed, don't display anything
 	<?php
 		// If comments are closed and there are comments, let's leave a little note, shall we?
 		if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
 	?>
 		<p class="no-comments"><?php _e( 'Comments are closed.', 'twentyfifteen' ); ?></p>
-		<div class="separator"></div>
-	<?php endif; ?> -->
+	<?php endif; ?>
 
-	<?php
-		$fields =  array(
-		  'author' =>
-		    '<div><label for="author">' . __( 'Name', 'domainreference' ) . '</label> ' .
-		    ( $req ? '' : '' ) .
-		    '<input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) .
-		    '" size="30" maxlength="30"' . ' /></div>',
-
-		  'email' =>
-		    '<div><label for="email">' . __( 'Email', 'domainreference' ) . '</label> ' .
-		    ( $req ? '' : '' ) .
-		    '<input id="email" name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) .
-		    '" size="30" maxlength="40"' . ' /></div>',
-		);
-		$args = array(
-			'fields' => $fields,
-			'comment_notes_before' => '<p class="comment-notes">' . __( 'Your email address will not be published. All fields are required.' ) . '</p>',
-			'comment_notes_after' => '',
-			'label_submit' => 'Submit',
-			'comment_field' =>
-		  	'<div><label for="comment">' . _x( 'Comment', 'noun' ) . '</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></div>'
-		  	);
-
-
-		comment_form($args); ?>
+	<?php comment_form(); ?>
 
 </div><!-- .comments-area -->
