@@ -1,6 +1,8 @@
 (function($) {
 $(document).ready(function() {
 
+$('.entry-footer .nav-links').addClass('clearfix');
+
 $('.comment-metadata a').click(function() { return false; });
 
 $('#up_arrow').click(function() {

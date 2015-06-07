@@ -21,7 +21,7 @@ function twentyfifteen_comment_nav() {
 	?>
 	<nav class="navigation comment-navigation" role="navigation">
 		<h2 class="screen-reader-text"><?php _e( 'Comment navigation', 'twentyfifteen' ); ?></h2>
-		<div class="nav-links">
+		<div class="nav-links clearfix">
 			<?php
 				if ( $prev_link = get_previous_comments_link( __( 'Older Comments', 'twentyfifteen' ) ) ) :
 					printf( '<div class="nav-previous">%s</div>', $prev_link );

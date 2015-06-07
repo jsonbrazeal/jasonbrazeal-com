@@ -188,13 +188,14 @@ aside.widget:last-child {
     margin-left: 30%;
 }
 
-.widget input[type="text"], .widget input[type="search"] {
+.widget input[type="text"] {
     padding: .5em;
     width: 75%;
 }
 
-input[type="search"] {
-
+.widget input[type="search"] {
+    padding: .5em;
+    width: 80%;
 }
 
 #search-3 {
@@ -233,13 +234,13 @@ input[type="text"], textarea, input[type="search"] {
 }
 
 nav {
-    width: 50%;
-    margin: 2em auto;
+    width: 100%;
+    margin-top: 4em;
 }
 
 .nav-next {
     float: right;
-    margin-top: -2em;
+    /*width: 50%;*/
 }
 
 .nav-next .meta-nav {
@@ -249,7 +250,7 @@ nav {
 
 .nav-previous {
     float: left;
-    margin-top: -2em;
+    /*width: 50%;*/
 }
 
 ul {
@@ -389,7 +390,7 @@ header h1 {
 }
 
 #text-3 {
-    font-size: .8em;
+    font-size: .9em;
 }
 
 .single [role=banner] .logo {
@@ -639,4 +640,19 @@ ol.comment-list {
 
 .comment-author b {
     font-size: 1.5em !important;
+}
+
+.entry-title {
+    margin: 0;
+}
+
+.search-results .page-title {
+    color: #222 !important;
+    margin-left: 25%;
+}
+
+.search-results .page-title .search-termmm {
+  font-family: 'Comfortaa', Verdana, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #3d8899;
 }
