@@ -188,9 +188,13 @@ aside.widget:last-child {
     margin-left: 30%;
 }
 
-.widget input[type="text"] {
+.widget input[type="text"], .widget input[type="search"] {
     padding: .5em;
     width: 75%;
+}
+
+input[type="search"] {
+
 }
 
 #search-3 {
@@ -212,12 +216,12 @@ input[type="submit"]:hover {
     color: #f2f1e7;
 }
 
-input[type="text"]:hover, input[type="text"]:focus, input[type="submit"]:focus, textarea:hover, textarea:focus {
+input[type="text"]:hover, input[type="text"]:focus, input[type="submit"]:focus, textarea:hover, textarea:focus, input[type="search"]:hover {
     outline: none;
     box-shadow: 0 0 10px #874341;
 }
 
-input[type="text"], textarea {
+input[type="text"], textarea, input[type="search"] {
     border-radius: 5px;
     border: 2px solid #3d8899;
     background: #f2f1e7;

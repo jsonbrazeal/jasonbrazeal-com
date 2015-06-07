@@ -333,6 +333,11 @@ function twentyfifteen_search_form_modify( $html ) {
 }
 add_filter( 'get_search_form', 'twentyfifteen_search_form_modify' );
 
+function twentyfifteen_search_form_modify_placeholder( $html ) {
+	return str_replace( 'placeholder', 'data-trash', $html );
+}
+add_filter( 'get_search_form', 'twentyfifteen_search_form_modify_placeholder' );
+
 /**
  * Implement the Custom Header feature.
  *
