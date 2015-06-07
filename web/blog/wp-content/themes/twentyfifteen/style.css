@@ -186,6 +186,7 @@ aside.widget:last-child {
 
 .widget input[type="submit"] {
     margin-left: 30%;
+    margin-top: 1em;
 }
 
 .widget input[type="text"] {

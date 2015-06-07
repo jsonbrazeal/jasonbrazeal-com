@@ -9,6 +9,7 @@ $('#up_arrow').click(function() {
     $.scrollTo($('#top'), {duration: 1000});
 });
 
+$('.comment-metadata .edit-link').remove();
 
 /*
   $("#facebook").click(function() {
