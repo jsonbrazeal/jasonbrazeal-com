@@ -97,7 +97,7 @@ if (!empty($_POST)) {
     $honeypot_message = $_POST["message"];
 
     /* return an error if honeypots are filled */
-	if (!empty($honeypot_name) and empty($honeypot_email) and empty($honeypot_message)) {
+	if (!(empty($honeypot_name) and empty($honeypot_email) and empty($honeypot_message))) {
 	   error_log('Error: honeypot tripped');
 	   // header('HTTP/1.1 500 Internal Server Error');
 	   // exit();
@@ -106,10 +106,10 @@ if (!empty($_POST)) {
 
 }
 
-$comment_author       = ( isset($_POST['rando1']) )  ? trim(strip_tags($_POST['rando1'])) : null;
-$comment_author_email = ( isset($_POST['rando2']) )   ? trim($_POST['rando2']) : null;
+$comment_author       = ( isset($_POST['randomfieldname1']) )  ? trim(strip_tags($_POST['randomfieldname1'])) : null;
+$comment_author_email = ( isset($_POST['randomfieldname2']) )   ? trim($_POST['randomfieldname2']) : null;
 $comment_author_url   = ( isset($_POST['url']) )     ? trim($_POST['url']) : null;
-$comment_content      = ( isset($_POST['rando3']) ) ? trim($_POST['rando3']) : null;
+$comment_content      = ( isset($_POST['randomfieldname3']) ) ? trim($_POST['randomfieldname3']) : null;
 
 // If the user is logged in
 $user = wp_get_current_user();
