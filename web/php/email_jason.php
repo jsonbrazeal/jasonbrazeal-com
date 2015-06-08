@@ -10,7 +10,7 @@ if (!empty($_POST)) {
 }
 
 /* return an error if honeypots are filled */
-if (!empty($honeypot_name) and empty($honeypot_email) and empty($honeypot_message)) {
+if (!(empty($honeypot_name) and empty($honeypot_email) and empty($honeypot_message))) {
    error_log('Error: honeypot tripped');
    header('HTTP/1.1 500 Internal Server Error');
    exit();
