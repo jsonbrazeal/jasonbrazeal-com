@@ -1021,7 +1021,7 @@ function trackback_rdf( $deprecated = '' ) {
 	the_permalink();
 	echo '"'."\n";
 	echo '    dc:title="'.str_replace('--', '&#x2d;&#x2d;', wptexturize(strip_tags(get_the_title()))).'"'."\n";
-	echo '    trackback:ping="'.get_trackback_url().'"'." />\n";
+	echo '    trackback:ping=""'." />\n";
 	echo '</rdf:RDF>';
 }
 
