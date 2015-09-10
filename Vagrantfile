@@ -39,7 +39,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # your network.
   # config.vm.network :public_network, ip: "192.168.1.99"
   # config.vm.network "public_network", ip: "192.168.1.99", bridge:"en1: Wi-Fi (AirPort)"
-  config.vm.network "public_network", :type => "dhcp", bridge:"en1: Wi-Fi (AirPort)"
+  # config.vm.network "public_network", :type => "dhcp", bridge:"en1: Wi-Fi (AirPort)"
+  config.vm.network "public_network", :type => "dhcp"
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
