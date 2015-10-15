@@ -231,7 +231,7 @@ $(document).ready(function() {
         // $('#page_header h1').css('color','rgba(243,242,231,' + (1-(scrolled*0.002))+')');
         // $('#page_header h1').css('color','rgba(243,242,231,' + (1-(scrolled*0.005))+')');
         // $('#page_header h1').css('font-size', 64+scrolled*.8+'px');
-        $('#page_header h1').css('letter-spacing', scrolled*.2+'px');
+        $('#page_header h1').css('letter-spacing', scrolled*.15+'px');
 
     } /* parallax function */
 

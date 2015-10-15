@@ -608,9 +608,143 @@ footer {
    Modify as content requires.
    ========================================================================== */
 
-@media only screen and (min-width: 35em) {
+@media only screen and (max-width: 700px) {
     /* Style adjustments for viewports that meet the condition */
+
+header h1 {
+    white-space: normal;
 }
+
+#intro {
+    width: 15em;
+    margin: 3em 0 0 33%;
+    display: block;
+}
+
+#intro span {
+    display: block;
+}
+
+#intro p {
+    display: block;
+}
+
+#me {
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 2em 3em 0 35%;
+    vertical-align: top;
+}
+
+#tagline {
+    width: 10em;
+    margin: 2em 0 2em 35%;
+    display: block;
+}
+
+#work_blurb {
+    width: 325px;
+    display: inline-block;
+    margin: 1em 0 0 15%;
+}
+
+#tools, #projects {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#tools {
+    margin: 2em 0 0 20%;
+    float: none;
+    width: 20%;
+}
+
+#projects {
+    margin: 1em 0 1em 15%;
+    float: none;
+    width: 25%;
+}
+
+#copyright .logo {
+    display: none;
+}
+
+#up_arrow {
+    right: 15%;
+}
+
+} /* @media only screen and (max-width: 700px) */
+
+
+@media only screen and (min-width: 700px) and (max-width: 1000px) {
+    /* Style adjustments for viewports that meet the condition */
+
+header h1 {
+    white-space: auto;
+}
+
+#intro {
+    width: 15em;
+    margin: 3em 0 0 40%;
+    display: block;
+}
+
+#intro span {
+    display: block;
+}
+
+#intro p {
+    display: block;
+}
+
+#me {
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 2em 3em 0 42%;
+    vertical-align: top;
+}
+
+#tagline {
+    width: 10em;
+    margin: 2em 0 2em 42%;
+    display: block;
+}
+
+#work_blurb {
+    width: 325px;
+    display: inline-block;
+    margin: 1em 0 0 34%;
+}
+
+#tools, #projects {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#tools {
+    margin: 2em 0 0 40%;
+    float: none;
+    width: 20%;
+}
+
+#projects {
+    margin: 1em 0 1em 33%;
+    float: none;
+    width: 25%;
+}
+
+} /* @media only screen and (max-width: 1000px) */
+
+
+
+
+
+
+
+
+
 
 @media print,
        (-o-min-device-pixel-ratio: 5/4),
