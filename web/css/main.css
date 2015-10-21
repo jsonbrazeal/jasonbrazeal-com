@@ -675,6 +675,10 @@ header h1 {
     right: 15%;
 }
 
+#page_header h2 {
+    display: none !important;
+}
+
 } /* @media only screen and (max-width: 700px) */
 
 
