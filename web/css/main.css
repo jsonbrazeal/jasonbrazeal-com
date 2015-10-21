@@ -284,6 +284,7 @@ h2 {
 
 #projects {
     float: left;
+    margin-left: 1em;
     padding: 0 2em 0 6.5em;
     width: 25%;
     background: url('../img/fi-laptop.svg') no-repeat;
@@ -677,7 +678,7 @@ header h1 {
 } /* @media only screen and (max-width: 700px) */
 
 
-@media only screen and (min-width: 700px) and (max-width: 1000px) {
+@media only screen and (min-width: 700px) and (max-width: 1035px) {
     /* Style adjustments for viewports that meet the condition */
 
 header h1 {
