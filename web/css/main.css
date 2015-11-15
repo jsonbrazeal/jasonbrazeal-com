@@ -650,7 +650,7 @@ header h1 {
 #work_blurb {
     max-width: 325px;
     display: inline-block;
-    margin: 1em 0 0 0;
+    margin: 1em 0 0 1.5em;
 }
 
 #tools, #projects {
@@ -681,6 +681,16 @@ header h1 {
 
 #page_header h2 {
     display: none !important;
+}
+
+#blog_articles {
+    max-width: 325px;
+    display: block;
+    padding-left: 1em;
+}
+
+#blog_articles article {
+    margin: 0 0 1em 0;
 }
 
 } /* @media only screen and (max-width: 700px) */
@@ -742,6 +752,11 @@ header h1 {
     margin: 1em 0 1em 33%;
     float: none;
     width: 25%;
+}
+
+#blog_articles {
+    max-width: 325px;
+    margin-left: 26%;
 }
 
 } /* @media only screen and (max-width: 1000px) */
