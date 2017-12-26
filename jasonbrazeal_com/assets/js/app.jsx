@@ -1,4 +1,22 @@
 import React from 'react';
+import css from '../css/main.css';
+import loader from '../css/loader.css';
+
+
+
+//// import 1
+// import { App } from './app.jsx'; - in main.js
+export class App extends React.Component {
+   render() {
+      return (
+        <div>
+        <h1 className={css.blue}>Hello, World from app.jsx :)</h1>
+        <div className={loader.loader}></div>
+        </div>
+      );
+   }
+}
+
 
 // //// import 1
 // // import { App } from './app.jsx'; - in main.js
@@ -78,114 +96,114 @@ import React from 'react';
 // ];
 
 
-export class NoteSearch extends React.Component {
+// export class NoteSearch extends React.Component {
 
-  constructor(props) {
-    super(props);
-    // set up "this" for the handle change function
-    this.handleChange = this.handleChange.bind(this);
-    // this.componentDidMount = this.componentDidMount.bind(this);
-    this.state = {
-      searchString: '',
-      notes: [],
-      matches: [],
-      url: window.location.pathname
-    };
-  }
+//   constructor(props) {
+//     super(props);
+//     // set up "this" for the handle change function
+//     this.handleChange = this.handleChange.bind(this);
+//     // this.componentDidMount = this.componentDidMount.bind(this);
+//     this.state = {
+//       searchString: '',
+//       notes: [],
+//       matches: [],
+//       url: window.location.pathname
+//     };
+//   }
 
-   componentWillMount() {
-    this.fetchNotes();
-   }
+//    componentWillMount() {
+//     this.fetchNotes();
+//    }
 
-  // componentDidMount() {
-  // }
+//   // componentDidMount() {
+//   // }
 
-  // componentWillReceiveProps: function(nextProps){
-  // }
+//   // componentWillReceiveProps: function(nextProps){
+//   // }
 
-   // componentWillUnmount() {
-   // }
+//    // componentWillUnmount() {
+//    // }
 
-  fetchNotes() {
-    fetch(this.state.url, {
-      headers:  {
-        'Accept': 'application/json',
-        'Cache-Control': 'no-cache'
-      }}).then((response) => {
-      if(response.ok) {
-        return response.json();
-      }
-      throw new Error('response status: ' + response.status);
-    }).then((data) => { // if you use a regular function call instead of the arrow,
-      this.setState({ // "this" won't work correctly
-        notes: data['notes'],
-        matches: data['notes'],
-        pathLinks: data['path_links']
-      });
-    }).catch((error) => {
-      console.log(error)
-    });
-  }
+//   fetchNotes() {
+//     fetch(this.state.url, {
+//       headers:  {
+//         'Accept': 'application/json',
+//         'Cache-Control': 'no-cache'
+//       }}).then((response) => {
+//       if(response.ok) {
+//         return response.json();
+//       }
+//       throw new Error('response status: ' + response.status);
+//     }).then((data) => { // if you use a regular function call instead of the arrow,
+//       this.setState({ // "this" won't work correctly
+//         notes: data['notes'],
+//         matches: data['notes'],
+//         pathLinks: data['path_links']
+//       });
+//     }).catch((error) => {
+//       console.log(error)
+//     });
+//   }
 
-  // path_links = {}
-  //   for i, d in enumerate(relpath.split('/')):
-  //       path_links[d] = ''.join([f'/{folder}' for folder in relpath.split('/')[:(i + 1)]])
+//   // path_links = {}
+//   //   for i, d in enumerate(relpath.split('/')):
+//   //       path_links[d] = ''.join([f'/{folder}' for folder in relpath.split('/')[:(i + 1)]])
 
-  // sets state, triggers render method
-  handleChange(event){
-    var searchString = event.target.value.trim().toLowerCase();
-    // grab value from input box
-    this.setState({
-      searchString: searchString,
-    });
-    // filter notes list by value from input box
-    if(searchString.length > 0){
-      var matches = this.state.notes.filter((note) => {
-        return note.name.toLowerCase().match(searchString);
-      });
-      this.setState({
-        matches: matches
-      });
-    } else {
-      this.setState({
-        matches: this.state.notes
-      });
-    }
-  }
+//   // sets state, triggers render method
+//   handleChange(event){
+//     var searchString = event.target.value.trim().toLowerCase();
+//     // grab value from input box
+//     this.setState({
+//       searchString: searchString,
+//     });
+//     // filter notes list by value from input box
+//     if(searchString.length > 0){
+//       var matches = this.state.notes.filter((note) => {
+//         return note.name.toLowerCase().match(searchString);
+//       });
+//       this.setState({
+//         matches: matches
+//       });
+//     } else {
+//       this.setState({
+//         matches: this.state.notes
+//       });
+//     }
+//   }
 
-  render() {
-    if (!this.state.notes.length) {
-      return null
-    } else {
-      return (
-        <div>
-        <h2>
-          <a href="/notes">notes</a>
-          { window.location.pathname.replace(/(^\/)|(\/$)/g, "").split('/').map((dir, i) => {
-              if (dir == 'notes') {
-                return null
-              } else {
-                return (
-                  <span key={ i }>/<a href={ `/notes${this.state.pathLinks[dir]}` }>{ dir }</a></span>
-                )
-              }
-          }) }
-        </h2>
-          <input id="search" value={this.state.searchString} onChange={this.handleChange} type="search" placeholder="Search" autoComplete="off" />
-          <ul id="files" className="view-tiles">
-            { this.state.matches.map((note, i) => {
-              return (
-                <li key={ i }>
-                  <a href={ `${this.state.url}${note.name}` } title={ `${note.name}` } className={ note.type == 'dir' && "bg-info" }>
-                    <span className="name">{ note.name }</span>
-                  </a>
-                </li>
-              );
-            }) }
-          </ul>
-        </div>
-      )
-    }
-  }
+//   render() {
+//     if (!this.state.notes.length) {
+//       return null
+//     } else {
+//       return (
+//         <div>
+//         <h2>
+//           <a href="/notes">notes</a>
+//           { window.location.pathname.replace(/(^\/)|(\/$)/g, "").split('/').map((dir, i) => {
+//               if (dir == 'notes') {
+//                 return null
+//               } else {
+//                 return (
+//                   <span key={ i }>/<a href={ `/notes${this.state.pathLinks[dir]}` }>{ dir }</a></span>
+//                 )
+//               }
+//           }) }
+//         </h2>
+//           <input id="search" value={this.state.searchString} onChange={this.handleChange} type="search" placeholder="Search" autoComplete="off" />
+//           <ul id="files" className={styles['view-tiles']}>
+//             { this.state.matches.map((note, i) => {
+//               return (
+//                 <li key={ i }>
+//                   <a href={ `${this.state.url}${note.name}` } title={ `${note.name}` } className={ note.type == 'dir' && styles['bg-info'] }>
+//                     <span className={styles.name}>{ note.name }</span>
+//                   </a>
+//                 </li>
+//               );
+//             }) }
+//           </ul>
+//         </div>
+//       )
+//     }
+//   }
 
-};
+// };

@@ -1,6 +1,6 @@
 // import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap/dist/css/bootstrap.css';
-import '../css/main.css';
+// import '../css/main.css';
 // import '../css/pygments.css';
 import { render } from 'react-dom';
 import React from 'react';
@@ -33,17 +33,12 @@ import React from 'react';
 // );
 
 //////////////////// react example 3
-import { NoteSearch } from './app.jsx'
+import { NoteSearch, App } from './app.jsx'
 
 render(
-  <NoteSearch />,
+  <App />,
   document.getElementById('content')
 );
-
-// render(
-// <NoteSearch />,
-// document.getElementById('wrapper')
-// );
 
 //////////////////// other module example
 

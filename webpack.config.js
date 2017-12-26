@@ -33,16 +33,11 @@ module.exports = {
         }
       }
     },
-
     resolve: {
         extensions: ['.js', '.jsx']
     },
     module: {
         rules: [
-            // {
-            //     test: /\.js$/i, loader: 'script-loader',
-            //     exclude: /node_modules/
-            // },
             {
                 test: /\.js[x]?$/,
                 loader: 'babel-loader',
@@ -59,48 +54,6 @@ module.exports = {
                 ],
             },
             {
-                test: /\.less$/i,
-                use: [
-                  {
-                    loader: 'style-loader',
-                  },
-                  {
-                    loader: 'css-loader',
-                  },
-                  {
-                    loader: 'less-loader',
-                  },
-                ],
-            },
-            {
-              test: /\.(scss)$/,
-              use: [{
-                loader: 'style-loader', // inject CSS to page
-              }, {
-                loader: 'css-loader', // translates CSS into CommonJS modules
-              }, {
-                loader: 'postcss-loader', // Run post css actions
-                options: {
-                  plugins: function () { // post css plugins, can be exported to postcss.config.js
-                    return [
-                      require('precss'),
-                      require('autoprefixer')
-                    ];
-                  }
-                }
-              }, {
-                loader: 'sass-loader' // compiles SASS to CSS
-              }]
-            },
-            {
-                test: /\.sass$/i,
-                use: [
-                  {
-                    loader: 'style!css!sass?sourceMap'
-                  }
-                ],
-            },
-            {
                 test: /\.woff$/,
                 loader: "url-loader?limit=10000&mimetype=application/font-woff&name=[name]_[hash:8].[ext]"
             }, {
@@ -112,27 +65,24 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader'
-                })
-                // use: [
-                //   {
-                //     loader: 'style-loader',
-                //   },
-                //   {
-                //     loader: 'css-loader',
-                //   },
-                // ],
+                use: [
+                  {
+                    loader: 'style-loader',
+                  },
+                  {
+                    loader: 'css-loader',
+                    options: {
+                      modules: true,
+                      importLoaders: 1,
+                      localIdentName: '[name]__[local]___[hash:base64:5]'
+                    }
+                  },
+                ],
             },
 
         ]
     },
     plugins: [
-        new ExtractTextPlugin({
-            filename: '[name].[chunkhash].css',
-            allChunks: true
-        }),
         new ManifestRevisionPlugin(path.join('build', 'manifest.json'), {
             rootAssetPath: rootAssetPath,
             ignorePaths: ['/css', '/js']

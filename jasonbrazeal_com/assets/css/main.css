@@ -19,212 +19,23 @@ body a:hover {
   color: #555;
 }
 
-#title-logo {
-  display: inline-block;
-}
-
-#note-svg {
-  display: inline-block;
-  height: 100px;
-}
-
-#title-bar {
-  background-color: #d9edf7;
-  margin-top: 100px;
-  padding: 40px;
-  height: 150px;
-  border-top: 1px solid #a8a6a6;
-  border-bottom: 1px solid #a8a6a6;
-}
-
 h1 {
   display: inline-block;
   vertical-align: top;
 }
 
-#home-link {
-  height: 50px;
-  position: fixed;
-  top: 10px;
-  left: 20px;
-}
-
-ul li {
-  list-style: none;
-}
-ul li:hover {
-  cursor: pointer;
-  color: #2e2e2e;
-}
-p {
-  line-height: 1.5;
-}
-#files {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-#files li {
-  float: left;
-  width: 30%;
-  line-height: 25px;
-  margin: 1px;
-}
-#files li a {
-  display: block;
-  height: 25px;
-  border: 1px solid transparent;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  overflow: hidden;
-  white-space: nowrap;
-}
-#files li a:focus,
-#files li a:hover {
-  background: rgba(255,255,255,0.65);
-  border: 1px solid #ececec;
-}
-#files li a.highlight {
-  -webkit-transition: background .4s ease-in-out;
-  background: #ffff4f;
-  border-color: #E9DC51;
-}
-#search {
-  display: block;
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 90px;
-  -webkit-transition: width ease 0.2s, opacity ease 0.4s;
-  -moz-transition: width ease 0.2s, opacity ease 0.4s;
-  -webkit-border-radius: 32px;
-  -moz-border-radius: 32px;
-  -webkit-box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.25), inset 0px 1px 3px rgba(0, 0, 0, 0.7), 0px 1px 0px rgba(255, 255, 255, 0.03);
-  -moz-box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.25), inset 0px 1px 3px rgba(0, 0, 0, 0.7), 0px 1px 0px rgba(255, 255, 255, 0.03);
-  -webkit-font-smoothing: antialiased;
-  text-align: left;
-  font: 13px "Helvetica Neue", Arial, sans-serif;
-  padding: 4px 10px;
-  border: none;
-  background: transparent;
-  margin-bottom: 0;
-  outline: none;
-  opacity: 0.7;
-  color: #888;
-}
-#search:focus {
-  width: 120px;
-  opacity: 1.0;
-}
-
-/*views*/
-#files span {
-  display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-indent: 10px;
+.blue {
+  color: #346D98;
 }
 
 /*mobile*/
 @media (max-width: 768px) {
   body {
-    font-size: 13px;
-    line-height: 16px;
-    padding: 0;
+    background-color: #303030;
   }
-  #search {
-    position: static;
-    width: 100%;
-    font-size: 2em;
-    line-height: 1.8em;
-    text-indent: 10px;
-    border: 0;
-    border-radius: 0;
-    padding: 10px 0;
-    margin: 0;
-  }
-  #search:focus {
-    width: 100%;
-    border: 0;
-    opacity: 1;
-  }
-  .directory h1 {
-    font-size: 2em;
-    line-height: 1.5em;
-    color: #fff;
-    background: #000;
-    padding: 15px 10px;
-    margin: 0;
-  }
-  #files {
-    border-top: 1px solid #cacaca;
-  }
-  #files li {
-    float: none;
-    width: auto !important;
-    display: block;
-    border-bottom: 1px solid #cacaca;
-    font-size: 2em;
-    line-height: 1.2em;
-    text-indent: 0;
-    margin: 0;
-  }
-  #files li:nth-child(odd) {
-    background: #e0e0e0;
-  }
-  #files li a {
-    height: auto;
-    border: 0;
-    border-radius: 0;
-    padding: 15px 10px;
-  }
-  #files li a:focus,
-  #files li a:hover {
-    border: 0;
-  }
-  #files .header,
-  #files .size,
-  #files .date {
-    display: none !important;
-  }
-  #files .name {
-    float: none;
-    display: inline-block;
-    width: 100%;
-    text-indent: 0;
-    background-position: 0 50%;
-  }
-  #files .icon .name {
-    text-indent: 41px;
+
+  .blue {
+    color: #1177dd;
   }
 }
 
-/* ReactCSSTransitionGroup stuff */
-
-/*.transition-enter {
-  opacity: 0.01;
-}
-
-.transition-enter.transition-enter-active {
-  opacity: 1;
-  transition: opacity 1s ease-in;
-}
-
-.transition-leave {
-  opacity: 1;
-}
-
-.transition-leave.transition-leave-active {
-  opacity: 0.01;
-  transition: opacity 1s ease-in;
-}*/
-
-.transition-appear {
-  opacity: 0.01;
-}
-
-.transition-appear.transition-appear-active {
-  opacity: 1;
-  transition: opacity 1s ease-in;
-}
