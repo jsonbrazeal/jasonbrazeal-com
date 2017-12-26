@@ -38,6 +38,7 @@
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "manifest-revision-webpack-plugin": "^0.4.1",
+    "normalize.css": "^7.0.0",
     "postcss-loader": "^2.0.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

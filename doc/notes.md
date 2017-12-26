@@ -3,8 +3,11 @@
 ## Raleway font
 * https://fonts.googleapis.com/css?family=Raleway:200,100,400
 
-## CSS panels/nav
+## css panels/nav
 * www.albertohartzet.com
+
+## css preloading screen
+* https://ihatetomatoes.net/create-custom-preloading-screen/
 
 ## modal
 * bootstrap?
@@ -53,3 +56,12 @@
   * home components
   * work components
   * portfolio components
+
+
+# jasonbrazeal.com 2.0.0 build tools
+
+* node (install with nvm)
+* npm
+* npm install --save-dev webpack-dev-server
+* npm install --save-prod react babel-core babel-loader babel-preset-env babel-preset-react css-loader extract-text-webpack-plugin file-loader image-webpack-loader less-loader manifest-revision-webpack-plugin postcss-loader react-dom rimraf script-loader style-loader url-loader webpack less sync-exec
+

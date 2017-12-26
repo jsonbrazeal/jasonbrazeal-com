@@ -1,4 +1,5 @@
 import React from 'react';
+import 'normalize.css';
 import css from '../css/main.css';
 import loader from '../css/loader.css';
 

@@ -42,7 +42,7 @@ module.exports = {
                 test: /\.js[x]?$/,
                 loader: 'babel-loader',
                 query: {
-                  'presets': ['latest', 'react']
+                  'presets': ['env', 'react']
                 },
                 exclude: /node_modules/
             },
