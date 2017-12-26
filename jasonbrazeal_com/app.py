@@ -28,8 +28,8 @@ app = create_app()
 
 
 @app.route('/')
-def index():
-    return render_template('index.html', title='jasonbrazeal.com')
+def home():
+    return render_template('home.html', title='jasonbrazeal.com')
 
 
 # # one way to run code before the app starts is to create a new cli command
