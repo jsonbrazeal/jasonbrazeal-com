@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // //// import 1
 // // import { App } from './app.jsx'; - in main.js
@@ -159,14 +158,6 @@ export class NoteSearch extends React.Component {
       return null
     } else {
       return (
-        <ReactCSSTransitionGroup
-          transitionName='transition'
-          transitionAppear={true}
-          transitionAppearTimeout={1000}
-          transitionEnter={true}
-          transitionEnterTimeout={1000}
-          transitionLeave={true}
-          transitionLeaveTimeout={1000}>
         <div>
         <h2>
           <a href="/notes">notes</a>
@@ -193,7 +184,6 @@ export class NoteSearch extends React.Component {
             }) }
           </ul>
         </div>
-        </ReactCSSTransitionGroup>
       )
     }
   }

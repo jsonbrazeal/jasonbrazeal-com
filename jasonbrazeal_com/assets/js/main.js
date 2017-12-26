@@ -1,10 +1,9 @@
 // import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 import '../css/main.css';
-import '../css/pygments.css';
+// import '../css/pygments.css';
 import { render } from 'react-dom';
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 //////////////////// react example 1
 //// import 1
