@@ -2,6 +2,7 @@ import 'normalize.css';
 import css from '../css/main.css';
 import loader from '../css/loader.css';
 import nav from '../css/nav.css'
+import icons from 'font-awesome/css/font-awesome.css'
 
 import React from 'react';
 
@@ -34,9 +35,9 @@ export class App extends React.Component {
           <div className={nav.container} id={nav.c1} >
             <div className={nav.container} id={nav.c2} >
               <div className={nav.container} id={nav.c3} >
-                <Page pageNum="1" pageTitle="Home" pageIcon="fa-home" />
-                <Page pageNum="2" pageTitle="Work" pageIcon="fa-suitcase" />
-                <Page pageNum="3" pageTitle="Portfolio" pageIcon="fa-laptop" />
+                <Page pageNum="1" pageTitle="Home" pageIcon={icons["fa-home"]} />
+                <Page pageNum="2" pageTitle="Work" pageIcon={icons["fa-suitcase"]} />
+                <Page pageNum="3" pageTitle="Portfolio" pageIcon={icons["fa-laptop"]} />
               </div>
             </div>
           </div>
@@ -49,7 +50,7 @@ export class Page extends React.Component {
    render() {
       return (
         <div className={nav.page} id={nav[`p${this.props.pageNum}`]}>
-          <section className={[nav.icon, nav.fa, this.props.pageIcon].join(' ')}>
+          <section className={[nav.icon, icons.fa, this.props.pageIcon].join(" ")}>
             <span className={nav.title}>{this.props.pageTitle}</span>
           </section>
         </div>
@@ -61,9 +62,9 @@ export class NavMenu extends React.Component {
    render() {
       return (
         <ul className={nav.menu}>
-          <a href=""><li id={nav.uno} className={[nav.navElem, nav.icon, nav.fa, 'fa-home'].join(' ')}>Home</li></a>
-          <a href=""><li id={nav.dos} className={[nav.navElem, nav.icon, nav.fa, 'fa-suitcase'].join(' ')}>Work</li></a>
-          <a href=""><li id={nav.tres} className={[nav.navElem, nav.icon, nav.fa, 'fa-laptop'].join(' ')}>Portfolio</li></a>
+          <a href=""><li id={nav.uno} className={[nav.navElem, nav.icon, icons.fa, icons["fa-home"]].join(" ")}></li></a>
+          <a href=""><li id={nav.dos} className={[nav.navElem, nav.icon, icons.fa, icons["fa-suitcase"]].join(" ")}></li></a>
+          <a href=""><li id={nav.tres} className={[nav.navElem, nav.icon, icons.fa, icons["fa-laptop"]].join(" ")}></li></a>
         </ul>
       );
    }

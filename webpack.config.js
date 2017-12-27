@@ -54,15 +54,18 @@ module.exports = {
                 ],
             },
             {
-                test: /\.woff$/,
-                loader: "url-loader?limit=10000&mimetype=application/font-woff&name=[name]_[hash:8].[ext]"
-            }, {
-                test: /\.woff2$/,
-                loader: "url-loader?limit=10000&mimetype=application/font-woff2&name=[name]_[hash:8].[ext]"
-            }, {
-                test: /\.(eot|ttf)$/,
-                loader: "file-loader?&name=[name]_[hash:8].[ext]"
+              test: /\.(eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+              use: [
+                {
+                  loader: "file-loader",
+                  options: {
+                    name: "[name].[ext]"
+                  }
+                }
+              ]
             },
+            // { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+            // { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
             {
                 test: /\.css$/i,
                 use: [
