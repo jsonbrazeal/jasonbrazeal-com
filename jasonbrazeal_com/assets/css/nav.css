@@ -4,7 +4,6 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  color: #d8d8d8;
   background-color: #346d98;
   position: absolute;
   transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
@@ -138,7 +137,33 @@
 }
 */
 
-.shiftedRight {
+.shiftedRight header, .shiftedRight section, .shiftedRight footer {
   position: relative;
   left: 15%;
+}
+
+.footerImage {
+  background-image: url(../img/jason.jpeg);
+  background-size: cover;
+  background-position: center shiftedRight;
+  width: 100px;
+  height: 100px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  /*-webkit-clip-path: circle(50% at 50% 50%);
+  clip-path: circle(50% at 50% 50%);  */
+}
+
+header * {
+  font-weight: normal;
+}
+
+footer * {
+  display: inline-block;
+}
+
+
+.subNav {
+
 }

@@ -10,8 +10,9 @@ a {
   color: #346D98;
 }
 
-* {
+*  {
   font-family: 'raleway', 'helvetica', sans-serif;
+  color: #d8d8d8;
 }
 
 /*mobile*/
