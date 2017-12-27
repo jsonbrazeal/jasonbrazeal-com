@@ -59,7 +59,8 @@ export class Page extends React.Component {
         <div className={nav.page} id={nav[`p${this.props.pageNum}`]}>
           <Header className={this.state.subnavItems.length == 0 ? '' : nav.shiftedRight} />
           <section className={nav.icon}>
-            <span className={[nav.title, icons.fa, this.props.pageIcon].join(" ")}>{this.props.pageTitle}</span>
+            <span className={[icons.fa, this.props.pageIcon].join(" ")}></span>
+            <span className={nav.title}>{this.props.pageTitle}</span>
             {this.state.subnavItems.length > 0 && <SubNavMenu items={this.state.subnavItems} />}
           </section>
           {this.state.subnavItems.length == 0 && <Footer />}
