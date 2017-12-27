@@ -137,3 +137,8 @@
   transition-delay: 1s;
 }
 */
+
+.shiftedRight {
+  position: relative;
+  left: 15%;
+}

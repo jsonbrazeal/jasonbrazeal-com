@@ -11,4 +11,4 @@ render(
 var mod = require('./mod.js');
 //////////////////// now use all the exports from mod
 
-console.log(mod(document));
+mod(document);

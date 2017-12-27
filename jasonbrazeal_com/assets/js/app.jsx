@@ -7,11 +7,6 @@ import icons from 'font-awesome/css/font-awesome.css'
 import React from 'react';
 
 // # TODO
-// * html/body/containers
-// * nav menu
-// * page
-// * header
-// * footer
 
 // * design/code/deploy bubbles graphic
 
@@ -47,12 +42,27 @@ export class App extends React.Component {
 }
 
 export class Page extends React.Component {
-   render() {
+    constructor(props) {
+      super(props);
+      this.state = {
+        subnavItems: []
+      }
+      if (this.props.pageTitle === 'Work') {
+        this.state.subnavItems = ['Skills', 'Experience', 'Education'];
+       } else if (this.props.pageTitle === 'Portfolio') {
+        this.state.subnavItems = ['Projects', 'Articles', 'Code Snippets'];
+       }
+    }
+
+    render() {
       return (
         <div className={nav.page} id={nav[`p${this.props.pageNum}`]}>
-          <section className={[nav.icon, icons.fa, this.props.pageIcon].join(" ")}>
-            <span className={nav.title}>{this.props.pageTitle}</span>
+          <Header className={this.state.subnavItems.length == 0 ? '' : nav.shiftedRight} />
+          <section className={nav.icon}>
+            <span className={[nav.title, icons.fa, this.props.pageIcon].join(" ")}>{this.props.pageTitle}</span>
+            {this.state.subnavItems.length > 0 && <SubNavMenu items={this.state.subnavItems} />}
           </section>
+          {this.state.subnavItems.length == 0 && <Footer />}
         </div>
       );
    }
@@ -70,6 +80,35 @@ export class NavMenu extends React.Component {
    }
 }
 
+export class SubNavMenu extends React.Component {
+   render() {
+      if (this.props.items) {
+        return (
+          <section className={nav.subnav}>
+            <ul className={nav.subnavList}>
+              {this.props.items.map(function(item, i){
+                return <li key={i}>{item}</li>;
+              })}
+            </ul>
+          </section>
+        );
+      } else {
+        return;
+      }
+   }
+}
+
+export class Header extends React.Component {
+   render() {
+    return <header className={this.props.className}>header</header>
+   }
+}
+
+export class Footer extends React.Component {
+   render() {
+    return <footer className={this.props.className}>footer</footer>
+   }
+}
 
 // for reference:
 

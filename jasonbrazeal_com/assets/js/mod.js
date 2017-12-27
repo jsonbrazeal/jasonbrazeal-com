@@ -28,7 +28,7 @@ var mod = function(document) {
         e.preventDefault();
         return false;
     });
-    return "returned from mod.js";
+    return;
 };
 
 module.exports = mod;
