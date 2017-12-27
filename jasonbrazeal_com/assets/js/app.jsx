@@ -79,12 +79,32 @@ export class Page extends React.Component {
 }
 
 export class NavMenu extends React.Component {
+  handleClick(e, id) {
+    e.preventDefault();
+    if (id == nav.uno) {
+      document.getElementById(nav.p2).classList.remove(nav.pageIn);
+      document.getElementById(nav.p3).classList.remove(nav.pageIn);
+      document.getElementById(nav.p1).classList.remove(nav.pageFaded);
+      document.getElementById(nav.p1).classList.remove(nav.blurry);
+    } else if (id == nav.dos) {
+      document.getElementById(nav.p2).classList.add(nav.pageIn);
+      document.getElementById(nav.p3).classList.remove(nav.pageIn);
+      document.getElementById(nav.p1).classList.add(nav.pageFaded);
+      document.getElementById(nav.p1).classList.add(nav.blurry);
+    } else if (id == nav.tres) {
+      document.getElementById(nav.p2).classList.remove(nav.pageIn);
+      document.getElementById(nav.p3).classList.add(nav.pageIn);
+      document.getElementById(nav.p1).classList.add(nav.pageFaded);
+      document.getElementById(nav.p1).classList.add(nav.blurry);
+    }
+  }
+
   render() {
     return (
       <ul className={nav.menu}>
-        <a href=""><li id={nav.uno} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-home"]].join(" ")}></li></a>
-        <a href=""><li id={nav.dos} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-suitcase"]].join(" ")}></li></a>
-        <a href=""><li id={nav.tres} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-laptop"]].join(" ")}></li></a>
+        <a href="" onClick={(e) => this.handleClick(e, nav.uno)}><li id={nav.uno} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-home"]].join(" ")}></li></a>
+        <a href="" onClick={(e) => this.handleClick(e, nav.dos)}><li id={nav.dos} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-suitcase"]].join(" ")}></li></a>
+        <a href="" onClick={(e) => this.handleClick(e, nav.tres)}><li id={nav.tres} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-laptop"]].join(" ")}></li></a>
       </ul>
     );
   }
