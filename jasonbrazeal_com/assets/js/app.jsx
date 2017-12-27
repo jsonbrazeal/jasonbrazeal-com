@@ -61,9 +61,9 @@ export class NavMenu extends React.Component {
    render() {
       return (
         <ul className={nav.menu}>
-          <a href={`#${nav.c1}`}><li id={nav.uno} className={[nav.navElem, nav.icon, nav.fa, nav['fa-home']].join(' ')}>Home</li></a>
-          <a href={`#${nav.c2}`}><li id={nav.dos} className={[nav.navElem, nav.icon, nav.fa, nav['fa-suitcase']].join(' ')}>Work</li></a>
-          <a href={`#${nav.c3}`}><li id={nav.tres} className={[nav.navElem, nav.icon, nav.fa, nav['fa-laptop']].join(' ')}>Portfolio</li></a>
+          <a href=""><li id={nav.uno} className={[nav.navElem, nav.icon, nav.fa, 'fa-home'].join(' ')}>Home</li></a>
+          <a href=""><li id={nav.dos} className={[nav.navElem, nav.icon, nav.fa, 'fa-suitcase'].join(' ')}>Work</li></a>
+          <a href=""><li id={nav.tres} className={[nav.navElem, nav.icon, nav.fa, 'fa-laptop'].join(' ')}>Portfolio</li></a>
         </ul>
       );
    }
