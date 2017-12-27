@@ -3,7 +3,6 @@ var exports = module.exports = {};
 
 var mod = function(document) {
     document.getElementById(nav.uno).addEventListener('click', function(e) {
-        console.log('clicked c1');
         document.getElementById(nav.p2).classList.remove(nav.pageIn);
         document.getElementById(nav.p3).classList.remove(nav.pageIn);
         document.getElementById(nav.p1).classList.remove(nav.pageFaded);
@@ -13,7 +12,6 @@ var mod = function(document) {
     });
 
     document.getElementById(nav.dos).addEventListener('click', function(e) {
-        console.log('clicked c2');
         document.getElementById(nav.p2).classList.add(nav.pageIn);
         document.getElementById(nav.p3).classList.remove(nav.pageIn);
         document.getElementById(nav.p1).classList.add(nav.pageFaded);
@@ -23,7 +21,6 @@ var mod = function(document) {
     });
 
     document.getElementById(nav.tres).addEventListener('click', function(e) {
-        console.log('clicked c3');
         document.getElementById(nav.p2).classList.remove(nav.pageIn);
         document.getElementById(nav.p3).classList.add(nav.pageIn);
         document.getElementById(nav.p1).classList.add(nav.pageFaded);
