@@ -1,89 +1,76 @@
-import React from 'react';
 import 'normalize.css';
 import css from '../css/main.css';
 import loader from '../css/loader.css';
+import nav from '../css/nav.css'
 
+import React from 'react';
 
+// # TODO
+// * html/body/containers
+// * nav menu
+// * page
+// * header
+// * footer
 
-//// import 1
-// import { App } from './app.jsx'; - in main.js
+// * design/code/deploy bubbles graphic
+
+// * submenu (work)
+// * skills graphic
+// * experience/education graphic (same component, different state/props?)
+
+// * submenu (same as work, portfolio state/props)
+// * projects container (6 of 'em)
+// * project
+// * articles container (maybe combine with snippets)
+// * article
+// * snippets container
+// * snippets
+
 export class App extends React.Component {
    render() {
       return (
-        <div>
-        <h1 className={css.blue}>Hello, World from app.jsx :)</h1>
-        <div className={loader.loader}></div>
+        <React.Fragment>
+          <NavMenu />
+          <div className={nav.container} id={nav.c1} >
+            <div className={nav.container} id={nav.c2} >
+              <div className={nav.container} id={nav.c3} >
+                <Page pageNum="1" pageTitle="Home" pageIcon="fa-home" />
+                <Page pageNum="2" pageTitle="Work" pageIcon="fa-suitcase" />
+                <Page pageNum="3" pageTitle="Portfolio" pageIcon="fa-laptop" />
+              </div>
+            </div>
+          </div>
+        </React.Fragment>
+      );
+   }
+}
+
+export class Page extends React.Component {
+   render() {
+      return (
+        <div className={nav.page} id={nav[`p${this.props.pageNum}`]}>
+          <section className={[nav.icon, nav.fa, this.props.pageIcon].join(' ')}>
+            <span className={nav.title}>{this.props.pageTitle}</span>
+          </section>
         </div>
       );
    }
 }
 
+export class NavMenu extends React.Component {
+   render() {
+      return (
+        <ul className={nav.menu}>
+          <a href={`#${nav.c1}`}><li id={nav.uno} className={[nav.navElem, nav.icon, nav.fa, nav['fa-home']].join(' ')}>Home</li></a>
+          <a href={`#${nav.c2}`}><li id={nav.dos} className={[nav.navElem, nav.icon, nav.fa, nav['fa-suitcase']].join(' ')}>Work</li></a>
+          <a href={`#${nav.c3}`}><li id={nav.tres} className={[nav.navElem, nav.icon, nav.fa, nav['fa-laptop']].join(' ')}>Portfolio</li></a>
+        </ul>
+      );
+   }
+}
 
-// //// import 1
-// // import { App } from './app.jsx'; - in main.js
-// class App extends React.Component {
-//    render() {
-//       return (
-//          <h1>Hello, World from app.jsx!</h1>
-//       );
-//    }
-// }
 
-// module.exports = { App };
-
-// //// import 2
-// // import App from './app.jsx'; - in main.js
-// export class App extends React.Component {
-//    render() {
-//       return (
-//          <h1>Hello, World from app.jsx!</h1>
-//       );
-//    }
-// }
-//  export var test = 'test';
-
-// export class DynamicSearch extends React.Component {
-
-//   constructor() {
-//     super();
-//     // set up "this" for the handle change function
-//     this.handleChange = this.handleChange.bind(this);
-//     this.state = {
-//       searchString: ''
-//     };
-//   }
-
-//   // sets state, triggers render method
-//   handleChange(event){
-//     // grab value form input box
-//     this.setState({searchString:event.target.value});
-//     console.log("scope updated!");
-//   }
-
-//   render() {
-//     var countries = this.props.items;
-//     var searchString = this.state.searchString.trim().toLowerCase();
-
-//     // filter countries list by value from input box
-//     if(searchString.length > 0){
-//       countries = countries.filter(function(country){
-//         return country.name.toLowerCase().match(searchString);
-//       });
-//     }
-
-//     return (
-//       <div>
-//         <input type="text" value={this.state.searchString} onChange={this.handleChange} placeholder="Search!" />
-//         <ul>
-//           { countries.map(function(country, i){
-//             return <li key={i}>{country.name}</li>
-//           }) }
-//         </ul>
-//       </div>
-//     )
-//   }
-
-// };
+// for reference:
 
 // // list of countries, defined with JavaScript object literals
 // export var countries = [

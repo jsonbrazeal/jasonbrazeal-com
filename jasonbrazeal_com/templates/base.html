@@ -1,14 +1,27 @@
-<!DOCTYPE html>
-<html>
-  <head lang="en">
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{ stylesheet_tag('app') | safe }}
-  </head>
-  <body class="{{ request.endpoint }}">
-    {% block content %}
-    {% endblock %}
-    {{ javascript_tag('app') | safe }}
-  </body>
+<!doctype html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{{ title }}</title>
+        <meta name="author" content="Jason Brazeal">
+        <meta name="description" content="{{ desc }}">
+    </head>
+    <body class="{{ request.endpoint }}">
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        {% block content %}
+        {% endblock %}
+
+        {{ javascript_tag('app') | safe }}
+        <!-- Google Analytics -->
+        <!-- <script>
+            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script> -->
+
+    </body>
 </html>
