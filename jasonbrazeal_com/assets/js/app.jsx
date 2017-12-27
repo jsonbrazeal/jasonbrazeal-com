@@ -91,12 +91,17 @@ export class NavMenu extends React.Component {
 }
 
 export class SubNavMenu extends React.Component {
+
+  handleClick(e, item) {
+    console.log(item)
+  }
+
   render() {
     return (
-      <section>
+      <section className={nav.subNav}>
         <ul className={nav.subNavList}>
-          {this.props.items.map(function(item, i){
-            return <li key={i}>{item}</li>;
+          {this.props.items.map((item, i) => {
+            return <li key={i} onClick={(e) => this.handleClick(e, item)}>{item}</li>
           })}
         </ul>
       </section>

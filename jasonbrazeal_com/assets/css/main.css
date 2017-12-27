@@ -1,5 +1,11 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:200,100,400");
+
 a {
   text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
 }
 
 :global(.blue) {

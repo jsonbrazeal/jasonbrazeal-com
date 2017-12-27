@@ -74,7 +74,6 @@
 }
 
 .navElem#uno, .navElem#dos, .navElem#tres {
-  list-style-type: none;
   display: block;
 }
 
@@ -165,5 +164,10 @@ footer * {
 
 
 .subNav {
+  left: 50% !important;
+  top: 33%;
+}
 
+hr {
+  width: 50%;
 }
