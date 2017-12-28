@@ -141,6 +141,11 @@
   left: 15%;
 }
 
+.shiftedRightElem {
+  position: relative;
+  left: 50%;
+}
+
 .footerImage {
   background-image: url(../img/jason.jpeg);
   background-size: cover;
@@ -165,9 +170,18 @@ footer * {
 
 .subNav {
   left: 50% !important;
-  top: 33%;
+  bottom: -33%;
 }
 
 hr {
   width: 50%;
+}
+
+.leftIcon {
+
+}
+
+.subNavArrow {
+  position: absolute;
+  left: 0;
 }

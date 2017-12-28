@@ -7,6 +7,7 @@ import animations from "../css/animations.css"
 import icons from "font-awesome/css/font-awesome.css"
 import jason from "../img/jason.jpeg"
 
+import utils from "./utils.js"
 import React from "react";
 
 export class App extends React.Component {
@@ -42,7 +43,7 @@ export class HomePage extends React.Component {
 export class WorkPage extends React.Component {
   render() {
     return (
-      <Page pageNum="2" pageTitle="Work" subNavItems={["skills", "experience", "education", "résumé"]}>
+      <Page pageNum="2" pageTitle="Work" subNavnewHeaders={["skills", "experience", "education", "résumé"]}>
         <SkillsGraphic />
         <WorkCardContainer subject="Experience" />
         <WorkCardContainer subject="Education" />
@@ -54,7 +55,7 @@ export class WorkPage extends React.Component {
 export class PortfolioPage extends React.Component {
   render() {
     return (
-      <Page pageNum="3" pageTitle="Portfolio" subNavItems={["projects", "articles", "code snippets"]}>
+      <Page pageNum="3" pageTitle="Portfolio" subNavnewHeaders={["projects", "articles", "code snippets"]}>
       <ProjectCardContainer />
       <CodeSnippetContainer />
       <ArticleContainer />
@@ -67,33 +68,59 @@ export class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showHeader: true
+      showSubNavMenu: true,
+      showSubNavArrow: false,
+      pageTitle: props.pageTitle,
+      showHeaderClass: ""
     };
-
   }
 
-  hideHeader() {
+  replaceHeader(newHeader) {
+    if (["projects", "articles", "code snippets"].includes(this.state.pageTitle.toLowerCase())) {
+      newHeader = "Portfolio";
+    } else if (["skills", "experience", "education", "r\u00e9sum\u00e9"].includes(this.state.pageTitle.toLowerCase())) {
+      newHeader = "Work";
+    }
+    // newHeader is the element to be placed in the h1
     this.setState({
-      showHeader: false
+      showSubNavArrow: false,
+      showSubNavMenu: false,
+      showHeaderClass: animations.fadeOut
     });
-  }
 
-  showHeader() {
-    this.setState({
-      showHeader: true
-    });
+    if (["work", "portfolio"].includes(newHeader.toLowerCase())) {
+      setTimeout(() => {
+        this.setState({
+          showSubNavArrow: false,
+          showSubNavMenu: true,
+          showHeaderClass: animations.fadeIn,
+          pageTitle: utils.titleCase(newHeader)
+        });
+      }, 1000, newHeader);
+    } else {
+      setTimeout(() => {
+        this.setState({
+          showSubNavArrow: true,
+          showSubNavMenu: false,
+          showHeaderClass: animations.fadeIn,
+          pageTitle: utils.titleCase(newHeader)
+        });
+      }, 1000, newHeader);
+    }
+
   }
 
   render() {
     return (
-      <div className={this.props.pageTitle === "Home" ? nav.page : [nav.page, nav.shiftedRight].join(' ')} id={nav[`p${this.props.pageNum}`]}>
-        <Header h1={this.props.pageTitle === "Home" ? "Jason Brazeal" : this.props.pageTitle} visible={this.state.showHeader}>
-          {this.props.pageTitle === "Home" && <Typewriter words={['Software', 'Eng']} />}
+      <div className={this.state.pageTitle === "Home" ? nav.page : [nav.page, nav.shiftedRight].join(" ")} id={nav[`p${this.props.pageNum}`]}>
+        <Header h1={this.state.pageTitle === "Home" ? "Jason Brazeal" : this.state.pageTitle} className={this.state.showHeaderClass}>
+          {this.state.pageTitle === "Home" && <Typewriter words={["Software", "Eng"]} />}
+          <SubNavArrow pageCallback={(newHeader) => this.replaceHeader(newHeader)} visible={this.state.showSubNavArrow} />
         </Header>
         <section>
           {this.props.children}
         </section>
-        {this.props.pageTitle === "Home" || <SubNavMenu items={this.props.subNavItems} pageNum={this.props.pageNum} pageCallback={this.state.showHeader ? () => this.hideHeader() : () => this.hideHeader()} />}
+        <SubNavMenu newHeaders={this.props.subNavnewHeaders} pageNum={this.props.pageNum} pageCallback={(newHeader) => this.replaceHeader(newHeader)} visible={this.state.showSubNavMenu} />
       </div>
     );
   }
@@ -132,46 +159,60 @@ export class NavMenu extends React.Component {
 }
 
 export class SubNavMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      status: 'open',
-      classList: [nav.subNav, animations.fadeIn]
-    };
-  }
 
-  handleClick(e, item) {
-    if (this.state.status == 'open') {
-      this.setState({
-        status: 'closed',
-        classList: [nav.subNav, animations.fadeOut]
-      });
-    } else if (this.state.status == 'closed') {
-      this.setState({
-        status: 'open',
-        classList: [nav.subNav, animations.fadeIn]
-      });
-    }
-    this.props.pageCallback();
+  // handleClick(e, newHeader) {
+  //   if (this.props.visible) {
+  //     this.setState({
+  //       classList: [nav.subNav, animations.fadeOut]
+  //     });
+  //   } else {
+  //     this.setState({
+  //       classList: [nav.subNav, animations.fadeIn]
+  //     });
+  //   }
+  //   this.props.pageCallback(newHeader);
+  // }
+  handleClick(e, newHeader) {
+    console.log("clicked subnav arrow")
+    this.props.pageCallback(newHeader);
   }
 
   render() {
-    return (
-      <section className={this.state.classList.join(' ')}>
-        <ul className={nav.subNavList}>
-          {this.props.items.map((item, i) => {
-            return <li key={i} onClick={(e) => this.handleClick(e, item)}>{item}</li>
-          })}
-        </ul>
-      </section>
-    );
+    console.log("rendering subnavmenu")
+    if (this.props.newHeaders) {
+      return (
+        <section className={`${nav.subNav} ${this.props.visible ? animations.fadeIn : animations.fadeOut }`}>
+          <ul className={nav.subNavList}>
+            {this.props.newHeaders.map((newHeader, i) => {
+              return <li key={i} onClick={(e) => this.handleClick(e, newHeader)}>{newHeader}</li>
+            })}
+          </ul>
+        </section>
+      );
+    } else {
+      return null;
+    }
+  }
+}
+
+
+export class SubNavArrow extends React.Component {
+  handleClick(e) {
+    console.log("clicked subnav arrow")
+    this.props.pageCallback(null);
+  }
+
+  render() {
+    console.log("rendering subnavarrow")
+    return <span className={`${[icons.fa, icons["fa-chevron-left"], nav.shiftedRightElem, nav.subNavArrow].join(" ")} ${this.props.visible ? animations.fadeIn : animations.fadeOut }`} onClick={(e) => this.handleClick(e)}></span>
   }
 }
 
 export class Header extends React.Component {
+
   render() {
     return (
-      <header className={this.props.visible ? '' : animations.fadeOut}>
+      <header className={this.props.className}>
         <h1>{this.props.h1}</h1>
         {this.props.children}
       </header>
@@ -266,7 +307,7 @@ export class SkillsGraphic extends React.Component {
 export class WorkCardContainer extends React.Component {
    render() {
     return(
-      <div className={[graphics.container, graphics.workCardContainer].join(' ')}>
+      <div className={[graphics.container, graphics.workCardContainer].join(" ")}>
         <div>{this.props.subject}</div>
       </div>
     )
@@ -276,7 +317,7 @@ export class WorkCardContainer extends React.Component {
 export class ProjectCardContainer extends React.Component {
    render() {
     return(
-      <div className={[graphics.container, graphics.projectCardContainer].join(' ')}>
+      <div className={[graphics.container, graphics.projectCardContainer].join(" ")}>
         <div>pcards</div>
       </div>
     )
@@ -286,7 +327,7 @@ export class ProjectCardContainer extends React.Component {
 export class CodeSnippetContainer extends React.Component {
    render() {
     return(
-      <div className={[graphics.container, graphics.snippetContainer].join(' ')}>
+      <div className={[graphics.container, graphics.snippetContainer].join(" ")}>
         <div className={graphics.snippet}>snip1</div>
         <div className={graphics.snippet}>snip2</div>
         <div className={graphics.snippet}>snip3</div>
@@ -298,7 +339,7 @@ export class CodeSnippetContainer extends React.Component {
 export class ArticleContainer extends React.Component {
    render() {
     return(
-      <div className={[graphics.container, graphics.articleContainer].join(' ')}>
+      <div className={[graphics.container, graphics.articleContainer].join(" ")}>
         <div className={graphics.article}>article1</div>
         <div className={graphics.article}>article2</div>
         <div className={graphics.article}>article3</div>

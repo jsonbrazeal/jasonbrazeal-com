@@ -6,9 +6,3 @@ render(
   <App />,
   document.getElementById('app')
 );
-
-//////////////////// other module example
-var mod = require('./mod.js');
-//////////////////// now use all the exports from mod
-
-mod(document);
