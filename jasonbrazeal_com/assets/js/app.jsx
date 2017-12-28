@@ -73,6 +73,28 @@ export class Page extends React.Component {
       pageTitle: props.pageTitle,
       showHeaderClass: ""
     };
+
+    // reset not working
+    window.addEventListener("changePage", (e) => {
+      // changePage fires when a NavMenu item is clicked
+      console.log(e)
+      // this.reset(e.detail.newPage);
+    });
+  }
+
+  reset(newPage) {
+    console.log('reset called')
+    console.log('newPage=' + newPage)
+    console.log('this.state.pageTitle=' + this.state.pageTitle)
+    if (this.state.pageTitle === newPage) {
+      return null;
+    }
+    this.setState({
+      showSubNavArrow: false,
+      showSubNavMenu: true,
+      showHeaderClass: "",
+      pageTitle: newPage
+    });
   }
 
   replaceHeader(newHeader) {
@@ -107,7 +129,6 @@ export class Page extends React.Component {
         });
       }, 1000, newHeader);
     }
-
   }
 
   render() {
@@ -134,17 +155,22 @@ export class NavMenu extends React.Component {
       document.getElementById(nav.p3).classList.remove(nav.pageIn);
       document.getElementById(nav.p1).classList.remove(nav.pageFaded);
       document.getElementById(nav.p1).classList.remove(nav.blurry);
+      var newPage = "Home";
     } else if (id == nav.dos) {
       document.getElementById(nav.p2).classList.add(nav.pageIn);
       document.getElementById(nav.p3).classList.remove(nav.pageIn);
       document.getElementById(nav.p1).classList.add(nav.pageFaded);
       document.getElementById(nav.p1).classList.add(nav.blurry);
+      var newPage = "Work";
     } else if (id == nav.tres) {
       document.getElementById(nav.p2).classList.remove(nav.pageIn);
       document.getElementById(nav.p3).classList.add(nav.pageIn);
       document.getElementById(nav.p1).classList.add(nav.pageFaded);
       document.getElementById(nav.p1).classList.add(nav.blurry);
+      var newPage = "Portfolio";
     }
+
+    window.dispatchEvent(new CustomEvent("changePage", { detail: { newPage: newPage } }));
   }
 
   render() {
@@ -159,26 +185,11 @@ export class NavMenu extends React.Component {
 }
 
 export class SubNavMenu extends React.Component {
-
-  // handleClick(e, newHeader) {
-  //   if (this.props.visible) {
-  //     this.setState({
-  //       classList: [nav.subNav, animations.fadeOut]
-  //     });
-  //   } else {
-  //     this.setState({
-  //       classList: [nav.subNav, animations.fadeIn]
-  //     });
-  //   }
-  //   this.props.pageCallback(newHeader);
-  // }
   handleClick(e, newHeader) {
-    console.log("clicked subnav arrow")
     this.props.pageCallback(newHeader);
   }
 
   render() {
-    console.log("rendering subnavmenu")
     if (this.props.newHeaders) {
       return (
         <section className={`${nav.subNav} ${this.props.visible ? animations.fadeIn : animations.fadeOut }`}>
@@ -198,12 +209,10 @@ export class SubNavMenu extends React.Component {
 
 export class SubNavArrow extends React.Component {
   handleClick(e) {
-    console.log("clicked subnav arrow")
     this.props.pageCallback(null);
   }
 
   render() {
-    console.log("rendering subnavarrow")
     return <span className={`${[icons.fa, icons["fa-chevron-left"], nav.shiftedRightElem, nav.subNavArrow].join(" ")} ${this.props.visible ? animations.fadeIn : animations.fadeOut }`} onClick={(e) => this.handleClick(e)}></span>
   }
 }
