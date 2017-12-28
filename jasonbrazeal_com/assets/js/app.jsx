@@ -64,16 +64,36 @@ export class PortfolioPage extends React.Component {
 }
 
 export class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showHeader: true
+    };
+
+  }
+
+  hideHeader() {
+    this.setState({
+      showHeader: false
+    });
+  }
+
+  showHeader() {
+    this.setState({
+      showHeader: true
+    });
+  }
+
   render() {
     return (
       <div className={this.props.pageTitle === "Home" ? nav.page : [nav.page, nav.shiftedRight].join(' ')} id={nav[`p${this.props.pageNum}`]}>
-        <Header h1={this.props.pageTitle === "Home" ? "Jason Brazeal" : this.props.pageTitle}>
+        <Header h1={this.props.pageTitle === "Home" ? "Jason Brazeal" : this.props.pageTitle} visible={this.state.showHeader}>
           {this.props.pageTitle === "Home" && <Typewriter words={['Software', 'Eng']} />}
         </Header>
         <section>
           {this.props.children}
         </section>
-        {this.props.pageTitle === "Home" || <SubNavMenu items={this.props.subNavItems} />}
+        {this.props.pageTitle === "Home" || <SubNavMenu items={this.props.subNavItems} pageNum={this.props.pageNum} pageCallback={this.state.showHeader ? () => this.hideHeader() : () => this.hideHeader()} />}
       </div>
     );
   }
@@ -116,23 +136,23 @@ export class SubNavMenu extends React.Component {
     super(props);
     this.state = {
       status: 'open',
-      classList: [nav.subNav]
+      classList: [nav.subNav, animations.fadeIn]
     };
   }
 
   handleClick(e, item) {
-    console.log(item)
     if (this.state.status == 'open') {
       this.setState({
         status: 'closed',
-        classList: [nav.subNav, animations.bounceUp]
+        classList: [nav.subNav, animations.fadeOut]
       });
     } else if (this.state.status == 'closed') {
       this.setState({
         status: 'open',
-        classList: [nav.subNav]
+        classList: [nav.subNav, animations.fadeIn]
       });
     }
+    this.props.pageCallback();
   }
 
   render() {
@@ -151,7 +171,7 @@ export class SubNavMenu extends React.Component {
 export class Header extends React.Component {
   render() {
     return (
-      <header className={this.props.className}>
+      <header className={this.props.visible ? '' : animations.fadeOut}>
         <h1>{this.props.h1}</h1>
         {this.props.children}
       </header>
