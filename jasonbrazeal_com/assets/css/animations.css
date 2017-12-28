@@ -1,0 +1,130 @@
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% { opacity: 1;
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  animation:fadeIn ease-in 1;
+  animation-fill-mode:forwards;
+  animation-duration:1s;
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% { opacity: 0;
+  }
+}
+
+.fadeOut {
+  animation: fadeOut ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  animation-delay: 0.1s;
+}
+
+.testing {
+  width: 200px;
+  height: 200px;
+  background-color: coral;
+  animation: square-to-circle 2s .5s infinite cubic-bezier(1,.015,.295,1.225) alternate;
+}
+
+@keyframes square-to-circle {
+  0%  {
+    border-radius: 0 0 0 0;
+    background: coral;
+    transform: rotate(0deg);
+  }
+  25%  {
+    border-radius: 50% 0 0 0;
+    background: darksalmon;
+    transform: rotate(45deg);
+  }
+  50%  {
+    border-radius: 50% 50% 0 0;
+    background: indianred;
+    transform: rotate(90deg);
+  }
+  75%  {
+    border-radius: 50% 50% 50% 0;
+    background: lightcoral;
+    transform: rotate(135deg);
+  }
+  100% {
+    border-radius: 50%;
+    background: darksalmon;
+    transform: rotate(180deg);
+  }
+}
+
+.bounceUp {
+  animation: bounceUp 2s infinite;
+}
+
+.bounceDown {
+  animation: bounceDown 2s infinite;
+}
+
+.bounceLeft {
+  animation: bounceLeft 2s infinite;
+}
+
+.bounceRight {
+  animation: bounceRight 2s infinite;
+}
+
+@keyframes bounceUp {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes bounceDown {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(30px);
+  }
+  60% {
+    transform: translateY(15px);
+  }
+}
+
+@keyframes bounceLeft {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-30px);
+  }
+  60% {
+    transform: translateX(-15px);
+  }
+}
+
+@keyframes bounceRight {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(30px);
+  }
+  60% {
+    transform: translateX(15px);
+  }
+}

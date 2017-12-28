@@ -78,6 +78,17 @@ module.exports = {
                       localIdentName: '[name]__[local]___[hash:base64:5]'
                     }
                   },
+                  {
+                    loader: 'postcss-loader',
+                    options: {
+                      plugins: function () {
+                        return [
+                          require('autoprefixer'),
+                          require('postcss-icss-keyframes')
+                        ];
+                      }
+                    }
+                  }
                 ],
             },
 

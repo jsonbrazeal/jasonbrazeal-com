@@ -3,6 +3,7 @@ import css from "../css/main.css";
 import loader from "../css/loader.css";
 import nav from "../css/nav.css"
 import graphics from "../css/graphics.css"
+import animations from "../css/animations.css"
 import icons from "font-awesome/css/font-awesome.css"
 import jason from "../img/jason.jpeg"
 
@@ -111,14 +112,32 @@ export class NavMenu extends React.Component {
 }
 
 export class SubNavMenu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      status: 'open',
+      classList: [nav.subNav]
+    };
+  }
 
   handleClick(e, item) {
     console.log(item)
+    if (this.state.status == 'open') {
+      this.setState({
+        status: 'closed',
+        classList: [nav.subNav, animations.bounceUp]
+      });
+    } else if (this.state.status == 'closed') {
+      this.setState({
+        status: 'open',
+        classList: [nav.subNav]
+      });
+    }
   }
 
   render() {
     return (
-      <section className={nav.subNav}>
+      <section className={this.state.classList.join(' ')}>
         <ul className={nav.subNavList}>
           {this.props.items.map((item, i) => {
             return <li key={i} onClick={(e) => this.handleClick(e, item)}>{item}</li>
