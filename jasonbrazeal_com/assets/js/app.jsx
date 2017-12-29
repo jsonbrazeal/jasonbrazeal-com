@@ -14,97 +14,24 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: "Home"
+      activePage: "Home",
+      activeSubPage: null
     };
   }
 
   handleNav(newPage) {
-    if (newPage.match('uno')) {
-      var page = "Home"
-    } else if (newPage.match('dos')) {
-      var page = "Work"
-    } else if (newPage.match('tres')) {
-      var page = "Portfolio"
+    console.log('handleNav('+newPage+')')
+    if (newPage.match("uno")) {
+      var page = "Home";
+    } else if (newPage.match("dos")) {
+      var page = "Work";
+    } else if (newPage.match("tres")) {
+      var page = "Portfolio";
     }
     this.setState({
-      currentPage: page
+      activePage: page,
+      activeSubPage: null
     });
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <NavMenu onChangePage={(e, newPage) => {this.handleNav(e, newPage)}} />
-        <div className={nav.container} id={nav.c1} >
-          <div className={nav.container} id={nav.c2} >
-            <div className={nav.container} id={nav.c3} >
-              <HomePage active={this.state.currentPage === "Home"} />
-              <WorkPage active={this.state.currentPage === "Work"} />
-              <PortfolioPage active={this.state.currentPage === "Portfolio"} />
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
-    );
-  }
-}
-
-export class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeSubPage: null,
-    };
-  }
-
-  handleSubPageNav(newHeader) {
-    this.setState({
-      activeSubPage: newHeader
-    });
-  }
-
-  render() {
-    return (
-      <Page pageNum="1" pageTitle="Home" active={this.props.active} pageParentCallback={(e, newHeader) => this.handleSubPageNav(e, newHeader)} >
-        <DesignCodeDeployGraphic />
-        <Footer />
-      </Page>
-    )
-  }
-}
-
-export class PortfolioPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeSubPage: null,
-    };
-  }
-
-  handleSubPageNav(newHeader) {
-    this.setState({
-      activeSubPage: newHeader
-    });
-  }
-
-  render() {
-    return (
-      <Page pageNum="3" pageTitle="Portfolio" active={this.props.active} pageParentCallback={(e, newHeader) => this.handleSubPageNav(e, newHeader)} subNavnewHeaders={["projects", "articles", "code snippets"]}>
-        <ProjectCardContainer active={true} />
-        <CodeSnippetContainer active={false} />
-        <ArticleContainer active={false} />
-      </Page>
-    )
-  }
-}
-
-
-export class WorkPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeSubPage: null,
-    };
   }
 
   handleSubPageNav(newHeader) {
@@ -115,14 +42,42 @@ export class WorkPage extends React.Component {
   }
 
   render() {
-    console.log('rendering WorkPage');
+    console.log('rendering app....this.state.activeSubPage='+this.state.activeSubPage);
     return (
-      <Page pageNum="2" pageTitle="Work" active={this.props.active} pageParentCallback={(e, newHeader) => this.handleSubPageNav(e, newHeader)} subNavnewHeaders={["skills", "experience", "education", "résumé"]}>
-        <SkillsGraphic active={this.state.activeSubPage === "skills"} />
-        <WorkCardContainer active={this.state.activeSubPage === "experience"} subject="Experience" />
-        <WorkCardContainer active={this.state.activeSubPage === "education"} subject="Education" />
-      </Page>
-    )
+      <React.Fragment>
+        <NavMenu onChangePage={(e, newPage) => {this.handleNav(e, newPage)}} />
+        <div className={nav.container} id={nav.c1} >
+          <div className={nav.container} id={nav.c2} >
+            <div className={nav.container} id={nav.c3} >
+              <Page active={this.state.activePage === "Home"}
+                    pageNum="1"
+                    pageTitle="Home"
+                    onChangeSubPage={(e, newHeader) => this.handleSubPageNav(e, newHeader)}
+                    activeSubPage={this.state.activeSubPage}
+                    children={[<DesignCodeDeployGraphic />,
+                               <Footer />]} />
+              <Page active={this.state.activePage === "Work"}
+                    pageNum="2"
+                    pageTitle="Work"
+                    onChangeSubPage={(e, newHeader) => this.handleSubPageNav(e, newHeader)}
+                    subNavNewHeaders={["skills", "experience", "education", "résumé"]}
+                    activeSubPage={this.state.activeSubPage}
+                    children={[<SkillsGraphic active={this.state.activeSubPage === "skills"} />,
+                               <WorkCardContainer active={this.state.activeSubPage === "experience"} subject="Experience" />,
+                               <WorkCardContainer active={this.state.activeSubPage === "education"} subject="Education" />]} />
+              <Page active={this.state.activePage === "Portfolio"}
+                    pageNum="3"
+                    pageTitle="Portfolio"
+                    onChangeSubPage={(e, newHeader) => this.handleSubPageNav(e, newHeader)}
+                    subNavNewHeaders={["projects", "articles", "code snippets"]} activeSubPage={this.state.activeSubPage}
+                    children={[<ProjectCardContainer active={this.state.activeSubPage === "projects"} />,
+                               <ArticleContainer active={this.state.activeSubPage === "articles"} />,
+                               <CodeSnippetContainer active={this.state.activeSubPage === "code snippets"} />]} />
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
+    );
   }
 }
 
@@ -170,7 +125,8 @@ export class Page extends React.Component {
       pageTitle: props.pageTitle,
       showHeaderClass: "",
       classList: props.pageTitle === "Home" ? [nav.page] : [nav.page, nav.shiftedRight],
-      active: props.active
+      active: props.active,
+      activeSubPage: this.props.activeSubPage
     };
   }
 
@@ -182,7 +138,7 @@ export class Page extends React.Component {
     }
 
     // handle subnav
-    this.props.pageParentCallback(newHeader)
+    this.props.onChangeSubPage(newHeader)
 
     // newHeader is the element to be placed in the h1
     this.setState({
@@ -213,6 +169,9 @@ export class Page extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({
+      activeSubPage: nextProps.activeSubPage
+    });
     if (nextProps.active) {
       if (this.props.pageNum === "1") {
           this.setState({
@@ -252,16 +211,17 @@ export class Page extends React.Component {
       <div className={this.state.classList.join(" ")} id={nav[`p${this.props.pageNum}`]}>
         <Header h1={this.state.pageTitle === "Home" ? "Jason Brazeal" : this.state.pageTitle} className={this.state.showHeaderClass}>
           {this.state.pageTitle === "Home" && <Typewriter words={["Software", "Eng"]} />}
-          <SubNavArrow pageCallback={(e) => this.replaceHeader(e)} visible={this.state.showSubNavArrow} />
+          <SubNavArrow onChangeSubPage={(e) => this.replaceHeader(e)} visible={this.state.showSubNavArrow} />
         </Header>
         <section>
           {this.props.children}
         </section>
-        <SubNavMenu newHeaders={this.props.subNavnewHeaders} pageNum={this.props.pageNum} pageCallback={(e) => this.replaceHeader(e)} visible={this.state.showSubNavMenu} />
+        <SubNavMenu newHeaders={this.props.subNavNewHeaders} pageNum={this.props.pageNum} onChangeSubPage={(e) => this.replaceHeader(e)} visible={this.state.showSubNavMenu} />
       </div>
     );
   }
 }
+
 
 export class NavMenu extends React.Component {
   handleClick(e, newPage) {
@@ -288,7 +248,7 @@ export class NavMenu extends React.Component {
 
 export class SubNavMenu extends React.Component {
   handleClick(e, newHeader) {
-    this.props.pageCallback(newHeader);
+    this.props.onChangeSubPage(newHeader);
   }
 
   render() {
@@ -310,7 +270,7 @@ export class SubNavMenu extends React.Component {
 
 export class SubNavArrow extends React.Component {
   handleClick(e) {
-    this.props.pageCallback(null);
+    this.props.onChangeSubPage(null);
   }
 
   render() {
