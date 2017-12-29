@@ -16,8 +16,8 @@ export class App extends React.Component {
     this.state = {
       currentPage: "Home"
     };
-    // this.handleNav = this.handleNav.bind(this);
   }
+
   handleNav(newPage) {
     if (newPage.match('uno')) {
       var page = "Home"
@@ -26,24 +26,12 @@ export class App extends React.Component {
     } else if (newPage.match('tres')) {
       var page = "Portfolio"
     }
-
-    console.log("newPage="+page)
-    console.log(this.props)
-    console.log(this)
-
     this.setState({
       currentPage: page
     });
-
-    console.log(this.state)
-    // React.Children.forEach(this.props.children, function(){})
-    // for (const p of this.props.children) {
-    //   console.log(value);
-    // }
   }
+
   render() {
-    console.log('rendering App elem')
-    console.log(this.state.currentPage)
     return (
       <React.Fragment>
         <NavMenu onChangePage={(e, newPage) => {this.handleNav(e, newPage)}} />
@@ -63,7 +51,6 @@ export class App extends React.Component {
 
 export class HomePage extends React.Component {
   render() {
-    console.log('rendering HomePage elem')
     return (
       <Page pageNum="1" pageTitle="Home" active={this.props.active}>
         <DesignCodeDeployGraphic />
@@ -75,7 +62,6 @@ export class HomePage extends React.Component {
 
 export class WorkPage extends React.Component {
   render() {
-    console.log('rendering WorkPage elem')
     return (
       <Page pageNum="2" pageTitle="Work" active={this.props.active} subNavnewHeaders={["skills", "experience", "education", "résumé"]}>
         <SkillsGraphic />
@@ -111,94 +97,41 @@ export class Page extends React.Component {
     };
   }
 
-  //   // this.addEventListener("changePage", (e) => {
-  // handleNav(newPage) {
-  //   // changePage fires when a NavMenu item is clicked
-  //   console.log('$$$$$');
-  //   console.log(this);
-  //   console.log('$$$$$');
-  //   if (newPage === "Home" && this.state.pageTitle !== "Home") {
-  //     if (this.state.pageNum == "1") {
-  //       this.state.classList.remove(nav.pageFaded);
-  //       this.state.classList.remove(nav.blurry);
-  //     } else if (this.state.pageNum == "2") {
-  //       this.state.classList.remove(nav.pageIn);
-  //     } else if (this.state.pageNum == "3") {
-  //       this.state.classList.remove(nav.pageIn);
-  //     }
-  //   } else if (newPage === "Work" && this.state.pageTitle !== "Work") {
-  //     if (this.state.pageNum == "1") {
-  //       this.state.classList.add(nav.pageFaded);
-  //       this.state.classList.add(nav.blurry);
-  //     } else if (this.state.pageNum == "2") {
-  //       this.state.classList.add(nav.pageIn);
-  //     } else if (this.state.pageNum == "3") {
-  //       this.state.classList.remove(nav.pageIn);
-  //     }
-  //   } else if (newPage === "Portfolio" && this.state.pageTitle !== "Portfolio") {
-  //     if (this.state.pageNum == "1") {
-  //       this.state.classList.add(nav.pageFaded);
-  //       this.state.classList.add(nav.blurry);
-  //     } else if (this.state.pageNum == "2") {
-  //       this.state.classList.remove(nav.pageIn);
-  //     } else if (this.state.pageNum == "3") {
-  //       this.state.classList.add(nav.pageIn);
-  //     }
-  //   }
-  // }
+  replaceHeader(newHeader) {
+    if (["projects", "articles", "code snippets"].includes(this.state.pageTitle.toLowerCase())) {
+      newHeader = "Portfolio";
+    } else if (["skills", "experience", "education", "r\u00e9sum\u00e9"].includes(this.state.pageTitle.toLowerCase())) {
+      newHeader = "Work";
+    }
+    // newHeader is the element to be placed in the h1
+    this.setState({
+      showSubNavArrow: false,
+      showSubNavMenu: false,
+      showHeaderClass: animations.fadeOut
+    });
 
-  // reset(newPage) {
-  //   console.log('reset called')
-  //   console.log('newPage=' + newPage)
-  //   console.log('this.state.pageTitle=' + this.state.pageTitle)
-  //   if (this.state.pageTitle === newPage) {
-  //     return null;
-  //   }
-  //   replaceHeader(newPage);
-  //   this.setState({
-  //     showSubNavArrow: false,
-  //     showSubNavMenu: true,
-  //     showHeaderClass: "",
-  //     pageTitle: newPage
-  //   });
-  // }
-
-  // replaceHeader(newHeader) {
-  //   if (["projects", "articles", "code snippets"].includes(this.state.pageTitle.toLowerCase())) {
-  //     newHeader = "Portfolio";
-  //   } else if (["skills", "experience", "education", "r\u00e9sum\u00e9"].includes(this.state.pageTitle.toLowerCase())) {
-  //     newHeader = "Work";
-  //   }
-  //   // newHeader is the element to be placed in the h1
-  //   this.setState({
-  //     showSubNavArrow: false,
-  //     showSubNavMenu: false,
-  //     showHeaderClass: animations.fadeOut
-  //   });
-
-  //   if (["work", "portfolio"].includes(newHeader.toLowerCase())) {
-  //     setTimeout(() => {
-  //       this.setState({
-  //         showSubNavArrow: false,
-  //         showSubNavMenu: true,
-  //         showHeaderClass: animations.fadeIn,
-  //         pageTitle: utils.titleCase(newHeader)
-  //       });
-  //     }, 1000, newHeader);
-  //   } else {
-  //     setTimeout(() => {
-  //       this.setState({
-  //         showSubNavArrow: true,
-  //         showSubNavMenu: false,
-  //         showHeaderClass: animations.fadeIn,
-  //         pageTitle: utils.titleCase(newHeader)
-  //       });
-  //     }, 1000, newHeader);
-  //   }
-  // }
+    if (["work", "portfolio"].includes(newHeader.toLowerCase())) {
+      setTimeout(() => {
+        this.setState({
+          showSubNavArrow: false,
+          showSubNavMenu: true,
+          showHeaderClass: animations.fadeIn,
+          pageTitle: utils.titleCase(newHeader)
+        });
+      }, 1000, newHeader);
+    } else {
+      setTimeout(() => {
+        this.setState({
+          showSubNavArrow: true,
+          showSubNavMenu: false,
+          showHeaderClass: animations.fadeIn,
+          pageTitle: utils.titleCase(newHeader)
+        });
+      }, 1000, newHeader);
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
-
     if (nextProps.active) {
       if (this.props.pageNum == "1") {
           this.setState({
@@ -223,46 +156,16 @@ export class Page extends React.Component {
             active: false
           });
       }
+      if (this.props.pageNum == "2" && this.state.pageTitle !== "Work") {
+        this.replaceHeader("Work");
+      }
+      if (this.props.pageNum == "3" && this.state.pageTitle !== "Portfolio") {
+        this.replaceHeader("Portfolio");
+      }
     }
   }
 
   render() {
-    console.log('rendering Page elem')
-    console.log('state=')
-    console.log(this.state)
-    console.log('Page props=')
-    console.log(this.props)
-    // if (newPage === "Home" && this.state.pageTitle !== "Home") {
-    //   if (this.state.pageNum == "1") {
-    //     this.state.classList.remove(nav.pageFaded);
-    //     this.state.classList.remove(nav.blurry);
-    //   } else if (this.state.pageNum == "2") {
-    //     this.state.classList.remove(nav.pageIn);
-    //   } else if (this.state.pageNum == "3") {
-    //     this.state.classList.remove(nav.pageIn);
-    //   }
-    // } else if (newPage === "Work" && this.state.pageTitle !== "Work") {
-    //   if (this.state.pageNum == "1") {
-    //     this.state.classList.add(nav.pageFaded);
-    //     this.state.classList.add(nav.blurry);
-    //   } else if (this.state.pageNum == "2") {
-    //     this.state.classList.add(nav.pageIn);
-    //   } else if (this.state.pageNum == "3") {
-    //     this.state.classList.remove(nav.pageIn);
-    //   }
-    // } else if (newPage === "Portfolio" && this.state.pageTitle !== "Portfolio") {
-    //   if (this.state.pageNum == "1") {
-    //     this.state.classList.add(nav.pageFaded);
-    //     this.state.classList.add(nav.blurry);
-    //   } else if (this.state.pageNum == "2") {
-    //     this.state.classList.remove(nav.pageIn);
-    //   } else if (this.state.pageNum == "3") {
-    //     this.state.classList.add(nav.pageIn);
-    //   }
-    // }
-
-
-    // }
     return (
       <div className={this.state.classList.join(" ")} id={nav[`p${this.props.pageNum}`]}>
         <Header h1={this.state.pageTitle === "Home" ? "Jason Brazeal" : this.state.pageTitle} className={this.state.showHeaderClass}>
@@ -279,22 +182,6 @@ export class Page extends React.Component {
 }
 
 export class NavMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    // this.handleClick = this.handleClick.bind(this);
-  }
-  // handleClick(e, id) {
-  //   e.preventDefault();
-  //     if (id == nav.uno) {
-  //       var newPage = "Home";
-  //     } else if (id == nav.dos) {
-  //       var newPage = "Work";
-  //     } else if (id == nav.tres) {
-  //       var newPage = "Portfolio";
-  //     }
-  //   window.dispatchEvent(new CustomEvent("changePage", { detail: { newPage: newPage } }));
-  // }
-
   handleClick(e, newPage) {
     e.preventDefault();
     this.props.onChangePage(newPage);
