@@ -115,9 +115,45 @@ export class App extends React.Component {
                     onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
                     subNavItems={["projects", "articles", "code snippets"]}
                     activeSubPage={this.state.activeSubPage}>
+                <CSSTransition
+                  timeout={1000}
+                  classNames={{
+                    appear: animations.slideAppear,
+                    appearActive: animations.slideAppearActive,
+                    enter: animations.slideEnter,
+                    enterActive: animations.slideEnterActive,
+                    exit: animations.slideExit,
+                    exitActive: animations.slideExitActive
+                  }}
+                  in={this.state.activeSubPage === "projects"}>
                 <ProjectCardContainer active={this.state.activeSubPage === "projects"} />
-                <ArticleContainer active={this.state.activeSubPage === "articles"} />
-                <CodeSnippetContainer active={this.state.activeSubPage === "code snippets"} />
+                </CSSTransition>
+                <CSSTransition
+                  timeout={1000}
+                  classNames={{
+                    appear: animations.slideAppear,
+                    appearActive: animations.slideAppearActive,
+                    enter: animations.slideEnter,
+                    enterActive: animations.slideEnterActive,
+                    exit: animations.slideExit,
+                    exitActive: animations.slideExitActive
+                  }}
+                  in={this.state.activeSubPage === "articles"}>
+                  <ArticleContainer active={this.state.activeSubPage === "articles"} />
+                </CSSTransition>
+                <CSSTransition
+                  timeout={1000}
+                  classNames={{
+                    appear: animations.slideAppear,
+                    appearActive: animations.slideAppearActive,
+                    enter: animations.slideEnter,
+                    enterActive: animations.slideEnterActive,
+                    exit: animations.slideExit,
+                    exitActive: animations.slideExitActive
+                  }}
+                  in={this.state.activeSubPage === "code snippets"}>
+                  <CodeSnippetContainer active={this.state.activeSubPage === "code snippets"} />
+                </CSSTransition>
                </Page>
             </div>
           </div>
@@ -156,7 +192,7 @@ export class Page extends React.Component {
     this.state = {
       showSubNavMenu: true,
       showSubNavArrow: false,
-      h1: props.pageTitle,
+      header: props.pageTitle,
       headerClassName: "",
       classList: props.pageTitle === "Home" ? [nav.page] : [nav.page, nav.shiftedRight],
       active: props.active,
@@ -169,7 +205,7 @@ export class Page extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(`this.state.h1=${this.state.h1}`)
+    console.log(`this.state.header=${this.state.header}`)
     // handle page nav state
     if (nextProps.active) {
       if (this.props.pageNum === "1") {
@@ -204,23 +240,20 @@ export class Page extends React.Component {
       this.setState({
         showSubNavArrow: false,
         showSubNavMenu: false,
-        headerClassName: animations.fadeOut
       });
 
       if (nextProps.activeSubPage) { // transition from page to subpage
           this.setState({
             showSubNavArrow: true,
             showSubNavMenu: false,
-            headerClassName: animations.fadeIn,
-            h1: utils.toTitleCase(nextProps.activeSubPage),
+            header: utils.toTitleCase(nextProps.activeSubPage),
             activeSubPage: nextProps.activeSubPage,
           });
       } else { // transition from subpage to page
           this.setState({
             showSubNavArrow: false,
             showSubNavMenu: true,
-            headerClassName: animations.fadeIn,
-            h1: this.props.pageTitle,
+            header: this.props.pageTitle,
             activeSubPage: null,
           });
       }
@@ -231,8 +264,8 @@ export class Page extends React.Component {
   render() {
     return (
       <div className={this.state.classList.join(" ")} id={nav[`p${this.props.pageNum}`]}>
-        <Header h1={this.state.h1 === "Home" ? "Jason Brazeal" : this.state.h1} className={this.state.headerClassName}>
-          {this.state.h1 === "Home" && <Typewriter words={["Software", "Eng"]} />}
+        <Header header={this.state.header === "Home" ? "Jason Brazeal" : this.state.header}>
+          {this.state.header === "Home" && <Typewriter words={["Software", "Eng"]} />}
           <SubNavArrow onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavArrow} />
         </Header>
         <section>
@@ -310,18 +343,41 @@ export class SkillsGraphic extends React.Component {
    render() {
     console.log('SkillsGraphic rendering.')
     return(
-      <div className={this.props.active ? `${graphics.skills} ${css.slidIn}` : `${graphics.skills} ${css.slidOut}`}>
+      <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
         <div className={graphics.bubbleSkill}>skills</div>
       </div>
     )
   }
+}
 
+export class CodeSnippetContainer extends React.Component {
+   render() {
+    return(
+      <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
+        <div className={graphics.snippet}>snip1</div>
+        <div className={graphics.snippet}>snip2</div>
+        <div className={graphics.snippet}>snip3</div>
+      </div>
+    )
+  }
+}
+
+export class ArticleContainer extends React.Component {
+   render() {
+    return(
+      <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
+        <div className={graphics.article}>article1</div>
+        <div className={graphics.article}>article2</div>
+        <div className={graphics.article}>article3</div>
+      </div>
+    )
+  }
 }
 
 export class WorkCardContainer extends React.Component {
    render() {
     return(
-      <div className={this.props.active ? `${graphics.skills} ${graphics.workCardContainer} ${css.slidIn}` : `${graphics.skills} ${graphics.workCardContainer} ${css.slidOut}`}>
+      <div className={this.props.active ? `${graphics.container} ${graphics.workCardContainer} ${css.slidIn}` : `${graphics.container} ${graphics.workCardContainer} ${css.slidOut}`}>
         <div>{this.props.subject}</div>
       </div>
     )
@@ -331,7 +387,7 @@ export class WorkCardContainer extends React.Component {
 export class ProjectCardContainer extends React.Component {
    render() {
     return(
-      <div className={this.props.active ? `${graphics.skills} ${graphics.workCardContainer} ${css.slidIn}` : `${graphics.skills} ${graphics.workCardContainer} ${css.slidOut}`}>
+      <div className={this.props.active ? `${graphics.container} ${graphics.projectCardContainer} ${css.slidIn}` : `${graphics.container} ${graphics.workCardContainer} ${css.slidOut}`}>
         <div>pcards</div>
       </div>
     )
@@ -339,10 +395,36 @@ export class ProjectCardContainer extends React.Component {
 }
 
 export class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      classList: [],
+      header: this.props.header
+    };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.header !== this.props.header) {
+      this.setState({
+        classList: [animations.fadeOut]
+      });
+      setTimeout(() => {
+        this.setState({
+          classList: [animations.fadeIn],
+          header: this.props.header
+        });
+      }, 1000);
+      setTimeout(() => {
+        this.setState({
+          classList: []
+        });
+      }, 2000);
+    }
+  }
+
   render() {
     return (
-      <header className={this.props.className}>
-        <h1>{this.props.h1}</h1>
+      <header className={this.state.classList.join(" ")}>
+        <h1>{this.state.header}</h1>
         {this.props.children}
       </header>
     )
@@ -422,29 +504,6 @@ export class DesignCodeDeployGraphic extends React.Component {
   }
 }
 
-export class CodeSnippetContainer extends React.Component {
-   render() {
-    return(
-      <div className={[graphics.container, graphics.snippetContainer].join(" ")}>
-        <div className={graphics.snippet}>snip1</div>
-        <div className={graphics.snippet}>snip2</div>
-        <div className={graphics.snippet}>snip3</div>
-      </div>
-    )
-  }
-}
-
-export class ArticleContainer extends React.Component {
-   render() {
-    return(
-      <div className={[graphics.container, graphics.articleContainer].join(" ")}>
-        <div className={graphics.article}>article1</div>
-        <div className={graphics.article}>article2</div>
-        <div className={graphics.article}>article3</div>
-      </div>
-    )
-  }
-}
 
 // for reference:
 
