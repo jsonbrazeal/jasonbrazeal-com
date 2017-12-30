@@ -54,3 +54,11 @@ ul {
 .displayBlock {
   display: block;
 }
+
+.zIndexFront {
+  z-index: 1000;
+}
+
+.zIndexBehind {
+  z-index: -1;
+}

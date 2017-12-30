@@ -243,19 +243,42 @@ export class Page extends React.Component {
 
 
 export class SubNavMenu extends React.Component {
+  constructor(props) {
+    super(props);
+    if (this.props.visible) {
+      var classList = [nav.subNav, animations.fadeIn, css.zIndexFront];
+    } else {
+      var classList = [nav.subNav, animations.fadeOut, css.zIndexBehind];
+    }
+    this.state = {
+      classList: classList
+    };
+  }
+
+  componentWillReceiveProps(nextProps)  {
+    var classList = this.state.classList;
+    if (nextProps.visible) {
+      classList.splice(classList.indexOf(animations.fadeOut), 1);
+      classList.splice(classList.indexOf(css.zIndexBehind), 1);
+      classList.push(animations.fadeIn, css.zIndexFront)
+    }
+    else {
+      classList.splice(classList.indexOf(animations.fadeIn), 1);
+      classList.splice(classList.indexOf(css.zIndexFront), 1);
+      classList.push(animations.fadeOut, css.zIndexBehind)
+    }
+    this.setState({
+      classList: classList
+    });
+  }
+
   handleClick(e, newSubPage) {
     this.props.onChangeSubPage(newSubPage)
   }
 
   render() {
-    if (this.props.visible) {
-      var classList = [nav.subNav, animations.fadeIn, css.displayBlock];
-    } else {
-      var classList = [nav.subNav, animations.fadeOut, css.displayNone];
-    }
-
     return (
-      <section className={classList.join(" ")}>
+      <section className={this.state.classList.join(" ")}>
         <ul className={nav.subNavList}>
           {this.props.subNavItems.map((subPage, i) => {
             if (this.props.visible) {
