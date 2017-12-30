@@ -82,8 +82,32 @@ export class App extends React.Component {
                   in={this.state.activeSubPage === "skills"}>
                   <SkillsGraphic active={this.state.activeSubPage === "skills"} />
                 </CSSTransition>
-                <WorkCardContainer active={this.state.activeSubPage === "experience"} subject="Experience" />
-                <WorkCardContainer active={this.state.activeSubPage === "education"} subject="Education" />
+                <CSSTransition
+                  timeout={1000}
+                  classNames={{
+                    appear: animations.slideAppear,
+                    appearActive: animations.slideAppearActive,
+                    enter: animations.slideEnter,
+                    enterActive: animations.slideEnterActive,
+                    exit: animations.slideExit,
+                    exitActive: animations.slideExitActive
+                  }}
+                  in={this.state.activeSubPage === "experience"}>
+                  <WorkCardContainer active={this.state.activeSubPage === "experience"} subject="Experience" />
+                </CSSTransition>
+                <CSSTransition
+                  timeout={1000}
+                  classNames={{
+                    appear: animations.slideAppear,
+                    appearActive: animations.slideAppearActive,
+                    enter: animations.slideEnter,
+                    enterActive: animations.slideEnterActive,
+                    exit: animations.slideExit,
+                    exitActive: animations.slideExitActive
+                  }}
+                  in={this.state.activeSubPage === "education"}>
+                  <WorkCardContainer active={this.state.activeSubPage === "education"} subject="Education" />
+                </CSSTransition>
               </Page>
               <Page active={this.state.activePage === "Portfolio"}
                     pageNum="3"
@@ -294,6 +318,26 @@ export class SkillsGraphic extends React.Component {
 
 }
 
+export class WorkCardContainer extends React.Component {
+   render() {
+    return(
+      <div className={this.props.active ? `${graphics.skills} ${graphics.workCardContainer} ${css.slidIn}` : `${graphics.skills} ${graphics.workCardContainer} ${css.slidOut}`}>
+        <div>{this.props.subject}</div>
+      </div>
+    )
+  }
+}
+
+export class ProjectCardContainer extends React.Component {
+   render() {
+    return(
+      <div className={this.props.active ? `${graphics.skills} ${graphics.workCardContainer} ${css.slidIn}` : `${graphics.skills} ${graphics.workCardContainer} ${css.slidOut}`}>
+        <div>pcards</div>
+      </div>
+    )
+  }
+}
+
 export class Header extends React.Component {
   render() {
     return (
@@ -373,26 +417,6 @@ export class DesignCodeDeployGraphic extends React.Component {
         <div className={graphics.bubble}>code</div>
         <div className={graphics.bubble}>deploy</div>
         <hr />
-      </div>
-    )
-  }
-}
-
-export class WorkCardContainer extends React.Component {
-   render() {
-    return(
-      <div className={[graphics.container, graphics.workCardContainer].join(" ")}>
-        <div>{this.props.subject}</div>
-      </div>
-    )
-  }
-}
-
-export class ProjectCardContainer extends React.Component {
-   render() {
-    return(
-      <div className={[graphics.container, graphics.projectCardContainer].join(" ")}>
-        <div>pcards</div>
       </div>
     )
   }
