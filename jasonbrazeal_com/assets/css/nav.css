@@ -185,3 +185,7 @@ hr {
   position: absolute;
   left: 0;
 }
+
+.selected {
+  color: #CE7734;
+}

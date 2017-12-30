@@ -50,7 +50,7 @@ export class App extends React.Component {
     console.log('this.state.activePage='+this.state.activePage);
     return (
       <React.Fragment>
-        <NavMenu onChangePage={(newPage) => {this.handleNav(newPage)}} />
+        <NavMenu activePage={this.state.activePage} onChangePage={(newPage) => {this.handleNav(newPage)}} />
         <div className={nav.container} id={nav.c1} >
           <div className={nav.container} id={nav.c2} >
             <div className={nav.container} id={nav.c3} >
@@ -170,16 +170,17 @@ export class NavMenu extends React.Component {
   }
 
   render() {
+    var classList = [nav.navElem, nav.icon, nav.menuIcon, icons.fa];
     return (
       <ul className={nav.menu}>
-        <a href="" onClick={(e) => this.handleClick(e, nav.uno)}><
-          li id={nav.uno} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-home"]].join(" ")}></li>
+        <a href="" onClick={(e) => this.handleClick(e, nav.uno)}>
+          <li id={nav.uno} className={classList.concat(this.props.activePage === "Home" ? [nav.selected, icons["fa-home"]] : [icons["fa-home"]]).join(" ")}></li>
         </a>
         <a href="" onClick={(e) => this.handleClick(e, nav.dos)}>
-          <li id={nav.dos} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-suitcase"]].join(" ")}></li>
+          <li id={nav.dos} className={classList.concat(this.props.activePage === "Work" ? [nav.selected, icons["fa-suitcase"]] : [icons["fa-suitcase"]]).join(" ")}></li>
         </a>
         <a href="" onClick={(e) => this.handleClick(e, nav.tres)}>
-          <li id={nav.tres} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-laptop"]].join(" ")}></li>
+          <li id={nav.tres} className={classList.concat(this.props.activePage === "Portfolio" ? [nav.selected, icons["fa-laptop"]] : [icons["fa-laptop"]]).join(" ")}></li>
         </a>
       </ul>
     );
