@@ -1,5 +1,5 @@
 import "normalize.css";
-import css from "../css/main.css";
+import css from "../css/shared.css";
 import loader from "../css/loader.css";
 import nav from "../css/nav.css"
 import graphics from "../css/graphics.css"
@@ -72,12 +72,12 @@ export class App extends React.Component {
                 <CSSTransition
                   timeout={1000}
                   classNames={{
-                    appear: animations.fadeAppear,
-                    appearActive: animations.fadeAppearActive,
-                    enter: animations.fadeEnter,
-                    enterActive: animations.fadeEnterActive,
-                    exit: animations.fadeExit,
-                    exitActive: animations.fadeExitActive
+                    appear: animations.slideAppear,
+                    appearActive: animations.slideAppearActive,
+                    enter: animations.slideEnter,
+                    enterActive: animations.slideEnterActive,
+                    exit: animations.slideExit,
+                    exitActive: animations.slideExitActive
                   }}
                   in={this.state.activeSubPage === "skills"}>
                   <SkillsGraphic active={this.state.activeSubPage === "skills"} />
@@ -286,7 +286,7 @@ export class SkillsGraphic extends React.Component {
    render() {
     console.log('SkillsGraphic rendering.')
     return(
-      <div className={this.props.active ? `${graphics.skills} ${animations.fadeIn}` : `${graphics.skills} ${animations.fadeOut}`}>
+      <div className={this.props.active ? `${graphics.skills} ${css.slidIn}` : `${graphics.skills} ${css.slidOut}`}>
         <div className={graphics.bubbleSkill}>skills</div>
       </div>
     )

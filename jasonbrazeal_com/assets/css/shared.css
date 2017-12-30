@@ -62,3 +62,11 @@ ul {
 .zIndexBehind {
   z-index: -1;
 }
+
+.slidIn {
+  top: 0px;
+}
+
+.slidOut {
+  top: 1000px;
+}

@@ -179,6 +179,36 @@
   }
 }
 
+.slideAppear {
+  top: 1000px;
+  visibility: visible;
+}
+
+.slideAppear.slideAppearActive {
+  top: 0;
+  transition: top 1000ms ease-out;
+}
+
+.slideEnter {
+  top: 1000px;
+  visibility: visible;
+}
+
+.slideEnter.slideEnterActive {
+  top: 0;
+  transition: top 1000ms ease-out;
+}
+
+.slideExit {
+  top: 0;
+}
+
+.slideExit.slideExitActive {
+  top: 1000px;
+  transition: top 800ms ease-out;
+}
+
+
 .fadeAppear {
   opacity: 0.01;
   visibility: visible;
