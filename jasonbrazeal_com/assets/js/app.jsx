@@ -170,17 +170,25 @@ export class NavMenu extends React.Component {
   }
 
   render() {
-    var classList = [nav.navElem, nav.icon, nav.menuIcon, icons.fa];
     return (
       <ul className={nav.menu}>
         <a href="" onClick={(e) => this.handleClick(e, nav.uno)}>
-          <li id={nav.uno} className={classList.concat(this.props.activePage === "Home" ? [nav.selected, icons["fa-home"]] : [icons["fa-home"]]).join(" ")}></li>
+          <li id={nav.uno} className={this.props.activePage === "Home" ? [nav.selected, nav.navElem].join(" ") : nav.navElem}>
+            <span className={[nav.icon, nav.menuIcon, icons.fa, icons["fa-home"]].join(" ")}></span>
+            Home
+          </li>
         </a>
         <a href="" onClick={(e) => this.handleClick(e, nav.dos)}>
-          <li id={nav.dos} className={classList.concat(this.props.activePage === "Work" ? [nav.selected, icons["fa-suitcase"]] : [icons["fa-suitcase"]]).join(" ")}></li>
+          <li id={nav.dos} className={this.props.activePage === "Work" ? [nav.selected, nav.navElem].join(" ") : nav.navElem}>
+            <span className={[nav.icon, nav.menuIcon, icons.fa, icons["fa-suitcase"]].join(" ")}></span>
+            Work
+          </li>
         </a>
         <a href="" onClick={(e) => this.handleClick(e, nav.tres)}>
-          <li id={nav.tres} className={classList.concat(this.props.activePage === "Portfolio" ? [nav.selected, icons["fa-laptop"]] : [icons["fa-laptop"]]).join(" ")}></li>
+          <li id={nav.tres} className={this.props.activePage === "Portfolio" ? [nav.selected, nav.navElem].join(" ") : nav.navElem}>
+            <span className={[nav.icon, nav.menuIcon, icons.fa, icons["fa-laptop"]].join(" ")}></span>
+            Portfolio
+          </li>
         </a>
       </ul>
     );
@@ -498,7 +506,7 @@ export class DesignCodeDeployGraphic extends React.Component {
         <div className={graphics.bubble}>design</div>
         <div className={graphics.bubble}>code</div>
         <div className={graphics.bubble}>deploy</div>
-        <hr />
+        <hr className={css.orangeBorder} />
       </div>
     )
   }
