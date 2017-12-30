@@ -9,6 +9,7 @@ import jason from "../img/jason.jpeg"
 
 import utils from "./utils.js"
 import React from "react";
+import { CSSTransition } from 'react-transition-group';
 
 export class App extends React.Component {
   constructor(props) {
@@ -58,27 +59,42 @@ export class App extends React.Component {
                     pageTitle="Home"
                     onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
                     subNavItems={[]}
-                    activeSubPage={this.state.activeSubPage}
-                    children={[<DesignCodeDeployGraphic />,
-                               <Footer />]} />
+                    activeSubPage={this.state.activeSubPage}>
+                <DesignCodeDeployGraphic />
+                <Footer />
+              </Page>
               <Page active={this.state.activePage === "Work"}
                     pageNum="2"
                     pageTitle="Work"
                     onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
                     subNavItems={["skills", "experience", "education", "résumé"]}
-                    activeSubPage={this.state.activeSubPage}
-                    children={[<SkillsGraphic active={this.state.activeSubPage === "skills"} />,
-                               <WorkCardContainer active={this.state.activeSubPage === "experience"} subject="Experience" />,
-                               <WorkCardContainer active={this.state.activeSubPage === "education"} subject="Education" />]} />
+                    activeSubPage={this.state.activeSubPage}>
+                <CSSTransition
+                  timeout={1000}
+                  classNames={{
+                    appear: animations.fadeAppear,
+                    appearActive: animations.fadeAppearActive,
+                    enter: animations.fadeEnter,
+                    enterActive: animations.fadeEnterActive,
+                    exit: animations.fadeExit,
+                    exitActive: animations.fadeExitActive
+                  }}
+                  in={this.state.activeSubPage === "skills"}>
+                  <SkillsGraphic active={this.state.activeSubPage === "skills"} />
+                </CSSTransition>
+                <WorkCardContainer active={this.state.activeSubPage === "experience"} subject="Experience" />
+                <WorkCardContainer active={this.state.activeSubPage === "education"} subject="Education" />
+              </Page>
               <Page active={this.state.activePage === "Portfolio"}
                     pageNum="3"
                     pageTitle="Portfolio"
                     onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
                     subNavItems={["projects", "articles", "code snippets"]}
-                    activeSubPage={this.state.activeSubPage}
-                    children={[<ProjectCardContainer active={this.state.activeSubPage === "projects"} />,
-                               <ArticleContainer active={this.state.activeSubPage === "articles"} />,
-                               <CodeSnippetContainer active={this.state.activeSubPage === "code snippets"} />]} />
+                    activeSubPage={this.state.activeSubPage}>
+                <ProjectCardContainer active={this.state.activeSubPage === "projects"} />
+                <ArticleContainer active={this.state.activeSubPage === "articles"} />
+                <CodeSnippetContainer active={this.state.activeSubPage === "code snippets"} />
+               </Page>
             </div>
           </div>
         </div>
@@ -194,35 +210,6 @@ export class Page extends React.Component {
       }
     }
 
-
-
-    //   if (!(["Work", "Portfolio"].includes(nextProps.pageTitle))) { // transition from subpage to page
-    //     setTimeout(() => {
-    //       this.setState({
-    //         showSubNavArrow: false,
-    //         showSubNavMenu: true,
-    //         headerClassName: animations.fadeIn,
-    //         pageTitle: nextProps.activeSubPage,
-    //         activeSubPage: nextProps.activeSubPage,
-    //       });
-    //       console.log(`transition continuing`)
-    //       console.log(this.state)
-    //     }, 1000);
-    //   } else { // transition from page to subpage
-    //     setTimeout(() => {
-    //       this.setState({
-    //         showSubNavArrow: true,
-    //         showSubNavMenu: false,
-    //         headerClassName: animations.fadeIn,
-    //         pageTitle: nextProps.pageTitle,
-    //         activeSubPage: null
-    //       });
-    //       console.log(`transition continuing`)
-    //       console.log(this.state)
-    //     }, 1000);
-    //   }
-    // }
-
   }
 
   render() {
@@ -304,36 +291,42 @@ export class SubNavArrow extends React.Component {
 }
 
 export class SkillsGraphic extends React.Component {
-  constructor(props) {
-    super(props);
-    if (this.props.active) {
-      var classList = [graphics.container, animations.slideIn];
-    } else {
-      var classList = [graphics.container, animations.slideOut];
-    }
-    this.state = {
-      classList: classList
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   if (this.props.active) {
+  //     var classList = [graphics.container, animations.slideIn];
+  //   } else {
+  //     var classList = [graphics.container, animations.slideOut];
+  //   }
+  //   this.state = {
+  //     classList: classList
+  //   };
+  // }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.active) {
-      var classList = [graphics.container, animations.slideIn];
-      } else {
-      var classList = [graphics.container, animations.slideOut];
-    }
-    this.setState({
-      classList: classList
-    });
-  }
+  // componentWillUpdate() {
+  //   console.log('componentWillUpdate')
+  // }
+  // componentWillReceiveProps(nextProps) {
+  //   console.log('componentWillReceiveProps('+nextProps+')')
+  //   if (nextProps.active) {
+  //     var classList = [graphics.container, animations.slideIn];
+  //     } else {
+  //     var classList = [graphics.container, animations.slideOut];
+  //   }
+  //   this.setState({
+  //     classList: classList
+  //   });
+  // }
 
    render() {
+    console.log('SkillsGraphic rendering.')
     return(
-      <div className={this.state.classList.join(" ")}>
+      <div className={graphics.skills}>
         <div className={graphics.bubbleSkill}>skills</div>
       </div>
     )
   }
+
 }
 
 export class Header extends React.Component {
