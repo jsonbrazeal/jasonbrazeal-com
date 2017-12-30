@@ -248,11 +248,21 @@ export class SubNavMenu extends React.Component {
   }
 
   render() {
+    if (this.props.visible) {
+      var classList = [nav.subNav, animations.fadeIn, css.displayBlock];
+    } else {
+      var classList = [nav.subNav, animations.fadeOut, css.displayNone];
+    }
+
     return (
-      <section className={`${nav.subNav} ${this.props.visible ? animations.fadeIn : animations.fadeOut }`}>
+      <section className={classList.join(" ")}>
         <ul className={nav.subNavList}>
           {this.props.subNavItems.map((subPage, i) => {
-            return <li key={i} onClick={(e) => this.handleClick(e, subPage)}>{subPage}</li>
+            if (this.props.visible) {
+              return <li key={i} onClick={(e) => this.handleClick(e, subPage)}>{subPage}</li>
+            } else {
+              return <li key={i} >{subPage}</li>
+            }
           })}
         </ul>
       </section>

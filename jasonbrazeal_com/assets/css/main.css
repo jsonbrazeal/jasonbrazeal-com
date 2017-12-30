@@ -46,3 +46,11 @@ ul {
 .opaque {
   opacity: 1;
 }
+
+.displayNone {
+  display: none;
+}
+
+.displayBlock {
+  display: block;
+}
