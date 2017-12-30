@@ -273,9 +273,8 @@ export class Page extends React.Component {
   render() {
     return (
       <div className={this.state.classList.join(" ")} id={nav[`p${this.props.pageNum}`]}>
-        <Header header={this.state.header === "Home" ? "Jason Brazeal" : this.state.header}>
+        <Header header={this.state.header === "Home" ? "Jason Brazeal" : this.state.header} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)}>
           {this.state.header === "Home" && <Typewriter words={["Software", "Eng"]} />}
-          <SubNavArrow onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavArrow} />
         </Header>
         <section>
           {this.props.children}
@@ -338,13 +337,79 @@ export class SubNavMenu extends React.Component {
   }
 }
 
+
+export class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      classList: [],
+      header: this.props.header
+    };
+  }
+
+  handleSubPageNav(newSubPage) {
+    this.props.onChangeSubPage(newSubPage)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.header !== this.props.header) {
+      if (["Home", "Work", "Portfolio"].includes(nextProps.header)) {
+        var showSubNavArrow = false;
+      } else {
+        var showSubNavArrow = true;
+      }
+      this.setState({
+        classList: [animations.fadeOutIn]
+      });
+      setTimeout(() => {
+        this.setState({
+          header: nextProps.header,
+          showSubNavArrow: showSubNavArrow
+        });
+      }, 500);
+      setTimeout(() => {
+        this.setState({
+          classList: []
+        });
+      }, 1000);
+    }
+  }
+
+  render() {
+    return (
+      <header className={this.state.classList.join(" ")}>
+        <h1>{this.state.header}</h1>
+        {this.state.header === "Home" || <SubNavArrow onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavArrow} />}
+        {this.props.children}
+      </header>
+    )
+  }
+}
+
 export class SubNavArrow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: this.props.visible
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      visible: nextProps.visible
+    });
+  }
+
   handleClick(e) {
     this.props.onChangeSubPage(null);
   }
 
   render() {
-    return <span className={`${[icons.fa, icons["fa-chevron-left"], nav.shiftedRightElem, nav.subNavArrow].join(" ")} ${this.props.visible ? animations.fadeIn : animations.fadeOut }`} onClick={(e) => this.handleClick(e)}></span>
+    if (this.props.visible) {
+      return <span className={`${[icons.fa, icons["fa-chevron-left"], nav.shiftedRightElem, nav.subNavArrow].join(" ")}`} onClick={(e) => this.handleClick(e)}></span>
+    } else {
+    return null;
+    }
   }
 }
 
@@ -399,42 +464,6 @@ export class ProjectCardContainer extends React.Component {
       <div className={this.props.active ? `${graphics.container} ${graphics.projectCardContainer} ${css.slidIn}` : `${graphics.container} ${graphics.workCardContainer} ${css.slidOut}`}>
         <div>pcards</div>
       </div>
-    )
-  }
-}
-
-export class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      classList: [],
-      header: this.props.header
-    };
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.header !== this.props.header) {
-      this.setState({
-        classList: [animations.fadeOutIn]
-      });
-      setTimeout(() => {
-        this.setState({
-          header: this.props.header
-        });
-      }, 500);
-      setTimeout(() => {
-        this.setState({
-          classList: []
-        });
-      }, 1000);
-    }
-  }
-
-  render() {
-    return (
-      <header className={this.state.classList.join(" ")}>
-        <h1>{this.state.header}</h1>
-        {this.props.children}
-      </header>
     )
   }
 }
