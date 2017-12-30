@@ -27,6 +27,8 @@ export class App extends React.Component {
       var page = "Work";
     } else if (newPage.match("tres")) {
       var page = "Portfolio";
+    } else {
+      throw `Page ${page} does not exist`
     }
     this.setState({
       activePage: page,
@@ -34,33 +36,36 @@ export class App extends React.Component {
     });
   }
 
-  handleSubPageNav(newHeader) {
-    console.log('handleSubPageNav('+newHeader+')')
+  handleSubPageNav(newSubPage) {
+    console.log('handleSubPageNav('+newSubPage+')')
     this.setState({
-      activeSubPage: newHeader.toLowerCase()
+      activeSubPage: newSubPage
     });
   }
 
   render() {
-    console.log('rendering app....this.state.activeSubPage='+this.state.activeSubPage);
+    console.log('rendering app....');
+    console.log('this.state.activeSubPage='+this.state.activeSubPage);
+    console.log('this.state.activePage='+this.state.activePage);
     return (
       <React.Fragment>
-        <NavMenu onChangePage={(e, newPage) => {this.handleNav(e, newPage)}} />
+        <NavMenu onChangePage={(newPage) => {this.handleNav(newPage)}} />
         <div className={nav.container} id={nav.c1} >
           <div className={nav.container} id={nav.c2} >
             <div className={nav.container} id={nav.c3} >
               <Page active={this.state.activePage === "Home"}
                     pageNum="1"
                     pageTitle="Home"
-                    onChangeSubPage={(e, newHeader) => this.handleSubPageNav(e, newHeader)}
+                    onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
+                    subNavItems={[]}
                     activeSubPage={this.state.activeSubPage}
                     children={[<DesignCodeDeployGraphic />,
                                <Footer />]} />
               <Page active={this.state.activePage === "Work"}
                     pageNum="2"
                     pageTitle="Work"
-                    onChangeSubPage={(e, newHeader) => this.handleSubPageNav(e, newHeader)}
-                    subNavNewHeaders={["skills", "experience", "education", "résumé"]}
+                    onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
+                    subNavItems={["skills", "experience", "education", "résumé"]}
                     activeSubPage={this.state.activeSubPage}
                     children={[<SkillsGraphic active={this.state.activeSubPage === "skills"} />,
                                <WorkCardContainer active={this.state.activeSubPage === "experience"} subject="Experience" />,
@@ -68,8 +73,9 @@ export class App extends React.Component {
               <Page active={this.state.activePage === "Portfolio"}
                     pageNum="3"
                     pageTitle="Portfolio"
-                    onChangeSubPage={(e, newHeader) => this.handleSubPageNav(e, newHeader)}
-                    subNavNewHeaders={["projects", "articles", "code snippets"]} activeSubPage={this.state.activeSubPage}
+                    onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
+                    subNavItems={["projects", "articles", "code snippets"]}
+                    activeSubPage={this.state.activeSubPage}
                     children={[<ProjectCardContainer active={this.state.activeSubPage === "projects"} />,
                                <ArticleContainer active={this.state.activeSubPage === "articles"} />,
                                <CodeSnippetContainer active={this.state.activeSubPage === "code snippets"} />]} />
@@ -81,38 +87,26 @@ export class App extends React.Component {
   }
 }
 
-export class SkillsGraphic extends React.Component {
-  constructor(props) {
-    super(props);
-    if (this.props.active) {
-      var classList = [graphics.container, animations.slideIn];
-    } else {
-      var classList = [graphics.container, animations.slideOut];
-    }
-    this.state = {
-      classList: classList
-    };
+export class NavMenu extends React.Component {
+  handleClick(e, newPageId) {
+    e.preventDefault();
+    this.props.onChangePage(newPageId);
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('SKILLSGRAPHIC componentWillReceiveProps('+nextProps+')')
-    if (nextProps.active) {
-      var classList = [graphics.container, animations.slideIn];
-      } else {
-      var classList = [graphics.container, animations.slideOut];
-    }
-    this.setState({
-      classList: classList
-    });
-  }
-
-   render() {
-    console.log('rendering SkillsGraphic')
-    return(
-      <div className={this.state.classList.join(" ")}>
-        <div className={graphics.bubbleSkill}>skills</div>
-      </div>
-    )
+  render() {
+    return (
+      <ul className={nav.menu}>
+        <a href="" onClick={(e) => this.handleClick(e, nav.uno)}><
+          li id={nav.uno} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-home"]].join(" ")}></li>
+        </a>
+        <a href="" onClick={(e) => this.handleClick(e, nav.dos)}>
+          <li id={nav.dos} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-suitcase"]].join(" ")}></li>
+        </a>
+        <a href="" onClick={(e) => this.handleClick(e, nav.tres)}>
+          <li id={nav.tres} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-laptop"]].join(" ")}></li>
+        </a>
+      </ul>
+    );
   }
 }
 
@@ -122,56 +116,21 @@ export class Page extends React.Component {
     this.state = {
       showSubNavMenu: true,
       showSubNavArrow: false,
-      pageTitle: props.pageTitle,
-      showHeaderClass: "",
+      h1: props.pageTitle,
+      headerClassName: "",
       classList: props.pageTitle === "Home" ? [nav.page] : [nav.page, nav.shiftedRight],
       active: props.active,
-      activeSubPage: this.props.activeSubPage
+      activeSubPage: props.activeSubPage,
     };
   }
 
-  replaceHeader(newHeader) {
-    if (["projects", "articles", "code snippets"].includes(this.state.pageTitle.toLowerCase())) {
-      newHeader = "Portfolio";
-    } else if (["skills", "experience", "education", "r\u00e9sum\u00e9"].includes(this.state.pageTitle.toLowerCase())) {
-      newHeader = "Work";
-    }
-
-    // handle subnav
-    this.props.onChangeSubPage(newHeader)
-
-    // newHeader is the element to be placed in the h1
-    this.setState({
-      showSubNavArrow: false,
-      showSubNavMenu: false,
-      showHeaderClass: animations.fadeOut
-    });
-
-    if (["work", "portfolio"].includes(newHeader.toLowerCase())) {
-      setTimeout(() => {
-        this.setState({
-          showSubNavArrow: false,
-          showSubNavMenu: true,
-          showHeaderClass: animations.fadeIn,
-          pageTitle: utils.titleCase(newHeader)
-        });
-      }, 1000, newHeader);
-    } else {
-      setTimeout(() => {
-        this.setState({
-          showSubNavArrow: true,
-          showSubNavMenu: false,
-          showHeaderClass: animations.fadeIn,
-          pageTitle: utils.titleCase(newHeader)
-        });
-      }, 1000, newHeader);
-    }
+  handleSubPageNav(newSubPage) {
+    this.props.onChangeSubPage(newSubPage)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      activeSubPage: nextProps.activeSubPage
-    });
+    console.log(`this.state.h1=${this.state.h1}`)
+    // handle page nav state
     if (nextProps.active) {
       if (this.props.pageNum === "1") {
           this.setState({
@@ -196,75 +155,108 @@ export class Page extends React.Component {
             active: false
           });
       }
-      if (this.props.pageNum === "2" && this.state.pageTitle !== "Work") {
-        this.replaceHeader("Work");
-      }
-      if (this.props.pageNum === "3" && this.state.pageTitle !== "Portfolio") {
-        this.replaceHeader("Portfolio");
+    }
+
+    if (nextProps.activeSubPage !== this.state.activeSubPage) {
+      console.log(`subpage transition ${this.state.activeSubPage} to ${nextProps.activeSubPage}`)
+      console.log(this.state)
+      // handle subpage transition
+      this.setState({
+        showSubNavArrow: false,
+        showSubNavMenu: false,
+        headerClassName: animations.fadeOut
+      });
+
+      if (nextProps.activeSubPage) { // transition from page to subpage
+        setTimeout(() => {
+          this.setState({
+            showSubNavArrow: true,
+            showSubNavMenu: false,
+            headerClassName: animations.fadeIn,
+            h1: utils.toTitleCase(nextProps.activeSubPage),
+            activeSubPage: nextProps.activeSubPage,
+          });
+          console.log(`page to subpage transition continuing`)
+          console.log(this.state)
+        }, 1000);
+      } else { // transition from subpage to page
+        setTimeout(() => {
+          this.setState({
+            showSubNavArrow: false,
+            showSubNavMenu: true,
+            headerClassName: animations.fadeIn,
+            h1: this.props.pageTitle,
+            activeSubPage: null,
+          });
+          console.log(`subpage to page transition continuing`)
+          console.log(this.state)
+        }, 1000);
       }
     }
+
+
+
+    //   if (!(["Work", "Portfolio"].includes(nextProps.pageTitle))) { // transition from subpage to page
+    //     setTimeout(() => {
+    //       this.setState({
+    //         showSubNavArrow: false,
+    //         showSubNavMenu: true,
+    //         headerClassName: animations.fadeIn,
+    //         pageTitle: nextProps.activeSubPage,
+    //         activeSubPage: nextProps.activeSubPage,
+    //       });
+    //       console.log(`transition continuing`)
+    //       console.log(this.state)
+    //     }, 1000);
+    //   } else { // transition from page to subpage
+    //     setTimeout(() => {
+    //       this.setState({
+    //         showSubNavArrow: true,
+    //         showSubNavMenu: false,
+    //         headerClassName: animations.fadeIn,
+    //         pageTitle: nextProps.pageTitle,
+    //         activeSubPage: null
+    //       });
+    //       console.log(`transition continuing`)
+    //       console.log(this.state)
+    //     }, 1000);
+    //   }
+    // }
+
   }
 
   render() {
-    console.log('rendering Page')
     return (
       <div className={this.state.classList.join(" ")} id={nav[`p${this.props.pageNum}`]}>
-        <Header h1={this.state.pageTitle === "Home" ? "Jason Brazeal" : this.state.pageTitle} className={this.state.showHeaderClass}>
-          {this.state.pageTitle === "Home" && <Typewriter words={["Software", "Eng"]} />}
-          <SubNavArrow onChangeSubPage={(e) => this.replaceHeader(e)} visible={this.state.showSubNavArrow} />
+        <Header h1={this.state.h1 === "Home" ? "Jason Brazeal" : this.state.h1} className={this.state.headerClassName}>
+          {this.state.h1 === "Home" && <Typewriter words={["Software", "Eng"]} />}
+          <SubNavArrow onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavArrow} />
         </Header>
         <section>
           {this.props.children}
         </section>
-        <SubNavMenu newHeaders={this.props.subNavNewHeaders} pageNum={this.props.pageNum} onChangeSubPage={(e) => this.replaceHeader(e)} visible={this.state.showSubNavMenu} />
+        <SubNavMenu subNavItems={this.props.subNavItems} pageNum={this.props.pageNum} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavMenu} />
       </div>
     );
   }
 }
 
 
-export class NavMenu extends React.Component {
-  handleClick(e, newPage) {
-    e.preventDefault();
-    this.props.onChangePage(newPage);
+export class SubNavMenu extends React.Component {
+  handleClick(e, newSubPage) {
+    this.props.onChangeSubPage(newSubPage)
   }
 
   render() {
     return (
-      <ul className={nav.menu}>
-        <a href="" onClick={(e) => this.handleClick(e, nav.uno)}><
-          li id={nav.uno} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-home"]].join(" ")}></li>
-        </a>
-        <a href="" onClick={(e) => this.handleClick(e, nav.dos)}>
-          <li id={nav.dos} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-suitcase"]].join(" ")}></li>
-        </a>
-        <a href="" onClick={(e) => this.handleClick(e, nav.tres)}>
-          <li id={nav.tres} className={[nav.navElem, nav.icon, nav.menuIcon, icons.fa, icons["fa-laptop"]].join(" ")}></li>
-        </a>
-      </ul>
+      <section className={`${nav.subNav} ${this.props.visible ? animations.fadeIn : animations.fadeOut }`}>
+        <ul className={nav.subNavList}>
+          {this.props.subNavItems.map((subPage, i) => {
+            return <li key={i} onClick={(e) => this.handleClick(e, subPage)}>{subPage}</li>
+          })}
+        </ul>
+      </section>
     );
-  }
-}
-
-export class SubNavMenu extends React.Component {
-  handleClick(e, newHeader) {
-    this.props.onChangeSubPage(newHeader);
-  }
-
-  render() {
-    if (this.props.newHeaders) {
-      return (
-        <section className={`${nav.subNav} ${this.props.visible ? animations.fadeIn : animations.fadeOut }`}>
-          <ul className={nav.subNavList}>
-            {this.props.newHeaders.map((newHeader, i) => {
-              return <li key={i} onClick={(e) => this.handleClick(e, newHeader)}>{newHeader}</li>
-            })}
-          </ul>
-        </section>
-      );
-    } else {
-      return null;
-    }
   }
 }
 
@@ -278,8 +270,54 @@ export class SubNavArrow extends React.Component {
   }
 }
 
+export class SkillsGraphic extends React.Component {
+  constructor(props) {
+    super(props);
+    if (this.props.active) {
+      var classList = [graphics.container, animations.slideIn];
+    } else {
+      var classList = [graphics.container, animations.slideOut];
+    }
+    this.state = {
+      classList: classList
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.active) {
+      var classList = [graphics.container, animations.slideIn];
+      } else {
+      var classList = [graphics.container, animations.slideOut];
+    }
+    this.setState({
+      classList: classList
+    });
+  }
+
+   render() {
+    return(
+      <div className={this.state.classList.join(" ")}>
+        <div className={graphics.bubbleSkill}>skills</div>
+      </div>
+    )
+  }
+}
 
 export class Header extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     className: this.props.className,
+  //     h1: this.props.h1
+  //   };
+  // }
+
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     className: nextProps.className,
+  //     h1: nextProps.h1
+  //   });
+  // }
 
   render() {
     return (

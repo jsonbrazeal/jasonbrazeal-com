@@ -5,7 +5,7 @@ var hi = function(document) {
 };
 
 
-var titleCase = function(str) {
+var toTitleCase = function(str) {
   return str.toLowerCase().split(' ').map(function(word) {
     return word.replace(word[0], word[0].toUpperCase());
   }).join(' ');
@@ -13,5 +13,5 @@ var titleCase = function(str) {
 
 module.exports = {
   hi: hi,
-  titleCase: titleCase
+  toTitleCase: toTitleCase
 };
