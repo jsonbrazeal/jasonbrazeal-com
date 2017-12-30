@@ -16,20 +16,29 @@
 }
 
 
-@keyframes fadeIn2 {
+@keyframes fadeOutIn {
   0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: .5;
+  }
+  50% {
     opacity: 0;
+  }
+  75% {
+    opacity: .5;
   }
   100% {
     opacity: 1;
   }
 }
 
-.fadeIn2 {
-  animation: fadeIn2 ease-in 1;
+.fadeOutIn {
+  animation: fadeOutIn ease-in 1;
   animation-fill-mode: forwards;
-  animation-duration: .4s;
-  animation-delay: 0.1s;
+  animation-duration: 1s;
+  animation-delay: 0s;
 }
 
 @keyframes fadeOut {
@@ -178,6 +187,8 @@
     transform: translateX(15px);
   }
 }
+
+/* used with CSSTransition component */
 
 .slideAppear {
   top: 1000px;

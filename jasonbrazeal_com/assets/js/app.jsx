@@ -405,19 +405,18 @@ export class Header extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.header !== this.props.header) {
       this.setState({
-        classList: [animations.fadeOut]
+        classList: [animations.fadeOutIn]
       });
       setTimeout(() => {
         this.setState({
-          classList: [animations.fadeIn],
           header: this.props.header
         });
-      }, 1000);
+      }, 500);
       setTimeout(() => {
         this.setState({
           classList: []
         });
-      }, 2000);
+      }, 1000);
     }
   }
 
