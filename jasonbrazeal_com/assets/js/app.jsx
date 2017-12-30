@@ -184,7 +184,6 @@ export class Page extends React.Component {
       });
 
       if (nextProps.activeSubPage) { // transition from page to subpage
-        setTimeout(() => {
           this.setState({
             showSubNavArrow: true,
             showSubNavMenu: false,
@@ -192,11 +191,7 @@ export class Page extends React.Component {
             h1: utils.toTitleCase(nextProps.activeSubPage),
             activeSubPage: nextProps.activeSubPage,
           });
-          console.log(`page to subpage transition continuing`)
-          console.log(this.state)
-        }, 1000);
       } else { // transition from subpage to page
-        setTimeout(() => {
           this.setState({
             showSubNavArrow: false,
             showSubNavMenu: true,
@@ -204,9 +199,6 @@ export class Page extends React.Component {
             h1: this.props.pageTitle,
             activeSubPage: null,
           });
-          console.log(`subpage to page transition continuing`)
-          console.log(this.state)
-        }, 1000);
       }
     }
 
@@ -291,37 +283,10 @@ export class SubNavArrow extends React.Component {
 }
 
 export class SkillsGraphic extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   if (this.props.active) {
-  //     var classList = [graphics.container, animations.slideIn];
-  //   } else {
-  //     var classList = [graphics.container, animations.slideOut];
-  //   }
-  //   this.state = {
-  //     classList: classList
-  //   };
-  // }
-
-  // componentWillUpdate() {
-  //   console.log('componentWillUpdate')
-  // }
-  // componentWillReceiveProps(nextProps) {
-  //   console.log('componentWillReceiveProps('+nextProps+')')
-  //   if (nextProps.active) {
-  //     var classList = [graphics.container, animations.slideIn];
-  //     } else {
-  //     var classList = [graphics.container, animations.slideOut];
-  //   }
-  //   this.setState({
-  //     classList: classList
-  //   });
-  // }
-
    render() {
     console.log('SkillsGraphic rendering.')
     return(
-      <div className={graphics.skills}>
+      <div className={this.props.active ? `${graphics.skills} ${animations.fadeIn}` : `${graphics.skills} ${animations.fadeOut}`}>
         <div className={graphics.bubbleSkill}>skills</div>
       </div>
     )
@@ -330,21 +295,6 @@ export class SkillsGraphic extends React.Component {
 }
 
 export class Header extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     className: this.props.className,
-  //     h1: this.props.h1
-  //   };
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     className: nextProps.className,
-  //     h1: nextProps.h1
-  //   });
-  // }
-
   render() {
     return (
       <header className={this.props.className}>

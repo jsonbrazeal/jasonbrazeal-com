@@ -179,8 +179,19 @@
   }
 }
 
+.fadeAppear {
+  opacity: 0.01;
+  visibility: visible;
+}
+
+.fadeAppear.fadeAppearActive {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
 .fadeEnter {
   opacity: 0.01;
+  visibility: visible;
 }
 
 .fadeEnter.fadeEnterActive {
