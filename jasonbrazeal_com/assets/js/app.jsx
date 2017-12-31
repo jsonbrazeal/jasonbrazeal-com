@@ -5,7 +5,6 @@ import nav from "../css/nav.css"
 import graphics from "../css/graphics.css"
 import animations from "../css/animations.css"
 import icons from "font-awesome/css/font-awesome.css"
-import jason from "../img/jason.jpeg"
 
 import utils from "./utils.js"
 import React from "react";
@@ -476,10 +475,13 @@ export class ProjectCardContainer extends React.Component {
 export class Footer extends React.Component {
   render() {
     return (
-      <footer className={this.props.className}>
-        <Contact />
-        <RoundThumbnail className={nav.footerImage} src={jason} alt="photo of jason" />
-        <Copyright />
+      <footer className={null}>
+        <div className={nav.footerWrapper}>
+          <hr className={css.orangeBorder} />
+          <Contact />
+          <RoundThumbnail className={nav.footerImage} alt="photo of jason" />
+          <Copyright />
+        </div>
       </footer>
     )
    }
@@ -488,7 +490,7 @@ export class Footer extends React.Component {
 export class Contact extends React.Component {
    render() {
     return(
-      <div>
+      <div className={nav.contact}>
         <a href="https://www.github.com/jsonbrazeal">
             <span className={[icons.fa, icons["fa-github"]].join(" ")}></span>
         </a>
@@ -509,7 +511,7 @@ export class Contact extends React.Component {
 export class Copyright extends React.Component {
    render() {
     return(
-      <div>
+      <div className={nav.copyright}>
         <span className={[icons.fa, icons["fa-copyright"]].join(" ")}></span>
         2017 Jason Brazeal
       </div>
@@ -520,7 +522,9 @@ export class Copyright extends React.Component {
 export class RoundThumbnail extends React.Component {
    render() {
     return(
-      <div className={this.props.className} src={this.props.src} alt={this.props.alt}></div>
+      <div className={nav.thumbnail}>
+        <span className={this.props.className} alt={this.props.alt}></span>
+      </div>
     )
   }
 }
@@ -540,7 +544,6 @@ export class DesignCodeDeployGraphic extends React.Component {
         <div className={graphics.bubble}>design</div>
         <div className={graphics.bubble}>code</div>
         <div className={graphics.bubble}>deploy</div>
-        <hr className={css.orangeBorder} />
       </div>
     )
   }
