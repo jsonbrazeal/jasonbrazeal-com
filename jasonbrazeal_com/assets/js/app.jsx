@@ -1,12 +1,12 @@
 import "normalize.css";
 import css from "../css/shared.css";
 import loader from "../css/loader.css";
-import nav from "../css/nav.css"
-import graphics from "../css/graphics.css"
-import animations from "../css/animations.css"
-import icons from "font-awesome/css/font-awesome.css"
+import nav from "../css/nav.css";
+import graphics from "../css/graphics.css";
+import animations from "../css/animations.css";
+import icons from "font-awesome/css/font-awesome.css";
 
-import utils from "./utils.js"
+import utils from "./utils.js";
 import React from "react";
 import { CSSTransition } from 'react-transition-group';
 
@@ -445,7 +445,7 @@ export class SubNavArrow extends React.Component {
 }
 
 export class SkillsGraphic extends React.Component {
-   render() {
+  render() {
     console.log('SkillsGraphic rendering.')
     return(
       <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
@@ -456,7 +456,7 @@ export class SkillsGraphic extends React.Component {
 }
 
 export class CodeSnippetContainer extends React.Component {
-   render() {
+  render() {
     return(
       <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
         <div className={graphics.snippet}>snip1</div>
@@ -468,7 +468,7 @@ export class CodeSnippetContainer extends React.Component {
 }
 
 export class ArticleContainer extends React.Component {
-   render() {
+  render() {
     return(
       <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
         <div className={graphics.article}>article1</div>
@@ -480,7 +480,7 @@ export class ArticleContainer extends React.Component {
 }
 
 export class WorkCardContainer extends React.Component {
-   render() {
+  render() {
     return(
       <div className={this.props.active ? `${graphics.container} ${graphics.workCardContainer} ${css.slidIn}` : `${graphics.container} ${graphics.workCardContainer} ${css.slidOut}`}>
         <div>{this.props.subject}</div>
@@ -490,7 +490,7 @@ export class WorkCardContainer extends React.Component {
 }
 
 export class ProjectCardContainer extends React.Component {
-   render() {
+  render() {
     return(
       <div className={this.props.active ? `${graphics.container} ${graphics.projectCardContainer} ${css.slidIn}` : `${graphics.container} ${graphics.workCardContainer} ${css.slidOut}`}>
         <div>pcards</div>
@@ -515,7 +515,7 @@ export class Footer extends React.Component {
 }
 
 export class Contact extends React.Component {
-   render() {
+  render() {
     return(
       <div className={nav.contact}>
         <a href="https://www.github.com/jsonbrazeal">
@@ -536,7 +536,7 @@ export class Contact extends React.Component {
 }
 
 export class Copyright extends React.Component {
-   render() {
+  render() {
     return(
       <div className={nav.copyright}>
         <span className={[icons.fa, icons["fa-copyright"]].join(" ")}></span>
@@ -547,7 +547,7 @@ export class Copyright extends React.Component {
 }
 
 export class RoundThumbnail extends React.Component {
-   render() {
+  render() {
     return(
       <div className={nav.thumbnail}>
         <span className={this.props.className} alt={this.props.alt}></span>
@@ -557,15 +557,27 @@ export class RoundThumbnail extends React.Component {
 }
 
 export class Typewriter extends React.Component {
-   render() {
+  componentDidMount() {
+    utils.typewriter(document);
+  }
+
+  render() {
     return(
-      <h2 className={graphics.typewriter}>{this.props.words.join(" ")}</h2>
+      <h2>
+        <span
+          className={[graphics.typewriter, animations.blinkingOrange].join(" ")}
+          data-period="2000"
+          data-rotate='["software engineer", "web developer", "coder."]'>
+          <span class="wrap"></span>
+          |
+        </span>
+      </h2>
     )
   }
 }
 
 export class DesignCodeDeployGraphic extends React.Component {
-   render() {
+  render() {
     return(
       <div className={graphics.designCodeDeploy}>
         <div className={graphics.bubble}>
@@ -672,7 +684,7 @@ export class DesignCodeDeployGraphic extends React.Component {
 //     }
 //   }
 
-//   render() {
+//  render() {
 //     if (!this.state.notes.length) {
 //       return null
 //     } else {
