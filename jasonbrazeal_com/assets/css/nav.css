@@ -93,7 +93,12 @@
 }
 
 .pageHeader {
-  margin-left: 5%;
+  margin: 5% 0 0 8%;
+}
+
+.pageHeader h1 {
+  font-size: 48px;
+  margin-bottom: 0;
 }
 
 @media only screen and (min-width: 1500px) {
@@ -181,6 +186,7 @@
   border-radius: 50%;
   /*-webkit-clip-path: circle(50% at 50% 50%);
   clip-path: circle(50% at 50% 50%);  */
+  margin-top: 10%;
 }
 
 header * {
@@ -200,6 +206,14 @@ header * {
   color: #FB9B51;
 }
 
+footer {
+  margin-top: 10%;
+  width: 100%;
+}
+
+footer * {
+}
+
 footer div {
   display: inline-block;
   width: 30%;
@@ -208,6 +222,7 @@ footer div {
 .footerWrapper {
   width: 100%;
   text-align: center;
+  width: 100%;
 }
 
 .contact {

@@ -289,7 +289,6 @@ export class Page extends React.Component {
   }
 }
 
-
 export class SubNavMenu extends React.Component {
   constructor(props) {
     super(props);
@@ -503,7 +502,7 @@ export class ProjectCardContainer extends React.Component {
 export class Footer extends React.Component {
   render() {
     return (
-      <footer className={null}>
+      <footer>
         <div className={nav.footerWrapper}>
           <hr className={css.orangeBorder} />
           <Contact />
@@ -560,7 +559,7 @@ export class RoundThumbnail extends React.Component {
 export class Typewriter extends React.Component {
    render() {
     return(
-      <h2>{this.props.words.join(" ")}</h2>
+      <h2 className={graphics.typewriter}>{this.props.words.join(" ")}</h2>
     )
   }
 }
@@ -568,10 +567,16 @@ export class Typewriter extends React.Component {
 export class DesignCodeDeployGraphic extends React.Component {
    render() {
     return(
-      <div>
-        <div className={graphics.bubble}>design</div>
-        <div className={graphics.bubble}>code</div>
-        <div className={graphics.bubble}>deploy</div>
+      <div className={graphics.designCodeDeploy}>
+        <div className={graphics.bubble}>
+          <span className={graphics.bubbleText}>design</span>
+        </div>
+        <div className={graphics.bubble}>
+          <span className={graphics.bubbleText}>code</span>
+        </div>
+        <div className={graphics.bubble}>
+          <span className={graphics.bubbleText}>deploy</span>
+        </div>
       </div>
     )
   }

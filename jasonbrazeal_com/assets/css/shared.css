@@ -22,7 +22,8 @@ ul {
 
 hr {
   border-color: #FB9B51;
-  width: 50%;
+  width: 67%;
+  z-index: 2;
 }
 
 *  {

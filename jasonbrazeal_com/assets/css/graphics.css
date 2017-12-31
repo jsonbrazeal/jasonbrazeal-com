@@ -6,6 +6,12 @@
   left: 25%;
 }
 
+.designCodeDeploy {
+  position: relative;
+  left: 18%;
+  top: 140px;
+}
+
 .bubble {
   display: inline-block;
   width: 300px;
@@ -14,6 +20,12 @@
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+  text-align: center;
+}
+
+.bubbleText {
+  display: inline-block;
+  margin: 150px 0 0 0;
 }
 
 .bubbleSkill {
@@ -51,4 +63,8 @@
   height: 200px;
   background: #ad8000;
   color: #393939;
+}
+
+.typewriter {
+  margin-left: 1em;
 }
