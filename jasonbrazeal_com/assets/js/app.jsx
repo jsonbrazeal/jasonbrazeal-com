@@ -49,7 +49,7 @@ export class App extends React.Component {
     console.log('this.state.activeSubPage='+this.state.activeSubPage);
     console.log('this.state.activePage='+this.state.activePage);
     return (
-      <React.Fragment>
+      <div class={css.appWrap}>
         <NavMenu activePage={this.state.activePage} onChangePage={(newPage) => {this.handleNav(newPage)}} />
         <div className={nav.container} id={nav.c1} >
           <div className={nav.container} id={nav.c2} >
@@ -158,7 +158,7 @@ export class App extends React.Component {
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -342,7 +342,7 @@ export class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      classList: [],
+      classList: [nav.pageHeader],
       header: this.props.header
     };
   }
@@ -359,7 +359,7 @@ export class Header extends React.Component {
         var showSubNavArrow = true;
       }
       this.setState({
-        classList: [animations.fadeOutIn]
+        classList: [animations.fadeOutIn, nav.pageHeader]
       });
       setTimeout(() => {
         this.setState({
@@ -369,7 +369,7 @@ export class Header extends React.Component {
       }, 500);
       setTimeout(() => {
         this.setState({
-          classList: []
+          classList: [nav.pageHeader]
         });
       }, 1000);
     }
@@ -379,7 +379,7 @@ export class Header extends React.Component {
     return (
       <header className={this.state.classList.join(" ")}>
         <h1>{this.state.header}</h1>
-        {this.state.header === "Home" || <SubNavArrow onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavArrow} />}
+        {this.state.header === "Jason Brazeal" || <SubNavArrow onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavArrow} />}
         {this.props.children}
       </header>
     )
@@ -406,7 +406,7 @@ export class SubNavArrow extends React.Component {
 
   render() {
     if (this.props.visible) {
-      return <span className={`${[icons.fa, icons["fa-chevron-left"], nav.shiftedRightElem, nav.subNavArrow].join(" ")}`} onClick={(e) => this.handleClick(e)}></span>
+      return <span className={`${[icons.fa, icons["fa-chevron-left"], nav.shiftedRightElem, nav.subNavArrow, animations.bounceLeft].join(" ")}`} onClick={(e) => this.handleClick(e)}></span>
     } else {
     return null;
     }

@@ -12,14 +12,6 @@
   -o-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
 }
 
-.pageIn {
-  transform: translateX(185%);
-  -webkit-transform: translateX(185%);
-  -moz-transform: translateX(185%);
-  -o-transform: translateX(185%);
-  transition-delay: .25s !important;
-}
-
 .pageFaded {
   background: #434343 !important;
 }
@@ -82,6 +74,82 @@
   text-align: center;
  }
 
+ .pageIn {
+  transform: translateX(185%);
+  -webkit-transform: translateX(185%);
+  -moz-transform: translateX(185%);
+  -o-transform: translateX(185%);
+  transition-delay: .25s !important;
+}
+
+.shiftedRight header, .shiftedRight section, .shiftedRight footer {
+  position: relative;
+  left: 15%;
+}
+
+.shiftedRight .subNav {
+  left: 50% !important;
+  bottom: -33%;
+}
+
+.pageHeader {
+  margin-left: 5%;
+}
+
+@media only screen and (min-width: 1500px) {
+
+  .menu {
+    width: 30%;
+   }
+
+   .pageIn {
+    transform: translateX(170%);
+    -webkit-transform: translateX(170%);
+    -moz-transform: translateX(170%);
+    -o-transform: translateX(170%);
+  }
+
+  .shiftedRight header, .shiftedRight section, .shiftedRight footer {
+    left: 30%;
+  }
+
+  .shiftedRight .subNav {
+    left: 70% !important;
+  }
+
+  .pageHeader {
+    margin-left: 25%;
+  }
+
+}
+
+@media only screen and (min-width: 2000px) {
+
+  .menu {
+    width: 50%;
+   }
+
+   .pageIn {
+    transform: translateX(150%);
+    -webkit-transform: translateX(150%);
+    -moz-transform: translateX(150%);
+    -o-transform: translateX(150%);
+  }
+
+  .shiftedRight header, .shiftedRight section, .shiftedRight footer {
+    left: 50%;
+  }
+
+  .shiftedRight .subNav {
+    left: 85% !important;
+  }
+
+  .pageHeader {
+    margin-left: 30%;
+  }
+
+}
+
 .menuIcon {
   font-size: 32px !important;
   margin: .5em .5em .5em 1.75em;
@@ -92,27 +160,8 @@
   -o-transition: all .5s ease-out;
 }
 
-.page .icon {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 10%;
-  left: 0;
-  width: 270px;
-  height: 170px;
-  margin: auto;
-  text-align: center;
-  font-size: 80px;
-  line-height: 1.3;
-}
-
 .menuIcon:hover {
   opacity: 0.5;
-}
-
-.shiftedRight header, .shiftedRight section, .shiftedRight footer {
-  position: relative;
-  left: 15%;
 }
 
 .shiftedRightElem {
@@ -139,12 +188,6 @@ header * {
 
 footer * {
   display: inline-block;
-}
-
-
-.subNav {
-  left: 50% !important;
-  bottom: -33%;
 }
 
 .leftIcon {
