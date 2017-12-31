@@ -81,12 +81,11 @@ module.exports = {
                   {
                     loader: 'postcss-loader',
                     options: {
-                      plugins: function () {
-                        return [
-                          require('autoprefixer'),
-                          require('postcss-icss-keyframes')
-                        ];
-                      }
+                      ident: 'postcss',
+                      plugins: [
+                        require('autoprefixer'),
+                        require('postcss-icss-keyframes')
+                      ]
                     }
                   }
                 ],

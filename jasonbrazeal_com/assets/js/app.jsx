@@ -48,7 +48,7 @@ export class App extends React.Component {
     console.log('this.state.activeSubPage='+this.state.activeSubPage);
     console.log('this.state.activePage='+this.state.activePage);
     return (
-      <div class={css.appWrap}>
+      <div className={css.appWrap}>
         <NavMenu activePage={this.state.activePage} onChangePage={(newPage) => {this.handleNav(newPage)}} />
         <div className={nav.container} id={nav.c1} >
           <div className={nav.container} id={nav.c2} >
@@ -299,7 +299,8 @@ export class SubNavMenu extends React.Component {
       var classList = [nav.subNav, animations.fadeOut, css.zIndexBehind];
     }
     this.state = {
-      classList: classList
+      classList: classList,
+      currentMenuItem: props.subNavItems[0]
     };
   }
 
@@ -324,20 +325,33 @@ export class SubNavMenu extends React.Component {
     this.props.onChangeSubPage(newSubPage)
   }
 
+  handleMouseOver(e, subPage) {
+    this.setState({currentMenuItem: subPage.replace(/é/g, 'e')});
+  }
+
+  handleMouseEnter(e, subPage) {
+    this.setState({currentMenuItem: subPage.replace(/é/g, 'e')});
+  }
+
   render() {
-    return (
-      <section className={this.state.classList.join(" ")}>
-        <ul className={nav.subNavList}>
-          {this.props.subNavItems.map((subPage, i) => {
-            if (this.props.visible) {
-              return <li key={i} onClick={(e) => this.handleClick(e, subPage)}>{subPage}</li>
-            } else {
-              return <li key={i} >{subPage}</li>
-            }
-          })}
-        </ul>
-      </section>
-    );
+    if (this.props.pageNum === "1") {
+      return null;
+    } else {
+      return (
+        <section className={this.state.classList.join(" ")}>
+          <span className={[nav.hoverIcon, animations.blinkingOrange, `${nav[this.state.currentMenuItem]}`].join(" ")}></span>
+          <ul className={nav.subNavList}>
+            {this.props.subNavItems.map((subPage, i) => {
+              if (this.props.visible) {
+                return <li key={i} onClick={(e) => this.handleClick(e, subPage)} onMouseOver={(e) => this.handleMouseOver(e, subPage)} onMouseEnter={(e) => this.handleMouseEnter(e, subPage)}>{subPage}</li>
+              } else {
+                return <li key={i} >{subPage}</li>
+              }
+            })}
+          </ul>
+        </section>
+      );
+    }
   }
 }
 

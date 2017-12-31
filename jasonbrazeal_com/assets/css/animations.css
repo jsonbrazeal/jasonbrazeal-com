@@ -1,3 +1,17 @@
+.blinkingOrange {
+  color: #FB9B51;
+  animation: blinkingOrange 1s step-end infinite;
+}
+
+@keyframes blinkingOrange {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: #FB9B51;
+  }
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -89,14 +103,14 @@
   animation-delay: .5s;
 }
 
-.testing {
+.squareToCircle {
   width: 200px;
   height: 200px;
   background-color: coral;
-  animation: square-to-circle 2s .5s infinite cubic-bezier(1,.015,.295,1.225) alternate;
+  animation: squareToCircle 2s .5s infinite cubic-bezier(1,.015,.295,1.225) alternate;
 }
 
-@keyframes square-to-circle {
+@keyframes squareToCircle {
   0%  {
     border-radius: 0 0 0 0;
     background: coral;
