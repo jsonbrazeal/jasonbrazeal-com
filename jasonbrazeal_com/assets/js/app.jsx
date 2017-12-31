@@ -569,13 +569,13 @@ export class DesignCodeDeployGraphic extends React.Component {
     return(
       <div className={graphics.designCodeDeploy}>
         <div className={graphics.bubble}>
-          <span className={graphics.bubbleText}>design</span>
+          <span className={[graphics.bubbleText, icons.fa, icons["fa-users"]].join(" ")}> design</span>
         </div>
         <div className={graphics.bubble}>
-          <span className={graphics.bubbleText}>code</span>
+          <span className={[graphics.bubbleText, icons.fa, icons["fa-code"]].join(" ")}> code</span>
         </div>
         <div className={graphics.bubble}>
-          <span className={graphics.bubbleText}>deploy</span>
+          <span className={[graphics.bubbleText, icons.fa, icons["fa-cloud-upload"]].join(" ")}> deploy</span>
         </div>
       </div>
     )
