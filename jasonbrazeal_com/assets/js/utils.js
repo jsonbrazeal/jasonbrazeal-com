@@ -1,11 +1,7 @@
 import graphics from "../css/graphics.css";
+import animations from "../css/animations.css";
 
 var exports = module.exports = {};
-
-var hi = function(document) {
-  console.log('hi')
-};
-
 
 var toTitleCase = function(str) {
   return str.toLowerCase().split(' ').map(function(word) {
@@ -14,6 +10,10 @@ var toTitleCase = function(str) {
 }
 
 var TxtRotate = function(el, toRotate, period) {
+  console.log('initializing txtrotate')
+  console.log(el)
+  console.log(toRotate)
+  console.log(period)
   this.toRotate = toRotate;
   this.el = el;
   this.loopNum = 0;
@@ -26,11 +26,21 @@ var TxtRotate = function(el, toRotate, period) {
 TxtRotate.prototype.tick = function() {
   var i = this.loopNum % this.toRotate.length;
   var fullTxt = this.toRotate[i];
+  // end loop when last item is fully typed
+  if (this.el.querySelector('span').innerHTML == this.toRotate[this.toRotate.length - 1]) {
+    setTimeout(() => {
+      this.el.querySelector(`.${graphics.typewriterCaret}`).classList.add(animations.fadeOut);
+      this.el.querySelector(`.${graphics.typewriterCaret}`).classList.remove(animations.blinkingOrange);
+    }, 1000);
+    return;
+  }
 
   if (this.isDeleting) {
     this.txt = fullTxt.substring(0, this.txt.length - 1);
+    this.el.querySelector(`.${graphics.typewriterCaret}`).classList.remove(animations.blinkingOrange)
   } else {
     this.txt = fullTxt.substring(0, this.txt.length + 1);
+    this.el.querySelector(`.${graphics.typewriterCaret}`).classList.add(animations.blinkingOrange)
   }
 
   this.el.querySelector('span').innerHTML = this.txt;
@@ -64,7 +74,6 @@ var typewriter = function(document) {
 };
 
 module.exports = {
-  hi: hi,
   toTitleCase: toTitleCase,
   typewriter: typewriter
 };

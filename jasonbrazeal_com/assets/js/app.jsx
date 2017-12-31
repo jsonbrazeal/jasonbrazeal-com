@@ -565,11 +565,11 @@ export class Typewriter extends React.Component {
     return(
       <h2>
         <span
-          className={[graphics.typewriter, animations.blinkingOrange].join(" ")}
+          className={graphics.typewriter}
           data-period="2000"
           data-rotate='["software engineer", "web developer", "coder."]'>
-          <span class="wrap"></span>
-          |
+          <span className={graphics.typewriterWrap}></span>
+          <span className={[graphics.typewriterCaret, animations.blinkingOrange].join(" ")}>|</span>
         </span>
       </h2>
     )
