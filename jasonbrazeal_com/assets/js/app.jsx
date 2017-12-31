@@ -271,9 +271,14 @@ export class Page extends React.Component {
   }
 
   render() {
+    if (this.props.pageTitle == "Home") {
+      var header = "Jason Brazeal";
+    } else {
+      var header = this.state.header;
+    }
     return (
       <div className={this.state.classList.join(" ")} id={nav[`p${this.props.pageNum}`]}>
-        <Header header={this.state.header === "Home" ? "Jason Brazeal" : this.state.header} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)}>
+        <Header header={header} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)}>
           {this.state.header === "Home" && <Typewriter words={["Software", "Eng"]} />}
         </Header>
         <section>
