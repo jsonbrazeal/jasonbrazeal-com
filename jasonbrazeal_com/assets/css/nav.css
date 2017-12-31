@@ -245,6 +245,7 @@ footer div {
   position: absolute;
   left: 1.5%;
   top: 16px;
+  color: #FB9B51;
 }
 
 @import url('../../../node_modules/font-awesome/css/font-awesome.min.css');
@@ -260,15 +261,35 @@ footer div {
 
 .skills {
   top: 16px;
+  transition: top 500ms ease-out;
 }
+
 .experience {
   top: 34px;
+  transition: top 500ms ease-out;
 }
 
 .education {
   top: 51px;
+  transition: top 500ms ease-out;
 }
 
 .resume {
   top: 70px;
+  transition: top 500ms ease-out;
+}
+
+.projects {
+  top: 16px;
+  transition: top 500ms ease-out;
+}
+
+.articles {
+  top: 34px;
+  transition: top 500ms ease-out;
+}
+
+.codeSnippets {
+  top: 52px;
+  transition: top 500ms ease-out;
 }

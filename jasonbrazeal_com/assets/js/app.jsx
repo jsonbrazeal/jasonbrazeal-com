@@ -300,7 +300,8 @@ export class SubNavMenu extends React.Component {
     }
     this.state = {
       classList: classList,
-      currentMenuItem: props.subNavItems[0]
+      currentMenuItem: props.subNavItems[0],
+      blink: true
     };
   }
 
@@ -326,11 +327,24 @@ export class SubNavMenu extends React.Component {
   }
 
   handleMouseOver(e, subPage) {
-    this.setState({currentMenuItem: subPage.replace(/é/g, 'e')});
+    // replace "é"" in order to keep unicode out of css and in js only
+    // replace " s" in "code snippets"
+    this.setState({
+      currentMenuItem: subPage.replace(/é/g, 'e').replace(/\ss/, 'S'),
+      blink: false
+    });
   }
 
   handleMouseEnter(e, subPage) {
-    this.setState({currentMenuItem: subPage.replace(/é/g, 'e')});
+    this.setState({
+      currentMenuItem: subPage.replace(/é/g, 'e').replace(/\ss/, 'S'),
+      blink: false
+    });
+    setTimeout(() => {
+      this.setState({
+        blink: true
+      });
+    }, 500);
   }
 
   render() {
@@ -339,7 +353,7 @@ export class SubNavMenu extends React.Component {
     } else {
       return (
         <section className={this.state.classList.join(" ")}>
-          <span className={[nav.hoverIcon, animations.blinkingOrange, `${nav[this.state.currentMenuItem]}`].join(" ")}></span>
+          <span className={[nav.hoverIcon, nav[this.state.currentMenuItem], this.state.blink ? animations.blinkingOrange : ''].join(" ")}></span>
           <ul className={nav.subNavList}>
             {this.props.subNavItems.map((subPage, i) => {
               if (this.props.visible) {

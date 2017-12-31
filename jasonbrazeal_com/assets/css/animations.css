@@ -1,17 +1,3 @@
-.blinkingOrange {
-  color: #FB9B51;
-  animation: blinkingOrange 1s step-end infinite;
-}
-
-@keyframes blinkingOrange {
-  from, to {
-    color: transparent;
-  }
-  50% {
-    color: #FB9B51;
-  }
-}
-
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -259,6 +245,49 @@
 }
 
 .fadeExit.fadeExitActive {
+  opacity: 0.01;
+  transition: opacity 800ms ease-in;
+}
+
+.blinkingOrange {
+  color: #FB9B51;
+  animation: blinkingOrange 1s step-end infinite;
+}
+
+@keyframes blinkingOrange {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: #FB9B51;
+  }
+}
+
+.blinkingOrangeAppear {
+  opacity: 0.01;
+  visibility: visible;
+}
+
+.blinkingOrangeAppear.blinkingOrangeAppearActive {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.blinkingOrangeEnter {
+  opacity: 0.01;
+  visibility: visible;
+}
+
+.blinkingOrangeEnter.blinkingOrangeEnterActive {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.blinkingOrangeExit {
+  opacity: 1;
+}
+
+.blinkingOrangeExit.blinkingOrangeExitActive {
   opacity: 0.01;
   transition: opacity 800ms ease-in;
 }
