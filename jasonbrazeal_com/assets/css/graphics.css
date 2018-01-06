@@ -12,6 +12,11 @@
   top: 140px;
 }
 
+.bubble:nth-child(2) {
+  position: relative;
+  bottom: 200px;
+}
+
 .bubble {
   display: inline-block;
   width: 300px;
@@ -36,6 +41,9 @@
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+}
+
+.bubbleChart {
 }
 
 .workCardContainer {

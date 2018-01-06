@@ -69,7 +69,10 @@ var typewriter = function(document) {
   var toRotate = elem.getAttribute('data-rotate');
   var period = elem.getAttribute('data-period');
   if (toRotate) {
-    new TxtRotate(elem, JSON.parse(toRotate), period);
+    elem.classList.add(animations.blinkingOrange);
+    setTimeout(() => {
+      new TxtRotate(elem, JSON.parse(toRotate), period);
+    }, 500);
   }
 };
 
