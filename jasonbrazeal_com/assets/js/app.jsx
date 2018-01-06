@@ -14,7 +14,7 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: "Home",
+      activePage: "Work",
       activeSubPage: null
     };
   }
@@ -269,6 +269,36 @@ export class Page extends React.Component {
 
   }
 
+  componentWillMount() {
+    console.log(`this.state.header=${this.state.header}`)
+    // handle page nav state
+    if (this.props.active) {
+      if (this.props.pageNum === "1") {
+          this.setState({
+            classList: [nav.page],
+            active: true
+          });
+      } else if (this.props.pageNum === "2" || this.props.pageNum === "3") {
+        this.setState({
+          classList: [nav.page, nav.shiftedRight, nav.pageIn],
+          active: true
+        });
+      }
+    } else {
+      if (this.props.pageNum === "1") {
+          this.setState({
+            classList: [nav.page, nav.pageFaded, nav.blurry],
+            active: false
+          });
+      } else if (this.props.pageNum === "2" || this.props.pageNum === "3") {
+          this.setState({
+            classList: [nav.page, nav.shiftedRight],
+            active: false
+          });
+      }
+    }
+}
+
   render() {
     if (this.props.pageTitle == "Home") {
       var header = "Jason Brazeal";
@@ -481,12 +511,62 @@ export class ArticleContainer extends React.Component {
 
 export class WorkCardContainer extends React.Component {
   render() {
+    if (this.props.subject === "Experience") {
+      var content = (
+        <ExperienceContent />
+      );
+    } else if (this.props.subject === "Education") {
+      var content = (
+         <EducationContent />
+      );
+    } else {
+      throw `WorkCardContainer.props.subject is ${this.props.subject}`;
+    }
+
     return(
-      <div className={this.props.active ? `${graphics.container} ${graphics.workCardContainer} ${css.slidIn}` : `${graphics.container} ${graphics.workCardContainer} ${css.slidOut}`}>
-        <div>{this.props.subject}</div>
+      <div className={this.props.active ? `${graphics.workCardContainer} ${graphics[this.props.subject.toLowerCase()]} ${css.slidIn}` : `${graphics.workCardContainer} ${graphics[this.props.subject.toLowerCase()]} ${css.slidOut}`}>
+        {content}
+      </div>
+    );
+  }
+}
+
+export class EducationContent extends React.Component {
+  render() {
+    var imgClass = graphics.accLogo;
+    return(
+      <div>
+      <div className={graphics.educationLogoContainer}>
+        <div className={[graphics.educationLogo, graphics.accLogo].join(" ")}></div>
+        <div className={[graphics.educationLogo, graphics.utLogo].join(" ")}></div>
+        <div className={[graphics.educationLogo, graphics.utLogo].join(" ")}></div>
+        <div className={[graphics.educationLogo, graphics.ugaLogo].join(" ")}></div>
+      </div>
+      <div className={graphics.educationTextContainer}>
+        <span className={graphics.degree}>Webmaster Certificate </span><span className={graphics.year}>2014 </span><span className={graphics.location}>Austin, TX</span>
+        <span className={graphics.degree}>Software Developer Training </span><span className={graphics.year}>2012 </span><span className={graphics.location}>Austin, TX</span>
+        <span className={graphics.degree}>M.A. Linguistics  2002</span><span className={graphics.year}>2005 </span><span className={graphics.location}>Austin, TX</span>
+        <span className={graphics.degree}>B.A. Linguistics </span><span className={graphics.year}>2002 </span><span className={graphics.location}>Athens, GA</span>
+      </div>
       </div>
     )
   }
+}
+
+export class ExperienceContent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: 0,
+    };
+  }
+  render() {
+    return(
+      <div className={graphics.experienceItem}>
+      </div>
+    )
+  }
+
 }
 
 export class ProjectCardContainer extends React.Component {
