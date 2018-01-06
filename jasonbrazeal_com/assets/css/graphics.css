@@ -46,6 +46,10 @@
 .bubbleChart {
 }
 
+.workCardContainer * {
+  color: #434343;
+}
+
 .workCardContainer {
   width: 50%;
   height: 500px;
