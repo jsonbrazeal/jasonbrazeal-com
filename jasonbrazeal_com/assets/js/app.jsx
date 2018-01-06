@@ -560,9 +560,58 @@ export class ExperienceContent extends React.Component {
       currentPage: 0,
     };
   }
+
+  handleNav(direction) {
+    console.log(`handlingNav(${direction})`)
+    if (direction === "next") {
+      if (this.state.currentPage === 3) {
+        this.setState({
+          currentPage: 0
+        });
+      } else {
+        this.setState({
+          currentPage: ++this.state.currentPage
+        });
+      }
+    } else if (direction === "prev") {
+      if (this.state.currentPage === 0) {
+        this.setState({
+          currentPage: 3
+        });
+      } else {
+        this.setState({
+          currentPage: --this.state.currentPage
+        });
+      }
+    } else {
+      throw `ExperienceContent.handleNav(direction) was called with direction=${direction}`;
+    }
+    console.log(`set currentPage to ${this.state.currentPage}`)
+  }
+
   render() {
     return(
-      <div className={graphics.experienceItem}>
+      <div>
+      <section className={[graphics.experienceSection, graphics.medal, this.state.currentPage === 0 ? graphics.activeExperienceSection : ""].join(" ")}>
+        <h3>Medal</h3>
+        <div className={[graphics.experienceLogo, graphics.medalLogo].join(" ")}></div>
+      </section>
+      <section className={[graphics.experienceSection, graphics.verodin, this.state.currentPage === 1 ? graphics.activeExperienceSection : ""].join(" ")}>
+        <h3>Verodin</h3>
+        <div className={[graphics.experienceLogo, graphics.verodinLogo].join(" ")}></div>
+      </section>
+      <section className={[graphics.experienceSection, graphics.tyco, this.state.currentPage === 2 ? graphics.activeExperienceSection : ""].join(" ")}>
+        <h3>Tyco</h3>
+        <div className={[graphics.experienceLogo, graphics.tycoLogo].join(" ")}></div>
+      </section>
+      <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 3 ? graphics.activeExperienceSection : ""].join(" ")}>
+        <h3>University of Texas at Austin</h3>
+        <div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div>
+      </section>
+      <section className={graphics.experienceNav}>
+        <span className={[icons.fa, icons["fa-chevron-left"]].join(" ")} onClick={(e) => this.handleNav("prev")}></span>
+        <span className={[icons.fa, icons["fa-chevron-right"]].join(" ")} onClick={(e) => this.handleNav("next")}></span>
+      </section>
       </div>
     )
   }
