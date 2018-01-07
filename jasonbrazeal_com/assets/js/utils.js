@@ -131,7 +131,7 @@ class BubbleChart  {
       var cx = this.centralPoint + dist * Math.cos(angle);
       var cy = this.centralPoint + dist * Math.sin(angle);
       var hit = false;
-      $.each(circles, function (i, circle) {
+      circles.forEach((circle, i, arr) => {
         var dx = circle.cx - cx;
         var dy = circle.cy - cy;
         var r = circle.r + rad;
@@ -189,13 +189,13 @@ class BubbleChart  {
     this.transition = {};
 
     if (this.supportResponsive) {
-      $(window).resize(() => {
-        var width = $(this.container).width();
+      window.addEventListener("resize", () => {
+        var width = document.getElementsByTagName(this.container).width;
         this.svg.attr("width", width);
         this.svg.attr("height", width);
       });
-      $(window).resize();
     }
+
   }
 
   moveToCentral(node) {
