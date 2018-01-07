@@ -488,11 +488,19 @@ export class SubNavArrow extends React.Component {
 }
 
 export class SkillsGraphic extends React.Component {
+
+  componentDidMount() {
+    var bubbleChart = new utils.BubbleChart();
+    bubbleChart.setup();
+    bubbleChart.registerClickEvent(bubbleChart.svg.selectAll(".node"));
+    bubbleChart.moveToCentral(d3.select(".node"));
+  }
+
   render() {
     console.log('SkillsGraphic rendering.')
     return(
-      <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
-        <div className={graphics.bubbleSkill}>skills</div>
+      <div className={this.props.active ? `${graphics.skillsContainer} ${css.slidIn}` : `${graphics.skillsContainer} ${css.slidOut}`}>
+        <div className="bubbleChart"></div>
       </div>
     )
   }
