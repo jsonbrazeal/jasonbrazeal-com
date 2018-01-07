@@ -4,9 +4,9 @@ import animations from "../css/animations.css";
 var exports = module.exports = {};
 
 var toTitleCase = function(str) {
-  return str.toLowerCase().split(' ').map(function(word) {
+  return str.toLowerCase().split(" ").map(function(word) {
     return word.replace(word[0], word[0].toUpperCase());
-  }).join(' ');
+  }).join(" ");
 }
 
 var TxtRotate = function(el, toRotate, period) {
@@ -14,7 +14,7 @@ var TxtRotate = function(el, toRotate, period) {
   this.el = el;
   this.loopNum = 0;
   this.period = parseInt(period, 10) || 2000;
-  this.txt = '';
+  this.txt = "";
   this.tick();
   this.isDeleting = false;
 };
@@ -23,7 +23,7 @@ TxtRotate.prototype.tick = function() {
   var i = this.loopNum % this.toRotate.length;
   var fullTxt = this.toRotate[i];
   // end loop when last item is fully typed
-  if (this.el.querySelector('span').innerHTML == this.toRotate[this.toRotate.length - 1]) {
+  if (this.el.querySelector("span").innerHTML == this.toRotate[this.toRotate.length - 1]) {
     setTimeout(() => {
       this.el.querySelector(`.${graphics.typewriterCaret}`).classList.add(animations.fadeOut);
       this.el.querySelector(`.${graphics.typewriterCaret}`).classList.remove(animations.blinkingOrange);
@@ -39,7 +39,7 @@ TxtRotate.prototype.tick = function() {
     this.el.querySelector(`.${graphics.typewriterCaret}`).classList.add(animations.blinkingOrange)
   }
 
-  this.el.querySelector('span').innerHTML = this.txt;
+  this.el.querySelector("span").innerHTML = this.txt;
 
   var that = this;
   var delta = 300 - Math.random() * 100;
@@ -49,7 +49,7 @@ TxtRotate.prototype.tick = function() {
   if (!this.isDeleting && this.txt === fullTxt) {
     delta = 0;
     this.isDeleting = true;
-  } else if (this.isDeleting && this.txt === '') {
+  } else if (this.isDeleting && this.txt === "") {
     this.isDeleting = false;
     this.loopNum++;
     delta = 500;
@@ -62,8 +62,8 @@ TxtRotate.prototype.tick = function() {
 
 var typewriter = function(document) {
   var elem = document.getElementsByClassName(graphics.typewriter)[0];
-  var toRotate = elem.getAttribute('data-rotate');
-  var period = elem.getAttribute('data-period');
+  var toRotate = elem.getAttribute("data-rotate");
+  var period = elem.getAttribute("data-period");
   if (toRotate) {
     elem.classList.add(animations.blinkingOrange);
     setTimeout(() => {
@@ -167,15 +167,22 @@ class BubbleChart  {
     var node = this.svg.selectAll(".node")
       .data(this.circlePositions)
     .enter().append("g")
-      .attr("class", (d) => {return ["node", this.data.classed(d.item)].join(" ");});
-
+      .attr("class", (d) => {return ["node", this.data.classed(d.item)].join(" ");})
     var fnColor = d3.scale.category20();
+
     node.append("circle")
       .attr({r: (d) => {return d.r;}, cx: (d) => {return d.cx;}, cy: (d) => {return d.cy;}})
       .style("fill", (d) => {
         return this.data.color !== undefined ? this.data.color(d.item) : fnColor(d.item.text);
       })
       .attr("opacity", "0.8");
+
+    node.append("text")
+      .attr("fill", "#343434")
+      .attr("text-anchor", "middle")
+      .attr("dx", (d) => { return d.cx })
+      .attr("dy", (d) => { return d.cy + 5 })
+      .text((d) => { return d.item.text });
     node.sort((a, b) => {return this.data.eval(b.item) - this.data.eval(a.item);});
 
     this.transition = {};
@@ -217,9 +224,9 @@ class BubbleChart  {
     node.transition()
       .duration(this.transitDuration)
       .delay(function (d, i) {return i * 10;})
-      .attr('transform', swapped ? "" : toReflectionPoint)
+      .attr("transform", swapped ? "" : toReflectionPoint)
     .select("circle")
-      .attr('r', (d) => {return d.r;});
+      .attr("r", (d) => {return d.r;});
   }
 
   reset(node) {
