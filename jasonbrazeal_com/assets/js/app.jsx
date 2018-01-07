@@ -107,6 +107,19 @@ export class App extends React.Component {
                   in={this.state.activeSubPage === "education"}>
                   <WorkCardContainer active={this.state.activeSubPage === "education"} subject="Education" />
                 </CSSTransition>
+                <CSSTransition
+                  timeout={1000}
+                  classNames={{
+                    appear: animations.slideAppear,
+                    appearActive: animations.slideAppearActive,
+                    enter: animations.slideEnter,
+                    enterActive: animations.slideEnterActive,
+                    exit: animations.slideExit,
+                    exitActive: animations.slideExitActive
+                  }}
+                  in={this.state.activeSubPage === "résumé"}>
+                  <ResumeContainer active={this.state.activeSubPage === "résumé"} />
+                </CSSTransition>
               </Page>
               <Page active={this.state.activePage === "Portfolio"}
                     pageNum="3"
@@ -666,6 +679,16 @@ export class ExperienceContent extends React.Component {
     )
   }
 
+}
+
+export class ResumeContainer extends React.Component {
+  render() {
+    return(
+      <div className={this.props.active ? `${graphics.resumeContainer} ${css.slidIn}` : `${graphics.resumeContainer} ${css.slidOut}`}>
+        <iframe src="http://localhost:8888/brazeal.pdf#zoom=100" height="600px" />
+      </div>
+    )
+  }
 }
 
 export class ProjectCardContainer extends React.Component {
