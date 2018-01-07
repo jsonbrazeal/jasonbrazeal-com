@@ -1,5 +1,6 @@
 import graphics from "../css/graphics.css";
 import animations from "../css/animations.css";
+import d3 from 'd3';
 
 var exports = module.exports = {};
 
@@ -198,33 +199,25 @@ class BubbleChart  {
   }
 
   moveToCentral(node) {
-    var toCentralPoint = d3.svg.transform()
-      .translate((d) => {
-        var cx = node.select("circle").attr("cx");
-        var dx = this.centralPoint - d.cx;
-        var dy = this.centralPoint - d.cy;
-        return [dx, dy];
-      });
     this.centralNode = node;
     this.transition.centralNode = node.classed({active: true})
       .transition().duration(this.transitDuration);
-    this.transition.centralNode.attr("transform", toCentralPoint)
+    this.transition.centralNode
+    .attr('transform', (d, i) => {
+      console.log("translate(" + (this.centralPoint - d.cx) + "," + (this.centralPoint - d.cy) + ")")
+      return "translate(" + (this.centralPoint - d.cx) + "," + (this.centralPoint - d.cy) + ")";
+    })
     .select("circle")
       .attr("r", (d) => {return this.innerRadius;});
   }
 
   moveToReflection(node, swapped) {
-    var toReflectionPoint = d3.svg.transform()
-      .translate((d) => {
-        var dx = 2 * (this.centralPoint - d.cx);
-        var dy = 2 * (this.centralPoint - d.cy);
-        return [dx, dy];
-    });
-
     node.transition()
       .duration(this.transitDuration)
       .delay(function (d, i) {return i * 10;})
-      .attr("transform", swapped ? "" : toReflectionPoint)
+      .attr("transform", swapped ? "" : (d, i) => {
+        return "translate(" + (2 * (this.centralPoint - d.cx)) + "," + (2 * (this.centralPoint - d.cy)) + ")";
+      })
     .select("circle")
       .attr("r", (d) => {return d.r;});
   }
