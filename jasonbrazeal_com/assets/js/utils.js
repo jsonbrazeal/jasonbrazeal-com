@@ -4,12 +4,14 @@ import d3 from 'd3';
 
 var exports = module.exports = {};
 
+// based on
+// https://stackoverflow.com/questions/2332811/capitalize-words-in-string/7592235#7592235
 var toTitleCase = function(str) {
-  return str.toLowerCase().split(" ").map(function(word) {
-    return word.replace(word[0], word[0].toUpperCase());
-  }).join(" ");
+  return str.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 }
 
+// based on
+// https://codepen.io/gschier/pen/jkivt?q=simple+typing+carousel&limit=all&type=type-pens
 var TxtRotate = function(el, toRotate, period) {
   this.toRotate = toRotate;
   this.el = el;
@@ -73,6 +75,8 @@ var typewriter = function(document) {
   }
 };
 
+// based on
+// https://github.com/phuonghuynh/bubble-chart/
 class BubbleChart  {
   constructor() {
     this.defaultViewBoxSize = 600;
