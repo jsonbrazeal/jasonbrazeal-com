@@ -7,9 +7,6 @@
   background-color: #346d98;
   position: absolute;
   transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
-  -webkit-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
-  -moz-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
-  -o-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
 }
 
 .pageFaded {
@@ -39,17 +36,11 @@
 
 .scaleDown {
   transform: scale(.6);
-  -webkit-transform: scale(.6);
-  -moz-transform: scale(.6);
-  -o-transform: scale(.6);
   transition-delay: .25s;
 }
 
 .scaleUp {
   transform: scale(1.2) !important;
-  -webkit-transform: scale(1.2) !important;
-  -moz-transform: scale(1.2) !important;
-  -o-transform: scale(1.2) !important;
 }
 
 /* define ids here so they are accessible in js */
@@ -76,20 +67,24 @@
 
  .pageIn {
   transform: translateX(185%);
-  -webkit-transform: translateX(185%);
-  -moz-transform: translateX(185%);
-  -o-transform: translateX(185%);
   transition-delay: .25s !important;
 }
 
-.shiftedRight header, .shiftedRight section, .shiftedRight footer {
+.shiftedRight section, .shiftedRight footer {
   position: relative;
   left: 15%;
+}
+
+.shiftedRight header {
+  position: relative;
+  left: 15%;
+  z-index: 200;
 }
 
 .shiftedRight .subNav {
   left: 50% !important;
   bottom: -33%;
+  z-index: 100;
 }
 
 .pageHeader {
@@ -109,9 +104,6 @@
 
    .pageIn {
     transform: translateX(170%);
-    -webkit-transform: translateX(170%);
-    -moz-transform: translateX(170%);
-    -o-transform: translateX(170%);
   }
 
   .shiftedRight header, .shiftedRight section, .shiftedRight footer {
@@ -136,9 +128,6 @@
 
    .pageIn {
     transform: translateX(150%);
-    -webkit-transform: translateX(150%);
-    -moz-transform: translateX(150%);
-    -o-transform: translateX(150%);
   }
 
   .shiftedRight header, .shiftedRight section, .shiftedRight footer {
@@ -160,9 +149,6 @@
   margin: .5em .5em .5em 1.75em;
   vertical-align: sub;
   transition: all .5s ease-out !important;
-  -webkit-transition: all .5s ease-out;
-  -moz-transition: all .5s ease-out;
-  -o-transition: all .5s ease-out;
 }
 
 .menuIcon:hover {
@@ -181,8 +167,6 @@
   background-position: center shiftedRight;
   width: 100px;
   height: 100px;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
   border-radius: 50%;
   /*-webkit-clip-path: circle(50% at 50% 50%);
   clip-path: circle(50% at 50% 50%);  */

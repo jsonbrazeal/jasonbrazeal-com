@@ -291,3 +291,119 @@
   opacity: 0.01;
   transition: opacity 800ms ease-in;
 }
+
+
+/*====================================
+  Modal - https://codepen.io/pure-css/pen/qddOQK?depth=everything&order=popularity&page=2&q=css+modal&show_forks=false
+=====================================*/
+
+.modal {
+  /*background: #fff;*/
+  /*box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);*/
+  /*display: inline-block;*/
+  /*padding: 1em;*/
+}
+
+@media (min-width: 43.75em) {
+  .modal {
+    padding: 1.5em;
+  }
+}
+
+.modalLabel {
+  background: #343434;
+  border: 1px solid #343434;
+  border-radius: .2em;
+  color: #d8d8d8;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.75em 1.5em;
+  text-shadow: 1px 1px 1px #fff;
+  transition: all 0.55s;
+}
+
+.modalLabel:hover {
+  transform: scale(0.97);
+}
+
+.modalOverlay {
+  background: #d8d8d8;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  text-shadow: none;
+  top: -1000px;
+  opacity: 0;
+  transform: scale(0.5);
+  /*transition: all 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55);*/
+  /*transition: all 0.75s cubic-bezier(.64,.54,.57,.44);*/
+  transition: all 0.75s cubic-bezier(0.68, 0, 0.265, 1);
+  z-index: -11;
+}
+
+.modalWrap {
+  padding: 1em 0;
+  position: relative;
+  margin: 0 auto;
+  max-width: 600px;
+  width: 90%;
+}
+
+@media (min-width: 50em) {
+  .modalWrap {
+    padding: 1.75em;
+  }
+}
+
+@media (min-height: 37.5em) {
+  .modalWrap {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -80%);
+  }
+}
+
+.modalWrap label {
+  background: #d8d8d8;
+  border-radius: 50%;
+  color: #343434;
+  cursor: pointer;
+  display: inline-block;
+  height: 1.5em;
+  line-height: 1.5;
+  position: absolute;
+  right: .5em;
+  top: .5em;
+  width: 1.5em;
+}
+
+.modalWrap h2 {
+  color: #343434;
+  margin-bottom: 1em;
+  text-transform: uppercase;
+}
+
+.modalWrap p {
+  color: #343434;
+  text-align: justify;
+}
+
+.modalTriggerInput:focus ~ label {
+  transform: scale(0.97);
+}
+
+.modalTriggerInput {
+  position: absolute;
+  top: -1000px;
+}
+
+.modalTriggerInput:checked ~ .modalOverlay {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1001;
+  top: 0;
+}

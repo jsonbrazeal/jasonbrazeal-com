@@ -642,13 +642,14 @@ console.log(direction)
       <div className={this.props.active ? `${graphics.articleContainer} ${css.slidIn}` : `${graphics.articleContainer} ${css.slidOut}`}>
         <span className={[icons.fa, icons["fa-chevron-up"], animations.bounceUp, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "up")} onMouseEnter={(e) => this.handleMouseEnter(e, "up")}></span>
         <div className={graphics.articleContainerInner}>
-          <Article title="Markdown Here for Code Styling">
+          <Article title="Markdown Here for Code Styling" articlePreview="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           </Article>
-          <Article title="Python Lists">
+          <Article title="Python Lists" articlePreview="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           </Article>
-          <Article title="How to Build a Simple IoT System with Python">
+          <Article title="How to Build a Simple IoT System with Python" articlePreview="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           </Article>
         </div>
@@ -659,15 +660,48 @@ console.log(direction)
 }
 
 export class Article extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      articleOpen: false
+    };
+  }
+
+  handleClick(state)  {
+    if (state === "open") {
+      this.setState({
+        articleOpen: true
+      });
+    } else {
+      this.setState({
+        articleOpen: false
+      });
+    }
+  }
+
   render() {
     return(
        <article className={graphics.article}>
        <h1>{this.props.title}</h1>
        <div className={graphics.articleText}>
-       {this.props.children}
+       <p>{this.props.articlePreview}</p>
        </div>
-       <button>full text</button>
-       </article>
+       <label className={[graphics.btn, graphics.fullTextBtn].join(" ")} htmlFor="modalTrigger" onClick={(e) => this.handleClick("open")}>full text</label>
+
+        {/* Start of Modal */}
+        <div className={animations.modal}>
+          <input id="modalTrigger" className={animations.modalTriggerInput} type="checkbox" checked={this.state.articleOpen} />
+          <div className={animations.modalOverlay}>
+            <div className={animations.modalWrap}>
+              <label htmlFor="modalTrigger" onClick={(e) => this.handleClick("close")}>&#10006;</label>
+              <h2>{this.props.title}</h2>
+              {this.props.children}
+            </div>
+          </div>
+        </div>
+        {/* End of Modal */}
+
+      </article>
     )
   }
 }
