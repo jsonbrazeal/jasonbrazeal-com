@@ -218,6 +218,7 @@
   position: absolute;
   overflow: hidden;
   padding: 25px;
+  z-index: -1;
 }
 
 .gistFile, .gistData {
