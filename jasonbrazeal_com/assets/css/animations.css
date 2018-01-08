@@ -304,11 +304,11 @@
   /*padding: 1em;*/
 }
 
-@media (min-width: 43.75em) {
+/*@media (min-width: 43.75em) {
   .modal {
     padding: 1.5em;
   }
-}
+}*/
 
 .modalLabel {
   background: #343434;
@@ -353,7 +353,7 @@
   width: 90%;
 }
 
-@media (min-width: 50em) {
+/*@media (min-width: 50em) {
   .modalWrap {
     padding: 1.75em;
   }
@@ -366,7 +366,7 @@
     top: 50%;
     transform: translate(-50%, -80%);
   }
-}
+}*/
 
 .modalWrap label {
   background: #d8d8d8;
