@@ -14,7 +14,7 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: "Work",
+      activePage: "Portfolio",
       activeSubPage: null
     };
   }
@@ -422,7 +422,7 @@ export class Header extends React.Component {
   }
 
   handleSubPageNav(newSubPage) {
-    this.props.onChangeSubPage(newSubPage)
+    this.props.onChangeSubPage(newSubPage);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -506,13 +506,95 @@ export class SkillsGraphic extends React.Component {
   }
 }
 
+export class EmbeddedGist extends React.Component {
+// based on https://gist.github.com/aVolpe/b364a8fcd10f1ba833d97e9ab278f42c
+
+  constructor(props) {
+      super(props);
+      this.gist = props.gist;
+      this.file = props.file;
+      this.stylesheetAdded = false;
+      this.state = {
+        loading: true,
+        src: "",
+        gistFileClass: graphics.gistFile,
+        gistDataClass: graphics.gistData,
+        gistClass: graphics.gist
+      };
+  }
+
+  nextGistCallback() {
+    return "embed_gist_callback_" + Math.floor(Math.random() * Math.floor(99999));
+  };
+
+  componentDidMount() {
+    // Create a JSONP callback that will set our state
+    // with the data that comes back from the Gist site
+    var gistCallback = this.nextGistCallback();
+    window[gistCallback] = function(gist) {
+        this.setState({
+          loading: false,
+          src: gist.div.replace(/"gist-file"/, `"gist-file ${this.state.gistFileClass}"`).replace(/"gist-data"/, `"gist-data ${this.state.gistDataClass}"`).replace(/"gist"/, `"gist ${this.state.gistClass}"`)
+        });
+        // The Gist JSON data includes a stylesheet to add to the page
+        // to make it look correct. `addStylesheet` ensures we only add
+        // the stylesheet one time.
+        if (!this.stylesheetAdded) {
+          this.stylesheetAdded = true;
+          var link = document.createElement('link');
+          link.type = "text/css";
+          link.rel = "stylesheet";
+          link.href = gist.stylesheet;
+          document.head.appendChild(link);
+        }
+    }.bind(this);
+
+    var url = "https://gist.github.com/" + this.props.gist + ".json?callback=" + gistCallback;
+    if (this.props.file) {
+      url += "&file=" + this.props.file;
+    }
+
+    // Add the JSONP script tag to the document.
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+    document.head.appendChild(script);
+  }
+
+  render() {
+    if (this.state.loading) {
+      return <div>loading...</div>;
+    } else {
+      return <div className={graphics.gistWrapper} dangerouslySetInnerHTML={{__html: this.state.src}} />;
+    }
+  }
+}
+
+// EmbeddedGist.propTypes = {
+//     gist: React.PropTypes.string.isRequired, // e.g. "username/id"
+//     file: React.PropTypes.string // to embed a single specific file from the gist
+// };
+
+// // Each time we request a Gist, we'll need to generate a new
+// // global function name to serve as the JSONP callback.
+// var gistCallbackId = 0;
+// EmbeddedGist.nextGistCallback = () => {
+//     return "embed_gist_callback_" + gistCallbackId++;
+// };
+
+/** USAGE:
+* <EmbeddedGist gist="aVolpe/fffbe6a9e9858c7e3546fb1d55782152" file="SetUtils.java"></EmbeddedGist>
+*/
+
 export class CodeSnippetContainer extends React.Component {
   render() {
     return(
-      <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
-        <div className={graphics.snippet}>snip1</div>
-        <div className={graphics.snippet}>snip2</div>
-        <div className={graphics.snippet}>snip3</div>
+      <div className={this.props.active ? `${graphics.gistContainer} ${css.slidIn}` : `${graphics.gistContainer} ${css.slidOut}`}>
+        <div className={graphics.gistContainerInner}>
+          <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" />
+          <EmbeddedGist gist="jsonbrazeal/3c7edf1ced0b448d2e77" />
+          <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" />
+        </div>
       </div>
     )
   }
@@ -702,8 +784,8 @@ export class ResumeContainer extends React.Component {
 export class ProjectCardContainer extends React.Component {
   render() {
     return(
-      <div className={this.props.active ? `${graphics.container} ${graphics.projectCardContainer} ${css.slidIn}` : `${graphics.container} ${graphics.workCardContainer} ${css.slidOut}`}>
-        <div>pcards</div>
+      <div className={this.props.active ? `${graphics.projectCardContainer} ${css.slidIn}` : `${graphics.projectCardContainer} ${css.slidOut}`}>
+        <h1>hi</h1>
       </div>
     )
   }
