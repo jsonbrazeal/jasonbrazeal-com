@@ -620,13 +620,55 @@ console.log(direction)
 }
 
 export class ArticleContainer extends React.Component {
+
+  handleMouseOver(e, direction) {
+    if (direction === "up") {
+console.log(direction)
+    } else if (direction === "down") {
+      console.log(direction)
+    }
+  }
+
+  handleMouseEnter(e, direction) {
+    if (direction === "up") {
+console.log(direction)
+    } else if (direction === "down") {
+      console.log(direction)
+    }
+  }
+
   render() {
     return(
-      <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
-        <div className={graphics.article}>article1</div>
-        <div className={graphics.article}>article2</div>
-        <div className={graphics.article}>article3</div>
+      <div className={this.props.active ? `${graphics.articleContainer} ${css.slidIn}` : `${graphics.articleContainer} ${css.slidOut}`}>
+        <span className={[icons.fa, icons["fa-chevron-up"], animations.bounceUp, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "up")} onMouseEnter={(e) => this.handleMouseEnter(e, "up")}></span>
+        <div className={graphics.articleContainerInner}>
+          <Article />
+          <Article />
+          <Article />
+        </div>
+        <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span>
       </div>
+    )
+  }
+
+
+  // render() {
+  //   return(
+  //     <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
+  //       <div className={graphics.article}>article1</div>
+  //       <div className={graphics.article}>article2</div>
+  //       <div className={graphics.article}>article3</div>
+  //     </div>
+  //   )
+  // }
+}
+
+export class Article extends React.Component {
+  render() {
+    return(
+       <article>
+       article
+       </article>
     )
   }
 }
