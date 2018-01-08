@@ -240,7 +240,7 @@ span.scrollNav {
   font-size: 32px;
   position: absolute;
   overflow: hidden;
-  padding: 25px;
+  padding: 25px 0 25px 0;
 }
 
 .article {

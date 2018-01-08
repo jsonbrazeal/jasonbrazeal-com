@@ -695,7 +695,9 @@ export class Article extends React.Component {
             <div className={animations.modalWrap}>
               <label htmlFor="modalTrigger" onClick={(e) => this.handleClick("close")}>&#10006;</label>
               <h2>{this.props.title}</h2>
+
               {this.props.children}
+
             </div>
           </div>
         </div>
