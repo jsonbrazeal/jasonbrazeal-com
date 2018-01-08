@@ -587,14 +587,33 @@ export class EmbeddedGist extends React.Component {
 */
 
 export class CodeSnippetContainer extends React.Component {
+
+  handleMouseOver(e, direction) {
+    if (direction === "up") {
+console.log(direction)
+    } else if (direction === "down") {
+      console.log(direction)
+    }
+  }
+
+  handleMouseEnter(e, direction) {
+    if (direction === "up") {
+console.log(direction)
+    } else if (direction === "down") {
+      console.log(direction)
+    }
+  }
+
   render() {
     return(
       <div className={this.props.active ? `${graphics.gistContainer} ${css.slidIn}` : `${graphics.gistContainer} ${css.slidOut}`}>
+        <span className={[icons.fa, icons["fa-chevron-up"], animations.bounceUp, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "up")} onMouseEnter={(e) => this.handleMouseEnter(e, "up")}></span>
         <div className={graphics.gistContainerInner}>
           <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" />
           <EmbeddedGist gist="jsonbrazeal/3c7edf1ced0b448d2e77" />
           <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" />
         </div>
+        <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span>
       </div>
     )
   }

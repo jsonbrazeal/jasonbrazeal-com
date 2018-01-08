@@ -197,13 +197,13 @@
 }
 
 .gistWrapper {
-  margin: 60px 0;
+  margin-bottom: 60px;
   width: 98%;
 }
 
 .gistContainerInner {
   width: 98%;
-  height: 500px;
+  height: 560px;
   font-size: 32px;
   /*position: absolute;*/
   overflow: hidden;
@@ -212,12 +212,12 @@
 
 .gistContainer {
   width: 75%;
-  height: 500px;
+  height: 600px;
   left: 7.5%;
   font-size: 32px;
   position: absolute;
   overflow: hidden;
-  padding-top: 50px;
+  padding: 25px;
 }
 
 .gistFile, .gistData {
@@ -227,4 +227,10 @@
 .gist {
   height: 150px;
 
+}
+
+span.scrollNav {
+  margin: 0 45%;
+  font-size: 18px;
+  display: block;
 }
