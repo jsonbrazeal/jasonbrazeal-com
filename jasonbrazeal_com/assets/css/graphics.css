@@ -154,33 +154,12 @@
 .verodin {
 }
 
-.container {
-  width: 100%;
-  height: 100%;
-  font-size: 32px;
-  position: absolute;
-  left: 25%;
-}
-
 .projectCardContainer {
   width: 100%;
   height: 100%;
   font-size: 32px;
   position: absolute;
   left: 25%;
-  background: #ad8;
-  color: #393939;
-}
-
-.snippet {
-  width: 600px;
-  height: 200px;
-}
-
-.article {
-  width: 600px;
-  height: 200px;
-  background: #ad8000;
   color: #393939;
 }
 
@@ -234,13 +213,28 @@ span.scrollNav {
   display: block;
 }
 
-
 .articleContainerInner {
   width: 98%;
   height: 560px;
   font-size: 32px;
   overflow: hidden;
   overflow-y: auto;
+}
+
+.articleContainer h1 {
+  font-size: 18px;
+  text-align: center;
+  color: #393939;
+}
+
+.articleContainer button {
+  margin: 1em auto;
+  display: block;
+}
+
+.articleContainer p, .articleContainer button {
+  font-size: 14px;
+  color: #393939;
 }
 
 .articleContainer {
@@ -252,4 +246,22 @@ span.scrollNav {
   overflow: hidden;
   padding: 25px;
   z-index: -1;
+}
+
+.article {
+  height: 200px;
+  margin-bottom: 20px;
+  width: 98%;
+  color: #393939;
+  background: white;
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.articleText {
+  /*white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;*/
+  width: 75%;
+  height: 50px;
+  margin: 0 auto;
 }

@@ -642,32 +642,31 @@ console.log(direction)
       <div className={this.props.active ? `${graphics.articleContainer} ${css.slidIn}` : `${graphics.articleContainer} ${css.slidOut}`}>
         <span className={[icons.fa, icons["fa-chevron-up"], animations.bounceUp, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "up")} onMouseEnter={(e) => this.handleMouseEnter(e, "up")}></span>
         <div className={graphics.articleContainerInner}>
-          <Article />
-          <Article />
-          <Article />
+          <Article title="Markdown Here for Code Styling">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+          </Article>
+          <Article title="Python Lists">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+          </Article>
+          <Article title="How to Build a Simple IoT System with Python">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+          </Article>
         </div>
         <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span>
       </div>
     )
   }
-
-
-  // render() {
-  //   return(
-  //     <div className={this.props.active ? `${graphics.container} ${css.slidIn}` : `${graphics.container} ${css.slidOut}`}>
-  //       <div className={graphics.article}>article1</div>
-  //       <div className={graphics.article}>article2</div>
-  //       <div className={graphics.article}>article3</div>
-  //     </div>
-  //   )
-  // }
 }
 
 export class Article extends React.Component {
   render() {
     return(
-       <article>
-       article
+       <article className={graphics.article}>
+       <h1>{this.props.title}</h1>
+       <div className={graphics.articleText}>
+       {this.props.children}
+       </div>
+       <button>full text</button>
        </article>
     )
   }
