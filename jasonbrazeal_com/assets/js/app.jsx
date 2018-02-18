@@ -908,17 +908,6 @@ export class ProjectCardContainer extends React.Component {
         [cardId]: "open"
       });
     }
-    // var openers = document.querySelectorAll('.card a[data-action="drawer"]')
-    // for (var i = 0; i < openers.length; ++i) {
-    //   openers[i].onclick = function() {
-    //     var card = this.parentElement.parentElement.parentElement;
-    //     if (card.classList.contains("active")) {
-    //       card.classList.remove("active");
-    //     } else {
-    //       card.classList.add("active");
-    //     }
-    //   }
-    // }
   }
 
   render() {
@@ -951,6 +940,7 @@ export class ProjectCardContainer extends React.Component {
             </ul>
           </div>
         </div>
+
       </div>
     )
   }
