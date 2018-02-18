@@ -183,7 +183,7 @@ class BubbleChart  {
       .attr("opacity", "0.8");
 
     node.append("text")
-      .attr("fill", "#343434")
+      .attr("fill", "#fff")
       .attr("text-anchor", "middle")
       .attr("dx", (d) => { return d.cx })
       .attr("dy", (d) => { return d.cy + 5 })

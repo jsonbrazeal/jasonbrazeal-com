@@ -623,7 +623,7 @@ export class ArticleContainer extends React.Component {
 
   handleMouseOver(e, direction) {
     if (direction === "up") {
-console.log(direction)
+      console.log(direction)
     } else if (direction === "down") {
       console.log(direction)
     }
@@ -631,7 +631,7 @@ console.log(direction)
 
   handleMouseEnter(e, direction) {
     if (direction === "up") {
-console.log(direction)
+      console.log(direction)
     } else if (direction === "down") {
       console.log(direction)
     }
@@ -885,10 +885,72 @@ export class ResumeContainer extends React.Component {
 }
 
 export class ProjectCardContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      card1: "closed",
+      card2: "closed",
+      card3: "closed",
+      card4: "closed",
+      card5: "closed",
+      card6: "closed"
+    };
+  }
+
+  handleClick(cardId)  {
+    console.log('clicked '+cardId)
+    if (this.state[cardId] === "open") {
+      this.setState({
+        [cardId]: "closed"
+      });
+    } else {
+      this.setState({
+        [cardId]: "open"
+      });
+    }
+    // var openers = document.querySelectorAll('.card a[data-action="drawer"]')
+    // for (var i = 0; i < openers.length; ++i) {
+    //   openers[i].onclick = function() {
+    //     var card = this.parentElement.parentElement.parentElement;
+    //     if (card.classList.contains("active")) {
+    //       card.classList.remove("active");
+    //     } else {
+    //       card.classList.add("active");
+    //     }
+    //   }
+    // }
+  }
+
   render() {
     return(
       <div className={this.props.active ? `${graphics.projectCardContainer} ${css.slidIn}` : `${graphics.projectCardContainer} ${css.slidOut}`}>
-        <h1>hi</h1>
+
+        <div className={this.state.card1 === 'open' ? `${graphics.card} ${graphics.active}` : `${graphics.card}`}>
+          <div className={graphics.cardImage}>
+            <h1>Django Tic-Tac-Toe</h1>
+          </div>
+          <div className={graphics.cardBody}>
+            <div className={graphics.controls}>
+              <a data-action="drawer" href="#" onClick={(e) => this.handleClick("card1")}>
+                <i className={[graphics.up, icons.fa, icons['fa-chevron-up']].join(" ")}></i>
+                <i className={[graphics.down, icons.fa, icons['fa-chevron-down']].join(" ")}></i>
+              </a>
+              <a href="http://jasonbrazeal.com/tictactoe">
+                <i className={[icons.fa, icons['fa-external-link']].join(" ")}></i>
+              </a>
+              <a href="https://github.com/jsonbrazeal/tictactoe">
+                <i className={[icons.fa, icons['fa-github']].join(" ")}></i>
+              </a>
+            </div>
+            <h1>Django Tic-Tac-Toe</h1>
+            <ul>
+              <li>simple online game</li>
+              <li>Python, Django</li>
+              <li>Javascript, jQuery</li>
+              <li>Digital Ocean, Nginx, Gunicorn</li>
+            </ul>
+          </div>
+        </div>
       </div>
     )
   }

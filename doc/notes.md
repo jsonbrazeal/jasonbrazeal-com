@@ -1,4 +1,4 @@
-# jasonbrazeal.com 2.0.0 frontent
+# jasonbrazeal.com 2.0.0 frontend
 
 ## Raleway font
 * https://fonts.googleapis.com/css?family=Raleway:200,100,400
