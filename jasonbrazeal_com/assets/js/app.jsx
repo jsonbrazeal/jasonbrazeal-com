@@ -14,7 +14,7 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: "Portfolio",
+      activePage: "Home",
       activeSubPage: null
     };
   }
