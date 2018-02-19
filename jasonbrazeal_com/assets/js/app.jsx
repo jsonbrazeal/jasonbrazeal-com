@@ -885,66 +885,107 @@ export class ResumeContainer extends React.Component {
 }
 
 export class ProjectCardContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      card1: "closed",
-      card2: "closed",
-      card3: "closed",
-      card4: "closed",
-      card5: "closed",
-      card6: "closed"
-    };
-  }
-
-  handleClick(cardId)  {
-    console.log('clicked '+cardId)
-    if (this.state[cardId] === "open") {
-      this.setState({
-        [cardId]: "closed"
-      });
-    } else {
-      this.setState({
-        [cardId]: "open"
-      });
-    }
-  }
-
   render() {
     return(
       <div className={this.props.active ? `${graphics.projectCardContainer} ${css.slidIn}` : `${graphics.projectCardContainer} ${css.slidOut}`}>
-
-        <div className={this.state.card1 === 'open' ? `${graphics.card} ${graphics.active}` : `${graphics.card}`}>
-          <div className={graphics.cardImage}>
-            <h1>Django Tic-Tac-Toe</h1>
-          </div>
-          <div className={graphics.cardBody}>
-            <div className={graphics.controls}>
-              <a data-action="drawer" href="#" onClick={(e) => this.handleClick("card1")}>
-                <i className={[graphics.up, icons.fa, icons['fa-chevron-up']].join(" ")}></i>
-                <i className={[graphics.down, icons.fa, icons['fa-chevron-down']].join(" ")}></i>
-              </a>
-              <a href="http://jasonbrazeal.com/tictactoe">
-                <i className={[icons.fa, icons['fa-external-link']].join(" ")}></i>
-              </a>
-              <a href="https://github.com/jsonbrazeal/tictactoe">
-                <i className={[icons.fa, icons['fa-github']].join(" ")}></i>
-              </a>
-            </div>
-            <h1>Django Tic-Tac-Toe</h1>
-            <ul>
-              <li>simple online game</li>
-              <li>Python, Django</li>
-              <li>Javascript, jQuery</li>
-              <li>Digital Ocean, Nginx, Gunicorn</li>
-            </ul>
-          </div>
-        </div>
-
+        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="http://jasonbrazeal.com/tictactoe">
+          <ul>
+            <li>Online Game</li>
+            <li>Python, Django</li>
+            <li>Javascript, jQuery</li>
+            <li>Digital Ocean, Nginx, Gunicorn</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="pcapview" cardClass="pcapview" githubLink="https://github.com/jsonbrazeal/pcapview">
+          <ul>
+            <li>Network Traffic Visualization Tool</li>
+            <li>Python, Flask</li>
+            <li>Javascript, d3.js</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="border wait times" cardClass="border" githubLink="https://github.com/jsonbrazeal">
+          <ul>
+            <li>Amazon Alexa Skill</li>
+            <li>Python, Selenium</li>
+            <li>AWS, EC2, DynamoDB</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="notes viewer" cardClass="notes" githubLink="https://github.com/jsonbrazeal/notes">
+          <ul>
+            <li>Local File Browser</li>
+            <li>Python, Flask</li>
+            <li>Javascript, React, Webpack</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="randogen" cardClass="randogen" githubLink="https://github.com/jsonbrazeal/randogen">
+          <ul>
+            <li>Random Number Generator</li>
+            <li>Rest Client for <a href="https://www.random.org/">random.org</a></li>
+            <li>Python, Requests</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="jasonbrazeal.com" cardClass="jasonBrazeal" githubLink="https://github.com/jsonbrazeal/jasonbrazeal-com-2.0.0" externalLink="http://jasonbrazeal.com">
+          <ul>
+            <li>Personal Website Redesign (<a href="http://jasonbrazeal.com">see old site</a>)</li>
+            <li>Python, Flask</li>
+            <li>Javascript, React, Webpack</li>
+            <li>Digital Ocean, Nginx, Gunicorn</li>
+          </ul>
+        </ProjectCard>
       </div>
     )
   }
 }
+
+
+export class ProjectCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
+  }
+
+  handleClick()  {
+    this.setState({
+      open: !this.state.open
+    });
+  }
+
+  render() {
+    if (this.props.externalLink) {
+      var externalLink = (
+        <a href={this.props.externalLink} target="blank">
+          <i className={[icons.fa, icons['fa-external-link']].join(" ")}></i>
+        </a>
+      )
+    } else {
+      var externalLink = null;
+    }
+    return(
+      <div className={this.state.open ? `${graphics.card} ${graphics.active} ${graphics[this.props.cardClass]}` : `${graphics.card} ${graphics[this.props.cardClass]}`}>
+        <div className={graphics.cardImage}>
+          <h1>{this.props.title}</h1>
+        </div>
+        <div className={graphics.cardBody}>
+          <div className={graphics.controls}>
+            <a data-action="drawer" href="#" onClick={(e) => this.handleClick()}>
+              <i className={[graphics.up, icons.fa, icons['fa-chevron-up']].join(" ")}></i>
+              <i className={[graphics.down, icons.fa, icons['fa-chevron-down']].join(" ")}></i>
+            </a>
+            {externalLink}
+            <a href={this.props.githubLink} target="blank">
+              <i className={[icons.fa, icons['fa-github']].join(" ")}></i>
+            </a>
+          </div>
+          <h1>{this.props.title}</h1>
+          {this.props.children}
+        </div>
+      </div>
+    )
+  }
+}
+
 
 export class Footer extends React.Component {
   render() {

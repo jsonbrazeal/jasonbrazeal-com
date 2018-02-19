@@ -318,6 +318,34 @@ span.scrollNav {
   position: absolute;
   left: 6%;
   color: #393939;
+  z-index: 101;
+}
+
+.ticTacToe .cardImage {
+  background-image: url(../img/tictactoe.png);
+  background-position: 0% 20%;
+}
+
+.pcapview .cardImage {
+  background-image: url(../img/pcapview.png);
+  background-position: 50% 0%;
+}
+
+.border .cardImage {
+  background-image: url(../img/border_wait_times.png);
+}
+
+.notes .cardImage {
+  background-image: url(../img/notes_viewer.png);
+  background-position: 0 20px;
+}
+
+.randogen .cardImage {
+  background-image: url(../img/randogen.png);
+}
+
+.jasonBrazeal .cardImage {
+  background-image: url(../img/jasonbrazeal.com.png);
 }
 
 .card {
@@ -337,9 +365,7 @@ span.scrollNav {
   position: relative;
   width: 300px;
   height: 210px;
-  background-image: url(../img/django_tictactoe.png);
   background-size: cover;
-  background-position: 0% 20%;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
@@ -348,15 +374,15 @@ span.scrollNav {
 }
 
 .card .cardImage h1 {
-  position: absolute;
-  bottom: 5px;
-  left: 10px;
+  position: relative;
+  top: 174px;
   margin: 0;
   padding: 0;
   font-weight: 300;
   transition: all 0.4s cubic-bezier(.25,.8,.25,1);
   color: #737373;
   font-size: 1em;
+  background-color: #fff;
 }
 
 .card.active .cardImage h1 {
@@ -456,6 +482,10 @@ span.scrollNav {
   list-style-type: square;
   padding: 15px 0 0 38px;
   margin-top: 0;
+}
+
+.card .cardBody ul li a {
+  color: #346D98;
 }
 
 .card .cardBody ul li {
