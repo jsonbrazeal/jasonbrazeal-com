@@ -14,6 +14,6 @@ npm run --prefix /path/to/project/folder start
 cd build
 python -m http.server
 # start flask server (dev only) or gunicorn
-FLASK_DEBUG=1 FLASK_APP=/path/to/project/folder/project/app.py flask start
+FLASK_DEBUG=1 FLASK_APP=/path/to/project/folder/project/app.py flask run
 ```
 

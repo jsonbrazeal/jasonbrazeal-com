@@ -1055,7 +1055,7 @@ export class Typewriter extends React.Component {
         <span
           className={graphics.typewriter}
           data-period="2000"
-          data-rotate='["software engineer", "web developer", "coder."]'>
+          data-rotate='["software engineer", "full stack developer", "coder."]'>
           <span className={graphics.typewriterWrap}></span>
           <span className={[graphics.typewriterCaret].join(" ")}>|</span>
         </span>
