@@ -125,7 +125,7 @@ export class App extends React.Component {
                     pageNum="3"
                     pageTitle="Portfolio"
                     onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
-                    subNavItems={["projects", "articles", "code snippets"]}
+                    subNavItems={["projects", "writing", "code snippets"]}
                     activeSubPage={this.state.activeSubPage}>
                 <CSSTransition
                   timeout={1000}
@@ -150,8 +150,8 @@ export class App extends React.Component {
                     exit: animations.slideExit,
                     exitActive: animations.slideExitActive
                   }}
-                  in={this.state.activeSubPage === "articles"}>
-                  <ArticleContainer active={this.state.activeSubPage === "articles"} />
+                  in={this.state.activeSubPage === "writing"}>
+                  <WritingContainer active={this.state.activeSubPage === "writing"} />
                 </CSSTransition>
                 <CSSTransition
                   timeout={1000}
@@ -619,7 +619,7 @@ console.log(direction)
   }
 }
 
-export class ArticleContainer extends React.Component {
+export class WritingContainer extends React.Component {
 
   handleMouseOver(e, direction) {
     if (direction === "up") {
@@ -639,10 +639,10 @@ export class ArticleContainer extends React.Component {
 
   render() {
     return(
-      <div className={this.props.active ? `${graphics.articleContainer} ${css.slidIn}` : `${graphics.articleContainer} ${css.slidOut}`}>
+      <div className={this.props.active ? `${graphics.writingContainer} ${css.slidIn}` : `${graphics.writingContainer} ${css.slidOut}`}>
         <span className={[icons.fa, icons["fa-chevron-up"], animations.bounceUp, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "up")} onMouseEnter={(e) => this.handleMouseEnter(e, "up")}></span>
-        <div className={graphics.articleContainerInner}>
-          <Article title="Markdown Here for Code Styling" articlePreview="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum">
+        <div className={graphics.writingContainerInner}>
+          <Writing title="Markdown Here for Code Styling" writingPreview="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
@@ -652,13 +652,13 @@ export class ArticleContainer extends React.Component {
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-          </Article>
-          <Article title="Python Lists" articlePreview="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum">
+          </Writing>
+          <Writing title="Python Lists" writingPreview="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-          </Article>
-          <Article title="How to Build a Simple IoT System with Python" articlePreview="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum">
+          </Writing>
+          <Writing title="How to Build a Simple IoT System with Python" writingPreview="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-          </Article>
+          </Writing>
         </div>
         <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span>
       </div>
@@ -666,38 +666,38 @@ export class ArticleContainer extends React.Component {
   }
 }
 
-export class Article extends React.Component {
+export class Writing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      articleOpen: false
+      writingOpen: false
     };
   }
 
   handleClick(state)  {
     if (state === "open") {
       this.setState({
-        articleOpen: true
+        writingOpen: true
       });
     } else {
       this.setState({
-        articleOpen: false
+        writingOpen: false
       });
     }
   }
 
   render() {
     return(
-       <article className={graphics.article}>
+       <article className={graphics.writing}>
        <h1>{this.props.title}</h1>
-       <div className={graphics.articleText}>
-       <p>{this.props.articlePreview}</p>
+       <div className={graphics.writingText}>
+       <p>{this.props.writingPreview}</p>
        </div>
        <label className={[graphics.btn, graphics.fullTextBtn].join(" ")} htmlFor="modalTrigger" onClick={(e) => this.handleClick("open")}>full text</label>
 
         {/* Start of Modal */}
         <div className={animations.modal}>
-          <input id="modalTrigger" className={animations.modalTriggerInput} type="checkbox" checked={this.state.articleOpen} />
+          <input id="modalTrigger" className={animations.modalTriggerInput} type="checkbox" checked={this.state.writingOpen} />
           <div className={animations.modalOverlay}>
             <div className={animations.modalWrap}>
               <label htmlFor="modalTrigger" onClick={(e) => this.handleClick("close")}>&#10006;</label>
@@ -770,7 +770,7 @@ export class ExperienceContent extends React.Component {
   handleNav(direction) {
     console.log(`handlingNav(${direction})`)
     if (direction === "next") {
-      if (this.state.currentPage === 4) {
+      if (this.state.currentPage === 5) {
         this.setState({
           currentPage: 0
         });
@@ -782,7 +782,7 @@ export class ExperienceContent extends React.Component {
     } else if (direction === "prev") {
       if (this.state.currentPage === 0) {
         this.setState({
-          currentPage: 4
+          currentPage: 5
         });
       } else {
         this.setState({
@@ -798,9 +798,20 @@ export class ExperienceContent extends React.Component {
   render() {
     return(
       <div>
-      <section className={[graphics.experienceSection, graphics.medal, this.state.currentPage === 0 ? graphics.activeExperienceSection : ""].join(" ")}>
+      <section className={[graphics.experienceSection, graphics.primer, this.state.currentPage === 0 ? graphics.activeExperienceSection : ""].join(" ")}>
+        <h3>Primer AI</h3>
+        <p>Senior Backend Engineer</p>
+        <p>July 2018</p>
+        <p>San Francisco, CA</p>
+        <ul>
+          <li>building stuff</li>
+        </ul>
+        <div className={[graphics.experienceLogo, graphics.primerLogo].join(" ")}></div>
+      </section>
+      <section className={[graphics.experienceSection, graphics.medal, this.state.currentPage === 1 ? graphics.activeExperienceSection : ""].join(" ")}>
         <h3>Medal</h3>
-        <p>July 2017-present</p>
+        <p>Full Stack Engineer ➡ Principal Software Engineer</p>
+        <p>July 2017-July 2018</p>
         <p>San Francisco, CA</p>
         <ul>
           <li>participate in the design, coding, and deployment of the Medal platform and Search & Summary web application, which consolidates medical records and clinical data from different sources (Python/Django/Javascript)</li>
@@ -809,8 +820,9 @@ export class ExperienceContent extends React.Component {
         </ul>
         <div className={[graphics.experienceLogo, graphics.medalLogo].join(" ")}></div>
       </section>
-      <section className={[graphics.experienceSection, graphics.verodin, this.state.currentPage === 1 ? graphics.activeExperienceSection : ""].join(" ")}>
+      <section className={[graphics.experienceSection, graphics.verodin, this.state.currentPage === 2 ? graphics.activeExperienceSection : ""].join(" ")}>
         <h3>Verodin</h3>
+        <p>Full Stack Engineer</p>
         <p>December 2015-June 2017</p>
         <p>remote</p>
         <ul>
@@ -822,8 +834,9 @@ export class ExperienceContent extends React.Component {
         </ul>
         <div className={[graphics.experienceLogo, graphics.verodinLogo].join(" ")}></div>
       </section>
-      <section className={[graphics.experienceSection, graphics.tyco, this.state.currentPage === 2 ? graphics.activeExperienceSection : ""].join(" ")}>
+      <section className={[graphics.experienceSection, graphics.tyco, this.state.currentPage === 3 ? graphics.activeExperienceSection : ""].join(" ")}>
         <h3>Tyco</h3>
+        <p>Python Developer</p>
         <p>September 2014-December 2015</p>
         <p>Boca Raton, FL</p>
         <ul>
@@ -836,24 +849,26 @@ export class ExperienceContent extends React.Component {
         </ul>
         <div className={[graphics.experienceLogo, graphics.tycoLogo].join(" ")}></div>
       </section>
-      <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 3 ? graphics.activeExperienceSection : ""].join(" ")}>
+      <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 4 ? graphics.activeExperienceSection : ""].join(" ")}>
         <h3>University of Texas at Austin</h3>
+        <p>Software Developer ➡ Software Developer / Analyst</p>
         <p>July 2013-May 2014</p>
         <p>Austin, TX</p>
         <ul>
           <li>built Python/Django middleware to integrate Toopher mobile app-based second factor authentication into existing legacy web systems using REST API</li>
           <li>configured development server for existing Digital Downloads service (LAMP) and deployed service to new load-balanced virtual host using Python/Fabric and Bash deployment scripts</li>
-          <li>devised suite of Selenium test scripts for our web applications that greatly reduced manual workload</li>
+ {/*         <li>devised suite of Selenium test scripts for our web applications that greatly reduced manual workload</li>
           <li>replaced cookie-based authentication with OpenAM WPA-based authentication system for Digital Downloads service</li>
           <li>maintained custom IT service provisioning web application and evaluated new IT service management vendor products based on ITIL standards (Service Now, BMC Remedy, and Cherwell ITSM platforms)</li>
           <li>set up daily mainframe database (Natural/Adabas) to MySQL database ETL process using SQL scripts and cron jobs for IT service provisioning application</li>
           <li>collaborated closely with technical infrastructure team for routine and emergency maintenance on Red Hat Enterprise Linux servers</li>
-          <li>taught Web Application Security course based on OWASP Top Ten and Python/Django course for campus developers</li>
+          <li>taught Web Application Security course based on OWASP Top Ten and Python/Django course for campus developers</li>*/}
         </ul>
         <div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div>
       </section>
-      <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 4 ? graphics.activeExperienceSection : ""].join(" ")}>
+      <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 5 ? graphics.activeExperienceSection : ""].join(" ")}>
         <h3>University of Texas at Austin</h3>
+        <p>Software Developer</p>
         <p>February 2012-July 2013</p>
         <p>Austin, TX</p>
         <ul>
@@ -1028,7 +1043,7 @@ export class Copyright extends React.Component {
     return(
       <div className={nav.copyright}>
         <span className={[icons.fa, icons["fa-copyright"]].join(" ")}></span>
-        2017 Jason Brazeal
+        2018 Jason Brazeal
       </div>
     )
   }

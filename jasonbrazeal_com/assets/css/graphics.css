@@ -124,6 +124,10 @@
   background-image: url(../img/verodin_logo.png);
 }
 
+.primerLogo {
+  background-image: url(../img/primer_logo.svg);
+}
+
 .experience {
 
 }
@@ -153,6 +157,9 @@
 }
 
 .verodin {
+}
+
+.primer {
 }
 
 .typewriter {
@@ -205,7 +212,7 @@ span.scrollNav {
   display: block;
 }
 
-.articleContainerInner {
+.writingContainerInner {
   width: 98%;
   height: 560px;
   font-size: 32px;
@@ -213,19 +220,19 @@ span.scrollNav {
   overflow-y: auto;
 }
 
-.articleContainer h1 {
+.writingContainer h1 {
   font-size: 18px;
   text-align: center;
   color: #393939;
   padding-top: 1em;
 }
 
-.articleContainer p {
+.writingContainer p {
   font-size: 14px;
   color: #393939;
 }
 
-.articleContainer {
+.writingContainer {
   width: 75%;
   height: 600px;
   left: 7.5%;
@@ -235,7 +242,7 @@ span.scrollNav {
   padding: 25px 0 25px 0;
 }
 
-.article {
+.writing {
   height: 200px;
   margin-bottom: 20px;
   width: 98%;
@@ -245,7 +252,7 @@ span.scrollNav {
   border-radius: 2px;
 }
 
-.articleText {
+.writingText {
   /*white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;*/
