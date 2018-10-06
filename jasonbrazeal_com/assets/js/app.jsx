@@ -751,7 +751,7 @@ export class EducationContent extends React.Component {
       <div className={graphics.educationTextContainer}>
         <span className={graphics.degree}>Webmaster Certificate </span><span className={graphics.year}>2014 </span><span className={graphics.location}>Austin, TX</span>
         <span className={graphics.degree}>Software Developer Training </span><span className={graphics.year}>2012 </span><span className={graphics.location}>Austin, TX</span>
-        <span className={graphics.degree}>M.A. Linguistics  2002</span><span className={graphics.year}>2005 </span><span className={graphics.location}>Austin, TX</span>
+        <span className={graphics.degree}>M.A. Linguistics </span><span className={graphics.year}>2005 </span><span className={graphics.location}>Austin, TX</span>
         <span className={graphics.degree}>B.A. Linguistics </span><span className={graphics.year}>2002 </span><span className={graphics.location}>Athens, GA</span>
       </div>
       </div>
