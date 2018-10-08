@@ -126,10 +126,17 @@
 
 .primerLogo {
   background-image: url(../img/primer_logo.svg);
+  position: relative;
+  top: 10px;
+  left: -70px;
 }
 
 .experience {
 
+}
+
+.experienceNav span:first-child {
+  margin-right: 68%;
 }
 
 .experienceSection {
@@ -145,6 +152,11 @@
 
 .activeExperienceSection {
   display: block !important;
+}
+
+.experienceSection ul {
+    width: 70%;
+    height: 200px;
 }
 
 .ut {

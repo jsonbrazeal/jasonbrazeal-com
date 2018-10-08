@@ -799,17 +799,18 @@ export class ExperienceContent extends React.Component {
     return(
       <div>
       <section className={[graphics.experienceSection, graphics.primer, this.state.currentPage === 0 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <h3>Primer AI</h3>
+        <div className={[graphics.experienceLogo, graphics.primerLogo].join(" ")}></div>
         <p>Senior Backend Engineer</p>
-        <p>July 2018</p>
+        <p>July 2018-present</p>
         <p>San Francisco, CA</p>
         <ul>
-          <li>building stuff</li>
+          <li>develop APIs and infrastructure used for web-based products (Python/Flask/React)</li>
+          <li>deploy and maintain various products across a variety of platforms (Python/Docker/Kubernetes/AWS)</li>
+          <li>provide technical leadership and advisement through code review, tech talks, and mentoring</li>
         </ul>
-        <div className={[graphics.experienceLogo, graphics.primerLogo].join(" ")}></div>
       </section>
       <section className={[graphics.experienceSection, graphics.medal, this.state.currentPage === 1 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <h3>Medal</h3>
+        <div className={[graphics.experienceLogo, graphics.medalLogo].join(" ")}></div>
         <p>Full Stack Engineer ➡ Principal Software Engineer</p>
         <p>July 2017-July 2018</p>
         <p>San Francisco, CA</p>
@@ -818,10 +819,9 @@ export class ExperienceContent extends React.Component {
           <li>replace username/password authentication for accessing the Medal platform with OpenIdConnect/OAuth2 authentication</li>
           <li>integrate HIPAA-compliant AWS S3 storage and SQS/SNS into Medal platform and applications</li>
         </ul>
-        <div className={[graphics.experienceLogo, graphics.medalLogo].join(" ")}></div>
       </section>
       <section className={[graphics.experienceSection, graphics.verodin, this.state.currentPage === 2 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <h3>Verodin</h3>
+        <div className={[graphics.experienceLogo, graphics.verodinLogo].join(" ")}></div>
         <p>Full Stack Engineer</p>
         <p>December 2015-June 2017</p>
         <p>remote</p>
@@ -832,10 +832,9 @@ export class ExperienceContent extends React.Component {
           <li>created and maintain dynamic graphics for Rails application using d3.js, amcharts, and jQuery</li>
           <li>attended PyCon in Portland, Oregon in May 2017</li>
         </ul>
-        <div className={[graphics.experienceLogo, graphics.verodinLogo].join(" ")}></div>
       </section>
       <section className={[graphics.experienceSection, graphics.tyco, this.state.currentPage === 3 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <h3>Tyco</h3>
+        <div className={[graphics.experienceLogo, graphics.tycoLogo].join(" ")}></div>
         <p>Python Developer</p>
         <p>September 2014-December 2015</p>
         <p>Boca Raton, FL</p>
@@ -847,10 +846,9 @@ export class ExperienceContent extends React.Component {
           <li>deployed several web applications including a real-time device data/monitoring dashboard, device log tracker, and custom online reports using GitLab's REST API (Python/Twisted/RabbitMQ/Flask/WebSockets/MariaDB/Javascript/d3.js)</li>
           <li>attended PyCon in Portland, Oregon in May/June 2016</li>
         </ul>
-        <div className={[graphics.experienceLogo, graphics.tycoLogo].join(" ")}></div>
       </section>
       <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 4 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <h3>University of Texas at Austin</h3>
+        <div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div>
         <p>Software Developer ➡ Software Developer / Analyst</p>
         <p>July 2013-May 2014</p>
         <p>Austin, TX</p>
@@ -864,10 +862,9 @@ export class ExperienceContent extends React.Component {
           <li>collaborated closely with technical infrastructure team for routine and emergency maintenance on Red Hat Enterprise Linux servers</li>
           <li>taught Web Application Security course based on OWASP Top Ten and Python/Django course for campus developers</li>*/}
         </ul>
-        <div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div>
       </section>
       <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 5 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <h3>University of Texas at Austin</h3>
+        <div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div>
         <p>Software Developer</p>
         <p>February 2012-July 2013</p>
         <p>Austin, TX</p>
@@ -877,7 +874,6 @@ export class ExperienceContent extends React.Component {
           <li>maintained and improved several legacy Registrar systems including adding a messaging component to administrative web registration and overhauling the mainframe batch process responsible for canceling students' registration for nonpayment</li>
           <li>attended OWASP AppSecUSA in Austin, Texas in October 2012</li>
         </ul>
-        <div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div>
       </section>
       <section className={graphics.experienceNav}>
         <span className={[icons.fa, icons["fa-chevron-left"]].join(" ")} onClick={(e) => this.handleNav("prev")}></span>
