@@ -14,7 +14,7 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: "Home",
+      activePage: "Work",
       activeSubPage: null
     };
   }
@@ -739,20 +739,34 @@ export class WorkCardContainer extends React.Component {
 
 export class EducationContent extends React.Component {
   render() {
-    var imgClass = graphics.accLogo;
     return(
       <div>
       <div className={graphics.educationLogoContainer}>
+        <div className={[graphics.educationLogo, graphics.ccsfLogo].join(" ")}></div>
         <div className={[graphics.educationLogo, graphics.accLogo].join(" ")}></div>
-        <div className={[graphics.educationLogo, graphics.utLogo].join(" ")}></div>
-        <div className={[graphics.educationLogo, graphics.utLogo].join(" ")}></div>
+        <div className={[graphics.educationLogo, graphics.utLogoEd].join(" ")}></div>
         <div className={[graphics.educationLogo, graphics.ugaLogo].join(" ")}></div>
       </div>
       <div className={graphics.educationTextContainer}>
-        <span className={graphics.degree}>Webmaster Certificate </span><span className={graphics.year}>2014 </span><span className={graphics.location}>Austin, TX</span>
-        <span className={graphics.degree}>Software Developer Training </span><span className={graphics.year}>2012 </span><span className={graphics.location}>Austin, TX</span>
-        <span className={graphics.degree}>M.A. Linguistics </span><span className={graphics.year}>2005 </span><span className={graphics.location}>Austin, TX</span>
-        <span className={graphics.degree}>B.A. Linguistics </span><span className={graphics.year}>2002 </span><span className={graphics.location}>Athens, GA</span>
+        <span className={graphics.degree}>Networking Certificate <span className={graphics.year}>(in progress)</span></span>
+        <span className={graphics.org}>City College of San Francisco</span>
+        <span className={[graphics.location, graphics.locationSf].join(" ")}>San Francisco, CA</span>
+
+        <span className={graphics.degree}>Webmaster Certificate <span className={graphics.year}>(2014)</span></span>
+        <span className={graphics.org}>Austin Community College</span>
+          <span className={[graphics.location, graphics.locationAustin1].join(" ")}>Austin, TX</span>
+
+        <span className={graphics.degree}>Software Developer Training <span className={graphics.year}>(2012)</span></span>
+        <span className={graphics.org}>University of Texas at Austin</span>
+        <span className={[graphics.location, graphics.locationAustin2].join(" ")}>Austin, TX</span>
+
+        <span className={[graphics.degree, graphics.maDegree].join(" ")}>M.A. Linguistics <span className={graphics.year}>(2005)</span></span>
+        <span className={graphics.org}>University of Texas at Austin</span>
+        <span className={[graphics.location, graphics.locationAustin3].join(" ")}>Austin, TX</span>
+
+        <span className={graphics.degree}>B.A. Linguistics <span className={graphics.year}>(2002)</span></span>
+        <span className={graphics.org}>University of Georgia</span>
+        <span className={graphics.location}>Athens, GA</span>
       </div>
       </div>
     )
@@ -770,7 +784,7 @@ export class ExperienceContent extends React.Component {
   handleNav(direction) {
     console.log(`handlingNav(${direction})`)
     if (direction === "next") {
-      if (this.state.currentPage === 5) {
+      if (this.state.currentPage === 4) {
         this.setState({
           currentPage: 0
         });
@@ -782,7 +796,7 @@ export class ExperienceContent extends React.Component {
     } else if (direction === "prev") {
       if (this.state.currentPage === 0) {
         this.setState({
-          currentPage: 5
+          currentPage: 4
         });
       } else {
         this.setState({
@@ -799,8 +813,8 @@ export class ExperienceContent extends React.Component {
     return(
       <div>
       <section className={[graphics.experienceSection, graphics.primer, this.state.currentPage === 0 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <div className={[graphics.experienceLogo, graphics.primerLogo].join(" ")}></div>
-        <p>Senior Backend Engineer</p>
+        <a href="https://primer.ai/"><div className={[graphics.experienceLogo, graphics.primerLogo].join(" ")}></div></a>
+          <p>Senior Backend Engineer</p>
         <p>July 2018-present</p>
         <p>San Francisco, CA</p>
         <ul>
@@ -810,8 +824,12 @@ export class ExperienceContent extends React.Component {
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.medal, this.state.currentPage === 1 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <div className={[graphics.experienceLogo, graphics.medalLogo].join(" ")}></div>
-        <p>Full Stack Engineer ➡ Principal Software Engineer</p>
+          <a href="https://www.medal.com/"><div className={[graphics.experienceLogo, graphics.medalLogo].join(" ")}></div></a>
+        <p>
+          Full Stack Engineer
+          <span className={`${[icons.fa, icons["fa-arrow-right"], graphics.promotion].join(" ")}`}></span>
+          Principal Software Engineer
+        </p>
         <p>July 2017-July 2018</p>
         <p>San Francisco, CA</p>
         <ul>
@@ -821,7 +839,7 @@ export class ExperienceContent extends React.Component {
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.verodin, this.state.currentPage === 2 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <div className={[graphics.experienceLogo, graphics.verodinLogo].join(" ")}></div>
+            <a href="https://www.verodin.com/"><div className={[graphics.experienceLogo, graphics.verodinLogo].join(" ")}></div></a>
         <p>Full Stack Engineer</p>
         <p>December 2015-June 2017</p>
         <p>remote</p>
@@ -834,7 +852,7 @@ export class ExperienceContent extends React.Component {
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.tyco, this.state.currentPage === 3 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <div className={[graphics.experienceLogo, graphics.tycoLogo].join(" ")}></div>
+            <a href="http://www.tyco.com/"><div className={[graphics.experienceLogo, graphics.tycoLogo].join(" ")}></div></a>
         <p>Python Developer</p>
         <p>September 2014-December 2015</p>
         <p>Boca Raton, FL</p>
@@ -848,31 +866,26 @@ export class ExperienceContent extends React.Component {
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 4 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div>
-        <p>Software Developer ➡ Software Developer / Analyst</p>
+        <a href="https://www.utexas.edu/"><div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div></a>
+        <p>
+          Software Developer
+          <span className={`${[icons.fa, icons["fa-arrow-right"], graphics.promotion].join(" ")}`}></span>
+          Software Developer / Analyst</p>
         <p>July 2013-May 2014</p>
         <p>Austin, TX</p>
         <ul>
           <li>built Python/Django middleware to integrate Toopher mobile app-based second factor authentication into existing legacy web systems using REST API</li>
           <li>configured development server for existing Digital Downloads service (LAMP) and deployed service to new load-balanced virtual host using Python/Fabric and Bash deployment scripts</li>
- {/*         <li>devised suite of Selenium test scripts for our web applications that greatly reduced manual workload</li>
+         <li>devised suite of Selenium test scripts for our web applications that greatly reduced manual workload</li>
           <li>replaced cookie-based authentication with OpenAM WPA-based authentication system for Digital Downloads service</li>
           <li>maintained custom IT service provisioning web application and evaluated new IT service management vendor products based on ITIL standards (Service Now, BMC Remedy, and Cherwell ITSM platforms)</li>
           <li>set up daily mainframe database (Natural/Adabas) to MySQL database ETL process using SQL scripts and cron jobs for IT service provisioning application</li>
           <li>collaborated closely with technical infrastructure team for routine and emergency maintenance on Red Hat Enterprise Linux servers</li>
-          <li>taught Web Application Security course based on OWASP Top Ten and Python/Django course for campus developers</li>*/}
-        </ul>
-      </section>
-      <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 5 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div>
-        <p>Software Developer</p>
-        <p>February 2012-July 2013</p>
-        <p>Austin, TX</p>
-        <ul>
-          <li>gathered requirements, designed, and built extension of student web registration in Python/Django available to 50,000+ students for canceling their registration for the upcoming semester; IBM z/OS mainframe back end with Natural/Adabas data store</li>
-          <li>served on front end development team for custom-built course and room scheduling web application with used to schedule, track, and report on all courses taught at the University; emphasis on Python/Django, HTML, CSS, Javascript/jQuery, and AJAX development</li>
-          <li>maintained and improved several legacy Registrar systems including adding a messaging component to administrative web registration and overhauling the mainframe batch process responsible for canceling students' registration for nonpayment</li>
-          <li>attended OWASP AppSecUSA in Austin, Texas in October 2012</li>
+          <li>taught Web Application Security course based on OWASP Top Ten and Python/Django course for campus developers</li>
+            <li>gathered requirements, designed, and built extension of student web registration in Python/Django available to 50,000+ students for canceling their registration for the upcoming semester; IBM z/OS mainframe back end with Natural/Adabas data store</li>
+            <li>served on front end development team for custom-built course and room scheduling web application with used to schedule, track, and report on all courses taught at the University; emphasis on Python/Django, HTML, CSS, Javascript/jQuery, and AJAX development</li>
+            <li>maintained and improved several legacy Registrar systems including adding a messaging component to administrative web registration and overhauling the mainframe batch process responsible for canceling students' registration for nonpayment</li>
+            <li>attended OWASP AppSecUSA in Austin, Texas in October 2012</li>
         </ul>
       </section>
       <section className={graphics.experienceNav}>

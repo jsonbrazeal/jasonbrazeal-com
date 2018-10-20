@@ -79,16 +79,13 @@
 }
 
 .educationLogo {
-  width: 100%;
-  height: 125px;
-  background-size: contain;
-  background-position: center;
 }
 
 .educationTextContainer {
   width: 48%;
   display: inline-block;
   vertical-align: top;
+  padding-top: 3em;
 }
 
 .educationLogoContainer {
@@ -96,39 +93,114 @@
   display: inline-block;
 }
 
-.degree, .year, .location {
+.degree, .org, .location {
   display: block;
+}
+
+.degree {
+  font-weight: bold;
+}
+
+.locationSf {
+  margin-bottom: 3em;
+}
+
+.locationAustin1 {
+  margin-bottom: 2.5em;
+}
+
+.locationAustin2 {
+  margin-bottom: .5em;
+}
+
+.locationAustin3 {
+  margin-bottom: 1.5em;
+}
+
+.year {
+  font-weight: normal;
+}
+
+.ccsfLogo {
+  background-image: url(../img/ccsf_logo.svg);
+  width: 110px;
+  height: 110px;
+  position: relative;
+  top: 18px;
+  left: 113px;
+  margin-bottom: 10px;
 }
 
 .accLogo {
   background-image: url(../img/acc_logo.svg);
+  width: 220px;
+  height: 125px;
+  position: relative;
+  left: 60px;
+  margin-bottom: 30px;
 }
 
-.utLogo {
+.educationLogoContainer .utLogoEd {
+  background-image: url(../img/ut_logo_ed.svg);
+  width: 267px;
+  height: 67px;
+  position: relative;
+  left: 44px;
+  margin-bottom: 35px;
+}
+
+.ut .utLogo {
   background-image: url(../img/ut_logo.svg);
+  width: 280px;
+  height: 80px;
+  position: relative;
+  top: 20px;
+  left: 95px;
+  margin-bottom: 36px;
 }
 
 .ugaLogo {
   background-image: url(../img/uga_logo.svg);
+  height: 73px;
+  width: 224px;
+  position: relative;
+  left: 48px;
 }
 
-.medalLogo {
+.medal .medalLogo {
   background-image: url(../img/medal_logo.svg);
+  width: 266px;
+  position: relative;
+  top: 40px;
+  left: 150px;
 }
 
-.tycoLogo {
+.tyco .tycoLogo {
   background-image: url(../img/tyco_logo.svg);
-}
-
-.verodinLogo {
-  background-image: url(../img/verodin_logo.png);
-}
-
-.primerLogo {
-  background-image: url(../img/primer_logo.svg);
+  width: 256px;
   position: relative;
   top: 10px;
-  left: -70px;
+  left: 120px;
+}
+
+.verodin .verodinLogo {
+  background-image: url(../img/verodin_logo.png);
+  width: 350px;
+  position: relative;
+  top: 10px;
+  left: 60px;
+}
+
+.primer .primerLogo {
+  background-image: url(../img/primer_logo.svg);
+  width: 350px;
+  position: relative;
+  top: 35px;
+  left: 90px;
+}
+
+.promotion {
+  padding: 0 .5em;
 }
 
 .experience {
