@@ -342,6 +342,7 @@
   /*transition: all 0.75s cubic-bezier(.64,.54,.57,.44);*/
   transition: all 0.75s cubic-bezier(0.68, 0, 0.265, 1);
   z-index: -11;
+  overflow: scroll;
 }
 
 .modalWrap {

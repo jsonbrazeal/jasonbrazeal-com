@@ -14,7 +14,7 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: "Work",
+      activePage: "Home",
       activeSubPage: null
     };
   }
@@ -125,7 +125,7 @@ export class App extends React.Component {
                     pageNum="3"
                     pageTitle="Portfolio"
                     onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
-                    subNavItems={["projects", "writing", "code snippets"]}
+                    subNavItems={["projects", "writing", "snippets"]}
                     activeSubPage={this.state.activeSubPage}>
                 <CSSTransition
                   timeout={1000}
@@ -163,8 +163,8 @@ export class App extends React.Component {
                     exit: animations.slideExit,
                     exitActive: animations.slideExitActive
                   }}
-                  in={this.state.activeSubPage === "code snippets"}>
-                  <CodeSnippetContainer active={this.state.activeSubPage === "code snippets"} />
+                  in={this.state.activeSubPage === "snippets"}>
+                  <CodeSnippetContainer active={this.state.activeSubPage === "snippets"} />
                 </CSSTransition>
                </Page>
             </div>
@@ -370,7 +370,7 @@ export class SubNavMenu extends React.Component {
 
   handleMouseOver(e, subPage) {
     // replace "é"" in order to keep unicode out of css and in js only
-    // replace " s" in "code snippets"
+    // replace " s" in "snippets"
     this.setState({
       currentMenuItem: subPage.replace(/é/g, 'e').replace(/\ss/, 'S'),
       blink: false
@@ -590,17 +590,17 @@ export class CodeSnippetContainer extends React.Component {
 
   handleMouseOver(e, direction) {
     if (direction === "up") {
-console.log(direction)
+      console.log(direction);
     } else if (direction === "down") {
-      console.log(direction)
+      console.log(direction);
     }
   }
 
   handleMouseEnter(e, direction) {
     if (direction === "up") {
-console.log(direction)
+      console.log(direction);
     } else if (direction === "down") {
-      console.log(direction)
+      console.log(direction);
     }
   }
 
