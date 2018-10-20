@@ -203,12 +203,18 @@
   padding: 0 .5em;
 }
 
-.experience {
-
+.experienceNav span:first-child {
+  position: relative;
+  bottom: 160px;
+  right: 100px;
+  z-index: 101;
 }
 
-.experienceNav span:first-child {
-  margin-right: 68%;
+.experienceNav span:last-child {
+  position: relative;
+  bottom: 160px;
+  left: 560px;
+  z-index: 101;
 }
 
 .experienceSection {
@@ -220,6 +226,11 @@
   height: 100px;
   background-size: contain;
   background-position: center;
+  margin-bottom: 1em;
+}
+
+.jobTitle {
+  font-weight: bold;
 }
 
 .activeExperienceSection {
@@ -227,8 +238,13 @@
 }
 
 .experienceSection ul {
-    width: 70%;
-    height: 200px;
+  width: 70%;
+  height: 200px;
+  list-style-type: disc;
+}
+
+.experienceSection li {
+  padding: 5px 0;
 }
 
 .ut {
@@ -244,6 +260,11 @@
 }
 
 .primer {
+}
+
+
+.experienceSection p {
+  margin: 0 0;
 }
 
 .typewriter {

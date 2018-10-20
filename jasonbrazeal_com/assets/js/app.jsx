@@ -814,18 +814,18 @@ export class ExperienceContent extends React.Component {
       <div>
       <section className={[graphics.experienceSection, graphics.primer, this.state.currentPage === 0 ? graphics.activeExperienceSection : ""].join(" ")}>
         <a href="https://primer.ai/"><div className={[graphics.experienceLogo, graphics.primerLogo].join(" ")}></div></a>
-          <p>Senior Backend Engineer</p>
+          <p className={graphics.jobTitle}>Senior Backend Engineer</p>
         <p>July 2018-present</p>
         <p>San Francisco, CA</p>
         <ul>
-          <li>develop APIs and infrastructure used for web-based products (Python/Flask/React)</li>
-          <li>deploy and maintain various products across a variety of platforms (Python/Docker/Kubernetes/AWS)</li>
-          <li>provide technical leadership and advisement through code review, tech talks, and mentoring</li>
+          <li>develop REST APIs and other infrastructure used for web-based products (Python/Flask/React)</li>
+          <li>deploy and maintain data ingestion pipelines using a variety of technologies (Python/Docker/Kubernetes/AWS)</li>
+          <li>provide technical leadership and advisement through code review, tech talks, interviewing, and mentoring</li>
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.medal, this.state.currentPage === 1 ? graphics.activeExperienceSection : ""].join(" ")}>
           <a href="https://www.medal.com/"><div className={[graphics.experienceLogo, graphics.medalLogo].join(" ")}></div></a>
-        <p>
+        <p className={graphics.jobTitle}>
           Full Stack Engineer
           <span className={`${[icons.fa, icons["fa-arrow-right"], graphics.promotion].join(" ")}`}></span>
           Principal Software Engineer
@@ -833,59 +833,50 @@ export class ExperienceContent extends React.Component {
         <p>July 2017-July 2018</p>
         <p>San Francisco, CA</p>
         <ul>
-          <li>participate in the design, coding, and deployment of the Medal platform and Search & Summary web application, which consolidates medical records and clinical data from different sources (Python/Django/Javascript)</li>
-          <li>replace username/password authentication for accessing the Medal platform with OpenIdConnect/OAuth2 authentication</li>
-          <li>integrate HIPAA-compliant AWS S3 storage and SQS/SNS into Medal platform and applications</li>
+          <li>participated in the design, coding, and deployment of the Medal platform, which consolidates medical records and clinical data from different sources (Python/Django/Javascript)</li>
+          <li>replaced username/password authentication for accessing the web applications with OpenIdConnect/OAuth2 authentication</li>
+          <li>integrated HIPAA-compliant AWS S3 storage and SQS/SNS into Medal platform and applications</li>
+          <li>promoted to Principal Software Engineer, oversaw the engineering team, collaborated to implement new features and improvements, and mentored other engineers</li>
+          <li>designed new features and services based on product/business requirements and provided guidance on technical architecture, scoping, preliminary cost analysis, etc.</li>
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.verodin, this.state.currentPage === 2 ? graphics.activeExperienceSection : ""].join(" ")}>
             <a href="https://www.verodin.com/"><div className={[graphics.experienceLogo, graphics.verodinLogo].join(" ")}></div></a>
-        <p>Full Stack Engineer</p>
+        <p className={graphics.jobTitle}>Full Stack Engineer</p>
         <p>December 2015-June 2017</p>
         <p>remote</p>
         <ul>
           <li>contributed code to the front and back end of Verodin's Security Instrumentation Platform, an innovative, evidence-based approach to managing cybersecurity</li>
           <li>implemented new features and fix bugs in a massive Ruby on Rails application and supplementary Python-based systems</li>
-          <li>wrote functional tests and unit tests for Rails back end and client-side Javascript, and configure them to run in CI system (Jenkins/RSpec/Capybara/Poltergeist/PhantomJS/Jasmine/Teaspoon/Mocha)</li>
-          <li>created and maintain dynamic graphics for Rails application using d3.js, amcharts, and jQuery</li>
-          <li>attended PyCon in Portland, Oregon in May 2017</li>
+          <li>wrote functional tests and unit tests for Rails back end and client-side Javascript, and configured them to run in CI system (Jenkins/RSpec/Capybara/Poltergeist/PhantomJS/ Jasmine/Teaspoon/Mocha)</li>
+          <li>created and maintained dynamic graphics for Rails application using d3.js, amcharts, and jQuery</li>
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.tyco, this.state.currentPage === 3 ? graphics.activeExperienceSection : ""].join(" ")}>
             <a href="http://www.tyco.com/"><div className={[graphics.experienceLogo, graphics.tycoLogo].join(" ")}></div></a>
-        <p>Python Developer</p>
+        <p className={graphics.jobTitle}>Python Developer</p>
         <p>September 2014-December 2015</p>
         <p>Boca Raton, FL</p>
         <ul>
           <li>developed web and embedded applications for Tyco On, an IoT initiative to create an integrated data and smart services platform for more than a billion devices deployed around the world</li>
-          <li>created REST services to support hardware development, such as MAC address provisioning and device authentication using LDAP and TOTP</li>
-          <li>implemented the device health and management service, a scalable cloud system to handle device sessions and track heartbeats (Python/Twisted/RabbitMQ/MariaDB)</li>
+          <li>created REST services to support hardware development, such as MAC address provisioning, device sessions, device authentication using LDAP and TOTP</li>
           <li>designed and built network device simulators to test cloud-based systems'​ processing of AMQP, UDP, and HTTP/REST communications from devices</li>
-          <li>deployed several web applications including a real-time device data/monitoring dashboard, device log tracker, and custom online reports using GitLab's REST API (Python/Twisted/RabbitMQ/Flask/WebSockets/MariaDB/Javascript/d3.js)</li>
-          <li>attended PyCon in Portland, Oregon in May/June 2016</li>
+          <li>deployed several web applications including a real-time device data/monitoring dashboard, device log tracker, and custom online reports using GitLab's REST API (Python/Twisted/ RabbitMQ/Flask/WebSockets/MariaDB/Javascript/d3.js)</li>
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 4 ? graphics.activeExperienceSection : ""].join(" ")}>
         <a href="https://www.utexas.edu/"><div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div></a>
-        <p>
+        <p className={graphics.jobTitle}>
           Software Developer
           <span className={`${[icons.fa, icons["fa-arrow-right"], graphics.promotion].join(" ")}`}></span>
           Software Developer / Analyst</p>
         <p>July 2013-May 2014</p>
         <p>Austin, TX</p>
         <ul>
+          <li>gathered requirements, designed, and coded extension of student web registration available to 50,000+ students for canceling their registration for the upcoming semester (Python/Django, IBM z/OS mainframe back end with Natural/Adabas data store)</li>
           <li>built Python/Django middleware to integrate Toopher mobile app-based second factor authentication into existing legacy web systems using REST API</li>
-          <li>configured development server for existing Digital Downloads service (LAMP) and deployed service to new load-balanced virtual host using Python/Fabric and Bash deployment scripts</li>
-         <li>devised suite of Selenium test scripts for our web applications that greatly reduced manual workload</li>
-          <li>replaced cookie-based authentication with OpenAM WPA-based authentication system for Digital Downloads service</li>
-          <li>maintained custom IT service provisioning web application and evaluated new IT service management vendor products based on ITIL standards (Service Now, BMC Remedy, and Cherwell ITSM platforms)</li>
-          <li>set up daily mainframe database (Natural/Adabas) to MySQL database ETL process using SQL scripts and cron jobs for IT service provisioning application</li>
-          <li>collaborated closely with technical infrastructure team for routine and emergency maintenance on Red Hat Enterprise Linux servers</li>
+          <li>set up daily mainframe database (Natural/Adabas) to MySQL database ETL process using SQL scripts and cron jobs for legacy IT service provisioning application</li>
           <li>taught Web Application Security course based on OWASP Top Ten and Python/Django course for campus developers</li>
-            <li>gathered requirements, designed, and built extension of student web registration in Python/Django available to 50,000+ students for canceling their registration for the upcoming semester; IBM z/OS mainframe back end with Natural/Adabas data store</li>
-            <li>served on front end development team for custom-built course and room scheduling web application with used to schedule, track, and report on all courses taught at the University; emphasis on Python/Django, HTML, CSS, Javascript/jQuery, and AJAX development</li>
-            <li>maintained and improved several legacy Registrar systems including adding a messaging component to administrative web registration and overhauling the mainframe batch process responsible for canceling students' registration for nonpayment</li>
-            <li>attended OWASP AppSecUSA in Austin, Texas in October 2012</li>
         </ul>
       </section>
       <section className={graphics.experienceNav}>
