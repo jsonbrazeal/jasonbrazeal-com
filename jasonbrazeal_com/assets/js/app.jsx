@@ -410,7 +410,6 @@ export class SubNavMenu extends React.Component {
   }
 }
 
-
 export class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -564,7 +563,7 @@ export class EmbeddedGist extends React.Component {
     if (this.state.loading) {
       return <div>loading...</div>;
     } else {
-      return <div className={graphics.gistWrapper} dangerouslySetInnerHTML={{__html: this.state.src}} />;
+      return <div className={graphics.snippetWrapper} dangerouslySetInnerHTML={{__html: this.state.src}} />;
     }
   }
 }
@@ -584,6 +583,243 @@ export class EmbeddedGist extends React.Component {
 /** USAGE:
 * <EmbeddedGist gist="aVolpe/fffbe6a9e9858c7e3546fb1d55782152" file="SetUtils.java"></EmbeddedGist>
 */
+
+function escHandler(e) {
+  if (event.key === "Escape") {
+    try {
+      var modalContainer = document.querySelector("." + animations.popupContainer);
+      modalContainer.classList.add(animations.out);
+      document.querySelector("body").classList.remove(animations.popupActive);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export class SnippetTiles extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+  }
+
+  componentDidMount() {
+    document.addEventListener("keyup", escHandler);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", escHandler);
+  }
+
+  // TODO: refactor this into the individual tile components
+  // they should hold the state (mouse entered or left) and update
+  // the class accordingly
+  mouseEnter(e) {
+    if (e.target.classList.contains(graphics.hexagon)) {
+      e.target.classList.add(graphics.hexagonHover);
+    }
+  }
+  mouseLeave(e) {
+    if (e.target.classList.contains(graphics.hexagon)) {
+      e.target.classList.remove(graphics.hexagonHover);
+    }
+  }
+
+  handleClick(text) {
+    console.log(text);
+    console.log(animations.popupContainer)
+    var hexagons = document.querySelectorAll("." + graphics.hexagon);
+    hexagons.forEach(element => {
+      element.blur();
+    });
+    var modalContainer = document.querySelector("." + animations.popupContainer);
+    modalContainer.classList.remove(animations.out);
+    if (!(modalContainer.classList.contains(animations.five))) {
+      modalContainer.classList.add(animations.five);
+    }
+    document.querySelector("body").classList.add(animations.popupActive);
+
+    // to close modal, click x, click background, or press escape
+    var modalClose = document.querySelector("." + animations.popupContent + " span");
+    modalClose.addEventListener("click", function() {
+      modalContainer.classList.add(animations.out);
+      document.querySelector("body").classList.remove(animations.popupActive);
+    });
+    var modalBackground = document.querySelector("." + animations.popupBackground);
+    modalBackground.addEventListener("click", function(e) {
+      if (e.target.classList.contains(animations.popupBackground)) {
+        modalContainer.classList.add(animations.out);
+        document.querySelector("body").classList.remove(animations.popupActive);
+      }
+    });
+  }
+
+  render() {
+    return (
+      // TODO: refactor into individual tile components
+      <div className={graphics.honeycomb}>
+        <div className={graphics.ibwsFix}>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("grep")}>
+            <div className={graphics.hexagontent}>grep</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("sed")}>
+            <div className={graphics.hexagontent}>sed</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("awk")}>
+            <div className={graphics.hexagontent}>awk</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("wc")}>
+            <div className={graphics.hexagontent}>wc</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("sort")}>
+            <div className={graphics.hexagontent}>sort</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("ps")}>
+            <div className={graphics.hexagontent}>ps</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("bc")}>
+            <div className={graphics.hexagontent}>bc</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("mqtt publisher")}>
+            <div className={graphics.hexagontent}>mqtt publisher</div>
+          </div>
+        </div>
+        <div className={graphics.ibwsFix}>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("mqtt subscriber")}>
+            <div className={graphics.hexagontent}>mqtt subscriber</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("mysql")}>
+            <div className={graphics.hexagontent}>mysql</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("requests")}>
+            <div className={graphics.hexagontent}>requests</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("sql")}>
+            <div className={graphics.hexagontent}>sql</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("flask")}>
+            <div className={graphics.hexagontent}>flask</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("asyncio")}>
+            <div className={graphics.hexagontent}>asyncio</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("bash")}>
+            <div className={graphics.hexagontent}>bash</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("xargs")}>
+            <div className={graphics.hexagontent}>xargs</div>
+          </div>
+        </div>
+        <div className={graphics.ibwsFix}>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("nc")}>
+            <div className={graphics.hexagontent}>nc</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("socat")}>
+            <div className={graphics.hexagontent}>socat</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("top")}>
+            <div className={graphics.hexagontent}>top</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("vi")}>
+            <div className={graphics.hexagontent}>vi</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("file")}>
+            <div className={graphics.hexagontent}>file</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("rm")}>
+            <div className={graphics.hexagontent}>rm</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("docker")}>
+            <div className={graphics.hexagontent}>docker</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("tr")}>
+            <div className={graphics.hexagontent}>tr</div>
+          </div>
+        </div>
+        <div className={graphics.ibwsFix}>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("ssh")}>
+            <div className={graphics.hexagontent}>ssh</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("zip")}>
+            <div className={graphics.hexagontent}>zip</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("tar")}>
+            <div className={graphics.hexagontent}>tar</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("systemctl")}>
+            <div className={graphics.hexagontent}>systemctl</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("cut")}>
+            <div className={graphics.hexagontent}>cut</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("unzip")}>
+            <div className={graphics.hexagontent}>unzip</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("mount")}>
+            <div className={graphics.hexagontent}>mount</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick("pyenv")}>
+            <div className={graphics.hexagontent}>pyenv</div>
+          </div>
+        </div>
+        <div className={graphics.ibwsFix}>
+          <div className={graphics.hexagon} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={(e) => this.handleClick("nvm")}>
+            <div className={graphics.hexagontent}>nvm</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={(e) => this.handleClick("rvm")}>
+            <div className={graphics.hexagontent}>rvm</div>
+          </div>
+          <div className={graphics.hexanone}></div>
+          <div className={graphics.hexagon} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={(e) => this.handleClick("adduser")}>
+            <div className={graphics.hexagontent}>adduser</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={(e) => this.handleClick("useradd")}>
+            <div className={graphics.hexagontent}>useradd</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={(e) => this.handleClick("trap")}>
+            <div className={graphics.hexagontent}>trap</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={(e) => this.handleClick("set")}>
+            <div className={graphics.hexagontent}>set</div>
+          </div>
+          <div className={graphics.hexagon} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={(e) => this.handleClick("kill")}>
+            <div className={graphics.hexagontent}>kill</div>
+          </div>
+        </div>
+        <div className={graphics.ibwsFix}>
+          <div className={graphics.hexanone}></div>
+          <div className={graphics.hexanone}></div>
+          <div className={graphics.hexagon} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={(e) => this.handleClick("env")}>
+            <div className={graphics.hexagontent}>env</div>
+          </div>
+          <div className={graphics.hexanone}></div>
+        </div>
+
+        <div className={animations.popupContainer}>
+          <div className={animations.popupBackground}>
+            <div className={animations.popup}>
+              <div className={animations.popupContent}>
+                <span className={[icons.fa, icons["fa-times"]].join(" ")}></span>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime repellendus quis eaque molestias officiis vitae, iusto explicabo numquam ducimus tempora culpa rem aut alias laudantium! Molestias vitae aliquid optio impedit.</p>
+                <code>python3 -m http.server 8000</code>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis.</p>
+                {/* <svg className={animations.popupSvg} xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
+                  <rect x="0" y="0" fill="none" rx="3" ry="3"></rect>
+                </svg> */}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+    )
+  }
+}
 
 export class CodeSnippetContainer extends React.Component {
 
@@ -605,15 +841,15 @@ export class CodeSnippetContainer extends React.Component {
 
   render() {
     return(
-      <div className={this.props.active ? `${graphics.gistContainer} ${css.slidIn}` : `${graphics.gistContainer} ${css.slidOut}`}>
-        <span className={[icons.fa, icons["fa-chevron-up"], animations.bounceUp, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "up")} onMouseEnter={(e) => this.handleMouseEnter(e, "up")}></span>
-        <div className={graphics.gistContainerInner}>
+      <div className={this.props.active ? `${graphics.snippetContainer} ${css.slidIn}` : `${graphics.snippetContainer} ${css.slidOut}`}>
+        {/* <span className={[icons.fa, icons["fa-chevron-up"], animations.bounceUp, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "up")} onMouseEnter={(e) => this.handleMouseEnter(e, "up")}></span> */}
+        <div className={graphics.snippetContainerInner}>
           {/* <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" />
           <EmbeddedGist gist="jsonbrazeal/3c7edf1ced0b448d2e77" />
           <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" /> */}
-
+          <SnippetTiles />
         </div>
-        <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span>
+        {/* <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span> */}
       </div>
     )
   }
@@ -640,7 +876,7 @@ export class WritingContainer extends React.Component {
   render() {
     return(
       <div className={this.props.active ? `${graphics.writingContainer} ${css.slidIn}` : `${graphics.writingContainer} ${css.slidOut}`}>
-        <span className={[icons.fa, icons["fa-chevron-up"], animations.bounceUp, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "up")} onMouseEnter={(e) => this.handleMouseEnter(e, "up")}></span>
+        {/* <span className={[icons.fa, icons["fa-chevron-up"], animations.bounceUp, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "up")} onMouseEnter={(e) => this.handleMouseEnter(e, "up")}></span> */}
         <div className={graphics.writingContainerInner}>
           <Writing title="Markdown Here for Code Styling" writingPreview="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
@@ -660,7 +896,7 @@ export class WritingContainer extends React.Component {
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           </Writing>
         </div>
-        <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span>
+        {/* <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span> */}
       </div>
     )
   }
