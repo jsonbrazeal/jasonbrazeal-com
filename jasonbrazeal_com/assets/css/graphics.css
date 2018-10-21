@@ -38,6 +38,7 @@
 .bubbleChart svg {
   z-index: 105;
   position: relative;
+  left: 67px;
 }
 
 .skillsContainer {
