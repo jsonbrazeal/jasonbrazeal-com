@@ -370,16 +370,15 @@ export class SubNavMenu extends React.Component {
 
   handleMouseOver(e, subPage) {
     // replace "é"" in order to keep unicode out of css and in js only
-    // replace " s" in "snippets"
     this.setState({
-      currentMenuItem: subPage.replace(/é/g, 'e').replace(/\ss/, 'S'),
+      currentMenuItem: subPage.replace(/é/g, 'e'),
       blink: false
     });
   }
 
   handleMouseEnter(e, subPage) {
     this.setState({
-      currentMenuItem: subPage.replace(/é/g, 'e').replace(/\ss/, 'S'),
+      currentMenuItem: subPage.replace(/é/g, 'e'),
       blink: false
     });
     setTimeout(() => {
@@ -401,7 +400,7 @@ export class SubNavMenu extends React.Component {
               if (this.props.visible) {
                 return <li key={i} onClick={(e) => this.handleClick(e, subPage)} onMouseOver={(e) => this.handleMouseOver(e, subPage)} onMouseEnter={(e) => this.handleMouseEnter(e, subPage)}>{subPage}</li>
               } else {
-                return <li key={i} >{subPage}</li>
+                return <li key={i}>{subPage}</li>
               }
             })}
           </ul>
@@ -500,7 +499,7 @@ export class SkillsGraphic extends React.Component {
     console.log('SkillsGraphic rendering.')
     return(
       <div className={this.props.active ? `${graphics.skillsContainer} ${css.slidIn}` : `${graphics.skillsContainer} ${css.slidOut}`}>
-        <div className="bubbleChart"></div>
+        <div className={graphics.bubbleChart + " bubbleChart"}></div>
       </div>
     )
   }
@@ -609,9 +608,10 @@ export class CodeSnippetContainer extends React.Component {
       <div className={this.props.active ? `${graphics.gistContainer} ${css.slidIn}` : `${graphics.gistContainer} ${css.slidOut}`}>
         <span className={[icons.fa, icons["fa-chevron-up"], animations.bounceUp, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "up")} onMouseEnter={(e) => this.handleMouseEnter(e, "up")}></span>
         <div className={graphics.gistContainerInner}>
-          <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" />
+          {/* <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" />
           <EmbeddedGist gist="jsonbrazeal/3c7edf1ced0b448d2e77" />
-          <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" />
+          <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" /> */}
+
         </div>
         <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span>
       </div>
@@ -756,7 +756,7 @@ export class EducationContent extends React.Component {
         <span className={graphics.org}>Austin Community College</span>
           <span className={[graphics.location, graphics.locationAustin1].join(" ")}>Austin, TX</span>
 
-        <span className={graphics.degree}>Software Developer Training <span className={graphics.year}>(2012)</span></span>
+        <span className={graphics.degree}>Software Developer Training Program <span className={graphics.year}>(2012)</span></span>
         <span className={graphics.org}>University of Texas at Austin</span>
         <span className={[graphics.location, graphics.locationAustin2].join(" ")}>Austin, TX</span>
 

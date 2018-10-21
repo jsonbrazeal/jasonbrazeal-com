@@ -35,7 +35,9 @@
   border-radius: 50%;
 }
 
-.bubbleChart {
+.bubbleChart svg {
+  z-index: 105;
+  position: relative;
 }
 
 .skillsContainer {
@@ -421,12 +423,9 @@ span.scrollNav {
   display: block;
   width: 50px;
   background-color: #343434;
-  z-index: 700;
+  z-index: 101;
   color: #d8d8d8;
 }
-
-
-
 
 .projectCardContainer {
   width: 75%;

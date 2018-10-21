@@ -166,7 +166,7 @@ class BubbleChart  {
       .attr({preserveAspectRatio: "xMidYMid",
              width: this.size,
              height: this.size,
-             class: "bubbleChart"})
+             class: "bubbleChartSvg"})
       .attr("viewBox", (d) => {return ["0 0", this.viewBoxSize, this.viewBoxSize].join(" ");});
     this.circlePositions = this.randomCirclesPositions(this.intersectDelta);
     var node = this.svg.selectAll(".node")
