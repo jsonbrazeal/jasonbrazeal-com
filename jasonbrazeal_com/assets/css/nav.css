@@ -78,11 +78,6 @@
 .shiftedRight header {
   position: relative;
   left: 15%;
-  z-index: 100;
-}
-
-.shiftedRight header span {
-  position: relative;
   z-index: 110;
 }
 
@@ -94,6 +89,12 @@
 
 .pageHeader {
   margin: 5% 0 0 8%;
+  max-width: 280px;
+}
+
+.pageHeaderWide {
+  margin: 5% 0 0 8%;
+  max-width: 700px;
 }
 
 .pageHeader h1 {

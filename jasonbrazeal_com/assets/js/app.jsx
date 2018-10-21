@@ -413,8 +413,13 @@ export class SubNavMenu extends React.Component {
 export class Header extends React.Component {
   constructor(props) {
     super(props);
+    if (this.props.header == "Jason Brazeal") {
+      var headerClass = nav.pageHeaderWide;
+    } else {
+      var headerClass = nav.pageHeader;
+    }
     this.state = {
-      classList: [nav.pageHeader],
+      classList: [headerClass],
       header: this.props.header
     };
   }
