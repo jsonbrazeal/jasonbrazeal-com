@@ -725,3 +725,11 @@ span.scrollNav {
 .fidgetSpinner {
 
 }
+
+.gaugeLights {
+
+}
+
+.gaugeLights circle {
+  display: none;
+}

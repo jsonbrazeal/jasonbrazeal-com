@@ -30,7 +30,7 @@ TxtRotate.prototype.tick = function() {
     setTimeout(() => {
       this.el.querySelector(`.${graphics.typewriterCaret}`).classList.add(animations.fadeOut);
       this.el.querySelector(`.${graphics.typewriterCaret}`).classList.remove(animations.blinkingOrange);
-      new Machine(); // add an "active" class to the machine here (make it a react component0)
+      document.querySelector(`.${graphics.machine}`).dispatchEvent(new Event('machineStart'));
     }, 1000);
     return;
   }
@@ -245,19 +245,6 @@ class BubbleChart  {
   }
 
 };
-
-class Machine {
-  constructor() {
-    this.lightBulb = document.querySelector(`.${graphics.lightBulb}`);
-    this.fidgetSpinner = document.querySelector(`.${graphics.fidgetSpinner} g g`);
-    this.lighBulbFall();
-  }
-
-  lighBulbFall() {
-    this.lightBulb.classList.add(...[animations.lightBulbFall, animations.lightBulbFadeIn]);
-    this.fidgetSpinner.classList.add(animations.rotate)
-  }
-}
 
 module.exports = {
   toTitleCase: toTitleCase,

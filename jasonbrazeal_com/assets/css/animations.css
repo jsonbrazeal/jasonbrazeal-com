@@ -574,11 +574,16 @@ html.popupActive, body.popupActive {
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(359deg);
+    transform: rotate(720deg);
   }
 }
 
-.rotate {
+.rotateFidgetSpinner {
   animation: rotation 1s infinite linear;
-  transform-origin: 6.75% 17.75%;
+  transform-origin: 6.8% 17.7%;
+}
+
+.rotateValve {
+  animation: rotation 1s infinite linear;
+  transform-origin: 69.1% 20.4%;
 }

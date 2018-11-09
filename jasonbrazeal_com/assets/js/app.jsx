@@ -1342,10 +1342,52 @@ export class LightBulbGraphic extends React.Component {
 }
 
 export class MachineGraphic extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: false
+    }
+  }
+
+  componentDidMount() {
+    this.machine.addEventListener("machineStart", this.handleMachine.bind(this));
+  }
+
+  componentWillUnmount() {
+    this.machine.removeEventListener("machineStop", this.handleMachine.bind(this));
+  }
+
+  handleMachine() {
+    if (this.state.active) {
+      console.log("stopping machine!");
+    } else {
+      console.log("starting machine!");
+      document.querySelector(`.${graphics.lightBulb}`).classList.add(...[animations.lightBulbFall, animations.lightBulbFadeIn]);;
+      this.fidgetSpinner.classList.add(animations.rotateFidgetSpinner)
+      this.valve.classList.add(animations.rotateValve)
+      this.blinkLights()
+    }
+  }
+
+  blinkLights() {
+    [this.gaugeLights1, this.gaugeLights2, this.gaugeLights3].forEach((elem, i, arr) => {
+      let jitter = Math.random() * Math.floor(i + 1);
+      setTimeout(this.showLights, jitter * 1000, elem);
+    });
+  }
+
+  showLights(gauge) {
+    [...gauge.children].forEach((elem, i, arr) => {
+      setTimeout((light) => {
+        light.style.display = 'block';
+      }, i * 500, elem);
+    });
+  }
+
   render() {
     return(
 
-      <svg className={graphics.machine} viewBox="15 37 874 358" version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <svg ref={elem => this.machine = elem} className={graphics.machine} viewBox="15 37 874 358" version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
         <defs>
           <rect id="path-1" x="318" y="197" width="205" height="97.5" rx="2"></rect>
           <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="205" height="97.5" fill="white">
@@ -1432,36 +1474,36 @@ export class MachineGraphic extends React.Component {
       <rect id="gauge3" stroke="#999999" stroke-width="1" fill="#666666" fill-rule="evenodd" x="46" y="357" width="205" height="17.5" rx="2"></rect>
       <rect id="gauge2" stroke="#999999" stroke-width="1" fill="#666666" fill-rule="evenodd" x="46" y="330" width="205" height="17.5" rx="2"></rect>
       <rect id="gauge1" stroke="#999999" stroke-width="1" fill="#666666" fill-rule="evenodd" x="46" y="304" width="205" height="17.5" rx="2"></rect>
-      <g id="gauge_lights" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(55.000000, 306.000000)">
+        <g ref={elem => this.gaugeLights1 = elem} className={graphics.gaugeLights}stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(55.000000, 306.000000)">
         <circle id="light" fill="#F2E64E" cx="7" cy="7" r="7"></circle>
-        <circle id="light" fill="#F2E64E" cx="85" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="27" cy="7" r="7"></circle>
-        <circle id="light" fill="#F2E64E" cx="66" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="46" cy="7" r="7"></circle>
+        <circle id="light" fill="#F2E64E" cx="66" cy="7" r="7"></circle>
+        <circle id="light" fill="#F2E64E" cx="85" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="105" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="124" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="144" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="163" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="183" cy="7" r="7"></circle>
       </g>
-      <g id="gauge_lights-copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(55.000000, 332.000000)">
+        <g ref={elem => this.gaugeLights2 = elem} className={graphics.gaugeLights} stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(55.000000, 332.000000)">
         <circle id="light" fill="#F2E64E" cx="7" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="27" cy="7" r="7"></circle>
-        <circle id="light" fill="#F2E64E" cx="85" cy="7" r="7"></circle>
-        <circle id="light" fill="#F2E64E" cx="66" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="46" cy="7" r="7"></circle>
+        <circle id="light" fill="#F2E64E" cx="66" cy="7" r="7"></circle>
+        <circle id="light" fill="#F2E64E" cx="85" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="105" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="124" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="144" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="163" cy="7" r="7"></circle>
         <circle id="light" fill="#F2E64E" cx="183" cy="7" r="7"></circle>
       </g>
-      <g id="gauge_lights-copy-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(54.000000, 359.000000)">
+        <g ref={elem => this.gaugeLights3 = elem} className={graphics.gaugeLights} stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(54.000000, 359.000000)">
         <circle id="light" fill="#F3E74E" cx="7" cy="7" r="7"></circle>
-        <circle id="light" fill="#F3E74E" cx="85" cy="7" r="7"></circle>
         <circle id="light" fill="#F3E74E" cx="27" cy="7" r="7"></circle>
-        <circle id="light" fill="#F3E74E" cx="66" cy="7" r="7"></circle>
         <circle id="light" fill="#F3E74E" cx="46" cy="7" r="7"></circle>
+        <circle id="light" fill="#F3E74E" cx="66" cy="7" r="7"></circle>
+        <circle id="light" fill="#F3E74E" cx="85" cy="7" r="7"></circle>
         <circle id="light" fill="#F3E74E" cx="105" cy="7" r="7"></circle>
         <circle id="light" fill="#F3E74E" cx="124" cy="7" r="7"></circle>
         <circle id="light" fill="#F3E74E" cx="144" cy="7" r="7"></circle>
@@ -1491,7 +1533,7 @@ export class MachineGraphic extends React.Component {
       </g>
         <g className={graphics.fidgetSpinner} filter="url(#filter-7)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(88.000000, 170.000000)">
         <g id="Group" fill="#346D98">
-          <g>
+          <g ref={elem => this.fidgetSpinner = elem}>
             <path d="M59.9331813,6.62083333 C51.5544183,6.62083333 44.7626965,13.2509358 44.7626965,21.4303133 C44.7626965,29.6096908 51.5544183,36.2411175 59.9331813,36.2411175 C68.3119442,36.2411175 75.103666,29.611015 75.103666,21.4316375 C75.103666,13.25226 68.3119442,6.62083333 59.9331813,6.62083333 L59.9331813,6.62083333 Z M59.9331813,29.9433808 C55.1178003,29.9433808 51.2139506,26.1324292 51.2139506,21.4316375 C51.2139506,16.7308458 55.1178003,12.9198942 59.9331813,12.9198942 C64.7485622,12.9198942 68.652412,16.7308458 68.652412,21.4316375 C68.652412,26.1324292 64.7485622,29.9433808 59.9331813,29.9433808 L59.9331813,29.9433808 Z" id="Shape"></path>
             <path d="M96.5572056,67.5325 C88.1784427,67.5325 81.3867209,74.1626025 81.3867209,82.34198 C81.3867209,90.5213575 88.1784427,97.15146 96.5572056,97.15146 C104.935969,97.15146 111.72769,90.5213575 111.72769,82.34198 C111.72769,74.1626025 104.935969,67.5325 96.5572056,67.5325 L96.5572056,67.5325 Z M96.5572056,90.8537233 C91.7418247,90.8537233 87.837975,87.0427717 87.837975,82.34198 C87.837975,77.6411883 91.7418247,73.8302367 96.5572056,73.8302367 C101.372587,73.8302367 105.276436,77.6411883 105.276436,82.34198 C105.276436,87.0427717 101.372587,90.8537233 96.5572056,90.8537233 L96.5572056,90.8537233 Z" id="Shape"></path>
             <path d="M21.9527115,67.5325 C13.5739486,67.5325 6.78222674,74.1626025 6.78222674,82.34198 C6.78222674,90.5213575 13.5739486,97.15146 21.9527115,97.15146 C30.3314744,97.15146 37.1231963,90.5213575 37.1231963,82.34198 C37.1231963,74.1626025 30.3314744,67.5325 21.9527115,67.5325 L21.9527115,67.5325 Z M21.9527115,90.8537233 C17.1373305,90.8537233 13.2334808,87.0427717 13.2334808,82.34198 C13.2334808,77.6411883 17.1373305,73.8302367 21.9527115,73.8302367 C26.7680925,73.8302367 30.6719422,77.6411883 30.6719422,82.34198 C30.6719422,87.0427717 26.7680925,90.8537233 21.9527115,90.8537233 L21.9527115,90.8537233 Z" id="Shape"></path>
@@ -1507,7 +1549,7 @@ export class MachineGraphic extends React.Component {
       <rect id="Rectangle-3-Copy-2" stroke="none" fill="#999999" fill-rule="evenodd" x="426" y="150" width="54" height="25.2700005" rx="2"></rect>
       <path d="M479.916667,101 L479.916667,46.0033251 L479.916667,46.0033251 C479.712108,46.0011103 479.507283,46 479.302198,46 C448.759637,46 424,70.6243388 424,101" id="Combined-Shape" stroke="none" fill="#999999" fill-rule="evenodd" opacity="0.98999995"></path>
       <path d="M708.916667,101 L708.916667,46.0033251 L708.916667,46.0033251 C708.712108,46.0011103 708.507283,46 708.302198,46 C677.759637,46 653,70.6243388 653,101" id="Combined-Shape-Copy" stroke="none" fill="#999999" fill-rule="evenodd" opacity="0.98999995" transform="translate(680.958333, 73.500000) scale(-1, 1) translate(-680.958333, -73.500000) "></path>
-      <path d="M604,37 C584.167665,37 568,53.1819377 568,73.0317814 C568,92.881625 584.167665,109.063563 604,109.063563 C623.832335,109.063563 640,92.881625 640,73.0317814 C640,53.3976969 623.832335,37 604,37 L604,37 Z M632.023952,73.2475406 C632.023952,76.9154464 631.377246,80.3675932 630.083832,83.8197399 L611.976048,73.2475406 L611.976048,73.2475406 C611.976048,70.4426713 610.251497,67.8535613 607.88024,66.3432471 L607.88024,45.6303668 C621.461078,47.3564402 632.023952,59.0074353 632.023952,73.2475406 L632.023952,73.2475406 Z M600.11976,45.1988485 L600.11976,65.9117288 C597.748503,67.422043 596.023952,70.011153 596.023952,72.8160222 L596.023952,72.8160222 L577.916168,83.3882215 C576.622754,80.3675932 575.976048,76.6996873 575.976048,72.8160222 C575.976048,59.0074353 586.538922,47.3564402 600.11976,45.1988485 L600.11976,45.1988485 Z M604,101.080473 C595.161677,101.080473 587.185629,96.7652901 582.011976,90.292515 L600.11976,79.7203157 C601.413174,80.3675932 602.706587,81.0148707 604.215569,81.0148707 C605.724551,81.0148707 607.017964,80.5833523 608.311377,79.7203157 L626.419162,90.292515 C620.814371,97.1968084 612.838323,101.080473 604,101.080473 L604,101.080473 Z" id="valve" stroke="none" fill="#777777" fill-rule="evenodd"></path>
+      <path ref={elem => this.valve = elem} d="M604,37 C584.167665,37 568,53.1819377 568,73.0317814 C568,92.881625 584.167665,109.063563 604,109.063563 C623.832335,109.063563 640,92.881625 640,73.0317814 C640,53.3976969 623.832335,37 604,37 L604,37 Z M632.023952,73.2475406 C632.023952,76.9154464 631.377246,80.3675932 630.083832,83.8197399 L611.976048,73.2475406 L611.976048,73.2475406 C611.976048,70.4426713 610.251497,67.8535613 607.88024,66.3432471 L607.88024,45.6303668 C621.461078,47.3564402 632.023952,59.0074353 632.023952,73.2475406 L632.023952,73.2475406 Z M600.11976,45.1988485 L600.11976,65.9117288 C597.748503,67.422043 596.023952,70.011153 596.023952,72.8160222 L596.023952,72.8160222 L577.916168,83.3882215 C576.622754,80.3675932 575.976048,76.6996873 575.976048,72.8160222 C575.976048,59.0074353 586.538922,47.3564402 600.11976,45.1988485 L600.11976,45.1988485 Z M604,101.080473 C595.161677,101.080473 587.185629,96.7652901 582.011976,90.292515 L600.11976,79.7203157 C601.413174,80.3675932 602.706587,81.0148707 604.215569,81.0148707 C605.724551,81.0148707 607.017964,80.5833523 608.311377,79.7203157 L626.419162,90.292515 C620.814371,97.1968084 612.838323,101.080473 604,101.080473 L604,101.080473 Z" id="valve" stroke="none" fill="#777777" fill-rule="evenodd"></path>
       <g id="screw-copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(23.000000, 161.500000) rotate(75.000000) translate(-23.000000, -161.500000) translate(19.000000, 158.000000)">
         <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
         <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
