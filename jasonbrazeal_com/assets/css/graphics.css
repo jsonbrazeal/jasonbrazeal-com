@@ -733,3 +733,7 @@ span.scrollNav {
 .gaugeLights circle {
   display: none;
 }
+
+.code {
+  transform: translate(389px, 220px);
+}
