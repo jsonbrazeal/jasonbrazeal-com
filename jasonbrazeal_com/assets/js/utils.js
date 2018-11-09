@@ -47,7 +47,8 @@ TxtRotate.prototype.tick = function() {
   var that = this;
   var delta = 300 - Math.random() * 100;
 
-  if (this.isDeleting) { delta /= 2; }
+  // if (this.isDeleting) { delta /= 2; }
+  delta /= 2;
 
   if (!this.isDeleting && this.txt === fullTxt) {
     delta = 0;
@@ -243,6 +244,15 @@ class BubbleChart  {
   }
 
 };
+
+// class Machine {
+//   constructor() {
+//     this.light_bulb = document.get_e
+//   }
+
+//   func(delta) {
+//   }
+// }
 
 module.exports = {
   toTitleCase: toTitleCase,
