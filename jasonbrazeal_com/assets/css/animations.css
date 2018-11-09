@@ -574,7 +574,16 @@ html.popupActive, body.popupActive {
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(720deg);
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes rotationCounter {
+  0%  {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-359deg);
   }
 }
 
@@ -584,17 +593,17 @@ html.popupActive, body.popupActive {
 }
 
 .rotateValve {
-  animation: rotation 1s infinite linear;
+  animation: rotation .3s infinite linear;
   transform-origin: 69.1% 20.4%;
 }
 
 .rotateGear1 {
-  animation: rotation 1s infinite linear;
+  animation: rotation 1.5s infinite linear;
   transform-origin: 3.3% 24.5%;
 }
 
 .rotateGear2 {
-  animation: rotation 1s infinite linear;
+  animation: rotationCounter 3s infinite linear;
   transform-origin: 8.3% 14.5%;
 }
 
