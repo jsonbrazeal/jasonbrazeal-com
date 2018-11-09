@@ -1060,9 +1060,9 @@ export class ExperienceContent extends React.Component {
         <p>July 2018-present</p>
         <p>San Francisco, CA</p>
         <ul>
-          <li>develop REST APIs and other infrastructure used for web-based products (Python/Flask/React)</li>
-          <li>deploy and maintain data ingestion pipelines using a variety of technologies (Python/Docker/Kubernetes/AWS)</li>
-          <li>provide technical leadership and advisement through code review, tech talks, interviewing, and mentoring</li>
+          <li>develop REST APIs and other infrastructure backing web-based interfaces to artificial intelligence software (Python/Flask/React)</li>
+          <li>deploy and maintain data ingestion pipelines that enable large scale machine learning analyses using a variety of technologies (Python/Docker/Kubernetes/AWS)</li>
+          <li>provide technical leadership and advisement as a member of the Platform Infrastructure team through code review, tech talks, interviewing, and mentoring</li>
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.medal, this.state.currentPage === 1 ? graphics.activeExperienceSection : ""].join(" ")}>
@@ -1076,7 +1076,6 @@ export class ExperienceContent extends React.Component {
         <p>San Francisco, CA</p>
         <ul>
           <li>participated in the design, coding, and deployment of the Medal platform, which consolidates medical records and clinical data from different sources (Python/Django/Javascript)</li>
-          <li>replaced username/password authentication for accessing the web applications with OpenIdConnect/OAuth2 authentication</li>
           <li>integrated HIPAA-compliant AWS S3 storage and SQS/SNS into Medal platform and applications</li>
           <li>promoted to Principal Software Engineer, oversaw the engineering team, collaborated to implement new features and improvements, and mentored other engineers</li>
           <li>designed new features and services based on product/business requirements and provided guidance on technical architecture, scoping, preliminary cost analysis, etc.</li>
@@ -1103,7 +1102,8 @@ export class ExperienceContent extends React.Component {
           <li>developed web and embedded applications for Tyco On, an IoT initiative to create an integrated data and smart services platform for more than a billion devices deployed around the world</li>
           <li>created REST services to support hardware development, such as MAC address provisioning, device sessions, device authentication using LDAP and TOTP</li>
           <li>designed and built network device simulators to test cloud-based systems'​ processing of AMQP, UDP, and HTTP/REST communications from devices</li>
-          <li>deployed several web applications including a real-time device data/monitoring dashboard, device log tracker, and custom online reports using GitLab's REST API (Python/Twisted/ RabbitMQ/Flask/WebSockets/MariaDB/Javascript/d3.js)</li>
+          <li>deployed a real-time device data/monitoring dashboard, device log tracker, and several other IoT-related web applications (Python/Twisted/RabbitMQ/Flask/
+            WebSockets/MariaDB/Javascript/d3.js)</li>
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 4 ? graphics.activeExperienceSection : ""].join(" ")}>

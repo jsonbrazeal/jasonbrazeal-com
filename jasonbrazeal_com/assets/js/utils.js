@@ -30,7 +30,7 @@ TxtRotate.prototype.tick = function() {
     setTimeout(() => {
       this.el.querySelector(`.${graphics.typewriterCaret}`).classList.add(animations.fadeOut);
       this.el.querySelector(`.${graphics.typewriterCaret}`).classList.remove(animations.blinkingOrange);
-      new Machine();
+      new Machine(); // add an "active" class to the machine here (make it a react component0)
     }, 1000);
     return;
   }
