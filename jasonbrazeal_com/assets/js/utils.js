@@ -30,6 +30,7 @@ TxtRotate.prototype.tick = function() {
     setTimeout(() => {
       this.el.querySelector(`.${graphics.typewriterCaret}`).classList.add(animations.fadeOut);
       this.el.querySelector(`.${graphics.typewriterCaret}`).classList.remove(animations.blinkingOrange);
+      new Machine();
     }, 1000);
     return;
   }
@@ -245,14 +246,18 @@ class BubbleChart  {
 
 };
 
-// class Machine {
-//   constructor() {
-//     this.light_bulb = document.get_e
-//   }
+class Machine {
+  constructor() {
+    this.lightBulb = document.querySelector(`.${graphics.lightBulb}`);
+    this.fidgetSpinner = document.querySelector(`.${graphics.fidgetSpinner} g g`);
+    this.lighBulbFall();
+  }
 
-//   func(delta) {
-//   }
-// }
+  lighBulbFall() {
+    this.lightBulb.classList.add(...[animations.lightBulbFall, animations.lightBulbFadeIn]);
+    this.fidgetSpinner.classList.add(animations.rotate)
+  }
+}
 
 module.exports = {
   toTitleCase: toTitleCase,

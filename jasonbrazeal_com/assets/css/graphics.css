@@ -714,3 +714,14 @@ span.scrollNav {
   width: 60%;
   height: 60%;
 }
+
+.lightBulb {
+  position: absolute;
+  top: 130px;
+  left: 317px;
+  opacity: 0;
+}
+
+.fidgetSpinner {
+
+}
