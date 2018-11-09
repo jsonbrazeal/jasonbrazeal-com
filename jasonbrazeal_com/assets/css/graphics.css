@@ -706,3 +706,11 @@ span.scrollNav {
   margin: 0 auto;
   text-align: center;
 }
+
+section svg {
+  position: relative;
+  top: 118px;
+  left: 235px;
+  width: 60%;
+  height: 60%;
+}
