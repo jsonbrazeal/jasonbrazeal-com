@@ -100,16 +100,16 @@ class BubbleChart  {
     this.radiusMin = 50;
     this.data = {
       items: [
-        {text: "Django", count: "236"},
-        {text: "Javascript", count: "382"},
-        {text: "HTML", count: "170"},
-        {text: "CSS", count: "123"},
-        {text: "Ruby", count: "12"},
-        {text: "Flask", count: "170"},
-        {text: "Python", count: "382"},
-        {text: "Rails", count: "10"},
-        {text: "Bash", count: "170"},
-        {text: "AWS", count: "150"},
+        {text: "Django", count: "236", desc: "all-in-one web framework for Python"},
+        {text: "Node.js", count: "382", desc: "Javascript runtime"},
+        {text: "HTML/CSS/JS", count: "170", desc: "web essentials"},
+        {text: "Git", count: "123", desc: "version control"},
+        {text: "Ruby", count: "15", desc: "high level programming language"},
+        {text: "Flask", count: "170", desc: "slim but solid web framework for Python"},
+        {text: "Python", count: "382", desc: "multi-use high level programming language"},
+        {text: "Rails", count: "10", desc: "web framework for Ruby"},
+        {text: "Bash", count: "170", desc: "shell, scripting"},
+        {text: "AWS", count: "150", desc: "cloud computing provider"},
       ],
       eval: (item) => {return item.count;},
       classed: (item) => {return item.text.toLowerCase();}
@@ -132,6 +132,7 @@ class BubbleChart  {
       var rad = [(val * this.radiusMax) / this.valueMax, this.radiusMin].reduce((x, y) => {
       return ( x > y ? x : y );
       }, 0)
+      rad += 10;
       var dist = this.innerRadius + rad + Math.random() * (this.outerRadius - this.innerRadius - rad * 2);
       var angle = Math.random() * Math.PI * 2;
       var cx = this.centralPoint + dist * Math.cos(angle);
@@ -190,6 +191,13 @@ class BubbleChart  {
       .attr("dx", (d) => { return d.cx })
       .attr("dy", (d) => { return d.cy + 5 })
       .text((d) => { return d.item.text });
+    node.append("text")
+      .attr("fill", "#fff")
+      .attr("text-anchor", "middle")
+      .attr("opacity", "0")
+      .attr("dx", (d) => { return d.cx })
+      .attr("dy", (d) => { return d.cy + 25 })
+      .text((d) => { return d.item.desc || 'no desc' });
     node.sort((a, b) => {return this.data.eval(b.item) - this.data.eval(a.item);});
 
     this.transition = {};
@@ -215,6 +223,9 @@ class BubbleChart  {
     })
     .select("circle")
       .attr("r", (d) => {return this.innerRadius;});
+    this.transition.centralNode
+      .select('text:last-of-type')
+        .attr('class', animations.fadeInSlow);
   }
 
   moveToReflection(node, swapped) {
@@ -237,6 +248,12 @@ class BubbleChart  {
     var self = this;
     node.style("cursor", "pointer").on("click", function(d)  {
       self.clickedNode = d3.select(this);
+
+      if (!(self.centralNode.attr('class') == self.clickedNode.attr('class'))) {
+        self.centralNode.select("text:last-of-type")
+          .attr('class', animations.fadeOutFast);
+      }
+
       self.reset(self.centralNode);
       self.moveToCentral(self.clickedNode);
       self.moveToReflection(self.svg.selectAll(".node:not(.active)"), swapped);

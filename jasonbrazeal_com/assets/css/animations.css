@@ -15,6 +15,25 @@
   animation-delay: 0.1s;
 }
 
+@keyframes fadeInSlow {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeInSlow {
+  opacity: 0;
+  animation: fadeInSlow ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: .4s;
+  animation-delay: 0;
+}
 
 @keyframes fadeOutIn {
   0% {
@@ -55,6 +74,22 @@
   animation-fill-mode: forwards;
   animation-duration: .4s;
   animation-delay: 0.1s;
+}
+
+@keyframes fadeOutFast {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+}
+
+.fadeOutFast {
+  animation: fadeOutFast ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: .4s;
+  animation-delay: 0;
 }
 
 @keyframes slideIn {
