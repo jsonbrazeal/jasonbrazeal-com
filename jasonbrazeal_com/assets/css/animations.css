@@ -740,3 +740,31 @@ html.popupActive, body.popupActive {
 .bubbleUp4 {
   animation: bubbleUp4 4s .5s infinite;
 }
+
+@keyframes redFlash {
+  0% {
+    border: 1px solid #ee2819;
+    fill: #FF8379;
+    box-shadow: 0px 0px 100px 25px #ff4444;
+  }
+  12% {
+    border: 1px solid white;
+    fill: #ff4444;
+    box-shadow: 0px 0px 100px 25px transparent;
+  }
+  25% {
+    border: 1px solid #ee2819;
+    fill: #FF8379;
+    box-shadow: 0px 0px 100px 25px #ff4444;
+  }
+  37% {
+    border: 1px solid white;
+    fill: #ff4444;
+    box-shadow: 0px 0px 100px 25px transparent;
+  }
+}
+.redFlash {
+  fill: #ff4444;
+  border: 1px solid white;
+  animation: redFlash 1s infinite;
+}
