@@ -787,3 +787,21 @@ html.popupActive, body.popupActive {
     stroke-dashoffset: -200;
   }
 }
+
+
+.cloudApp {
+  animation: cloudApp 3s linear forwards infinite;
+}
+
+@keyframes cloudApp {
+  0% {
+    transform: scale(.1) translate(140rem, -68rem);
+  }
+  50% {
+    transform: scale(.1) translate(245rem, -68rem);
+  }
+  100% {
+    transform: scale(.1) translate(245rem, -500rem);
+  }
+}
+

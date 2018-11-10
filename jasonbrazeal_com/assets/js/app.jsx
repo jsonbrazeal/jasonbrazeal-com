@@ -60,6 +60,7 @@ export class App extends React.Component {
                     subNavItems={[]}
                     activeSubPage={this.state.activeSubPage}>
                 <LightBulbGraphic />
+                <CloudAppGraphic />
                 <MachineGraphic />
                 <Footer />
               </Page>
@@ -1376,6 +1377,7 @@ export class MachineGraphic extends React.Component {
       this.tank2.classList.add(animations.fadeIn);
       this.redLight.classList.add(animations.redFlash);
       this.electricPotential.classList.add(animations.electricFlow);
+      document.querySelector(`.${graphics.cloudApp}`).classList.add(animations.cloudApp);
     }
   }
 
@@ -1397,41 +1399,6 @@ export class MachineGraphic extends React.Component {
       this.startLights();
     }, 5000);
   }
-
-  // resetLights(gauge) {
-  //   // [this.gaugeLights1, this.gaugeLights2, this.gaugeLights3].forEach((gauge, i, arr) => {
-  //   //   [...gauge.children].forEach((light, i, arr) => {
-  //   //     light.style.display = 'none';
-  //   //   });
-  //   // });
-  //   [...gauge.children].forEach((light, i, arr) => {
-  //     light.style.display = 'none';
-  //   });
-  //   var reset = true;
-  //   [this.gaugeLights1, this.gaugeLights2, this.gaugeLights3].forEach((light, i, arr) => {
-  //     if (light.style.display === 'block') {
-  //       reset = false;
-  //     }
-  //   });
-  //   if (restart) {
-  //     setTimeout(() => {
-  //       this.startLights();
-  //     }, 500);
-  //   }
-  // }
-
-  // showLights(gauge, component) {
-  //   console.log('show lights');
-  //   console.log(gauge);
-  //   [...gauge.children].forEach((light, i, arr) => {
-  //     setTimeout(() => {
-  //       light.style.display = 'none';
-  //     }, i * 100);
-  //     setTimeout(() => {
-  //       light.style.display = 'block';
-  //     }, i * 1000);
-  //   });
-  // }
 
   render() {
     return(
@@ -1469,7 +1436,7 @@ export class MachineGraphic extends React.Component {
       <path d="M51,41.2055538 L65.8156678,26" id="Line-Copy-4" stroke="#4DB09A" stroke-width="5" transform="translate(58.407834, 33.602777) scale(-1, -1) translate(-58.407834, -33.602777) "></path>
       <path d="M51,25.2055538 L65.8156678,10" id="Line-Copy-3" stroke="#4DB09A" stroke-width="5" transform="translate(58.407834, 17.602777) scale(-1, 1) translate(-58.407834, -17.602777) "></path>
     </g>
-    <g id="electricity" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(275.000000, 106.000000)">
+    <g id="electricity" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(283.000000, 106.000000)">
           <path ref={elem => this.electricPotential = elem} className={graphics.electricPotential} d="M16.0429688,7.8203125 L35.1730116,25.3203125 L51.5042119,10.3913707 L73.3037778,25.3203125 C73.3037778,25.3203125 95.8323685,8.16307141 99.0429688,10.3913707" stroke="#F2E64E" stroke-width="3"></path>
       <rect id="separator1" fill="#D8D8D8" transform="translate(31.500000, 46.500000) rotate(-31.000000) translate(-31.500000, -46.500000) " x="28" y="12" width="7" height="69" rx="3.5"></rect>
       <rect id="separator1-copy" fill="#D8D8D8" transform="translate(81.500000, 46.500000) scale(-1, 1) rotate(-31.000000) translate(-81.500000, -46.500000) " x="78" y="12" width="7" height="69" rx="3.5"></rect>
@@ -1729,6 +1696,18 @@ export class MachineGraphic extends React.Component {
 </svg>
     )
   }
+}
+
+export class CloudAppGraphic extends React.Component {
+
+  render() {
+    return (
+      <svg className={graphics.cloudApp} viewBox="735 230 143 94" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <path d="M773.471977,318.816193 C776.750959,322.023402 781.236381,324 786.183,324 C793.381564,324 799.603426,319.814058 802.55186,313.741201 C807.199736,315.974313 812.407931,317.225225 817.908,317.225225 C826.747935,317.225225 834.833895,313.993839 841.051334,308.646728 C844.655726,310.864887 848.898619,312.144144 853.44,312.144144 C866.522521,312.144144 877.128,301.528049 877.128,288.432432 C877.128,275.336816 866.522521,264.720721 853.44,264.720721 C852.044853,264.720721 850.677876,264.841453 849.348927,265.073048 C848.546797,263.55248 847.637804,262.097134 846.631955,260.717029 C845.873612,246.898901 834.439729,235.927928 820.446,235.927928 C813.693338,235.927928 807.536746,238.482559 802.888129,242.679003 C800.846906,235.365127 794.140873,230 786.183,230 C776.985147,230 769.459646,237.167357 768.876373,246.226918 C753.194039,247.70171 740.922,260.916276 740.922,277 C740.922,279.334111 741.180456,281.607796 741.670283,283.793943 C737.541229,288.061689 735,293.877923 735,300.288288 C735,313.383905 745.605479,324 758.688,324 C764.280221,324 769.419837,322.060229 773.471977,318.816193 Z" id="cloud" stroke="none" fill="#D8D8D8" fill-rule="evenodd"></path>
+      </svg>
+    )
+  }
+
 }
 
 

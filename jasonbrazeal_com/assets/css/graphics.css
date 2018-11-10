@@ -709,8 +709,8 @@ span.scrollNav {
 
 .machine {
   position: relative;
-  top: 118px;
-  left: 235px;
+  top: 7.25rem;
+  left: 10rem;
   width: 60%;
   height: 60%;
 }
@@ -718,7 +718,7 @@ span.scrollNav {
 .lightBulb {
   position: relative;
   top: -20rem;
-  left: 392px;
+  left: 19.75rem;
   opacity: 0;
 }
 
@@ -767,4 +767,9 @@ span.scrollNav {
 
 .electricPotential {
   opacity: 0;
+}
+
+.cloudApp {
+  transform: scale(.1) translate(140rem, -68rem);
+  position: absolute;
 }
