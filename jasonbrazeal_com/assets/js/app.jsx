@@ -940,10 +940,10 @@ export class EducationContent extends React.Component {
     return(
       <div>
       <div className={graphics.educationLogoContainer}>
-        <div className={[graphics.educationLogo, graphics.ccsfLogo].join(" ")}></div>
-        <div className={[graphics.educationLogo, graphics.accLogo].join(" ")}></div>
-        <div className={[graphics.educationLogo, graphics.utLogoEd].join(" ")}></div>
-        <div className={[graphics.educationLogo, graphics.ugaLogo].join(" ")}></div>
+        <a href="https://www.ccsf.edu/" target="_blank"><div className={[graphics.educationLogo, graphics.ccsfLogo].join(" ")}></div></a>
+        <a href="http://www.austincc.edu/" target="_blank"><div className={[graphics.educationLogo, graphics.accLogo].join(" ")}></div></a>
+        <a href="https://www.utexas.edu/" target="_blank"><div className={[graphics.educationLogo, graphics.utLogoEd].join(" ")}></div></a>
+        <a href="https://www.uga.edu/" target="_blank"><div className={[graphics.educationLogo, graphics.ugaLogo].join(" ")}></div></a>
       </div>
       <div className={graphics.educationTextContainer}>
         <span className={graphics.degree}>Networking Certificate <span className={graphics.year}>(in progress)</span></span>
@@ -1011,7 +1011,7 @@ export class ExperienceContent extends React.Component {
     return(
       <div>
       <section className={[graphics.experienceSection, graphics.primer, this.state.currentPage === 0 ? graphics.activeExperienceSection : ""].join(" ")}>
-        <a href="https://primer.ai/"><div className={[graphics.experienceLogo, graphics.primerLogo].join(" ")}></div></a>
+        <a href="https://primer.ai/" target="_blank"><div className={[graphics.experienceLogo, graphics.primerLogo].join(" ")}></div></a>
           <p className={graphics.jobTitle}>Senior Backend Engineer</p>
         <p>July 2018-present</p>
         <p>San Francisco, CA</p>
@@ -1022,7 +1022,7 @@ export class ExperienceContent extends React.Component {
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.medal, this.state.currentPage === 1 ? graphics.activeExperienceSection : ""].join(" ")}>
-          <a href="https://www.medal.com/"><div className={[graphics.experienceLogo, graphics.medalLogo].join(" ")}></div></a>
+          <a href="https://www.medal.com/" target="_blank"><div className={[graphics.experienceLogo, graphics.medalLogo].join(" ")}></div></a>
         <p className={graphics.jobTitle}>
           Full Stack Engineer
           <span className={`${[icons.fa, icons["fa-arrow-right"], graphics.promotion].join(" ")}`}></span>
@@ -1038,7 +1038,7 @@ export class ExperienceContent extends React.Component {
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.verodin, this.state.currentPage === 2 ? graphics.activeExperienceSection : ""].join(" ")}>
-            <a href="https://www.verodin.com/"><div className={[graphics.experienceLogo, graphics.verodinLogo].join(" ")}></div></a>
+            <a href="https://www.verodin.com/" target="_blank"><div className={[graphics.experienceLogo, graphics.verodinLogo].join(" ")}></div></a>
         <p className={graphics.jobTitle}>Full Stack Engineer</p>
         <p>December 2015-June 2017</p>
         <p>remote</p>
@@ -1050,7 +1050,7 @@ export class ExperienceContent extends React.Component {
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.tyco, this.state.currentPage === 3 ? graphics.activeExperienceSection : ""].join(" ")}>
-            <a href="http://www.tyco.com/"><div className={[graphics.experienceLogo, graphics.tycoLogo].join(" ")}></div></a>
+            <a href="http://www.tyco.com/" target="_blank"><div className={[graphics.experienceLogo, graphics.tycoLogo].join(" ")}></div></a>
         <p className={graphics.jobTitle}>Python Developer</p>
         <p>September 2014-December 2015</p>
         <p>Boca Raton, FL</p>
