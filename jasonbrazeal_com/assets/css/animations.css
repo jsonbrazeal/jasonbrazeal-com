@@ -490,6 +490,8 @@ html.popupActive, body.popupActive {
   top: 12px;
   left: 18px;
   z-index: 111;
+  width: 25px;
+  height: 25px;
 }
 
 .popupContainer .popupBackground .popup span:hover {
