@@ -933,10 +933,23 @@ export class Writing extends React.Component {
       this.setState({
         writingOpen: true
       });
+      document.addEventListener("keydown", this.handleKeyDown.bind(this));
+      document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'hidden';
     } else {
       this.setState({
         writingOpen: false
       });
+      document.removeEventListener("keydown", this.handleKeyDown.bind(this));
+      document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'auto';
+    }
+  }
+
+  handleKeyDown(event) {
+    if (event.keyCode == 27) {
+      this.setState({
+        writingOpen: false
+      });
+      document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'auto';
     }
   }
 
