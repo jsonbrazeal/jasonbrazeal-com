@@ -1170,7 +1170,7 @@ export class ProjectCardContainer extends React.Component {
         </ProjectCard>
         <ProjectCard title="notes viewer" cardClass="notes" githubLink="https://github.com/jsonbrazeal/notes">
           <ul>
-            <li>Local File Browser</li>
+            <li>Local File Browser Interface</li>
             <li>Python, Flask</li>
             <li>Javascript, React, Webpack</li>
           </ul>
@@ -1249,8 +1249,8 @@ export class Footer extends React.Component {
   render() {
     return (
       <footer>
+        <hr className={css.orangeBorder} />
         <div className={nav.footerWrapper}>
-          <hr className={css.orangeBorder} />
           <Contact />
           <RoundThumbnail className={nav.footerImage} alt="photo of jason" />
           <Copyright />
