@@ -1362,13 +1362,18 @@ export class MachineGraphic extends React.Component {
       console.log("stopping machine!");
     } else {
       console.log("starting machine!");
-      document.querySelector(`.${graphics.lightBulb}`).classList.add(...[animations.lightBulbFall, animations.lightBulbFadeIn]);;
-      this.fidgetSpinner.classList.add(animations.rotateFidgetSpinner)
-      this.valve.classList.add(animations.rotateValve)
-      this.blinkLights()
-      this.gear1.classList.add(animations.rotateGear1)
-      this.gear2.classList.add(animations.rotateGear2)
-      this.code.classList.add(animations.code)
+      document.querySelector(`.${graphics.lightBulb}`).classList.add(...[animations.lightBulbFall, animations.lightBulbFadeIn]);
+      this.fidgetSpinner.classList.add(animations.rotateFidgetSpinner);
+      this.valve.classList.add(animations.rotateValve);
+      this.blinkLights();
+      this.gear1.classList.add(animations.rotateGear1);
+      this.gear2.classList.add(animations.rotateGear2);
+      this.code.classList.add(animations.code);
+      this.needle1.classList.add(animations.needle1);
+      this.needle2.classList.add(animations.needle2);
+      this.needle3.classList.add(animations.needle3);
+      this.tank1.classList.add(animations.fadeIn);
+      this.tank2.classList.add(animations.fadeIn);
     }
   }
 
@@ -1461,13 +1466,97 @@ export class MachineGraphic extends React.Component {
     <rect id="section1" stroke="none" fill="#AAAAAA" fill-rule="evenodd" x="15" y="154" width="264" height="239" rx="2"></rect>
     <g id="tank2" stroke="none" fill="none">
       <use fill="#6A4F8E" fill-rule="evenodd" xlinkHref="#path-3"></use>
-    <use stroke="#777777" mask="url(#mask-4)" stroke-width="8" xlinkHref="#path-3"></use>
-  </g >
+      <use stroke="#777777" mask="url(#mask-4)" stroke-width="8" xlinkHref="#path-3"></use>
+    </g>
+
+    <g ref={elem => this.tank2 = elem} className={graphics.tank2}>
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new" d="M28.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+    c-1.974,0-3.574-1.601-3.574-3.573l0,0c0-1.975,1.601-3.574,3.574-3.574l0,0C26.418,77.646,28.018,79.246,28.018,81.221
+      L28.018,81.221z"></path>
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M39.018,51.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+      c-1.974,0-3.574-1.601-3.574-3.573l0,0c0-1.975,1.601-3.575,3.574-3.575l0,0C37.418,47.646,39.018,49.246,39.018,51.221
+      L39.018,51.221z"></path>
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M65.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+      c-1.973,0-3.573-1.601-3.573-3.573l0,0c0-1.975,1.601-3.574,3.573-3.574l0,0C63.418,77.646,65.018,79.246,65.018,81.221
+      L65.018,81.221z"></path>
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M58.018,59.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+      c-1.973,0-3.573-1.601-3.573-3.573l0,0c0-1.975,1.601-3.574,3.573-3.574l0,0C56.418,55.646,58.018,57.246,58.018,59.221
+      L58.018,59.221z"></path>
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M23.165,61.221c0,0.949-0.771,1.719-1.721,1.719l0,0
+      c-0.949,0-1.72-0.77-1.72-1.719l0,0c0-0.951,0.771-1.721,1.72-1.721l0,0C22.394,59.5,23.165,60.27,23.165,61.221L23.165,61.221z"></path>
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M45.165,71.221c0,2.055-1.667,3.719-3.721,3.719l0,0
+      c-2.053,0-3.719-1.664-3.719-3.719l0,0c0-2.056,1.667-3.72,3.719-3.72l0,0C43.498,67.501,45.165,69.165,45.165,71.221L45.165,71.221
+      z"></path>
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M43.877,86.221c0,1.344-1.09,2.432-2.434,2.432l0,0
+      c-1.343,0-2.433-1.088-2.433-2.432l0,0c0-1.345,1.09-2.434,2.433-2.434l0,0C42.788,83.787,43.877,84.876,43.877,86.221
+      L43.877,86.221z"></path>
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M63.999,42.22c0,1.411-1.146,2.554-2.556,2.554l0,0
+      c-1.408,0-2.553-1.143-2.553-2.554l0,0c0-1.411,1.145-2.554,2.553-2.554l0,0C62.854,39.666,63.999,40.809,63.999,42.22L63.999,42.22
+      z"></path>
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M23.109,46.601c0,0.709-0.575,1.283-1.285,1.283l0,0
+      c-0.708,0-1.283-0.573-1.283-1.283l0,0c0-0.709,0.575-1.284,1.283-1.284l0,0C22.534,45.317,23.109,45.891,23.109,46.601
+      L23.109,46.601z"></path>
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M53.075,49.444c0,0.709-0.574,1.283-1.284,1.283l0,0
+      c-0.708,0-1.283-0.573-1.283-1.283l0,0c0-0.709,0.575-1.283,1.283-1.283l0,0C52.5,48.161,53.075,48.734,53.075,49.444L53.075,49.444
+      z"></path>
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M53.497,74.723c0,0.711-0.575,1.283-1.284,1.283l0,0
+      c-0.708,0-1.283-0.572-1.283-1.283l0,0c0-0.709,0.575-1.281,1.283-1.281l0,0C52.921,73.439,53.497,74.014,53.497,74.723
+      L53.497,74.723z"></path>
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M26.061,70.771c0,0.709-0.575,1.283-1.284,1.283l0,0
+      c-0.708,0-1.283-0.574-1.283-1.283l0,0c0-0.709,0.575-1.283,1.283-1.283l0,0C25.486,69.486,26.061,70.062,26.061,70.771
+      L26.061,70.771z"></path>
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M65.877,68.221c0,1.344-1.09,2.432-2.434,2.432l0,0
+      c-1.344,0-2.434-1.088-2.434-2.432l0,0c0-1.345,1.09-2.434,2.434-2.434l0,0C64.788,65.787,65.877,66.876,65.877,68.221
+      L65.877,68.221z"></path>
+    </g>
+
     <rect id="tank2_highlight" stroke="none" fill="#D8D8D8" fill-rule="evenodd" opacity="0.100000001" x="702" y="295" width="15" height="80"></rect>
     <g id="tank1" stroke="none" fill="none">
       <use fill="#6A4F8E" fill-rule="evenodd" xlinkHref="#path-5"></use>
-    <use stroke="#777777" mask="url(#mask-6)" stroke-width="8" xlinkHref="#path-5"></use>
-  </g>
+      <use stroke="#777777" mask="url(#mask-6)" stroke-width="8" xlinkHref="#path-5"></use>
+    </g>
+
+    <g ref={elem => this.tank1 = elem} className={graphics.tank1}>
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new" d="M28.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+    c-1.974,0-3.574-1.601-3.574-3.573l0,0c0-1.975,1.601-3.574,3.574-3.574l0,0C26.418,77.646,28.018,79.246,28.018,81.221
+      L28.018,81.221z"></path>
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M39.018,51.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+      c-1.974,0-3.574-1.601-3.574-3.573l0,0c0-1.975,1.601-3.575,3.574-3.575l0,0C37.418,47.646,39.018,49.246,39.018,51.221
+      L39.018,51.221z"></path>
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M65.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+      c-1.973,0-3.573-1.601-3.573-3.573l0,0c0-1.975,1.601-3.574,3.573-3.574l0,0C63.418,77.646,65.018,79.246,65.018,81.221
+      L65.018,81.221z"></path>
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M58.018,59.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+      c-1.973,0-3.573-1.601-3.573-3.573l0,0c0-1.975,1.601-3.574,3.573-3.574l0,0C56.418,55.646,58.018,57.246,58.018,59.221
+      L58.018,59.221z"></path>
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M23.165,61.221c0,0.949-0.771,1.719-1.721,1.719l0,0
+      c-0.949,0-1.72-0.77-1.72-1.719l0,0c0-0.951,0.771-1.721,1.72-1.721l0,0C22.394,59.5,23.165,60.27,23.165,61.221L23.165,61.221z"></path>
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M45.165,71.221c0,2.055-1.667,3.719-3.721,3.719l0,0
+      c-2.053,0-3.719-1.664-3.719-3.719l0,0c0-2.056,1.667-3.72,3.719-3.72l0,0C43.498,67.501,45.165,69.165,45.165,71.221L45.165,71.221
+      z"></path>
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M43.877,86.221c0,1.344-1.09,2.432-2.434,2.432l0,0
+      c-1.343,0-2.433-1.088-2.433-2.432l0,0c0-1.345,1.09-2.434,2.433-2.434l0,0C42.788,83.787,43.877,84.876,43.877,86.221
+      L43.877,86.221z"></path>
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M63.999,42.22c0,1.411-1.146,2.554-2.556,2.554l0,0
+      c-1.408,0-2.553-1.143-2.553-2.554l0,0c0-1.411,1.145-2.554,2.553-2.554l0,0C62.854,39.666,63.999,40.809,63.999,42.22L63.999,42.22
+      z"></path>
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M23.109,46.601c0,0.709-0.575,1.283-1.285,1.283l0,0
+      c-0.708,0-1.283-0.573-1.283-1.283l0,0c0-0.709,0.575-1.284,1.283-1.284l0,0C22.534,45.317,23.109,45.891,23.109,46.601
+      L23.109,46.601z"></path>
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M53.075,49.444c0,0.709-0.574,1.283-1.284,1.283l0,0
+      c-0.708,0-1.283-0.573-1.283-1.283l0,0c0-0.709,0.575-1.283,1.283-1.283l0,0C52.5,48.161,53.075,48.734,53.075,49.444L53.075,49.444
+      z"></path>
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M53.497,74.723c0,0.711-0.575,1.283-1.284,1.283l0,0
+      c-0.708,0-1.283-0.572-1.283-1.283l0,0c0-0.709,0.575-1.281,1.283-1.281l0,0C52.921,73.439,53.497,74.014,53.497,74.723
+      L53.497,74.723z"></path>
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M26.061,70.771c0,0.709-0.575,1.283-1.284,1.283l0,0
+      c-0.708,0-1.283-0.574-1.283-1.283l0,0c0-0.709,0.575-1.283,1.283-1.283l0,0C25.486,69.486,26.061,70.062,26.061,70.771
+      L26.061,70.771z"></path>
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M65.877,68.221c0,1.344-1.09,2.432-2.434,2.432l0,0
+      c-1.344,0-2.434-1.088-2.434-2.432l0,0c0-1.345,1.09-2.434,2.434-2.434l0,0C64.788,65.787,65.877,66.876,65.877,68.221
+      L65.877,68.221z"></path>
+    </g>
+
     <rect id="tank1_highlight" stroke="none" fill="#D8D8D8" fill-rule="evenodd" opacity="0.1" x="609" y="295" width="15" height="80"></rect>
     <rect id="gauge3" stroke="#999999" stroke-width="1" fill="#666666" fill-rule="evenodd" x="46" y="357" width="205" height="17.5" rx="2"></rect>
     <rect id="gauge2" stroke="#999999" stroke-width="1" fill="#666666" fill-rule="evenodd" x="46" y="330" width="205" height="17.5" rx="2"></rect>
@@ -1513,21 +1602,21 @@ export class MachineGraphic extends React.Component {
       <circle id="dial" fill="#FFFFFF" cx="30" cy="28" r="27"></circle>
       <path d="M57,55 C57,40.0883118 44.9116882,28 30,28 C15.0883118,28 3,40.0883118 3,55 L57,55 Z" id="dial_bottom" fill="#D55050" transform="translate(30.000000, 41.500000) scale(1, -1) translate(-30.000000, -41.500000) "></path>
       <path d="M30,34 C32.7614237,34 35,31.7614237 35,29 C35,26.2385763 32.7614237,24 30,24 C27.2385763,24 25,26.2385763 25,29 C25,31.7614237 27.2385763,34 30,34 Z" id="dial_center" fill="#666666"></path>
-      <path d="M14.5,14.5 L29.6137817,27.5986108" id="needle" stroke="#666666" stroke-width="4" stroke-linecap="square"></path>
+      <path ref={elem => this.needle1 = elem} className={graphics.needle1} d="M14.5,14.5 L29.6137817,27.5986108" id="needle" stroke="#666666" stroke-width="4" stroke-linecap="square"></path>
     </g>
     <g id="dial2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(394.000000, 319.000000)">
       <circle id="dial-shadow" fill="#777777" cx="29" cy="29" r="29"></circle>
       <circle id="dial" fill="#FFFFFF" cx="30" cy="28" r="27"></circle>
       <path d="M57,55 C57,40.0883118 44.9116882,28 30,28 C15.0883118,28 3,40.0883118 3,55 L57,55 Z" id="dial_bottom" fill="#D55050" transform="translate(30.000000, 41.500000) scale(1, -1) translate(-30.000000, -41.500000) "></path>
       <path d="M30,34 C32.7614237,34 35,31.7614237 35,29 C35,26.2385763 32.7614237,24 30,24 C27.2385763,24 25,26.2385763 25,29 C25,31.7614237 27.2385763,34 30,34 Z" id="dial_center" fill="#666666"></path>
-      <path d="M34.5,8.5 L29.6137817,27.5986108" id="needle" stroke="#666666" stroke-width="4" stroke-linecap="square"></path>
+      <path ref={elem => this.needle2 = elem} className={graphics.needle2} d="M34.5,8.5 L29.6137817,27.5986108" id="needle" stroke="#666666" stroke-width="4" stroke-linecap="square"></path>
     </g>
     <g id="dial3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(474.000000, 319.000000)">
       <circle id="dial-shadow" fill="#777777" cx="29" cy="29" r="29"></circle>
       <circle id="dial" fill="#FFFFFF" cx="30" cy="28" r="27"></circle>
       <path d="M57,55 C57,40.0883118 44.9116882,28 30,28 C15.0883118,28 3,40.0883118 3,55 L57,55 Z" id="dial_bottom" fill="#D55050" transform="translate(30.000000, 41.500000) scale(1, -1) translate(-30.000000, -41.500000) "></path>
       <path d="M30,34 C32.7614237,34 35,31.7614237 35,29 C35,26.2385763 32.7614237,24 30,24 C27.2385763,24 25,26.2385763 25,29 C25,31.7614237 27.2385763,34 30,34 Z" id="dial_center" fill="#666666"></path>
-      <path d="M49.5,22.5 L31.4919759,27.7582008" id="needle" stroke="#666666" stroke-width="4" stroke-linecap="square"></path>
+      <path ref={elem => this.needle3 = elem} className={graphics.needle3} d="M49.5,22.5 L31.4919759,27.7582008" id="needle" stroke="#666666" stroke-width="4" stroke-linecap="square"></path>
     </g>
       <g className={graphics.fidgetSpinner} filter="url(#filter-7)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(88.000000, 170.000000)">
       <g id="Group" fill="#346D98">
@@ -1596,7 +1685,7 @@ export class MachineGraphic extends React.Component {
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-</svg >
+</svg>
     )
   }
 }

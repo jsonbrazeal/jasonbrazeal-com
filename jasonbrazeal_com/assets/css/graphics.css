@@ -737,3 +737,29 @@ span.scrollNav {
 .code {
   transform: translate(250px, 220px);
 }
+
+.needle1 {
+  transform-origin: 3.5% 8%;
+}
+
+.needle2 {
+  transform-origin: 3.5% 8%;
+}
+
+.needle3 {
+  transform-origin: 3.5% 8%;
+}
+
+.tank1 {
+  transform: translate(68%, 77%);
+  opacity: 0;
+}
+
+.tank2 {
+  transform: translate(78.5%, 77%);
+  opacity: 0;
+}
+
+.tank1 path, .tank2 path {
+  opacity: .3;
+}

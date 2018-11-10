@@ -619,3 +619,124 @@ html.popupActive, body.popupActive {
 .code {
   animation: swooshCode 1s infinite linear;
 }
+
+@keyframes needleRock {
+  0% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(140deg);
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
+}
+
+@keyframes needleSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes needleRockFast {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.needle1 {
+  animation: needleRock 1s infinite linear;
+}
+
+.needle2 {
+  animation: needleSpin 2s infinite linear;
+}
+
+.needle3 {
+  animation: needleRockFast .25s infinite linear;
+}
+
+@keyframes bubbleUp1 {
+  0% {
+    transform: translateY(-1%);
+    opacity: .3;
+  }
+  50% {
+    transform: translateY(-2%);
+    opacity: .1;
+  }
+  100% {
+    transform: translateY(-1%);
+    opacity: .3;
+  }
+}
+
+@keyframes bubbleUp2 {
+  0% {
+    transform: translateY(1%);
+    opacity: .3;
+  }
+  50% {
+    transform: translateY(-3%);
+    opacity: .1;
+  }
+  100% {
+    transform: translateY(1%);
+    opacity: .3;
+  }
+}
+
+@keyframes bubbleUp3 {
+  0% {
+    transform: translateY(0%);
+    opacity: .1;
+  }
+  50% {
+    transform: translateY(-4%);
+    opacity: .3;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: .1;
+  }
+}
+
+@keyframes bubbleUp4 {
+  0% {
+    transform: translateY(1%);
+    opacity: .3;
+  }
+  50% {
+    transform: translateY(-3%);
+    opacity: .1;
+  }
+  100% {
+    transform: translateY(1%);
+    opacity: .3;
+  }
+}
+
+.bubbleUp1 {
+  animation: bubbleUp1 2s 0s infinite;
+}
+
+.bubbleUp2 {
+  animation: bubbleUp2 3s 1s infinite;
+}
+
+.bubbleUp3 {
+  animation: bubbleUp3 4s 2s infinite;
+}
+
+.bubbleUp4 {
+  animation: bubbleUp4 4s .5s infinite;
+}
