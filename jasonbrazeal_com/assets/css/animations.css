@@ -768,3 +768,23 @@ html.popupActive, body.popupActive {
   border: 1px solid white;
   animation: redFlash 1s infinite;
 }
+
+
+.electricFlow {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: dash 3s linear forwards infinite;
+  opacity: 1;
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -200;
+  }
+}

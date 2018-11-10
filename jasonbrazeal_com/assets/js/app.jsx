@@ -1375,6 +1375,7 @@ export class MachineGraphic extends React.Component {
       this.tank1.classList.add(animations.fadeIn);
       this.tank2.classList.add(animations.fadeIn);
       this.redLight.classList.add(animations.redFlash);
+      this.electricPotential.classList.add(animations.electricFlow);
     }
   }
 
@@ -1430,7 +1431,7 @@ export class MachineGraphic extends React.Component {
       <path d="M51,25.2055538 L65.8156678,10" id="Line-Copy-3" stroke="#4DB09A" stroke-width="5" transform="translate(58.407834, 17.602777) scale(-1, 1) translate(-58.407834, -17.602777) "></path>
     </g>
     <g id="electricity" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(275.000000, 106.000000)">
-      <path d="M16.0429688,7.8203125 L35.1730116,25.3203125 L51.5042119,10.3913707 L73.3037778,25.3203125 C73.3037778,25.3203125 95.8323685,8.16307141 99.0429688,10.3913707" stroke="#979797"></path>
+          <path ref={elem => this.electricPotential = elem} className={graphics.electricPotential} d="M16.0429688,7.8203125 L35.1730116,25.3203125 L51.5042119,10.3913707 L73.3037778,25.3203125 C73.3037778,25.3203125 95.8323685,8.16307141 99.0429688,10.3913707" stroke="#F2E64E" stroke-width="3"></path>
       <rect id="separator1" fill="#D8D8D8" transform="translate(31.500000, 46.500000) rotate(-31.000000) translate(-31.500000, -46.500000) " x="28" y="12" width="7" height="69" rx="3.5"></rect>
       <rect id="separator1-copy" fill="#D8D8D8" transform="translate(81.500000, 46.500000) scale(-1, 1) rotate(-31.000000) translate(-81.500000, -46.500000) " x="78" y="12" width="7" height="69" rx="3.5"></rect>
       <circle id="electricity_ball1" fill="#666666" cx="10.1440543" cy="10.1440543" r="10.1440543"></circle>

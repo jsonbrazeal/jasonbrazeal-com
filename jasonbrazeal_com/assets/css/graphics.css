@@ -763,3 +763,7 @@ span.scrollNav {
 .tank1 path, .tank2 path {
   opacity: .3;
 }
+
+.electricPotential {
+  opacity: 0;
+}
