@@ -716,9 +716,9 @@ span.scrollNav {
 }
 
 .lightBulb {
-  position: absolute;
-  top: 130px;
-  left: 317px;
+  position: relative;
+  top: -20rem;
+  left: 392px;
   opacity: 0;
 }
 
@@ -732,10 +732,11 @@ span.scrollNav {
 
 .gaugeLights circle {
   display: none;
+  box-shadow: 0 0 110px #f9e594;
 }
 
 .code {
-  transform: translate(250px, 220px);
+  transform: translate(250px, 224px);
 }
 
 .needle1 {

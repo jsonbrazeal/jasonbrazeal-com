@@ -548,18 +548,18 @@ html.popupActive, body.popupActive {
 
 @keyframes fall {
   0% {
-    top: 130px;
+    top: -20rem;
     opacity: 0;
   }
   10% {
-    top: 130px;
+    top: -20rem;
     opacity: 1
   }
   90% {
     opacity: 1
   }
   100% {
-    top: 320px;
+    top: 0;
     opacity: 0;
   }
 }
@@ -608,10 +608,10 @@ html.popupActive, body.popupActive {
 
 @keyframes swooshCode {
   0%  {
-    transform: translate(250px, 220px);
+    transform: translate(250px, 224px);
   }
   100% {
-    transform: translate(525px, 220px);
+    transform: translate(525px, 224px);
   }
 }
 

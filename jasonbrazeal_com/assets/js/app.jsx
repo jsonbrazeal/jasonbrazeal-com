@@ -1362,7 +1362,7 @@ export class MachineGraphic extends React.Component {
       console.log("stopping machine!");
     } else {
       console.log("starting machine!");
-      document.querySelector(`.${graphics.lightBulb}`).classList.add(...[animations.lightBulbFall, animations.lightBulbFadeIn]);
+      document.querySelector(`.${graphics.lightBulb}`).classList.add(animations.lightBulbFall);
       this.fidgetSpinner.classList.add(animations.rotateFidgetSpinner);
       this.valve.classList.add(animations.rotateValve);
       this.startLights();
