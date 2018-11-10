@@ -1365,7 +1365,7 @@ export class MachineGraphic extends React.Component {
       document.querySelector(`.${graphics.lightBulb}`).classList.add(...[animations.lightBulbFall, animations.lightBulbFadeIn]);
       this.fidgetSpinner.classList.add(animations.rotateFidgetSpinner);
       this.valve.classList.add(animations.rotateValve);
-      this.blinkLights();
+      this.startLights();
       this.gear1.classList.add(animations.rotateGear1);
       this.gear2.classList.add(animations.rotateGear2);
       this.code.classList.add(animations.code);
@@ -1379,20 +1379,59 @@ export class MachineGraphic extends React.Component {
     }
   }
 
-  blinkLights() {
-    [this.gaugeLights1, this.gaugeLights2, this.gaugeLights3].forEach((elem, i, arr) => {
-      let jitter = Math.random() * Math.floor(i + 1);
-      setTimeout(this.showLights, jitter * 1000, elem);
+  startLights() {
+    [this.gaugeLights1, this.gaugeLights2, this.gaugeLights3].forEach((gauge, i, arr) => {
+      [...gauge.children].forEach((light, i, arr) => {
+        setTimeout(() => {
+          light.style.display = 'none';
+        }, i * 50);
+      });
+      let jitter = Math.random() * Math.floor(i + 2);
+      [...gauge.children].forEach((light, i, arr) => {
+        setTimeout(() => {
+          light.style.display = 'block';
+        }, (i + jitter) * 400);
+      });
     });
+    setTimeout(() => {
+      this.startLights();
+    }, 5000);
   }
 
-  showLights(gauge) {
-    [...gauge.children].forEach((elem, i, arr) => {
-      setTimeout((light) => {
-        light.style.display = 'block';
-      }, i * 500, elem);
-    });
-  }
+  // resetLights(gauge) {
+  //   // [this.gaugeLights1, this.gaugeLights2, this.gaugeLights3].forEach((gauge, i, arr) => {
+  //   //   [...gauge.children].forEach((light, i, arr) => {
+  //   //     light.style.display = 'none';
+  //   //   });
+  //   // });
+  //   [...gauge.children].forEach((light, i, arr) => {
+  //     light.style.display = 'none';
+  //   });
+  //   var reset = true;
+  //   [this.gaugeLights1, this.gaugeLights2, this.gaugeLights3].forEach((light, i, arr) => {
+  //     if (light.style.display === 'block') {
+  //       reset = false;
+  //     }
+  //   });
+  //   if (restart) {
+  //     setTimeout(() => {
+  //       this.startLights();
+  //     }, 500);
+  //   }
+  // }
+
+  // showLights(gauge, component) {
+  //   console.log('show lights');
+  //   console.log(gauge);
+  //   [...gauge.children].forEach((light, i, arr) => {
+  //     setTimeout(() => {
+  //       light.style.display = 'none';
+  //     }, i * 100);
+  //     setTimeout(() => {
+  //       light.style.display = 'block';
+  //     }, i * 1000);
+  //   });
+  // }
 
   render() {
     return(

@@ -566,7 +566,6 @@ html.popupActive, body.popupActive {
 
 .lightBulbFall {
   animation: fall 5s infinite ease-in-out;
-  animation-delay: 2s;
 }
 
 @keyframes rotation {
