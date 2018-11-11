@@ -197,7 +197,8 @@ header * {
 }
 
 footer {
-  margin-top: 6.4rem;
+  position: relative;
+  bottom: 20.9rem;
   width: 100%;
 }
 

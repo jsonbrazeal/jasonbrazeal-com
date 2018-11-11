@@ -708,17 +708,20 @@ span.scrollNav {
 }
 
 .machine {
-  position: relative;
+  /* position: relative;
   top: 7.25rem;
   left: 10rem;
   width: 60%;
-  height: 60%;
+  height: 60%; */
+  position: relative;
+  top: -19.25rem;
+  left: 15rem;
+  width: 60%;
+  height: 100%;
 }
 
 .lightBulb {
-  position: relative;
-  top: -20rem;
-  left: 19.75rem;
+  transform: translate(10.7%, -16%) scale(.6);
   opacity: 0;
 }
 

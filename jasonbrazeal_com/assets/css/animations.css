@@ -593,18 +593,18 @@ html.popupActive, body.popupActive {
 
 @keyframes fall {
   0% {
-    top: -20rem;
+    transform: translate(10.7%, -16%) scale(.6);
     opacity: 0;
   }
   10% {
-    top: -20rem;
+    transform: translate(10.7%, -16%) scale(.6);
     opacity: 1
   }
   90% {
     opacity: 1
   }
   100% {
-    top: 0;
+    transform: translate(10.7%, 10%) scale(.6);
     opacity: 0;
   }
 }
