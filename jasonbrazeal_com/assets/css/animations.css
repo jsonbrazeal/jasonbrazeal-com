@@ -591,26 +591,26 @@ html.popupActive, body.popupActive {
   }
 }
 
-@keyframes fall {
+@keyframes lightBulbFall {
   0% {
-    transform: translate(10.7%, -16%) scale(.6);
+    transform: translate(7.8%, -19%) scale(.6);
     opacity: 0;
   }
   10% {
-    transform: translate(10.7%, -16%) scale(.6);
+    transform: translate(7.8%, -19%) scale(.6);
     opacity: 1
   }
   90% {
     opacity: 1
   }
   100% {
-    transform: translate(10.7%, 10%) scale(.6);
+    transform: translate(7.8%, 10%) scale(.6);
     opacity: 0;
   }
 }
 
 .lightBulbFall {
-  animation: fall 5s infinite ease-in-out;
+  animation: lightBulbFall 5s infinite ease-in-out;
 }
 
 @keyframes rotation {
@@ -633,22 +633,22 @@ html.popupActive, body.popupActive {
 
 .rotateFidgetSpinner {
   animation: rotation 1s infinite linear;
-  transform-origin: 6.8% 17.7%;
+  transform-origin: 5% 7.9%;
 }
 
 .rotateValve {
   animation: rotation .3s infinite linear;
-  transform-origin: 69.1% 20.4%;
+  transform-origin: 50.35% 9.15%;
 }
 
 .rotateGear1 {
   animation: rotation 1.5s infinite linear;
-  transform-origin: 3.3% 24.5%;
+  transform-origin: 2.4% 11%;
 }
 
 .rotateGear2 {
   animation: rotationCounter 3s infinite linear;
-  transform-origin: 8.3% 14.5%;
+  transform-origin: 6% 6.5%;
 }
 
 @keyframes swooshCode {
@@ -840,13 +840,13 @@ html.popupActive, body.popupActive {
 
 @keyframes cloudApp {
   0% {
-    transform: scale(.1) translate(140rem, -68rem);
+    transform: scale(.9) translate(1rem, 1.5rem);
   }
   50% {
-    transform: scale(.1) translate(245rem, -68rem);
+    transform: scale(.9) translate(18rem, 1.5rem);
   }
   100% {
-    transform: scale(.1) translate(245rem, -500rem);
+    transform: scale(.9) translate(18rem, -100rem);
   }
 }
 

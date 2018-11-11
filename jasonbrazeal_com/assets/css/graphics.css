@@ -708,20 +708,16 @@ span.scrollNav {
 }
 
 .machine {
-  /* position: relative;
-  top: 7.25rem;
-  left: 10rem;
-  width: 60%;
-  height: 60%; */
   position: relative;
-  top: -19.25rem;
-  left: 15rem;
+  top: -11.35rem;
+  left: 23rem;
   width: 60%;
   height: 100%;
+  transform: scale(1.3);
 }
 
 .lightBulb {
-  transform: translate(10.7%, -16%) scale(.6);
+  transform: translate(7.8%, -19%) scale(.6);
   opacity: 0;
 }
 
@@ -743,15 +739,15 @@ span.scrollNav {
 }
 
 .needle1 {
-  transform-origin: 3.5% 8%;
+  transform-origin: 2.5% 3.5%;
 }
 
 .needle2 {
-  transform-origin: 3.5% 8%;
+  transform-origin: 2.5% 3.6%;
 }
 
 .needle3 {
-  transform-origin: 3.5% 8%;
+  transform-origin: 2% 4%;
 }
 
 .tank1 {
@@ -773,6 +769,6 @@ span.scrollNav {
 }
 
 .cloudApp {
-  transform: scale(.1) translate(140rem, -68rem);
+  transform: scale(.9) translate(1rem, 1.5rem);
   position: absolute;
 }

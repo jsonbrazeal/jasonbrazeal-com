@@ -57,7 +57,7 @@
   z-index: 1;
   top: 0;
   bottom: 0;
-  right: -1.5rem;
+  right: 0rem;
   margin: auto;
   height: 280px;
   width: 15%;
@@ -66,7 +66,7 @@
  }
 
  .pageIn {
-  transform: translateX(188%);
+  transform: translateX(185%);
   transition-delay: .25s !important;
 }
 
@@ -198,7 +198,7 @@ header * {
 
 footer {
   position: relative;
-  bottom: 20.9rem;
+  bottom: 7.7rem;
   width: 100%;
 }
 
@@ -211,7 +211,7 @@ footer div {
 }
 
 footer hr {
-  width: 78%;
+  width: 72%;
   z-index: 2;
   position: relative;
   left: -1rem;
