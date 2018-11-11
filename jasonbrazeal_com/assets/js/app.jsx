@@ -871,8 +871,21 @@ export class Writing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      writingOpen: false
+      writingOpen: false,
+      active: false
     };
+  }
+
+  mouseEnter(e) {
+    this.setState({
+      active: true
+    });
+  }
+
+  mouseLeave(e) {
+    this.setState({
+      active: false
+    });
   }
 
   handleClick(state, e)  {
@@ -916,7 +929,10 @@ export class Writing extends React.Component {
           <input id="modalTrigger" className={animations.modalTriggerInput} type="checkbox" checked={this.state.writingOpen} />
           <div className={animations.modalOverlay}>
             <div className={animations.modalWrap}>
-              <label htmlFor="modalTrigger" onClick={(e) => this.handleClick("close", e)}>&#10006;</label>
+              <label htmlFor="modalTrigger" onClick={(e) => this.handleClick("close", e)}>
+                  <span className={this.state.active ? [animations.modalCloseCircle, animations.modalCloseActive].join(" ") : animations.modalCloseCircle} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)}></span>
+                  <span className={[animations.modalCloseX, icons.fa, icons["fa-times"]].join(" ")}></span>
+              </label>
               <h2>{this.props.title}</h2>
 
               {this.props.children}

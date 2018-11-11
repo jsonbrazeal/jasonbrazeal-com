@@ -389,6 +389,7 @@
   width: 90%;
 }
 
+
 /*@media (min-width: 50em) {
   .modalWrap {
     padding: 1.75em;
@@ -404,18 +405,28 @@
   }
 }*/
 
-.modalWrap label {
-  background: #d8d8d8;
-  border-radius: 50%;
+
+.modalWrap .modalCloseX {
   color: #343434;
+  font-size: 22px;
+}
+
+.modalWrap .modalCloseActive {
+  opacity: .2 !important;
+}
+
+.modalWrap .modalCloseCircle {
+  opacity: 0;
+  background: #000;
+  border-radius: 50%;
   cursor: pointer;
   display: inline-block;
-  height: 1.5em;
   line-height: 1.5;
- /* position: absolute;
-  right: 43%;
-  top: .5em;*/
-  width: 1.5em;
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  right: 47.45%;
+  top: 2.45rem;
 }
 
 .modalWrap h2 {
