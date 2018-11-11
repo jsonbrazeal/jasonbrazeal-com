@@ -642,7 +642,7 @@ html.popupActive, body.popupActive {
 
 .rotateValve {
   animation: rotation .3s infinite linear;
-  transform-origin: 50.35% 9.15%;
+  transform-origin: 50.34% 9.15%;
 }
 
 .rotateGear1 {

@@ -832,12 +832,12 @@ span.scrollNav {
 }
 
 .tank1 {
-  transform: translate(68%, 77%);
+  transform: translate(50%, 36.5%) scale(.8);
   opacity: 0;
 }
 
 .tank2 {
-  transform: translate(78.5%, 77%);
+  transform: translate(58%, 36.5%) scale(.8);
   opacity: 0;
 }
 
