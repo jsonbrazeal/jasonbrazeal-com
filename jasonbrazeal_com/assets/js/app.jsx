@@ -611,6 +611,26 @@ export class EmbeddedGist extends React.Component {
 */
 
 export class SnippetTiles extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: false
+    };
+  }
+
+  mouseEnter(e) {
+    this.setState({
+      popupCloseActive: true
+    });
+  }
+
+  mouseLeave(e) {
+    this.setState({
+      popupCloseActive: false
+    });
+  }
+
   render() {
     return (
       // TODO: refactor into individual tile components
@@ -676,7 +696,8 @@ export class SnippetTiles extends React.Component {
           <div className={animations.popupBackground}>
             <div className={animations.popup}>
               <div className={animations.popupContent}>
-                <span className={[icons.fa, icons["fa-times"]].join(" ")}></span>
+                <span className={this.state.popupCloseActive ? [animations.popupClose, animations.popupCloseActive].join(" ") : animations.popupClose} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)}></span>
+                <span className={[animations.popupCloseIcon, icons.fa, icons["fa-times"]].join(" ")}></span>
                 <h3 className={animations.popupTitle}></h3>
                 <div className={animations.popupSnippet}></div>
               </div>

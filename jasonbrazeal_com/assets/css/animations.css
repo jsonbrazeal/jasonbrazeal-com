@@ -339,12 +339,6 @@
   /*padding: 1em;*/
 }
 
-/*@media (min-width: 43.75em) {
-  .modal {
-    padding: 1.5em;
-  }
-}*/
-
 .modalLabel {
   background: #343434;
   border: 1px solid #343434;
@@ -389,26 +383,9 @@
   width: 90%;
 }
 
-
-/*@media (min-width: 50em) {
-  .modalWrap {
-    padding: 1.75em;
-  }
-}
-
-@media (min-height: 37.5em) {
-  .modalWrap {
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -80%);
-  }
-}*/
-
-
 .modalWrap .modalCloseX {
   color: #343434;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .modalWrap .modalCloseActive {
@@ -531,15 +508,6 @@ html.popupActive, body.popupActive {
   color: #737373;
 }
 
-.popupContainer .popupBackground .popup span {
-  position: absolute;
-  top: 12px;
-  left: 18px;
-  z-index: 111;
-  width: 25px;
-  height: 25px;
-}
-
 .popupContainer .popupBackground .popup span:hover {
   cursor: pointer;
 }
@@ -551,6 +519,31 @@ html.popupActive, body.popupActive {
 .popupTitle {
 
 }
+
+.popupCloseIcon {
+  position: absolute;
+  top: 12px;
+  left: 18px;
+  z-index: 111;
+}
+
+.popupClose {
+  opacity: 0;
+  background-color: #000;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: block;
+  position: absolute;
+  top: 8.5px;
+  left: 10px;
+  z-index: 112;
+}
+
+.popupCloseActive {
+  opacity: .2;
+}
+
 
 @keyframes popupFadeIn {
   0% {
