@@ -65,8 +65,14 @@
   border-radius: 2px;
 }
 
-.resumeContainer iframe {
-  width: 59%;
+.resumeContainer .btn {
+  width: 109px;
+  background-color: #343434;
+  z-index: 101;
+  color: #d8d8d8;
+  position: relative;
+  left: 15%;
+  top: 30%;
 }
 
 .resumeContainer {
@@ -398,6 +404,7 @@ span.scrollNav {
 }
 
 .btn:active {
+  color: #666;
   background-color: #eee;
   background-image: radial-gradient(circle, #eee 10%, #fff 11%);
   background-repeat: no-repeat;

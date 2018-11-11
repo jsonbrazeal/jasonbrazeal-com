@@ -1176,10 +1176,20 @@ export class ExperienceContent extends React.Component {
 }
 
 export class ResumeContainer extends React.Component {
+
+  handleClick(version) {
+    if (version === 'full') {
+      window.open('http://localhost:8888/res.pdf', '_blank');
+    } else if (version === 'short') {
+      window.open('http://localhost:8888/res_short.pdf', '_blank');
+    }
+  }
+
   render() {
     return(
       <div className={this.props.active ? `${graphics.resumeContainer} ${css.slidIn}` : `${graphics.resumeContainer} ${css.slidOut}`}>
-        <iframe src="http://localhost:8888/brazeal.pdf#zoom=100" height="600px" />
+        <label className={[graphics.btn].join(" ")} onClick={(e) => this.handleClick("full", e)}>Full Version pdf</label>
+        <label className={[graphics.btn].join(" ")} onClick={(e) => this.handleClick("short", e)}>Short Version pdf</label>
       </div>
     )
   }

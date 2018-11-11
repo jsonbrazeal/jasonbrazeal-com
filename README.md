@@ -17,3 +17,6 @@ python -m http.server 8888
 FLASK_DEBUG=1 FLASK_APP=/path/to/project/folder/project/app.py flask run --host=0.0.0.0 --port=5000
 ```
 
+# license info
+
+* some icons from here: https://fontawesome.com/license
