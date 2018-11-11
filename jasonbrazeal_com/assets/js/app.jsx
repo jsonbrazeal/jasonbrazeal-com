@@ -1140,8 +1140,8 @@ export class ExperienceContent extends React.Component {
           <li>developed web and embedded applications for Tyco On, an IoT initiative to create an integrated data and smart services platform for more than a billion devices deployed around the world</li>
           <li>created REST services to support hardware development, such as MAC address provisioning, device sessions, device authentication using LDAP and TOTP</li>
           <li>designed and built network device simulators to test cloud-based systems'​ processing of AMQP, UDP, and HTTP/REST communications from devices</li>
-          <li>deployed a real-time device data/monitoring dashboard, device log tracker, and several other IoT-related web applications (Python/Twisted/RabbitMQ/Flask/
-            WebSockets/MariaDB/Javascript/d3.js)</li>
+          <li>deployed a real-time device data/monitoring dashboard, device log tracker, and several other IoT-related web applications (Python/Twisted/RabbitMQ/Flask/WebSockets/MariaDB/
+          Javascript/d3.js)</li>
         </ul>
       </section>
       <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 4 ? graphics.activeExperienceSection : ""].join(" ")}>

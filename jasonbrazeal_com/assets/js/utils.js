@@ -16,7 +16,9 @@ var TxtRotate = function(el, toRotate, period) {
   this.toRotate = toRotate;
   this.el = el;
   this.loopNum = 0;
-  this.period = parseInt(period, 10) || 2000;
+  // this.period = parseInt(period, 10) || 2000;
+  this.period = 20;
+  console.log(this.period)
   this.txt = "";
   this.tick();
   this.isDeleting = false;
@@ -48,11 +50,15 @@ TxtRotate.prototype.tick = function() {
   var that = this;
   var delta = 300 - Math.random() * 100;
 
+  // type half as slow as delete
   // if (this.isDeleting) { delta /= 2; }
-  delta /= 2;
+  // type the same speed as delete
+  // delta /= 2;
+  // type faster
+  delta /= 4;
 
   if (!this.isDeleting && this.txt === fullTxt) {
-    delta = 0;
+    delta = this.period;
     this.isDeleting = true;
   } else if (this.isDeleting && this.txt === "") {
     this.isDeleting = false;
@@ -101,14 +107,14 @@ class BubbleChart  {
     this.data = {
       items: [
         {text: "Django", count: "236", desc: "all-in-one web framework for Python"},
-        {text: "Node.js", count: "382", desc: "Javascript runtime"},
+        {text: "Node.js", count: "382", desc: "server-side Javascript runtime"},
         {text: "HTML/CSS/JS", count: "170", desc: "web essentials"},
         {text: "Git", count: "123", desc: "version control"},
         {text: "Ruby", count: "15", desc: "high level programming language"},
         {text: "Flask", count: "170", desc: "slim but solid web framework for Python"},
         {text: "Python", count: "382", desc: "multi-use high level programming language"},
         {text: "Rails", count: "10", desc: "web framework for Ruby"},
-        {text: "Bash", count: "170", desc: "shell, scripting"},
+        {text: "Bash", count: "170", desc: "Linux shell and scripting language"},
         {text: "AWS", count: "150", desc: "cloud computing provider"},
       ],
       eval: (item) => {return item.count;},
