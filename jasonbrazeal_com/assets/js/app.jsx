@@ -1215,13 +1215,13 @@ export class ProjectCardContainer extends React.Component {
             <li>Javascript, d3.js</li>
           </ul>
         </ProjectCard>
-        <ProjectCard title="border wait times" cardClass="border" githubLink="https://github.com/jsonbrazeal">
+        {/* <ProjectCard title="border wait times" cardClass="border" githubLink="https://github.com/jsonbrazeal">
           <ul>
             <li>Amazon Alexa Skill</li>
             <li>Python, Selenium</li>
             <li>AWS, EC2, DynamoDB</li>
           </ul>
-        </ProjectCard>
+        </ProjectCard> */}
         <ProjectCard title="notes viewer" cardClass="notes" githubLink="https://github.com/jsonbrazeal/notes">
           <ul>
             <li>Local File Browser Interface</li>
