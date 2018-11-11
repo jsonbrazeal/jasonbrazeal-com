@@ -324,7 +324,7 @@ export class Page extends React.Component {
         <Header header={header} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)}>
           {this.state.header === "Home" && <Typewriter words={["Software", "Eng"]} />}
         </Header>
-        <section>
+        <section className={nav[`p${this.props.pageNum}`]}>
           {this.props.children}
         </section>
         <SubNavMenu subNavItems={this.props.subNavItems} pageNum={this.props.pageNum} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavMenu} />
@@ -468,23 +468,43 @@ export class SubNavArrow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: this.props.visible
+      visible: this.props.visible,
+      active: false
     };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      visible: nextProps.visible
+      visible: nextProps.visible,
     });
   }
 
   handleClick(e) {
+    this.setState({
+      active: false
+    });
     this.props.onChangeSubPage(null);
+  }
+
+  mouseEnter(e) {
+    this.setState({
+      active: true
+    });
+  }
+  mouseLeave(e) {
+    this.setState({
+      active: false
+    });
   }
 
   render() {
     if (this.props.visible) {
-      return <span className={`${[icons.fa, icons["fa-chevron-left"], nav.shiftedRightElem, nav.subNavArrow, animations.bounceLeft].join(" ")}`} onClick={(e) => this.handleClick(e)}></span>
+      return (
+        <span>
+          <span className={this.state.active ? [nav.navArrowCircle, nav.navArrowCircleActive].join(" ") :  nav.navArrowCircle} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick(e)}></span>
+          <span className={`${[icons.fa, icons["fa-chevron-left"], nav.shiftedRightElem, nav.subNavArrow, animations.bounceLeft].join(" ")}`}></span>
+        </span>
+      )
     } else {
     return null;
     }
@@ -974,7 +994,34 @@ export class ExperienceContent extends React.Component {
     super(props);
     this.state = {
       currentPage: 0,
+      prevActive: false,
+      nextActive: false
     };
+  }
+
+  mouseEnter(e, direction) {
+    console.log(direction)
+    if (direction === "prev") {
+      this.setState({
+        prevActive: true,
+      });
+    } else if (direction === "next") {
+      this.setState({
+        nextActive: true
+      });
+    }
+  }
+  mouseLeave(e, direction) {
+    console.log(direction)
+    if (direction === "prev") {
+      this.setState({
+        prevActive: false
+      });
+    } else if (direction === "next") {
+      this.setState({
+        nextActive: false
+      });
+    }
   }
 
   handleNav(direction) {
@@ -1075,9 +1122,15 @@ export class ExperienceContent extends React.Component {
           <li>taught Web Application Security course based on OWASP Top Ten and Python/Django course for campus developers</li>
         </ul>
       </section>
-      <section className={graphics.experienceNav}>
-        <span className={[icons.fa, icons["fa-chevron-left"]].join(" ")} onClick={(e) => this.handleNav("prev")}></span>
-        <span className={[icons.fa, icons["fa-chevron-right"]].join(" ")} onClick={(e) => this.handleNav("next")}></span>
+      <section className={[nav.experienceNav, nav.experienceNavPrev].join(" ")}>
+        <span className={nav.experienceNavContainer}>
+          <span className={this.state.prevActive ? [nav.experienceNavArrowCircle, nav.navArrowCircleActive].join(" ") : nav.experienceNavArrowCircle} onMouseEnter={(e) => this.mouseEnter(e, "prev")} onMouseLeave={(e) => this.mouseLeave(e, "prev")} onClick={(e) => this.handleNav("prev")}></span>
+          <span className={[icons.fa, icons["fa-chevron-left"]].join(" ")}></span>
+        </span>
+        <span className={[nav.experienceNavContainer, nav.experienceNavNext].join(" ")}>
+          <span className={this.state.nextActive ? [nav.experienceNavArrowCircle, nav.navArrowCircleActive].join(" ") : nav.experienceNavArrowCircle} onMouseEnter={(e) => this.mouseEnter(e, "next")} onMouseLeave={(e) => this.mouseLeave(e, "next")} onClick={(e) => this.handleNav("next")}></span>
+          <span className={[icons.fa, icons["fa-chevron-right"]].join(" ")}></span>
+        </span>
       </section>
       </div>
     )
@@ -1099,6 +1152,7 @@ export class ProjectCardContainer extends React.Component {
   render() {
     return(
       <div className={this.props.active ? `${graphics.projectCardContainer} ${css.slidIn}` : `${graphics.projectCardContainer} ${css.slidOut}`}>
+        <div className={graphics.projectCardWrapper}>
         <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="http://jasonbrazeal.com/tictactoe">
           <ul>
             <li>Online Game</li>
@@ -1143,6 +1197,7 @@ export class ProjectCardContainer extends React.Component {
             <li>Digital Ocean, Nginx, Gunicorn</li>
           </ul>
         </ProjectCard>
+        </div>
       </div>
     )
   }

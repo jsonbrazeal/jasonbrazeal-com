@@ -102,6 +102,32 @@
   margin-bottom: 0;
 }
 
+@media only screen and (max-width: 800px) {
+
+  .pageHeaderWide h1 {
+    font-size: 24px;
+    margin-bottom: -1rem;
+  }
+  .pageHeaderWide h2 {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+
+  .menu {
+    display: none;
+   }
+}
+
+@media only screen and (max-width: 1100px) {
+
+  .menu {
+    width: 8%;
+    right: 3rem;
+   }
+}
+
 @media only screen and (min-width: 1500px) {
 
   .menu {
@@ -150,9 +176,15 @@
 
 }
 
+@media screen and (orientation:portrait) {
+  .p1 {
+    margin-top: 33%
+  }
+}
+
 .menuIcon {
   font-size: 32px !important;
-  margin: .5em .5em .5em 1.75em;
+  margin: .5em .5em .5em 20%;
   vertical-align: sub;
   transition: all .5s ease-out !important;
 }
@@ -187,6 +219,62 @@ header * {
 
 }
 
+.experienceNavPrev {
+}
+.experienceNavNext {
+}
+
+.experienceNavContainer:first-child {
+  position: relative;
+  bottom: 10rem;
+  right: 11%;
+}
+
+.experienceNavContainer:last-child {
+  position: relative;
+  bottom: 12.75rem;
+  right: 0;
+  left: 78.5%;
+}
+
+
+.experienceNavContainer:first-child .experienceNavArrowCircle {
+  top: 1.25rem;
+  right: 0.37rem;
+}
+
+.experienceNavContainer:last-child .experienceNavArrowCircle {
+  top: 1.25rem;
+  right: .55rem;
+}
+
+.experienceNavArrowCircle {
+  background-color: #000;
+  opacity: 0;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  position: relative;
+  z-index: 102;
+  display: block;
+}
+
+.navArrowCircle {
+  background-color: #000;
+  opacity: 0;
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  bottom: -21px;
+  left: -5px;
+  z-index: 111;
+}
+
+.navArrowCircleActive {
+  opacity: .1;
+}
+
 .subNavArrow {
   position: absolute;
   left: 0;
@@ -196,9 +284,15 @@ header * {
   color: #FB9B51;
 }
 
+@media only screen and (max-width: 1000px) {
+  footer {
+    display: none
+  }
+}
+
 footer {
   position: relative;
-  bottom: 7.7rem;
+  bottom: 7.75rem;
   width: 100%;
 }
 
