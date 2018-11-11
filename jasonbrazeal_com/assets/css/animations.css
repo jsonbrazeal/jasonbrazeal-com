@@ -389,7 +389,7 @@
 }
 
 .modalWrap .modalCloseActive {
-  opacity: .2 !important;
+  opacity: .1 !important;
 }
 
 .modalWrap .modalCloseCircle {
@@ -535,15 +535,14 @@ html.popupActive, body.popupActive {
   height: 30px;
   display: block;
   position: absolute;
-  top: 8.5px;
+  top: 8.25px;
   left: 10px;
   z-index: 112;
 }
 
 .popupCloseActive {
-  opacity: .2;
+  opacity: .1;
 }
-
 
 @keyframes popupFadeIn {
   0% {
