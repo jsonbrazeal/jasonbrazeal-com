@@ -429,6 +429,23 @@ span.scrollNav {
   overflow-y: scroll;
 }
 
+.projectCardNav.projectCardNavActive {
+  opacity: .1;
+}
+
+.projectCardNav {
+  background-color: #000;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: block;
+  position: absolute;
+  left: 9.5px;
+  bottom: 2px;
+  opacity: 0;
+  z-index: 102;
+}
+
 .ticTacToe .cardImage {
   background-image: url(../img/tictactoe.png);
   background-position: 0% 20%;

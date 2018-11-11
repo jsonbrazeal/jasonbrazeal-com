@@ -1208,13 +1208,29 @@ export class ProjectCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      active: false
     };
+  }
+
+  mouseEnter(e) {
+    console.log('mouseEnter')
+    this.setState({
+      active: true
+    });
+  }
+
+  mouseLeave(e) {
+    console.log('mouseLeave')
+    this.setState({
+      active: false
+    });
   }
 
   handleClick()  {
     this.setState({
-      open: !this.state.open
+      open: !this.state.open,
+      active: false
     });
   }
 
@@ -1235,7 +1251,8 @@ export class ProjectCard extends React.Component {
         </div>
         <div className={graphics.cardBody}>
           <div className={graphics.controls}>
-            <a data-action="drawer" href="#" onClick={(e) => this.handleClick()}>
+            <a href="#">
+              <span onClick={(e) => this.handleClick()} className={this.state.active ? [graphics.projectCardNav, graphics.projectCardNavActive].join(" ") : graphics.projectCardNav} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)}></span>
               <i className={[graphics.up, icons.fa, icons['fa-chevron-up']].join(" ")}></i>
               <i className={[graphics.down, icons.fa, icons['fa-chevron-down']].join(" ")}></i>
             </a>
