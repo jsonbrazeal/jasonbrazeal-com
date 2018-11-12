@@ -908,13 +908,13 @@ export class Writing extends React.Component {
         writingOpen: true
       });
       document.addEventListener("keydown", this.handleKeyDown.bind(this));
-      document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'hidden';
+      // document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'hidden';
     } else {
       this.setState({
         writingOpen: false
       });
       document.removeEventListener("keydown", this.handleKeyDown.bind(this));
-      document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'auto';
+      // document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'auto';
     }
   }
 
@@ -923,7 +923,7 @@ export class Writing extends React.Component {
       this.setState({
         writingOpen: false
       });
-      document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'auto';
+      // document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'auto';
     }
   }
 
