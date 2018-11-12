@@ -6,7 +6,7 @@ var writing = [
     slug: "buildIotSystemWithPython",
     date: "September 10, 2015",
     preview: 'The Internet of Things (IoT) movement is in full swing and growing bigger every day. Wireless thermostats and refrigerators, home security systems controlled by a mobile app, scales and health monitors that save your weight and fitness data...these are some examples of the "smart" gadgets coming out of the IoT movement. This blog post describes how to use Python and the MQTT protocol to hook your gadgets up to a network.',
-    md: `## IoT
+    md: `### IoT
 The [Internet of Things (IoT)](https://en.wikipedia.org/wiki/Internet_of_Things) movement is in full swing and growing bigger every day. Wireless thermostats and refrigerators, home security systems controlled by a mobile app, scales and health monitors that save your weight and fitness data...these are some examples of the "smart" gadgets coming out of the IoT movement. This blog post describes how to use Python and the MQTT protocol to hook your gadgets up to a network. [Message Queuing Telemetry Transport (MQTT)](http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html) is a lightweight protocol that runs over TCP/IP and uses a publish/subscribe model to pass messages between publishers and consumers. It offers certificate-based SSL/TLS encryption and is often a good transport solution in low bandwidth situations common in IoT networks. This post describes how to set up a basic IoT system using a central message broker to receive and process messages from all the devices on your wireless network. A device is anything that is able to connect to wifi and send/receive an MQTT message: sensors (temperature, light, motion, etc.), controllers (lights on/off, etc.), etc. Although it's outside of the scope of this article, it's not that hard to create and program your own device these days, at least if it can run Python on it :) See the links at the end of this article for some ideas. For this tutorial, you can use any wifi-capable device, including a laptop simulating a real device. Here's the list of what you'll need:
   * Linux server or VM connected to a wifi network
     * Python
@@ -18,11 +18,11 @@ The [Internet of Things (IoT)](https://en.wikipedia.org/wiki/Internet_of_Things)
 
 I'll assume you know some [Linux and bash basics](http://www.gnu.org/software/bash/) and how to [set up your Python environment](https://www.python.org/) and [use pip](https://pip.pypa.io/en/stable/index.html). I'll be using Ubuntu 14.04.2 and Python 2.7.9.
 The basic system we're building is simple: a message broker that receives messages from devices, processes them, and saves them in a database. It'd be trivial to add a web interface to view the data, but I'll leave that as an exercise for the reader.
-## Setting Up the Message Broker
+### Setting Up the Message Broker
 [Mosquitto](https://eclipse.org/mosquitto/) is an MQTT message broker currently maintained by [Eclipse IoT](http://iot.eclipse.org/). It is written in C and does not consume much memory, even with lots of clients connected (specifically, "[around 3MB RAM with 1000 clients connected](https://projects.eclipse.org/projects/technology.mosquitto)"). Mosquitto has the ability to act as a bridge and connect to other MQTT brokers, but our setup will use a single instance as a central receiving point for messages from IoT devices. To install it, run: \`sudo apt-get install mosquitto\`
 That should install mosquitto as a service and configure it to run on startup, listening for connections on port 1883. For SSL/TLS setup, see [here](http://www.eclipse.org/mosquitto/man/mosquitto-tls-7.php). To test the broker, go ahead and install these command line utilities: \`sudo apt-get install mosquitto-clients\` Now you can easily subscribe to a topic with \`mosquitto_sub -t 'mytopic'\` and publish a message with \`mosquitto_pub -t 'mytopic' -m 'mymessage'\`. See [here](http://www.eclipse.org/mosquitto/) for more on mosquitto-clients. While developing, I almost always have a terminal window opened that has a subscriber running listening on all topics, represented by "#" and with the \`-v\` flag so that the topic is displayed alongside the message: \`mosquitto_sub -v -t '#'\`
 The configuration file is located by default at /etc/mosquitto/mosquitto.conf on Ubuntu 14.04.2 and it is very well-commented. Note that there is no security or logging enabled by default.
-## Publishing and Receiving Messages with Python
+### Publishing and Receiving Messages with Python
 MQTT messages have a payload and are published to a topic. The payload can be any type of data: text, JSON, XML, binary, etc. The max payload size allowed by Mosquitto can be configured (see [message_size_limit](https://eclipse.org/mosquitto/man/mosquitto-conf-5.php)), but the default cap is the max allowed by MQTT, around 268MB. MQTT topics are hierarchically structured and delimited by a slash '/'. Some examples are 'sensor/humidity/12345678' and 'device/light/kitchen'. A copy of the message will go to all clients subscribed to the message's topic at the time of publication. The wildcard characters '+' and '#' can also be used when subscribing to topics. The '+' matches exactly one topic and the '#' matches zero or more topics. Expanding on the examples above, a subscription to 'sensor/#' would receive data from all sensors, e.g. messages published to 'sensor/humidity/12345678', 'sensor/light/12345678', etc. A subscription to 'device/+/kitchen' would receive data on all devices in the kitchen, e.g. messages published to 'device/light/kitchen', 'device/refrigerator/kitchen', etc. There is also a special set of topics beginning in '$SYS/' where subscribers can get system information like the number of connected clients, and broker uptime. See the [documentation](https://eclipse.org/mosquitto/man/mosquitto-8.php) for a full listing.
 To send and receive MQTT messages, we'll use the [Paho](http://www.eclipse.org/paho/) Python client library, also from Eclipse. To install it, run: \`pip install paho-mqtt\` or \`sudo pip install paho-mqtt\`
 The Paho library uses an asynchronous event loop to connect to MQTT brokers. This means you have to create a series of functions, callbacks, that will run when certain events fire. These events include:
@@ -101,7 +101,7 @@ The publisher code is very similar to the subscriber code. The key difference is
 
 [gist](https://gist.github.com/jsonbrazeal/745e118b37479b875a8d)
 You can test this code all on the same machine using the mosquitto-clients utilities. When deploying, you have several options. In this example, the subscriber code would live on the same Linux machine as Mosquitto. The publisher code would be run on all your devices, periodically sending messages to the central broker. This setup is ideal if you have devices like sensors or monitors that just collect and send in data. For more complicated devices that you'd like to control via MQTT, the setup would be a little different. You could have a subscriber running on the device, and whenever a message is published to a certain topic with a certain payload, this might cause the device to perform an action like turning off a light. Just be careful to secure your IoT devices well or better yet, only expose them to your home network and not to the entire internet.
-## Go Forth and IoT
+### Go Forth and IoT
 The examples in this blog post will hopefully be helpful in getting a basic IoT infrastructure up and running. Using open source tools, it is not too hard to set up an IoT system with a central message broker that receives messages from wifi-connected devices. With some more work, you could develop this base infrastructure into a full system to connect all your gadgets. Admittedly, I didn't talk much about the "things" in IoT, and these devices are what the movement is all about! Here are some small boards that can run Python and are popular for IoT projects:
   * [MicroPython PyBoard](http://micropython.org/)
   * [WiPy](http://wipy.io/)
@@ -116,11 +116,11 @@ They can be connected to just about any device and to wifi. As an example, you c
     slug: "pythonLists",
     date: "June 22, 2014",
     preview: "Welcome to my Python lists reference guide. The objective is to gather essential information on the list data type in one place with lots of examples. Please let me know what you think...additions, corrections, and suggestions welcome!",
-    md: `## intro
+    md: `### intro
 
 Welcome to my Python lists reference guide. The objective is to gather essential information on the list data type in one place with lots of examples. Please let me know what you think...additions, corrections, and suggestions welcome!
 
-## create lists
+### create lists
 
 * lists are ordered sequences and can hold any combination or types of objects or expressions
 \`\`\`python
@@ -149,7 +149,7 @@ l = list('hello') # ['h','e','l','l','o']
 l = list((1,2,3)) # [1,2,3]
 \`\`\`
 
-## use lists
+### use lists
 
 * lists have a zero-based index, and slice notation is used to access one or more objects in the list
 \`\`\`python
@@ -207,7 +207,7 @@ any(l) # True if any members evaluate to True
 all(l) # True if all members evaluate to True
 \`\`\`
 
-## modify lists
+### modify lists
 
 * slicing notation can be used to modify a list; just assign a value or sequence of values to the slice
 \`\`\`python
@@ -239,7 +239,7 @@ l += [4] # concatenation - like l.extend([4]) except returns a new list
 l = [0, 1] * 3 # repetition - same as [0, 1] + [0, 1] + [0, 1] or [0, 1, 0, 1, 0, 1]
 \`\`\`
 
-## do stuff with lists
+### do stuff with lists
 
 * easily implement stack &amp; queue data structures using the methods described above
 * stacks
@@ -273,7 +273,7 @@ y_data = [2, 4, 6]
 data_points = zip(x_data, y_data) # data_points is [(1, 2), (3, 4), (5, 6)]
 \`\`\`
 
-## list gotchas
+### list gotchas
 
 * lists as default arguments - default values are evaluated only once, so there are differences in using a mutable type (list, etc.) and an immutable type (None, etc.) as a default
   * this function will keep appending char to the same list on subsequent calls

@@ -645,11 +645,11 @@ export class SnippetTiles extends React.Component {
           <SnippetTile topic="wc" />
           <SnippetTile topic="sort" />
           <SnippetTile topic="ps" />
-          <SnippetTile topic="bc" />
-          <SnippetTile topic="mqtt publisher" />
+          <SnippetTile topic="catt" />
+          <SnippetTile topic="unixTime" />
         </div>
         <div className={graphics.ibwsFix}>
-          <SnippetTile topic="mqtt subscriber" />
+          <SnippetTile topic="pythonCli" />
           <SnippetTile topic="mysql" />
           <SnippetTile topic="requests" />
           <SnippetTile topic="sql" />
@@ -682,11 +682,11 @@ export class SnippetTiles extends React.Component {
           <SnippetTile topic="nvm" />
           <SnippetTile topic="rvm" />
           <SnippetTile topic="none" />
-          <SnippetTile topic="adduser" />
-          <SnippetTile topic="useradd" />
+          <SnippetTile topic="rabbitmq" />
+          <SnippetTile topic="kill" />
           <SnippetTile topic="trap" />
           <SnippetTile topic="set" />
-          <SnippetTile topic="kill" />
+          <SnippetTile topic="none" />
         </div>
         <div className={graphics.ibwsFix}>
           <SnippetTile topic="none" />
@@ -745,7 +745,7 @@ export class SnippetTile extends React.Component {
     let popupTitle = document.querySelector(`.${animations.popupTitle}`);
     popupTitle.innerHTML = this.props.topic;
     let popup = document.querySelector(`.${animations.popupSnippet}`);
-    popup.innerHTML = snippets.snippets[this.props.topic] || "";
+    popup.innerHTML = md.render(snippets.snippets[this.props.topic]) || "";
 
     var hexagons = document.querySelectorAll("." + graphics.hexagon);
     hexagons.forEach(element => {
@@ -858,7 +858,7 @@ export class WritingContainer extends React.Component {
     let texts = [];
     for (var i = 0; i < writing.writing.length; i++) {
       texts.push(
-        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug}>
+        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date}>
         </Writing>
       );
     }
@@ -941,7 +941,7 @@ export class Writing extends React.Component {
                   <span className={[animations.modalCloseX, icons.fa, icons["fa-times"]].join(" ")}></span>
               </label>
               <h2>{this.props.title}</h2>
-
+              <time>{this.props.date}</time>
               <div className={graphics[this.props.slug]} dangerouslySetInnerHTML={{__html: md.render(this.props.md)}}></div>
 
             </div>

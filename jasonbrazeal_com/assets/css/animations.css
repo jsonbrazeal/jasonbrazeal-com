@@ -516,15 +516,17 @@ html.popupActive, body.popupActive {
   cursor: pointer;
 }
 
-.popupSnippet {
-
+.popupContainer .popupBackground .popupContent .popupSnippet {
+  width: 100%;
 }
 
-.popupTitle {
-
+.popupContainer .popupBackground .popupContent .popupTitle {
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 2rem;
 }
 
-.popupCloseIcon {
+.popupContainer .popupBackground .popupContent .popupCloseIcon {
   position: absolute;
   top: 12px;
   left: 18px;
