@@ -24,7 +24,6 @@ export class App extends React.Component {
   }
 
   handleNav(newPage) {
-    console.log('handleNav('+newPage+')')
     if (newPage.match("uno")) {
       var page = "Home";
     } else if (newPage.match("dos")) {
@@ -41,16 +40,12 @@ export class App extends React.Component {
   }
 
   handleSubPageNav(newSubPage) {
-    console.log('handleSubPageNav('+newSubPage+')')
     this.setState({
       activeSubPage: newSubPage
     });
   }
 
   render() {
-    console.log('rendering app....');
-    console.log('this.state.activeSubPage='+this.state.activeSubPage);
-    console.log('this.state.activePage='+this.state.activePage);
     return (
       <div className={css.appWrap}>
         <NavMenu activePage={this.state.activePage} onChangePage={(newPage) => {this.handleNav(newPage)}} />
@@ -155,7 +150,7 @@ export class App extends React.Component {
                     exitActive: animations.slideExitActive
                   }}
                   in={this.state.activeSubPage === "writing"}>
-                  <WritingContainer active={this.state.activeSubPage === "writing"} />
+                  <WritingContainer active={this.state.activeSubPage === "writing"} activeSubPage={this.state.activeSubPage} />
                 </CSSTransition>
                 <CSSTransition
                   timeout={1000}
@@ -168,7 +163,7 @@ export class App extends React.Component {
                     exitActive: animations.slideExitActive
                   }}
                   in={this.state.activeSubPage === "snippets"}>
-                  <SnippetContainer active={this.state.activeSubPage === "snippets"} />
+                  <SnippetContainer active={this.state.activeSubPage === "snippets"} activeSubPage={this.state.activeSubPage}/>
                 </CSSTransition>
                </Page>
             </div>
@@ -230,7 +225,6 @@ export class Page extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(`this.state.header=${this.state.header}`)
     // handle page nav state
     if (nextProps.active) {
       if (this.props.pageNum === "1") {
@@ -259,8 +253,6 @@ export class Page extends React.Component {
     }
 
     if (nextProps.activeSubPage !== this.state.activeSubPage) {
-      console.log(`subpage transition ${this.state.activeSubPage} to ${nextProps.activeSubPage}`)
-      console.log(this.state)
       // handle subpage transition
       this.setState({
         showSubNavArrow: false,
@@ -287,7 +279,6 @@ export class Page extends React.Component {
   }
 
   componentWillMount() {
-    console.log(`this.state.header=${this.state.header}`)
     // handle page nav state
     if (this.props.active) {
       if (this.props.pageNum === "1") {
@@ -524,7 +515,6 @@ export class SkillsGraphic extends React.Component {
   }
 
   render() {
-    console.log('SkillsGraphic rendering.')
     return(
       <div className={this.props.active ? `${graphics.skillsContainer} ${css.slidIn}` : `${graphics.skillsContainer} ${css.slidOut}`}>
         <div className={graphics.bubbleChart + " bubbleChart"}></div>
@@ -722,6 +712,18 @@ export class SnippetTile extends React.Component {
     };
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.activeSubPage != "snippets") {
+      this.setState({
+        active: false
+      });
+      let modalContainer = document.querySelector("." + animations.popupContainer);
+      modalContainer.classList.add(animations.out);
+      document.querySelector("body").classList.remove(animations.popupActive);
+      setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
+    }
+  }
+
   componentDidMount() {
     document.addEventListener("keyup", this.escHandler);
   }
@@ -763,12 +765,14 @@ export class SnippetTile extends React.Component {
     modalClose.addEventListener("click", function () {
       modalContainer.classList.add(animations.out);
       document.querySelector("body").classList.remove(animations.popupActive);
+      setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
     });
     var modalBackground = document.querySelector("." + animations.popupBackground);
     modalBackground.addEventListener("click", function (e) {
       if (e.target.classList.contains(animations.popupBackground)) {
         modalContainer.classList.add(animations.out);
         document.querySelector("body").classList.remove(animations.popupActive);
+        setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
       }
     });
   }
@@ -779,6 +783,7 @@ export class SnippetTile extends React.Component {
         var modalContainer = document.querySelector("." + animations.popupContainer);
         modalContainer.classList.add(animations.out);
         document.querySelector("body").classList.remove(animations.popupActive);
+        setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
       }
       catch (error) {
         console.log(error);
@@ -805,17 +810,13 @@ export class SnippetContainer extends React.Component {
 
   handleMouseOver(e, direction) {
     if (direction === "up") {
-      console.log(direction);
     } else if (direction === "down") {
-      console.log(direction);
     }
   }
 
   handleMouseEnter(e, direction) {
     if (direction === "up") {
-      console.log(direction);
     } else if (direction === "down") {
-      console.log(direction);
     }
   }
 
@@ -827,7 +828,7 @@ export class SnippetContainer extends React.Component {
           {/* <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" />
           <EmbeddedGist gist="jsonbrazeal/3c7edf1ced0b448d2e77" />
           <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" /> */}
-          <SnippetTiles />
+          <SnippetTiles activeSubPage={this.props.activeSubPage} />
         </div>
         {/* <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span> */}
       </div>
@@ -839,17 +840,13 @@ export class WritingContainer extends React.Component {
 
   handleMouseOver(e, direction) {
     if (direction === "up") {
-      console.log(direction)
     } else if (direction === "down") {
-      console.log(direction)
     }
   }
 
   handleMouseEnter(e, direction) {
     if (direction === "up") {
-      console.log(direction)
     } else if (direction === "down") {
-      console.log(direction)
     }
   }
 
@@ -858,7 +855,7 @@ export class WritingContainer extends React.Component {
     let texts = [];
     for (var i = 0; i < writing.writing.length; i++) {
       texts.push(
-        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date}>
+        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage}>
         </Writing>
       );
     }
@@ -893,6 +890,14 @@ export class Writing extends React.Component {
     this.setState({
       active: false
     });
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.activeSubPage != "writing") {
+      this.setState({
+        writingOpen: false
+      });
+    }
   }
 
   handleClick(state, e)  {
@@ -936,9 +941,9 @@ export class Writing extends React.Component {
           <input id="modalTrigger" className={animations.modalTriggerInput} type="checkbox" checked={this.state.writingOpen} />
           <div className={animations.modalOverlay}>
             <div className={animations.modalWrap}>
-              <label htmlFor="modalTrigger" onClick={(e) => this.handleClick("close", e)}>
+              <label htmlFor="modalClose" onClick={(e) => this.handleClick("close", e)}>
                   <span className={this.state.active ? [animations.modalCloseCircle, animations.modalCloseActive].join(" ") : animations.modalCloseCircle} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)}></span>
-                  <span className={[animations.modalCloseX, icons.fa, icons["fa-times"]].join(" ")}></span>
+                  <span className={[animations.modalCloseX, icons.fa, icons["fa-times"]].join(" ")} id="modalClose"></span>
               </label>
               <h2>{this.props.title}</h2>
               <time>{this.props.date}</time>
@@ -1023,7 +1028,6 @@ export class ExperienceContent extends React.Component {
   }
 
   mouseEnter(e, direction) {
-    console.log(direction)
     if (direction === "prev") {
       this.setState({
         prevActive: true,
@@ -1035,7 +1039,6 @@ export class ExperienceContent extends React.Component {
     }
   }
   mouseLeave(e, direction) {
-    console.log(direction)
     if (direction === "prev") {
       this.setState({
         prevActive: false
@@ -1048,7 +1051,6 @@ export class ExperienceContent extends React.Component {
   }
 
   handleNav(direction) {
-    console.log(`handlingNav(${direction})`)
     if (direction === "next") {
       if (this.state.currentPage === 4) {
         this.setState({
@@ -1072,7 +1074,6 @@ export class ExperienceContent extends React.Component {
     } else {
       throw `ExperienceContent.handleNav(direction) was called with direction=${direction}`;
     }
-    console.log(`set currentPage to ${this.state.currentPage}`)
   }
 
   render() {
@@ -1247,14 +1248,12 @@ export class ProjectCard extends React.Component {
   }
 
   mouseEnter(e) {
-    console.log('mouseEnter')
     this.setState({
       active: true
     });
   }
 
   mouseLeave(e) {
-    console.log('mouseLeave')
     this.setState({
       active: false
     });
@@ -1398,9 +1397,7 @@ export class MachineGraphic extends React.Component {
 
   handleMachine() {
     if (this.state.active) {
-      console.log("stopping machine!");
     } else {
-      console.log("starting machine!");
       document.querySelector(`.${graphics.lightBulb}`).classList.add(animations.lightBulbFall);
       this.fidgetSpinner.classList.add(animations.rotateFidgetSpinner);
       this.valve.classList.add(animations.rotateValve);

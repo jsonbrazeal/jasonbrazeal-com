@@ -18,7 +18,6 @@ var TxtRotate = function(el, toRotate, period) {
   this.loopNum = 0;
   // this.period = parseInt(period, 10) || 2000;
   this.period = 20;
-  console.log(this.period)
   this.txt = "";
   this.tick();
   this.isDeleting = false;
@@ -224,7 +223,6 @@ class BubbleChart  {
       .transition().duration(this.transitDuration);
     this.transition.centralNode
     .attr('transform', (d, i) => {
-      console.log("translate(" + (this.centralPoint - d.cx) + "," + (this.centralPoint - d.cy) + ")")
       return "translate(" + (this.centralPoint - d.cx) + "," + (this.centralPoint - d.cy) + ")";
     })
     .select("circle")
