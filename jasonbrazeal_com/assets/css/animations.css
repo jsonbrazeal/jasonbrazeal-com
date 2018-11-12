@@ -417,6 +417,10 @@
   text-align: justify;
 }
 
+.modalWrap * {
+  color: #343434;
+}
+
 .modalTriggerInput:focus ~ label {
   transform: scale(0.97);
 }
