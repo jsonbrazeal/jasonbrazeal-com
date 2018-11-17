@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Inconsolata");
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -518,6 +520,10 @@ html.popupActive, body.popupActive {
 
 .popupContainer .popupBackground .popupContent .popupSnippet {
   width: 100%;
+}
+
+.popupContainer .popupBackground .popupContent .popupSnippet pre, .popupContainer .popupBackground .popupContent .popupSnippet code, popupContainer .popupBackground .popupContent .popupSnippet code span {
+  font-family: Inconsolata, monospace;
 }
 
 .popupContainer .popupBackground .popupContent .popupTitle {
