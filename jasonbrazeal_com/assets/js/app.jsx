@@ -608,19 +608,55 @@ export class SnippetTiles extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false
+      popupCloseActive: false
     };
   }
 
   mouseEnter(e) {
     this.setState({
-      popupCloseActive: true
+      popupCloseActive: true,
     });
   }
 
   mouseLeave(e) {
     this.setState({
-      popupCloseActive: false
+      popupCloseActive: false,
+    });
+  }
+
+  handleTileClick(topic) {
+
+    let popupTitle = document.querySelector(`.${animations.popupTitle}`);
+    popupTitle.innerHTML = topic;
+    let popup = document.querySelector(`.${animations.popupSnippet}`);
+    popup.innerHTML = md.render(snippets.snippets[topic]) || "";
+
+    var hexagons = document.querySelectorAll("." + graphics.hexagon);
+    hexagons.forEach(element => {
+      element.blur();
+    });
+
+    var modalContainer = document.querySelector("." + animations.popupContainer);
+    modalContainer.classList.remove(animations.out);
+    if (!(modalContainer.classList.contains(animations.five))) {
+      modalContainer.classList.add(animations.five);
+    }
+    document.querySelector("body").classList.add(animations.popupActive);
+
+    // to close modal, click x, click background, or press escape
+    var modalClose = document.querySelector("." + animations.popupContent + " span");
+    modalClose.addEventListener("click", function () {
+      modalContainer.classList.add(animations.out);
+      document.querySelector("body").classList.remove(animations.popupActive);
+      setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
+    });
+    var modalBackground = document.querySelector("." + animations.popupBackground);
+    modalBackground.addEventListener("click", function (e) {
+      if (e.target.classList.contains(animations.popupBackground)) {
+        modalContainer.classList.add(animations.out);
+        document.querySelector("body").classList.remove(animations.popupActive);
+        setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
+      }
     });
   }
 
@@ -629,60 +665,60 @@ export class SnippetTiles extends React.Component {
       // TODO: refactor into individual tile components
       <div className={graphics.honeycomb}>
         <div className={graphics.ibwsFix}>
-          <SnippetTile topic="grep" />
-          <SnippetTile topic="sed" />
-          <SnippetTile topic="awk" />
-          <SnippetTile topic="wc" />
-          <SnippetTile topic="sort" />
-          <SnippetTile topic="ps" />
-          <SnippetTile topic="catt" />
-          <SnippetTile topic="unixTime" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="grep" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="sed" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="awk" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="wc" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="sort" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="ps" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="catt" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="unixTime" />
         </div>
         <div className={graphics.ibwsFix}>
-          <SnippetTile topic="pythonCli" />
-          <SnippetTile topic="mysql" />
-          <SnippetTile topic="requests" />
-          <SnippetTile topic="sql" />
-          <SnippetTile topic="flask" />
-          <SnippetTile topic="asyncio" />
-          <SnippetTile topic="bash" />
-          <SnippetTile topic="xargs" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="pythonCli" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="mysql" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="requests" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="sql" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="flask" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="asyncio" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="bash" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="xargs" />
         </div>
         <div className={graphics.ibwsFix}>
-          <SnippetTile topic="nc" />
-          <SnippetTile topic="socat" />
-          <SnippetTile topic="top" />
-          <SnippetTile topic="vi" />
-          <SnippetTile topic="file" />
-          <SnippetTile topic="rm" />
-          <SnippetTile topic="docker" />
-          <SnippetTile topic="tr" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="nc" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="socat" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="top" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="vi" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="file" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="rm" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="docker" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="tr" />
         </div>
         <div className={graphics.ibwsFix}>
-          <SnippetTile topic="ssh" />
-          <SnippetTile topic="zip" />
-          <SnippetTile topic="tar" />
-          <SnippetTile topic="systemctl" />
-          <SnippetTile topic="cut" />
-          <SnippetTile topic="unzip" />
-          <SnippetTile topic="mount" />
-          <SnippetTile topic="pyenv" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="ssh" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="zip" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="tar" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="systemctl" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="cut" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="unzip" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="mount" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="pyenv" />
         </div>
         <div className={graphics.ibwsFix}>
-          <SnippetTile topic="nvm" />
-          <SnippetTile topic="rvm" />
-          <SnippetTile topic="none" />
-          <SnippetTile topic="rabbitmq" />
-          <SnippetTile topic="kill" />
-          <SnippetTile topic="trap" />
-          <SnippetTile topic="set" />
-          <SnippetTile topic="none" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="nvm" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="rvm" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="rabbitmq" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="kill" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="trap" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="set" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
         </div>
         <div className={graphics.ibwsFix}>
-          <SnippetTile topic="none" />
-          <SnippetTile topic="none" />
-          <SnippetTile topic="env" />
-          <SnippetTile topic="none" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="env" />
+          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
         </div>
 
         <div className={animations.popupContainer}>
@@ -742,41 +778,6 @@ export class SnippetTile extends React.Component {
     });
   }
 
-  handleClick() {
-
-    let popupTitle = document.querySelector(`.${animations.popupTitle}`);
-    popupTitle.innerHTML = this.props.topic;
-    let popup = document.querySelector(`.${animations.popupSnippet}`);
-    popup.innerHTML = md.render(snippets.snippets[this.props.topic]) || "";
-
-    var hexagons = document.querySelectorAll("." + graphics.hexagon);
-    hexagons.forEach(element => {
-      element.blur();
-    });
-    var modalContainer = document.querySelector("." + animations.popupContainer);
-    modalContainer.classList.remove(animations.out);
-    if (!(modalContainer.classList.contains(animations.five))) {
-      modalContainer.classList.add(animations.five);
-    }
-    document.querySelector("body").classList.add(animations.popupActive);
-
-    // to close modal, click x, click background, or press escape
-    var modalClose = document.querySelector("." + animations.popupContent + " span");
-    modalClose.addEventListener("click", function () {
-      modalContainer.classList.add(animations.out);
-      document.querySelector("body").classList.remove(animations.popupActive);
-      setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
-    });
-    var modalBackground = document.querySelector("." + animations.popupBackground);
-    modalBackground.addEventListener("click", function (e) {
-      if (e.target.classList.contains(animations.popupBackground)) {
-        modalContainer.classList.add(animations.out);
-        document.querySelector("body").classList.remove(animations.popupActive);
-        setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
-      }
-    });
-  }
-
   escHandler(e) {
     if (event.key === "Escape") {
       try {
@@ -798,7 +799,7 @@ export class SnippetTile extends React.Component {
       )
     } else {
       return (
-        <div className={`${graphics.hexagon} ${this.state.active ? graphics.hexagonHover : ""}`} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.handleClick(this.props.topic)}>
+        <div className={`${graphics.hexagon} ${this.state.active ? graphics.hexagonHover : ""}`} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)} onClick={(e) => this.props.handleClick(this.props.topic)}>
           <div className={graphics.hexagontent}>{this.props.topic}</div>
         </div>
       )
