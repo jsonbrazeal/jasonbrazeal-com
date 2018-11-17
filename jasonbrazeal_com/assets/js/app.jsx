@@ -914,6 +914,8 @@ export class Writing extends React.Component {
   }
 
   handleClick(state, e)  {
+    let writing = document.querySelector(`.${graphics[this.props.slug]}`);
+    Prism.highlightAllUnder(writing);
     // avoid scrolling back to the top of writing container
     e.preventDefault();
     if (state === "open") {
@@ -961,7 +963,6 @@ export class Writing extends React.Component {
               <h2>{this.props.title}</h2>
               <time>{this.props.date}</time>
               <div className={graphics[this.props.slug]} dangerouslySetInnerHTML={{__html: md.render(this.props.md)}}></div>
-
             </div>
           </div>
         </div>

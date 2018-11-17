@@ -522,8 +522,10 @@ html.popupActive, body.popupActive {
   width: 100%;
 }
 
-.popupContainer .popupBackground .popupContent .popupSnippet pre * {
+.popupContainer .popupBackground .popupContent .popupSnippet pre[class*="language-"], .popupContainer .popupBackground .popupContent .popupSnippet code[class*="language-"], .popupContainer .popupBackground .popupContent .popupSnippet code[class*="language-"] * {
   font-family: Inconsolata, monospace;
+  font-size: 1rem;
+  line-height: 1;
 }
 
 .popupContainer .popupBackground .popupContent .popupTitle {

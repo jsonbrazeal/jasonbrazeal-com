@@ -35,7 +35,7 @@ The Paho library uses an asynchronous event loop to connect to MQTT brokers. Thi
 
 You don't have to set up every callback; for example \`on_publish\` will not be used in our subscriber code. After defining the callbacks, the code to connect to the broker is pretty concise. Here's our simple subscriber (code adapted from [Paho source repository](http://git.eclipse.org/c/paho/org.eclipse.paho.mqtt.python.git/tree/examples)):
 
-\`\`\`
+\`\`\`python
     import paho.mqtt.client as mqtt
     from db import save_to_db
 
@@ -72,7 +72,7 @@ You don't have to set up every callback; for example \`on_publish\` will not be 
 After the callbacks are defined, we create an instance of an MQTT client and assign the callbacks to its \`on_\` properties. Then we connect to the broker, subscribe to a topic, and start the event loop. Because this code is asynchronous, nothing actually happens until the event loop is started. The connect and subscribe methods don't run when the execution reaches their lines in the code. They are merely scheduled at that time and actually run once the event loop has started. This is the nature of event-driven, asynchronous code. When the loop starts, the \`connect\` function runs and its completion triggers \`on_connect\`. The \`subscribe\` function then runs and its completion triggers \`on_subscribe\`. At any point after subscribing, a message received will cause \`on_message\` to run. Here I assume you have a \`db.py\` module in the same directory as this code with a \`save_to_db\` function that parses the message and saves it to your database. I'll leave that part for you to implement as you like. After a callback returns, the event loop takes over and waits on the next event to fire and next callback to be triggered. The \`loop_forever\` call will cause a client to listen until it calls \`disconnect\`. Our subscriber code doesn't disconnect, but it may be interrupted with CTRL+C or killed.
 The publisher code is very similar to the subscriber code. The key difference is that it publishes instead of subscribing in the \`on_connect\` callback, and disconnects after publishing one message:
 
-\`\`\`
+\`\`\`python
     import paho.mqtt.client as mqtt
 
     def on_connect(mqttc, userdata, rc):

@@ -364,7 +364,11 @@ span.scrollNav {
   margin: 0 auto;
 }
 
-
+.writing pre[class*="language-"], .writing code[class*="language-"], .writing code[class*="language-"] * {
+  font-family: Inconsolata, monospace;
+  font-size: 1rem;
+  line-height: 1.25;
+}
 
 
 .btn {
