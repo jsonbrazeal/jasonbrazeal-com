@@ -11,8 +11,19 @@ import snippets from "./snippets.js";
 import writing from "./writing.js";
 import React from "react";
 import { CSSTransition } from 'react-transition-group';
-var Remarkable = require('remarkable');
+
+import Prism from 'prismjs'; // includes defaults
+// import Prism from 'prismjs/components/prism-core'
+import 'prismjs/components/prism-python'
+import 'prismjs/components/prism-ruby'
+import 'prismjs/components/prism-bash'
+import 'prismjs/components/prism-sql'
+import 'prismjs/themes/prism-tomorrow.css'
+
+import Remarkable from 'remarkable';
+
 var md = new Remarkable();
+
 
 export class App extends React.Component {
   constructor(props) {
@@ -630,6 +641,7 @@ export class SnippetTiles extends React.Component {
     popupTitle.innerHTML = topic;
     let popup = document.querySelector(`.${animations.popupSnippet}`);
     popup.innerHTML = md.render(snippets.snippets[topic]) || "";
+    Prism.highlightAllUnder(popup);
 
     var hexagons = document.querySelectorAll("." + graphics.hexagon);
     hexagons.forEach(element => {

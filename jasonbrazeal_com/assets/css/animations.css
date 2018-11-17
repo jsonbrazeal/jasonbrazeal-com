@@ -508,13 +508,13 @@ html.popupActive, body.popupActive {
   height: 100%;
   width: 100%;
 }
-.popupContainer .popupBackground .popup * {
+.popupContainer * {
   font-size: 18px;
   line-height: 22px;
   color: #737373;
 }
 
-.popupContainer .popupBackground .popup span:hover {
+.popupContainer .popupBackground .popup .popupClose:hover, .popupContainer .popupBackground .popup .popupCloseIcon:hover {
   cursor: pointer;
 }
 
@@ -522,7 +522,7 @@ html.popupActive, body.popupActive {
   width: 100%;
 }
 
-.popupContainer .popupBackground .popupContent .popupSnippet pre, .popupContainer .popupBackground .popupContent .popupSnippet code, popupContainer .popupBackground .popupContent .popupSnippet code span {
+.popupContainer .popupBackground .popupContent .popupSnippet pre * {
   font-family: Inconsolata, monospace;
 }
 
@@ -547,7 +547,7 @@ html.popupActive, body.popupActive {
   height: 30px;
   display: block;
   position: absolute;
-  top: 8.25px;
+  top: 6.4px;
   left: 10px;
   z-index: 112;
 }
@@ -864,4 +864,3 @@ html.popupActive, body.popupActive {
     transform: scale(.9) translate(18rem, -100rem);
   }
 }
-

@@ -3,6 +3,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ManifestRevisionPlugin = require('manifest-revision-webpack-plugin');
 
 var rootAssetPath = './jasonbrazeal_com/assets';
+const getLocalIdent = require('css-loader/lib/getLocalIdent');
 
 module.exports = {
     // context: __dirname,
@@ -75,7 +76,14 @@ module.exports = {
                     options: {
                       modules: true,
                       importLoaders: 1,
-                      localIdentName: '[name]__[local]___[hash:base64:5]'
+                      localIdentName: '[name]__[local]___[hash:base64:5]',
+                      getLocalIdent: (loaderContext, localIdentName, localName, options) => {
+                        // include modules here that need to be loaded as global css, i.e. without
+                        // all class names as localIdentName
+                        return loaderContext.resourcePath.includes('prism') ?
+                          localName :
+                          getLocalIdent(loaderContext, localIdentName, localName, options);
+                      }
                     }
                   },
                   {

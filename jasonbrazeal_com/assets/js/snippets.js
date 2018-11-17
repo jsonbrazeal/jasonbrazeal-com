@@ -4,9 +4,7 @@
 var exports = module.exports = {};
 
 var snippets = {
-  grep: `<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime repellendus quis eaque molestias officiis vitae, iusto explicabo numquam ducimus tempora culpa rem aut alias laudantium! Molestias vitae aliquid optio impedit.</p>
-  <code>python3 -m http.server 8000</code>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil fugiat tempora quaerat a est, ut voluptate quam totam vitae eveniet architecto doloribus repellendus similique magnam dicta quae, expedita voluptas debitis.</p>`,
+  grep: `grep it`,
 
   catt: `# how to add syntax highlighting to command line output
   * install the Python syntax highlighter [Pygments](http://pygments.org/)
@@ -34,13 +32,13 @@ var snippets = {
 
   * backup mysql database:
 
-  \`\`\`
+  \`\`\`bash
     mysqldump -v -h localhost -u username -p db_name > backup.sql
   \`\`\`
 
   * restore mysql database:
 
-  \`\`\`
+  \`\`\`bash
     mysql -v --show-warnings -h localhost -u username -p db_name < backup.sql
   \`\`\`
 
@@ -106,25 +104,31 @@ var snippets = {
 
   pythonCli: `# how to run python code from the command line
 
-  * run python code from the command line with the \`-c\` flag; put the code in single quotes and use double quotes in the Python code
+  \`\`\`python
+  import this
+  test = "a test string"
+  test3 = 1 + 2
   \`\`\`
+
+  * run python code from the command line with the \`-c\` flag; put the code in single quotes and use double quotes in the Python code
+  \`\`\`python
   python -c 'print("hi")'
   \`\`\`
 
   * you must print your results in the code to display them in the terminal
-  \`\`\`
+  \`\`\`python
     python -c 'sum([1,2,3,4,5])'
     python -c 'print(sum([1,2,3,4,5]))'
   \`\`\`
 
   * you can enter multi-line strings of code
-  \`\`\`
+  \`\`\`python
     python -c 'import random
     print(random.randint(1, 10))'
   \`\`\`
 
   * but indentation must be preserved
-  \`\`\`
+  \`\`\`python
     python -c 'import random
                print(random.randint(1, 10))'
 
@@ -135,7 +139,7 @@ var snippets = {
   \`\`\`
 
   * some might find this easier to read
-  \`\`\`
+  \`\`\`python
     python -c '\
     import random
     print(random.randint(1, 10))
@@ -143,7 +147,7 @@ var snippets = {
   \`\`\`
 
   * you can also use commas to separate lines
-  \`\`\`
+  \`\`\`python
   python -c 'import random; print(random.randint(0,1))'
   \`\`\`
 
