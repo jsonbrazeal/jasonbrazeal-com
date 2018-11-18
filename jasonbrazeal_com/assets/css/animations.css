@@ -427,6 +427,14 @@
   list-style-type: disc;
 }
 
+.modalWrap a {
+  color: #346D98;
+}
+
+.modalWrap a:hover {
+  font-weight: bolder;
+}
+
 .modalWrap * {
   color: #343434;
   text-align: left;
@@ -535,6 +543,14 @@ html.popupActive, body.popupActive {
 
 .popupContainer .popupBackground .popupContent .popupSnippet ul {
   list-style-type: square;
+}
+
+.popupContainer .popupBackground .popupContent .popupSnippet a {
+  color: #346D98;
+}
+
+.popupContainer .popupBackground .popupContent .popupSnippet a:hover {
+  font-weight: bolder;
 }
 
 .popupContainer .popupBackground .popupContent .popupSnippet pre[class*="language-"], .popupContainer .popupBackground .popupContent .popupSnippet code[class*="language-"], .popupContainer .popupBackground .popupContent .popupSnippet code[class*="language-"] * {
