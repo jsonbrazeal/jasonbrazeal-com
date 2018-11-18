@@ -524,7 +524,7 @@ export class SkillsGraphic extends React.Component {
     var bubbleChart = new BubbleChart();
     bubbleChart.setup();
     bubbleChart.registerClickEvent(bubbleChart.svg.selectAll(".node"));
-    bubbleChart.moveToCentral(bubbleChart.svg.selectAll(".node"));
+    bubbleChart.moveToCentral(d3Select(".node"));
   }
 
   render() {

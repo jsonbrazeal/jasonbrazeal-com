@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "d3-scale": "*",
+    "d3-scale-chromatic": "*",
     "d3-selection": "*",
     "d3-selection-multi": "*",
     "font-awesome": "*",

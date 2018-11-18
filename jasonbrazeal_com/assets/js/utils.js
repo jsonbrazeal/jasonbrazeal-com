@@ -2,7 +2,9 @@ import graphics from "../css/graphics.css";
 import animations from "../css/animations.css";
 import { select as d3Select } from 'd3-selection';
 import { selectAll as d3SelectAll } from 'd3-selection-multi';
-import { schemeCategory10, scaleOrdinal } from 'd3-scale';
+import { scaleOrdinal } from 'd3-scale';
+import { schemePaired } from 'd3-scale-chromatic';
+import 'd3-transition';
 
 // var exports = module.exports = {};
 
@@ -172,8 +174,10 @@ export class BubbleChart  {
   }
 
   setup() {
+    var fnColor = scaleOrdinal(schemePaired);
+
     this.svg = d3Select(this.container).append("svg");
-    this.svg.attr({preserveAspectRatio: "xMidYMid",
+    this.svg.attrs({preserveAspectRatio: "xMidYMid",
                    width: this.size,
                    height: this.size,
                    class: "bubbleChartSvg"});
@@ -183,31 +187,30 @@ export class BubbleChart  {
       .data(this.circlePositions)
     .enter().append("g")
       .attr("class", (d) => {return ["node", this.data.classed(d.item)].join(" ");})
-
-      var fnColor = scaleOrdinal(schemeCategory10);
-      // var fnColor = d3.scale.category20();
-
-    node.append("circle")
-      .attr({r: (d) => {return d.r;}, cx: (d) => {return d.cx;}, cy: (d) => {return d.cy;}})
-    node.style("fill", (d) => {
+    .append("circle")
+      .attr("opacity", "0.8")
+      .attrs({ r: (d) => { return d.r; },
+               cx: (d) => { return d.cx; },
+               cy: (d) => { return d.cy; }
+      })
+      .style("fill", (d) => {
         return this.data.color !== undefined ? this.data.color(d.item) : fnColor(d.item.text);
       })
-    node.attr("opacity", "0.8");
 
-    node.append("text")
+    this.svg.selectAll(".node").append("text")
       .attr("fill", "#fff")
       .attr("text-anchor", "middle")
       .attr("dx", (d) => { return d.cx })
       .attr("dy", (d) => { return d.cy + 5 })
       .text((d) => { return d.item.text });
-    node.append("text")
+    this.svg.selectAll(".node").append("text")
       .attr("fill", "#fff")
       .attr("text-anchor", "middle")
       .attr("opacity", "0")
       .attr("dx", (d) => { return d.cx })
       .attr("dy", (d) => { return d.cy + 25 })
       .text((d) => { return d.item.desc || 'no desc' });
-    node.sort((a, b) => {return this.data.eval(b.item) - this.data.eval(a.item);});
+    this.svg.selectAll(".node").sort((a, b) => {return this.data.eval(b.item) - this.data.eval(a.item);});
 
     this.transition = {};
 
@@ -223,7 +226,7 @@ export class BubbleChart  {
 
   moveToCentral(node) {
     this.centralNode = node;
-    this.transition.centralNode = node.selectAll('.active')
+    this.transition.centralNode = node.classed('active', true)
       .transition().duration(this.transitDuration);
     this.transition.centralNode
     .attr('transform', (d, i) => {
@@ -244,17 +247,23 @@ export class BubbleChart  {
         return "translate(" + (2 * (this.centralPoint - d.cx)) + "," + (2 * (this.centralPoint - d.cy)) + ")";
       })
     .select("circle")
-      .attr("r", (d) => {return d.r;});
+      .attr("r", (d) => {return d.r;})
   }
 
   reset(node) {
-    node.classed({active: false});
+    node.classed('active', false);
   }
 
   registerClickEvent(node) {
     var swapped = false;
     var self = this;
     node.style("cursor", "pointer").on("click", function(d)  {
+      if (self.transitioning) {
+        return;
+      } else {
+        self.transitioning = true;
+      }
+
       self.clickedNode = d3Select(this);
 
       if (!(self.centralNode.attr('class') == self.clickedNode.attr('class'))) {
@@ -266,6 +275,9 @@ export class BubbleChart  {
       self.moveToCentral(self.clickedNode);
       self.moveToReflection(self.svg.selectAll(".node:not(.active)"), swapped);
       swapped = !swapped;
+      setTimeout(function() {
+        self.transitioning = false;
+      }, 1000)
     });
   }
 
