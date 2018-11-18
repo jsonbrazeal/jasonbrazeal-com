@@ -6,21 +6,23 @@ import graphics from "../css/graphics.css";
 import animations from "../css/animations.css";
 import icons from "font-awesome/css/font-awesome.css";
 
-import utils from "./utils.js";
+import { toTitleCase, typewriter, BubbleChart } from "./utils.js";
 import snippets from "./snippets.js";
 import writing from "./writing.js";
 import React from "react";
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition } from "react-transition-group";
+import { select as d3Select } from 'd3-selection';
+import { selectAll as d3SelectAll } from 'd3-selection-multi';
 
-import Prism from 'prismjs'; // includes defaults
-// import Prism from 'prismjs/components/prism-core'
-import 'prismjs/components/prism-python'
-import 'prismjs/components/prism-ruby'
-import 'prismjs/components/prism-bash'
-import 'prismjs/components/prism-sql'
-import 'prismjs/themes/prism-tomorrow.css'
+import Prism from "prismjs"; // includes defaults
+// import Prism from "prismjs/components/prism-core"
+import "prismjs/components/prism-python"
+import "prismjs/components/prism-ruby"
+import "prismjs/components/prism-bash"
+import "prismjs/components/prism-sql"
+import "prismjs/themes/prism-tomorrow.css"
 
-import Remarkable from 'remarkable';
+import Remarkable from "remarkable";
 
 var md = new Remarkable({html: true});
 
@@ -274,7 +276,7 @@ export class Page extends React.Component {
           this.setState({
             showSubNavArrow: true,
             showSubNavMenu: false,
-            header: utils.toTitleCase(nextProps.activeSubPage),
+            header: toTitleCase(nextProps.activeSubPage),
             activeSubPage: nextProps.activeSubPage,
           });
       } else { // transition from subpage to page
@@ -519,10 +521,10 @@ export class SubNavArrow extends React.Component {
 export class SkillsGraphic extends React.Component {
 
   componentDidMount() {
-    var bubbleChart = new utils.BubbleChart();
+    var bubbleChart = new BubbleChart();
     bubbleChart.setup();
     bubbleChart.registerClickEvent(bubbleChart.svg.selectAll(".node"));
-    bubbleChart.moveToCentral(d3.select(".node"));
+    bubbleChart.moveToCentral(bubbleChart.svg.selectAll(".node"));
   }
 
   render() {
@@ -1348,7 +1350,7 @@ export class RoundThumbnail extends React.Component {
 
 export class Typewriter extends React.Component {
   componentDidMount() {
-    utils.typewriter(document);
+    typewriter(document);
   }
 
   render() {

@@ -6,6 +6,7 @@ var rootAssetPath = './jasonbrazeal_com/assets';
 const getLocalIdent = require('css-loader/lib/getLocalIdent');
 
 module.exports = {
+    mode: 'development',
     // context: __dirname,
     entry: {
         app: [
@@ -43,7 +44,7 @@ module.exports = {
                 test: /\.js[x]?$/,
                 loader: 'babel-loader',
                 query: {
-                  'presets': ['env', 'react']
+                  'presets': ['@babel/preset-env', '@babel/preset-react']
                 },
                 exclude: /node_modules/
             },

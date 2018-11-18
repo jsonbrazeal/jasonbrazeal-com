@@ -1,12 +1,14 @@
 import graphics from "../css/graphics.css";
 import animations from "../css/animations.css";
-import d3 from 'd3';
+import { select as d3Select } from 'd3-selection';
+import { selectAll as d3SelectAll } from 'd3-selection-multi';
+import { schemeCategory10, scaleOrdinal } from 'd3-scale';
 
-var exports = module.exports = {};
+// var exports = module.exports = {};
 
 // based on
 // https://stackoverflow.com/questions/2332811/capitalize-words-in-string/7592235#7592235
-var toTitleCase = function(str) {
+export function toTitleCase(str) {
   return str.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 }
 
@@ -70,7 +72,7 @@ TxtRotate.prototype.tick = function() {
   }, delta);
 };
 
-var typewriter = function(document) {
+export function typewriter(document) {
   var elem = document.getElementsByClassName(graphics.typewriter)[0];
   var toRotate = elem.getAttribute("data-rotate");
   var period = elem.getAttribute("data-period");
@@ -84,7 +86,7 @@ var typewriter = function(document) {
 
 // based on
 // https://github.com/phuonghuynh/bubble-chart/
-class BubbleChart  {
+export class BubbleChart  {
   constructor() {
     this.defaultViewBoxSize = 600;
     this.defaultInnerRadius = this.defaultViewBoxSize / 3;
@@ -170,25 +172,27 @@ class BubbleChart  {
   }
 
   setup() {
-    this.svg = d3.select(this.container).append("svg")
-      .attr({preserveAspectRatio: "xMidYMid",
-             width: this.size,
-             height: this.size,
-             class: "bubbleChartSvg"})
-      .attr("viewBox", (d) => {return ["0 0", this.viewBoxSize, this.viewBoxSize].join(" ");});
+    this.svg = d3Select(this.container).append("svg");
+    this.svg.attr({preserveAspectRatio: "xMidYMid",
+                   width: this.size,
+                   height: this.size,
+                   class: "bubbleChartSvg"});
+    this.svg.attr("viewBox", (d) => {return ["0 0", this.viewBoxSize, this.viewBoxSize].join(" ");});
     this.circlePositions = this.randomCirclesPositions(this.intersectDelta);
     var node = this.svg.selectAll(".node")
       .data(this.circlePositions)
     .enter().append("g")
       .attr("class", (d) => {return ["node", this.data.classed(d.item)].join(" ");})
-    var fnColor = d3.scale.category20();
+
+      var fnColor = scaleOrdinal(schemeCategory10);
+      // var fnColor = d3.scale.category20();
 
     node.append("circle")
       .attr({r: (d) => {return d.r;}, cx: (d) => {return d.cx;}, cy: (d) => {return d.cy;}})
-      .style("fill", (d) => {
+    node.style("fill", (d) => {
         return this.data.color !== undefined ? this.data.color(d.item) : fnColor(d.item.text);
       })
-      .attr("opacity", "0.8");
+    node.attr("opacity", "0.8");
 
     node.append("text")
       .attr("fill", "#fff")
@@ -219,7 +223,7 @@ class BubbleChart  {
 
   moveToCentral(node) {
     this.centralNode = node;
-    this.transition.centralNode = node.classed({active: true})
+    this.transition.centralNode = node.selectAll('.active')
       .transition().duration(this.transitDuration);
     this.transition.centralNode
     .attr('transform', (d, i) => {
@@ -251,7 +255,7 @@ class BubbleChart  {
     var swapped = false;
     var self = this;
     node.style("cursor", "pointer").on("click", function(d)  {
-      self.clickedNode = d3.select(this);
+      self.clickedNode = d3Select(this);
 
       if (!(self.centralNode.attr('class') == self.clickedNode.attr('class'))) {
         self.centralNode.select("text:last-of-type")
@@ -267,8 +271,8 @@ class BubbleChart  {
 
 };
 
-module.exports = {
-  toTitleCase: toTitleCase,
-  typewriter: typewriter,
-  BubbleChart: BubbleChart
-};
+// module.exports = {
+//   toTitleCase: toTitleCase,
+//   typewriter: typewriter,
+//   BubbleChart: BubbleChart
+// };
