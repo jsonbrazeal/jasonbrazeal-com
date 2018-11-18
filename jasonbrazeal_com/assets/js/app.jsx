@@ -677,19 +677,18 @@ export class SnippetTiles extends React.Component {
     let snipsContainers = [];
     for (let i = 0; i < numRows + 1; i++) {
       let snipsSlice = Object.keys(snippets.snippets).slice(i * 8, i * 8 + 8);
-      let snips = snipsSlice.map((elem, i) => {
-        return <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic={elem} />
+      let snips = snipsSlice.map((elem, j) => {
+        return <SnippetTile key={i * 8 + j} activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic={elem} />
       });
       if (snips.length !== 8) {
-        let nones = [...Array(8 - snips.length).keys()].map((elem, i) => {
-          return <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
+        let nones = [...Array(8 - snips.length).keys()].map((elem, k) => {
+          return <SnippetTile key={i * 8 + 8 - k} activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
         });
-        snipsContainers.push(<HexagonGroup>{snips}{nones}</HexagonGroup>);
+        snipsContainers.push(<HexagonGroup key={i}>{snips}{nones}</HexagonGroup>);
       } else {
-        snipsContainers.push(<HexagonGroup>{snips}</HexagonGroup>);
+        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
       }
     }
-    console.log(snipsContainers)
     return (
       <div className={graphics.honeycomb}>
 
@@ -769,7 +768,7 @@ export class SnippetTile extends React.Component {
         setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
       }
       catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   }
@@ -912,6 +911,10 @@ export class Writing extends React.Component {
     }
   }
 
+  onChange(event) {
+    // this method exists to get rid of a React warning
+  }
+
   render() {
     return(
        <article className={graphics.writing}>
@@ -923,7 +926,7 @@ export class Writing extends React.Component {
 
         {/* Start of Modal */}
         <div className={animations.modal}>
-          <input id="modalTrigger" className={animations.modalTriggerInput} type="checkbox" checked={this.state.writingOpen} />
+          <input id="modalTrigger" className={animations.modalTriggerInput} type="checkbox" checked={this.state.writingOpen} onChange={ (e) => this.onChange(e) } />
           <div className={animations.modalOverlay}>
             <div className={animations.modalWrap}>
               <label htmlFor="modalClose" onClick={(e) => this.handleClick("close", e)}>
@@ -1447,10 +1450,10 @@ export class MachineGraphic extends React.Component {
         </feMerge>
       </filter>
     </defs>
-    <g className={graphics.cloudApp} id="cloudAppGroup" stroke="none" fill="#D8D8D8" fill-rule="evenodd">
+    <g className={graphics.cloudApp} id="cloudAppGroup" stroke="none" fill="#D8D8D8" fillRule="evenodd">
       <path d="M773.471977,318.816193 C776.750959,322.023402 781.236381,324 786.183,324 C793.381564,324 799.603426,319.814058 802.55186,313.741201 C807.199736,315.974313 812.407931,317.225225 817.908,317.225225 C826.747935,317.225225 834.833895,313.993839 841.051334,308.646728 C844.655726,310.864887 848.898619,312.144144 853.44,312.144144 C866.522521,312.144144 877.128,301.528049 877.128,288.432432 C877.128,275.336816 866.522521,264.720721 853.44,264.720721 C852.044853,264.720721 850.677876,264.841453 849.348927,265.073048 C848.546797,263.55248 847.637804,262.097134 846.631955,260.717029 C845.873612,246.898901 834.439729,235.927928 820.446,235.927928 C813.693338,235.927928 807.536746,238.482559 802.888129,242.679003 C800.846906,235.365127 794.140873,230 786.183,230 C776.985147,230 769.459646,237.167357 768.876373,246.226918 C753.194039,247.70171 740.922,260.916276 740.922,277 C740.922,279.334111 741.180456,281.607796 741.670283,283.793943 C737.541229,288.061689 735,293.877923 735,300.288288 C735,313.383905 745.605479,324 758.688,324 C764.280221,324 769.419837,322.060229 773.471977,318.816193 Z"></path>
     </g>
-    <g className={graphics.lightBulb} id="lighBulbGroup" stroke="none" stroke-width="1" fill-rule="evenodd" fill="#FB9B51">
+    <g className={graphics.lightBulb} id="lighBulbGroup" stroke="none" strokeWidth="1" fillRule="evenodd" fill="#FB9B51">
       <path d="M85.3886364,53.9125926 C60.7878788,53.9125926 40.8325758,73.886358 40.8325758,98.5317284 C40.8325758,106.643333 43.1049242,114.186914 46.7719697,120.804136 C57.7121212,140.546975 60.6155303,151.628765 62.405303,162.354877 C63.9007576,171.345062 65.9689394,173.434012 72.7515152,173.434012 L85.3886364,173.434012 L98.0284091,173.434012 C104.824242,173.434012 106.895076,171.345062 108.387879,162.354877 C110.182955,151.623457 113.083712,140.539012 124.021212,120.804136 C127.701515,114.189568 129.960606,106.645988 129.960606,98.5317284 C129.968561,73.8837037 110.013258,53.9125926 85.3886364,53.9125926 L85.3886364,53.9125926 Z" id="Shape"></path>
       <path d="M101.332197,176.664321 L69.4795455,176.664321 C68.1537879,176.664321 67.0852273,177.731358 67.0852273,179.05321 L67.0852273,180.651111 C67.0852273,181.967654 68.1537879,183.04 69.4795455,183.04 L101.332197,183.04 C102.639394,183.04 103.710606,181.967654 103.710606,180.651111 L103.710606,179.05321 C103.715909,177.731358 102.639394,176.664321 101.332197,176.664321 L101.332197,176.664321 Z" id="Shape"></path>
       <path d="M101.332197,186.22784 L69.4795455,186.22784 C68.1537879,186.22784 67.0852273,187.289568 67.0852273,188.616728 L67.0852273,190.21463 C67.0852273,191.531173 68.1537879,192.59821 69.4795455,192.59821 L101.332197,192.59821 C102.639394,192.59821 103.710606,191.531173 103.710606,190.21463 L103.710606,188.616728 C103.715909,187.292222 102.639394,186.22784 101.332197,186.22784 L101.332197,186.22784 Z" id="Shape"></path>
@@ -1462,26 +1465,26 @@ export class MachineGraphic extends React.Component {
       <path d="M34.4238636,22.501358 C30.3617424,15.3798148 41.3337121,8.98555556 45.4329545,16.0938272 C47.5753788,19.8072222 63.094697,46.7273457 63.094697,46.7273457 L52.069697,53.1030247 C52.069697,53.1030247 38.2606061,29.1690123 34.4318182,22.5305556 L34.4318182,22.5225926 L34.4238636,22.501358 L34.4238636,22.501358 L34.4238636,22.501358 Z" id="Shape"></path>
       <path d="M9.58977273,47.4333951 L9.58977273,47.4333951 L9.58977273,47.441358 L9.60833333,47.4440123 C15.2189394,50.6849383 39.217803,64.5617284 39.217803,64.5617284 L32.8488636,75.6037037 C32.8488636,75.6037037 8.78371212,61.697716 3.18636364,58.4620988 C-3.92765152,54.3532099 2.4625,43.3616667 9.58977273,47.4333951 L9.58977273,47.4333951 Z"></path>
     </g>
-    <rect id="codeWindowRectangle" x="318" y="197" width="205" height="97.5" rx="2" stroke="#777777" stroke-width="2" fill="#FFFFFF" fill-rule="evenodd"></rect>
-    <g ref={elem => this.code = elem} className={graphics.code} id="code" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M26,47.1459048 L38.9420131,0" id="Line" stroke="#4DB09A" stroke-width="5"></path>
-      <path d="M0,41.2055538 L14.8156678,26" id="Line-Copy" stroke="#4DB09A" stroke-width="5" transform="translate(7.407834, 33.602777) scale(1, -1) translate(-7.407834, -33.602777) "></path>
-      <path d="M0,25.2055538 L14.8156678,10" id="Line-Copy-2" stroke="#4DB09A" stroke-width="5"></path>
-      <path d="M51,41.2055538 L65.8156678,26" id="Line-Copy-4" stroke="#4DB09A" stroke-width="5" transform="translate(58.407834, 33.602777) scale(-1, -1) translate(-58.407834, -33.602777) "></path>
-      <path d="M51,25.2055538 L65.8156678,10" id="Line-Copy-3" stroke="#4DB09A" stroke-width="5" transform="translate(58.407834, 17.602777) scale(-1, 1) translate(-58.407834, -17.602777) "></path>
+    <rect id="codeWindowRectangle" x="318" y="197" width="205" height="97.5" rx="2" stroke="#777777" strokeWidth="2" fill="#FFFFFF" fillRule="evenodd"></rect>
+    <g ref={elem => this.code = elem} className={graphics.code} id="code" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M26,47.1459048 L38.9420131,0" id="Line" stroke="#4DB09A" strokeWidth="5"></path>
+      <path d="M0,41.2055538 L14.8156678,26" id="Line-Copy" stroke="#4DB09A" strokeWidth="5" transform="translate(7.407834, 33.602777) scale(1, -1) translate(-7.407834, -33.602777) "></path>
+      <path d="M0,25.2055538 L14.8156678,10" id="Line-Copy-2" stroke="#4DB09A" strokeWidth="5"></path>
+      <path d="M51,41.2055538 L65.8156678,26" id="Line-Copy-4" stroke="#4DB09A" strokeWidth="5" transform="translate(58.407834, 33.602777) scale(-1, -1) translate(-58.407834, -33.602777) "></path>
+      <path d="M51,25.2055538 L65.8156678,10" id="Line-Copy-3" stroke="#4DB09A" strokeWidth="5" transform="translate(58.407834, 17.602777) scale(-1, 1) translate(-58.407834, -17.602777) "></path>
     </g>
-    <g id="electricity" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(283.000000, 106.000000)">
-          <path ref={elem => this.electricPotential = elem} className={graphics.electricPotential} d="M16.0429688,7.8203125 L35.1730116,25.3203125 L51.5042119,10.3913707 L73.3037778,25.3203125 C73.3037778,25.3203125 95.8323685,8.16307141 99.0429688,10.3913707" stroke="#F2E64E" stroke-width="3"></path>
+    <g id="electricity" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(283.000000, 106.000000)">
+          <path ref={elem => this.electricPotential = elem} className={graphics.electricPotential} d="M16.0429688,7.8203125 L35.1730116,25.3203125 L51.5042119,10.3913707 L73.3037778,25.3203125 C73.3037778,25.3203125 95.8323685,8.16307141 99.0429688,10.3913707" stroke="#F2E64E" strokeWidth="3"></path>
       <rect id="separator1" fill="#D8D8D8" transform="translate(31.500000, 46.500000) rotate(-31.000000) translate(-31.500000, -46.500000) " x="28" y="12" width="7" height="69" rx="3.5"></rect>
       <rect id="separator1-copy" fill="#D8D8D8" transform="translate(81.500000, 46.500000) scale(-1, 1) rotate(-31.000000) translate(-81.500000, -46.500000) " x="78" y="12" width="7" height="69" rx="3.5"></rect>
       <circle id="electricity_ball1" fill="#666666" cx="10.1440543" cy="10.1440543" r="10.1440543"></circle>
       <path d="M102.144054,20.2881085 C107.746461,20.2881085 112.288109,15.7464607 112.288109,10.1440543 C112.288109,4.54164779 107.746461,-1.13686838e-13 102.144054,-1.13686838e-13 C96.5416478,-1.13686838e-13 92,4.54164779 92,10.1440543 C92,15.7464607 96.5416478,20.2881085 102.144054,20.2881085 Z" id="electricity_ball2" fill="#666666"></path>
     </g>
-    <g id="light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(744.000000, 115.000000)">
+    <g id="light" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(744.000000, 115.000000)">
       <path ref={elem => this.redLight = elem} d="M45.9088792,23.3712982 C45.9691809,22.7185425 46,22.0572962 46,21.3888889 C46,9.57613174 36.3741221,0 24.5,0 C12.6258779,0 3,9.57613174 3,21.3888889 C3,22.0579311 3.03087769,22.7197987 3.09129271,23.3731583 C3.03149572,23.6484234 3,23.9342459 3,24.2274256 L3,58.9947966 C3,61.2163545 4.79387055,63 7.00672201,63 L41.993278,63 C44.2070888,63 46,61.2068093 46,58.9947966 L46,24.2274256 C46,23.933335 45.9685632,23.6469185 45.9088792,23.3712982 Z" stroke="#AAAAAA" fill="#D55050"></path>
       <rect id="Rectangle-3-Copy" fill="#777777" x="0.468725869" y="46" width="48.5312741" height="6.27476038" rx="2"></rect>
     </g>
-    <g id="funnel2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(828.000000, 280.500000) rotate(90.000000) translate(-828.000000, -280.500000) translate(722.500000, 219.500000)">
+    <g id="funnel2" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(828.000000, 280.500000) rotate(90.000000) translate(-828.000000, -280.500000) translate(722.500000, 219.500000)">
       <polygon id="Triangle" fill="#777777" points="0 6.21744885 209.517572 6.21744885 104.758786 100.466454"></polygon>
       <rect id="Rectangle" fill="#999999" opacity="0.98999995" x="52.1277955" y="51.3003195" width="105.089457" height="70.3354633"></rect>
       <polygon id="Triangle-2" fill="#999999" transform="translate(157.594140, 53.541484) scale(1, -1) translate(-157.594140, -53.541484) " points="105 6.68762476 210.18828 100.395342 105 100.395342"></polygon>
@@ -1489,7 +1492,7 @@ export class MachineGraphic extends React.Component {
       <rect id="Rectangle-3" fill="#D8D8D8" x="0.482428115" y="1.13686838e-13" width="209.517572" height="8.27476038" rx="2"></rect>
       <rect id="Rectangle-3" fill="#777777" x="49.6453674" y="74.7795527" width="110.054313" height="8.27476038" rx="2"></rect>
     </g>
-    <g id="funnel1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(40.000000, 71.000000)">
+    <g id="funnel1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(40.000000, 71.000000)">
       <polygon id="Triangle" fill="#777777" points="0 6.21744885 209.517572 6.21744885 104.758786 100.466454"></polygon>
       <rect id="Rectangle" fill="#999999" opacity="0.98999995" x="52.1277955" y="51.3003195" width="105.089457" height="70.3354633"></rect>
       <polygon id="Triangle-2" fill="#999999" transform="translate(157.594140, 53.541484) scale(1, -1) translate(-157.594140, -53.541484) " points="105 6.68762476 210.18828 100.395342 105 100.395342"></polygon>
@@ -1497,113 +1500,113 @@ export class MachineGraphic extends React.Component {
       <rect id="Rectangle-3" fill="#D8D8D8" x="0.482428115" y="1.13686838e-13" width="209.517572" height="8.27476038" rx="2"></rect>
       <rect id="Rectangle-3" fill="#777777" x="49.6453674" y="74.7795527" width="110.054313" height="8.27476038" rx="2"></rect>
     </g>
-    <rect id="separator1" stroke="none" fill="#D8D8D8" fill-rule="evenodd" x="275" y="152" width="15" height="243" rx="7.5"></rect>
-    <rect id="separator2" stroke="none" fill="#D8D8D8" fill-rule="evenodd" x="548" y="168" width="15" height="227" rx="7.5"></rect>
-    <rect id="section3" stroke="none" fill="#AAAAAA" fill-rule="evenodd" x="560" y="166" width="246" height="227" rx="2"></rect>
-    <g id="gears" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(683.028315, 231.553442) rotate(15.000000) translate(-683.028315, -231.553442) translate(621.028315, 173.053442)">
+    <rect id="separator1" stroke="none" fill="#D8D8D8" fillRule="evenodd" x="275" y="152" width="15" height="243" rx="7.5"></rect>
+    <rect id="separator2" stroke="none" fill="#D8D8D8" fillRule="evenodd" x="548" y="168" width="15" height="227" rx="7.5"></rect>
+    <rect id="section3" stroke="none" fill="#AAAAAA" fillRule="evenodd" x="560" y="166" width="246" height="227" rx="2"></rect>
+    <g id="gears" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(683.028315, 231.553442) rotate(15.000000) translate(-683.028315, -231.553442) translate(621.028315, 173.053442)">
       <path ref={elem => this.gear1 = elem} d="M44.5085566,90.001719 C44.5870983,89.3472055 44.6394593,88.6665115 44.6394593,87.9596369 C44.6394593,87.2527624 44.5870983,86.5720684 44.4823761,85.9175549 L48.9068872,82.4617237 C49.2995953,82.1475573 49.4043174,81.5715854 49.1686926,81.1265163 L44.9798063,73.874507 C44.718001,73.4032573 44.1682096,73.246174 43.6969599,73.4032573 L38.4870327,75.4977004 C37.38745,74.6599231 36.2355063,73.9792291 34.9526599,73.4556183 L34.1672438,67.9053441 C34.0887021,67.3817333 33.643633,67.0152058 33.1200222,67.0152058 L24.7422497,67.0152058 C24.218639,67.0152058 23.7997503,67.3817333 23.7212087,67.9053441 L22.9357926,73.4556183 C21.6529461,73.9792291 20.4748219,74.6861037 19.4014198,75.4977004 L14.1914925,73.4032573 C13.7202428,73.2199935 13.1704515,73.4032573 12.9086461,73.874507 L8.7197599,81.1265163 C8.45795451,81.597766 8.56267667,82.1475573 8.98156529,82.4617237 L13.4060764,85.9175549 C13.3013542,86.5720684 13.2228126,87.2789429 13.2228126,87.9596369 C13.2228126,88.6403309 13.2751737,89.3472055 13.3798958,90.001719 L8.95538475,93.4575501 C8.56267667,93.7717166 8.45795451,94.3476884 8.69357936,94.7927576 L12.8824656,102.044767 C13.144271,102.516017 13.6940623,102.6731 14.165312,102.516017 L19.3752393,100.421573 C20.4748219,101.259351 21.6267656,101.940045 22.909612,102.463655 L23.6950282,108.01393 C23.7997503,108.537541 24.218639,108.904068 24.7422497,108.904068 L33.1200222,108.904068 C33.643633,108.904068 34.0887021,108.537541 34.1410632,108.01393 L34.9264794,102.463655 C36.2093258,101.940045 37.38745,101.23317 38.4608521,100.421573 L43.6707794,102.516017 C44.1420291,102.69928 44.6918204,102.516017 44.9536258,102.044767 L49.142512,94.7927576 C49.4043174,94.3215079 49.2995953,93.7717166 48.8807066,93.4575501 L44.5085566,90.001719 L44.5085566,90.001719 Z M28.931136,95.8137986 C24.611347,95.8137986 21.0769743,92.2794258 21.0769743,87.9596369 C21.0769743,83.639848 24.611347,80.1054752 28.931136,80.1054752 C33.2509249,80.1054752 36.7852977,83.639848 36.7852977,87.9596369 C36.7852977,92.2794258 33.2509249,95.8137986 28.931136,95.8137986 L28.931136,95.8137986 Z" id="Shape" fill="#666666" transform="translate(28.931136, 87.959637) rotate(-35.000000) translate(-28.931136, -87.959637) "></path>
       <path ref={elem => this.gear2 = elem} d="M100.299948,55.5539861 C100.44097,54.3788049 100.534984,53.1566164 100.534984,51.8874206 C100.534984,50.6182248 100.44097,49.3960363 100.252941,48.2208551 L108.197166,42.015898 C108.902275,41.451811 109.090304,40.4176515 108.667239,39.6185283 L101.146079,26.59752 C100.676006,25.7513895 99.6888538,25.469346 98.8427233,25.7513895 L89.4882805,29.5119695 C87.513976,28.0077375 85.445657,26.785549 83.1423017,25.845404 L81.7320842,15.8798669 C81.5910625,14.9397219 80.7919392,14.2816204 79.8517942,14.2816204 L64.8094741,14.2816204 C63.8693291,14.2816204 63.1172131,14.9397219 62.9761914,15.8798669 L61.5659739,25.845404 C59.2626186,26.785549 57.1472923,28.0547447 55.2199951,29.5119695 L45.8655523,25.7513895 C45.0194218,25.4223387 44.0322695,25.7513895 43.562197,26.59752 L36.041037,39.6185283 C35.5709645,40.4646588 35.7589935,41.451811 36.5111095,42.015898 L44.4553348,48.2208551 C44.2673058,49.3960363 44.126284,50.6652321 44.126284,51.8874206 C44.126284,53.1096091 44.2202985,54.3788049 44.4083275,55.5539861 L36.4641022,61.7589432 C35.7589935,62.3230302 35.5709645,63.3571897 35.9940297,64.1563129 L43.5151898,77.1773212 C43.9852623,78.0234517 44.9724145,78.3054952 45.818545,78.0234517 L55.1729878,74.2628717 C57.1472923,75.7671037 59.2156114,76.9892922 61.5189666,77.9294372 L62.9291841,87.8949743 C63.1172131,88.8351193 63.8693291,89.4932208 64.8094741,89.4932208 L79.8517942,89.4932208 C80.7919392,89.4932208 81.5910625,88.8351193 81.685077,87.8949743 L83.0952945,77.9294372 C85.3986498,76.9892922 87.513976,75.7200965 89.4412733,74.2628717 L98.7957161,78.0234517 C99.6418466,78.3525025 100.628999,78.0234517 101.099071,77.1773212 L108.620231,64.1563129 C109.090304,63.3101824 108.902275,62.3230302 108.150159,61.7589432 L100.299948,55.5539861 L100.299948,55.5539861 Z M72.3306342,65.9895957 C64.5744379,65.9895957 58.2284591,59.6436169 58.2284591,51.8874206 C58.2284591,44.1312243 64.5744379,37.7852455 72.3306342,37.7852455 C80.0868305,37.7852455 86.4328093,44.1312243 86.4328093,51.8874206 C86.4328093,59.6436169 80.0868305,65.9895957 72.3306342,65.9895957 L72.3306342,65.9895957 Z" id="Shape" fill="#666666" transform="translate(72.330634, 51.887421) rotate(-35.000000) translate(-72.330634, -51.887421) "></path>
     </g>
-    <path d="M288,177.001882 C288,175.896273 288.904172,175 289.991899,175 L550.008101,175 C551.108196,175 552,175.901311 552,177.001882 L552,390.998118 C552,392.103727 551.095828,393 550.008101,393 L289.991899,393 C288.891804,393 288,392.098689 288,390.998118 L288,177.001882 Z M318,198.991781 C318,197.891751 318.891569,197 319.995958,197 L521.004042,197 C522.106379,197 523,197.902953 523,198.991781 L523,292.508219 C523,293.608249 522.108431,294.5 521.004042,294.5 L319.995958,294.5 C318.893621,294.5 318,293.597047 318,292.508219 L318,198.991781 Z" id="section2_codeWindow" stroke="none" fill="#AAAAAA" fill-rule="evenodd"></path>
-    <rect id="section1" stroke="none" fill="#AAAAAA" fill-rule="evenodd" x="15" y="154" width="264" height="239" rx="2"></rect>
+    <path d="M288,177.001882 C288,175.896273 288.904172,175 289.991899,175 L550.008101,175 C551.108196,175 552,175.901311 552,177.001882 L552,390.998118 C552,392.103727 551.095828,393 550.008101,393 L289.991899,393 C288.891804,393 288,392.098689 288,390.998118 L288,177.001882 Z M318,198.991781 C318,197.891751 318.891569,197 319.995958,197 L521.004042,197 C522.106379,197 523,197.902953 523,198.991781 L523,292.508219 C523,293.608249 522.108431,294.5 521.004042,294.5 L319.995958,294.5 C318.893621,294.5 318,293.597047 318,292.508219 L318,198.991781 Z" id="section2_codeWindow" stroke="none" fill="#AAAAAA" fillRule="evenodd"></path>
+    <rect id="section1" stroke="none" fill="#AAAAAA" fillRule="evenodd" x="15" y="154" width="264" height="239" rx="2"></rect>
     <g id="tank2" stroke="none" fill="none">
-      <use fill="#6A4F8E" fill-rule="evenodd" xlinkHref="#path-3"></use>
-      <use stroke="#777777" mask="url(#mask-4)" stroke-width="8" xlinkHref="#path-3"></use>
+      <use fill="#6A4F8E" fillRule="evenodd" xlinkHref="#path-3"></use>
+      <use stroke="#777777" mask="url(#mask-4)" strokeWidth="8" xlinkHref="#path-3"></use>
     </g>
 
     <g ref={elem => this.tank2 = elem} className={graphics.tank2}>
-    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new" d="M28.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enableBackground="new" d="M28.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
     c-1.974,0-3.574-1.601-3.574-3.573l0,0c0-1.975,1.601-3.574,3.574-3.574l0,0C26.418,77.646,28.018,79.246,28.018,81.221
       L28.018,81.221z"></path>
-    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M39.018,51.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enableBackground="new    " d="M39.018,51.221c0,1.975-1.6,3.573-3.574,3.573l0,0
       c-1.974,0-3.574-1.601-3.574-3.573l0,0c0-1.975,1.601-3.575,3.574-3.575l0,0C37.418,47.646,39.018,49.246,39.018,51.221
       L39.018,51.221z"></path>
-    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M65.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enableBackground="new    " d="M65.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
       c-1.973,0-3.573-1.601-3.573-3.573l0,0c0-1.975,1.601-3.574,3.573-3.574l0,0C63.418,77.646,65.018,79.246,65.018,81.221
       L65.018,81.221z"></path>
-    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M58.018,59.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enableBackground="new    " d="M58.018,59.221c0,1.975-1.6,3.573-3.574,3.573l0,0
       c-1.973,0-3.573-1.601-3.573-3.573l0,0c0-1.975,1.601-3.574,3.573-3.574l0,0C56.418,55.646,58.018,57.246,58.018,59.221
       L58.018,59.221z"></path>
-    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M23.165,61.221c0,0.949-0.771,1.719-1.721,1.719l0,0
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enableBackground="new    " d="M23.165,61.221c0,0.949-0.771,1.719-1.721,1.719l0,0
       c-0.949,0-1.72-0.77-1.72-1.719l0,0c0-0.951,0.771-1.721,1.72-1.721l0,0C22.394,59.5,23.165,60.27,23.165,61.221L23.165,61.221z"></path>
-    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M45.165,71.221c0,2.055-1.667,3.719-3.721,3.719l0,0
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enableBackground="new    " d="M45.165,71.221c0,2.055-1.667,3.719-3.721,3.719l0,0
       c-2.053,0-3.719-1.664-3.719-3.719l0,0c0-2.056,1.667-3.72,3.719-3.72l0,0C43.498,67.501,45.165,69.165,45.165,71.221L45.165,71.221
       z"></path>
-    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M43.877,86.221c0,1.344-1.09,2.432-2.434,2.432l0,0
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enableBackground="new    " d="M43.877,86.221c0,1.344-1.09,2.432-2.434,2.432l0,0
       c-1.343,0-2.433-1.088-2.433-2.432l0,0c0-1.345,1.09-2.434,2.433-2.434l0,0C42.788,83.787,43.877,84.876,43.877,86.221
       L43.877,86.221z"></path>
-    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M63.999,42.22c0,1.411-1.146,2.554-2.556,2.554l0,0
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enableBackground="new    " d="M63.999,42.22c0,1.411-1.146,2.554-2.556,2.554l0,0
       c-1.408,0-2.553-1.143-2.553-2.554l0,0c0-1.411,1.145-2.554,2.553-2.554l0,0C62.854,39.666,63.999,40.809,63.999,42.22L63.999,42.22
       z"></path>
-    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M23.109,46.601c0,0.709-0.575,1.283-1.285,1.283l0,0
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enableBackground="new    " d="M23.109,46.601c0,0.709-0.575,1.283-1.285,1.283l0,0
       c-0.708,0-1.283-0.573-1.283-1.283l0,0c0-0.709,0.575-1.284,1.283-1.284l0,0C22.534,45.317,23.109,45.891,23.109,46.601
       L23.109,46.601z"></path>
-    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M53.075,49.444c0,0.709-0.574,1.283-1.284,1.283l0,0
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enableBackground="new    " d="M53.075,49.444c0,0.709-0.574,1.283-1.284,1.283l0,0
       c-0.708,0-1.283-0.573-1.283-1.283l0,0c0-0.709,0.575-1.283,1.283-1.283l0,0C52.5,48.161,53.075,48.734,53.075,49.444L53.075,49.444
       z"></path>
-    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M53.497,74.723c0,0.711-0.575,1.283-1.284,1.283l0,0
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enableBackground="new    " d="M53.497,74.723c0,0.711-0.575,1.283-1.284,1.283l0,0
       c-0.708,0-1.283-0.572-1.283-1.283l0,0c0-0.709,0.575-1.281,1.283-1.281l0,0C52.921,73.439,53.497,74.014,53.497,74.723
       L53.497,74.723z"></path>
-    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M26.061,70.771c0,0.709-0.575,1.283-1.284,1.283l0,0
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enableBackground="new    " d="M26.061,70.771c0,0.709-0.575,1.283-1.284,1.283l0,0
       c-0.708,0-1.283-0.574-1.283-1.283l0,0c0-0.709,0.575-1.283,1.283-1.283l0,0C25.486,69.486,26.061,70.062,26.061,70.771
       L26.061,70.771z"></path>
-    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M65.877,68.221c0,1.344-1.09,2.432-2.434,2.432l0,0
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enableBackground="new    " d="M65.877,68.221c0,1.344-1.09,2.432-2.434,2.432l0,0
       c-1.344,0-2.434-1.088-2.434-2.432l0,0c0-1.345,1.09-2.434,2.434-2.434l0,0C64.788,65.787,65.877,66.876,65.877,68.221
       L65.877,68.221z"></path>
     </g>
 
-    <rect id="tank2_highlight" stroke="none" fill="#D8D8D8" fill-rule="evenodd" opacity="0.100000001" x="702" y="295" width="15" height="80"></rect>
+    <rect id="tank2_highlight" stroke="none" fill="#D8D8D8" fillRule="evenodd" opacity="0.100000001" x="702" y="295" width="15" height="80"></rect>
     <g id="tank1" stroke="none" fill="none">
-      <use fill="#6A4F8E" fill-rule="evenodd" xlinkHref="#path-5"></use>
-      <use stroke="#777777" mask="url(#mask-6)" stroke-width="8" xlinkHref="#path-5"></use>
+      <use fill="#6A4F8E" fillRule="evenodd" xlinkHref="#path-5"></use>
+      <use stroke="#777777" mask="url(#mask-6)" strokeWidth="8" xlinkHref="#path-5"></use>
     </g>
 
     <g ref={elem => this.tank1 = elem} className={graphics.tank1}>
-    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new" d="M28.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enableBackground="new" d="M28.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
     c-1.974,0-3.574-1.601-3.574-3.573l0,0c0-1.975,1.601-3.574,3.574-3.574l0,0C26.418,77.646,28.018,79.246,28.018,81.221
       L28.018,81.221z"></path>
-    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M39.018,51.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enableBackground="new    " d="M39.018,51.221c0,1.975-1.6,3.573-3.574,3.573l0,0
       c-1.974,0-3.574-1.601-3.574-3.573l0,0c0-1.975,1.601-3.575,3.574-3.575l0,0C37.418,47.646,39.018,49.246,39.018,51.221
       L39.018,51.221z"></path>
-    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M65.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enableBackground="new    " d="M65.018,81.221c0,1.975-1.6,3.573-3.574,3.573l0,0
       c-1.973,0-3.573-1.601-3.573-3.573l0,0c0-1.975,1.601-3.574,3.573-3.574l0,0C63.418,77.646,65.018,79.246,65.018,81.221
       L65.018,81.221z"></path>
-    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M58.018,59.221c0,1.975-1.6,3.573-3.574,3.573l0,0
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enableBackground="new    " d="M58.018,59.221c0,1.975-1.6,3.573-3.574,3.573l0,0
       c-1.973,0-3.573-1.601-3.573-3.573l0,0c0-1.975,1.601-3.574,3.573-3.574l0,0C56.418,55.646,58.018,57.246,58.018,59.221
       L58.018,59.221z"></path>
-    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M23.165,61.221c0,0.949-0.771,1.719-1.721,1.719l0,0
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enableBackground="new    " d="M23.165,61.221c0,0.949-0.771,1.719-1.721,1.719l0,0
       c-0.949,0-1.72-0.77-1.72-1.719l0,0c0-0.951,0.771-1.721,1.72-1.721l0,0C22.394,59.5,23.165,60.27,23.165,61.221L23.165,61.221z"></path>
-    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M45.165,71.221c0,2.055-1.667,3.719-3.721,3.719l0,0
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enableBackground="new    " d="M45.165,71.221c0,2.055-1.667,3.719-3.721,3.719l0,0
       c-2.053,0-3.719-1.664-3.719-3.719l0,0c0-2.056,1.667-3.72,3.719-3.72l0,0C43.498,67.501,45.165,69.165,45.165,71.221L45.165,71.221
       z"></path>
-    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M43.877,86.221c0,1.344-1.09,2.432-2.434,2.432l0,0
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enableBackground="new    " d="M43.877,86.221c0,1.344-1.09,2.432-2.434,2.432l0,0
       c-1.343,0-2.433-1.088-2.433-2.432l0,0c0-1.345,1.09-2.434,2.433-2.434l0,0C42.788,83.787,43.877,84.876,43.877,86.221
       L43.877,86.221z"></path>
-    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M63.999,42.22c0,1.411-1.146,2.554-2.556,2.554l0,0
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enableBackground="new    " d="M63.999,42.22c0,1.411-1.146,2.554-2.556,2.554l0,0
       c-1.408,0-2.553-1.143-2.553-2.554l0,0c0-1.411,1.145-2.554,2.553-2.554l0,0C62.854,39.666,63.999,40.809,63.999,42.22L63.999,42.22
       z"></path>
-    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M23.109,46.601c0,0.709-0.575,1.283-1.285,1.283l0,0
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enableBackground="new    " d="M23.109,46.601c0,0.709-0.575,1.283-1.285,1.283l0,0
       c-0.708,0-1.283-0.573-1.283-1.283l0,0c0-0.709,0.575-1.284,1.283-1.284l0,0C22.534,45.317,23.109,45.891,23.109,46.601
       L23.109,46.601z"></path>
-    <path className={animations.bubbleUp2} fill="#FFFFFF" enable-background="new    " d="M53.075,49.444c0,0.709-0.574,1.283-1.284,1.283l0,0
+    <path className={animations.bubbleUp2} fill="#FFFFFF" enableBackground="new    " d="M53.075,49.444c0,0.709-0.574,1.283-1.284,1.283l0,0
       c-0.708,0-1.283-0.573-1.283-1.283l0,0c0-0.709,0.575-1.283,1.283-1.283l0,0C52.5,48.161,53.075,48.734,53.075,49.444L53.075,49.444
       z"></path>
-    <path className={animations.bubbleUp3} fill="#FFFFFF" enable-background="new    " d="M53.497,74.723c0,0.711-0.575,1.283-1.284,1.283l0,0
+    <path className={animations.bubbleUp3} fill="#FFFFFF" enableBackground="new    " d="M53.497,74.723c0,0.711-0.575,1.283-1.284,1.283l0,0
       c-0.708,0-1.283-0.572-1.283-1.283l0,0c0-0.709,0.575-1.281,1.283-1.281l0,0C52.921,73.439,53.497,74.014,53.497,74.723
       L53.497,74.723z"></path>
-    <path className={animations.bubbleUp4} fill="#FFFFFF" enable-background="new    " d="M26.061,70.771c0,0.709-0.575,1.283-1.284,1.283l0,0
+    <path className={animations.bubbleUp4} fill="#FFFFFF" enableBackground="new    " d="M26.061,70.771c0,0.709-0.575,1.283-1.284,1.283l0,0
       c-0.708,0-1.283-0.574-1.283-1.283l0,0c0-0.709,0.575-1.283,1.283-1.283l0,0C25.486,69.486,26.061,70.062,26.061,70.771
       L26.061,70.771z"></path>
-    <path className={animations.bubbleUp1} fill="#FFFFFF" enable-background="new    " d="M65.877,68.221c0,1.344-1.09,2.432-2.434,2.432l0,0
+    <path className={animations.bubbleUp1} fill="#FFFFFF" enableBackground="new    " d="M65.877,68.221c0,1.344-1.09,2.432-2.434,2.432l0,0
       c-1.344,0-2.434-1.088-2.434-2.432l0,0c0-1.345,1.09-2.434,2.434-2.434l0,0C64.788,65.787,65.877,66.876,65.877,68.221
       L65.877,68.221z"></path>
     </g>
 
-    <rect id="tank1_highlight" stroke="none" fill="#D8D8D8" fill-rule="evenodd" opacity="0.1" x="609" y="295" width="15" height="80"></rect>
-    <rect id="gauge3" stroke="#999999" stroke-width="1" fill="#666666" fill-rule="evenodd" x="46" y="357" width="205" height="17.5" rx="2"></rect>
-    <rect id="gauge2" stroke="#999999" stroke-width="1" fill="#666666" fill-rule="evenodd" x="46" y="330" width="205" height="17.5" rx="2"></rect>
-    <rect id="gauge1" stroke="#999999" stroke-width="1" fill="#666666" fill-rule="evenodd" x="46" y="304" width="205" height="17.5" rx="2"></rect>
-      <g ref={elem => this.gaugeLights1 = elem} className={graphics.gaugeLights}stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(55.000000, 306.000000)">
+    <rect id="tank1_highlight" stroke="none" fill="#D8D8D8" fillRule="evenodd" opacity="0.1" x="609" y="295" width="15" height="80"></rect>
+    <rect id="gauge3" stroke="#999999" strokeWidth="1" fill="#666666" fillRule="evenodd" x="46" y="357" width="205" height="17.5" rx="2"></rect>
+    <rect id="gauge2" stroke="#999999" strokeWidth="1" fill="#666666" fillRule="evenodd" x="46" y="330" width="205" height="17.5" rx="2"></rect>
+    <rect id="gauge1" stroke="#999999" strokeWidth="1" fill="#666666" fillRule="evenodd" x="46" y="304" width="205" height="17.5" rx="2"></rect>
+      <g ref={elem => this.gaugeLights1 = elem} className={graphics.gaugeLights}stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(55.000000, 306.000000)">
       <circle id="light" fill="#F2E64E" cx="7" cy="7" r="7"></circle>
       <circle id="light" fill="#F2E64E" cx="27" cy="7" r="7"></circle>
       <circle id="light" fill="#F2E64E" cx="46" cy="7" r="7"></circle>
@@ -1615,7 +1618,7 @@ export class MachineGraphic extends React.Component {
       <circle id="light" fill="#F2E64E" cx="163" cy="7" r="7"></circle>
       <circle id="light" fill="#F2E64E" cx="183" cy="7" r="7"></circle>
     </g>
-      <g ref={elem => this.gaugeLights2 = elem} className={graphics.gaugeLights} stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(55.000000, 332.000000)">
+      <g ref={elem => this.gaugeLights2 = elem} className={graphics.gaugeLights} stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(55.000000, 332.000000)">
       <circle id="light" fill="#F2E64E" cx="7" cy="7" r="7"></circle>
       <circle id="light" fill="#F2E64E" cx="27" cy="7" r="7"></circle>
       <circle id="light" fill="#F2E64E" cx="46" cy="7" r="7"></circle>
@@ -1627,7 +1630,7 @@ export class MachineGraphic extends React.Component {
       <circle id="light" fill="#F2E64E" cx="163" cy="7" r="7"></circle>
       <circle id="light" fill="#F2E64E" cx="183" cy="7" r="7"></circle>
     </g>
-      <g ref={elem => this.gaugeLights3 = elem} className={graphics.gaugeLights} stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(54.000000, 359.000000)">
+      <g ref={elem => this.gaugeLights3 = elem} className={graphics.gaugeLights} stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(54.000000, 359.000000)">
       <circle id="light" fill="#F3E74E" cx="7" cy="7" r="7"></circle>
       <circle id="light" fill="#F3E74E" cx="27" cy="7" r="7"></circle>
       <circle id="light" fill="#F3E74E" cx="46" cy="7" r="7"></circle>
@@ -1639,28 +1642,28 @@ export class MachineGraphic extends React.Component {
       <circle id="light" fill="#F3E74E" cx="163" cy="7" r="7"></circle>
       <circle id="light" fill="#F3E74E" cx="183" cy="7" r="7"></circle>
     </g>
-    <g id="dial1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(316.000000, 319.000000)">
+    <g id="dial1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(316.000000, 319.000000)">
       <circle id="dial-shadow" fill="#777777" cx="29" cy="29" r="29"></circle>
       <circle id="dial" fill="#FFFFFF" cx="30" cy="28" r="27"></circle>
       <path d="M57,55 C57,40.0883118 44.9116882,28 30,28 C15.0883118,28 3,40.0883118 3,55 L57,55 Z" id="dial_bottom" fill="#D55050" transform="translate(30.000000, 41.500000) scale(1, -1) translate(-30.000000, -41.500000) "></path>
       <path d="M30,34 C32.7614237,34 35,31.7614237 35,29 C35,26.2385763 32.7614237,24 30,24 C27.2385763,24 25,26.2385763 25,29 C25,31.7614237 27.2385763,34 30,34 Z" id="dial_center" fill="#666666"></path>
-      <path ref={elem => this.needle1 = elem} className={graphics.needle1} d="M14.5,14.5 L29.6137817,27.5986108" id="needle" stroke="#666666" stroke-width="4" stroke-linecap="square"></path>
+      <path ref={elem => this.needle1 = elem} className={graphics.needle1} d="M14.5,14.5 L29.6137817,27.5986108" id="needle" stroke="#666666" strokeWidth="4" strokeLinecap="square"></path>
     </g>
-    <g id="dial2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(394.000000, 319.000000)">
+    <g id="dial2" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(394.000000, 319.000000)">
       <circle id="dial-shadow" fill="#777777" cx="29" cy="29" r="29"></circle>
       <circle id="dial" fill="#FFFFFF" cx="30" cy="28" r="27"></circle>
       <path d="M57,55 C57,40.0883118 44.9116882,28 30,28 C15.0883118,28 3,40.0883118 3,55 L57,55 Z" id="dial_bottom" fill="#D55050" transform="translate(30.000000, 41.500000) scale(1, -1) translate(-30.000000, -41.500000) "></path>
       <path d="M30,34 C32.7614237,34 35,31.7614237 35,29 C35,26.2385763 32.7614237,24 30,24 C27.2385763,24 25,26.2385763 25,29 C25,31.7614237 27.2385763,34 30,34 Z" id="dial_center" fill="#666666"></path>
-      <path ref={elem => this.needle2 = elem} className={graphics.needle2} d="M34.5,8.5 L29.6137817,27.5986108" id="needle" stroke="#666666" stroke-width="4" stroke-linecap="square"></path>
+      <path ref={elem => this.needle2 = elem} className={graphics.needle2} d="M34.5,8.5 L29.6137817,27.5986108" id="needle" stroke="#666666" strokeWidth="4" strokeLinecap="square"></path>
     </g>
-    <g id="dial3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(474.000000, 319.000000)">
+    <g id="dial3" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(474.000000, 319.000000)">
       <circle id="dial-shadow" fill="#777777" cx="29" cy="29" r="29"></circle>
       <circle id="dial" fill="#FFFFFF" cx="30" cy="28" r="27"></circle>
       <path d="M57,55 C57,40.0883118 44.9116882,28 30,28 C15.0883118,28 3,40.0883118 3,55 L57,55 Z" id="dial_bottom" fill="#D55050" transform="translate(30.000000, 41.500000) scale(1, -1) translate(-30.000000, -41.500000) "></path>
       <path d="M30,34 C32.7614237,34 35,31.7614237 35,29 C35,26.2385763 32.7614237,24 30,24 C27.2385763,24 25,26.2385763 25,29 C25,31.7614237 27.2385763,34 30,34 Z" id="dial_center" fill="#666666"></path>
-      <path ref={elem => this.needle3 = elem} className={graphics.needle3} d="M49.5,22.5 L31.4919759,27.7582008" id="needle" stroke="#666666" stroke-width="4" stroke-linecap="square"></path>
+      <path ref={elem => this.needle3 = elem} className={graphics.needle3} d="M49.5,22.5 L31.4919759,27.7582008" id="needle" stroke="#666666" strokeWidth="4" strokeLinecap="square"></path>
     </g>
-      <g className={graphics.fidgetSpinner} filter="url(#filter-7)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(88.000000, 170.000000)">
+      <g className={graphics.fidgetSpinner} filter="url(#filter-7)" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(88.000000, 170.000000)">
       <g id="Group" fill="#346D98">
         <g ref={elem => this.fidgetSpinner = elem}>
           <path d="M59.9331813,6.62083333 C51.5544183,6.62083333 44.7626965,13.2509358 44.7626965,21.4303133 C44.7626965,29.6096908 51.5544183,36.2411175 59.9331813,36.2411175 C68.3119442,36.2411175 75.103666,29.611015 75.103666,21.4316375 C75.103666,13.25226 68.3119442,6.62083333 59.9331813,6.62083333 L59.9331813,6.62083333 Z M59.9331813,29.9433808 C55.1178003,29.9433808 51.2139506,26.1324292 51.2139506,21.4316375 C51.2139506,16.7308458 55.1178003,12.9198942 59.9331813,12.9198942 C64.7485622,12.9198942 68.652412,16.7308458 68.652412,21.4316375 C68.652412,26.1324292 64.7485622,29.9433808 59.9331813,29.9433808 L59.9331813,29.9433808 Z" id="Shape"></path>
@@ -1671,59 +1674,59 @@ export class MachineGraphic extends React.Component {
         </g>
       </g>
     </g>
-    <rect id="Rectangle-4" stroke="none" fill="#AAAAAA" fill-rule="evenodd" x="432" y="96" width="43" height="73"></rect>
-    <rect id="Rectangle-4-Copy-2" stroke="none" fill="#AAAAAA" fill-rule="evenodd" transform="translate(563.500000, 74.500000) rotate(90.000000) translate(-563.500000, -74.500000) " x="542" y="-47" width="43" height="243" rx="21.5"></rect>
-    <rect id="Rectangle-4-Copy" stroke="none" fill="#AAAAAA" fill-rule="evenodd" x="658" y="96" width="43" height="73"></rect>
-    <rect id="Rectangle-3-Copy" stroke="none" fill="#999999" fill-rule="evenodd" x="652" y="143" width="54" height="25.2700005" rx="2"></rect>
-    <rect id="Rectangle-3-Copy-2" stroke="none" fill="#999999" fill-rule="evenodd" x="426" y="150" width="54" height="25.2700005" rx="2"></rect>
-    <path d="M479.916667,101 L479.916667,46.0033251 L479.916667,46.0033251 C479.712108,46.0011103 479.507283,46 479.302198,46 C448.759637,46 424,70.6243388 424,101" id="Combined-Shape" stroke="none" fill="#999999" fill-rule="evenodd" opacity="0.98999995"></path>
-    <path d="M708.916667,101 L708.916667,46.0033251 L708.916667,46.0033251 C708.712108,46.0011103 708.507283,46 708.302198,46 C677.759637,46 653,70.6243388 653,101" id="Combined-Shape-Copy" stroke="none" fill="#999999" fill-rule="evenodd" opacity="0.98999995" transform="translate(680.958333, 73.500000) scale(-1, 1) translate(-680.958333, -73.500000) "></path>
-    <path ref={elem => this.valve = elem} d="M604,37 C584.167665,37 568,53.1819377 568,73.0317814 C568,92.881625 584.167665,109.063563 604,109.063563 C623.832335,109.063563 640,92.881625 640,73.0317814 C640,53.3976969 623.832335,37 604,37 L604,37 Z M632.023952,73.2475406 C632.023952,76.9154464 631.377246,80.3675932 630.083832,83.8197399 L611.976048,73.2475406 L611.976048,73.2475406 C611.976048,70.4426713 610.251497,67.8535613 607.88024,66.3432471 L607.88024,45.6303668 C621.461078,47.3564402 632.023952,59.0074353 632.023952,73.2475406 L632.023952,73.2475406 Z M600.11976,45.1988485 L600.11976,65.9117288 C597.748503,67.422043 596.023952,70.011153 596.023952,72.8160222 L596.023952,72.8160222 L577.916168,83.3882215 C576.622754,80.3675932 575.976048,76.6996873 575.976048,72.8160222 C575.976048,59.0074353 586.538922,47.3564402 600.11976,45.1988485 L600.11976,45.1988485 Z M604,101.080473 C595.161677,101.080473 587.185629,96.7652901 582.011976,90.292515 L600.11976,79.7203157 C601.413174,80.3675932 602.706587,81.0148707 604.215569,81.0148707 C605.724551,81.0148707 607.017964,80.5833523 608.311377,79.7203157 L626.419162,90.292515 C620.814371,97.1968084 612.838323,101.080473 604,101.080473 L604,101.080473 Z" id="valve" stroke="none" fill="#777777" fill-rule="evenodd"></path>
-    <g id="screw-copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(23.000000, 161.500000) rotate(75.000000) translate(-23.000000, -161.500000) translate(19.000000, 158.000000)">
+    <rect id="Rectangle-4" stroke="none" fill="#AAAAAA" fillRule="evenodd" x="432" y="96" width="43" height="73"></rect>
+    <rect id="Rectangle-4-Copy-2" stroke="none" fill="#AAAAAA" fillRule="evenodd" transform="translate(563.500000, 74.500000) rotate(90.000000) translate(-563.500000, -74.500000) " x="542" y="-47" width="43" height="243" rx="21.5"></rect>
+    <rect id="Rectangle-4-Copy" stroke="none" fill="#AAAAAA" fillRule="evenodd" x="658" y="96" width="43" height="73"></rect>
+    <rect id="Rectangle-3-Copy" stroke="none" fill="#999999" fillRule="evenodd" x="652" y="143" width="54" height="25.2700005" rx="2"></rect>
+    <rect id="Rectangle-3-Copy-2" stroke="none" fill="#999999" fillRule="evenodd" x="426" y="150" width="54" height="25.2700005" rx="2"></rect>
+    <path d="M479.916667,101 L479.916667,46.0033251 L479.916667,46.0033251 C479.712108,46.0011103 479.507283,46 479.302198,46 C448.759637,46 424,70.6243388 424,101" id="Combined-Shape" stroke="none" fill="#999999" fillRule="evenodd" opacity="0.98999995"></path>
+    <path d="M708.916667,101 L708.916667,46.0033251 L708.916667,46.0033251 C708.712108,46.0011103 708.507283,46 708.302198,46 C677.759637,46 653,70.6243388 653,101" id="Combined-Shape-Copy" stroke="none" fill="#999999" fillRule="evenodd" opacity="0.98999995" transform="translate(680.958333, 73.500000) scale(-1, 1) translate(-680.958333, -73.500000) "></path>
+    <path ref={elem => this.valve = elem} d="M604,37 C584.167665,37 568,53.1819377 568,73.0317814 C568,92.881625 584.167665,109.063563 604,109.063563 C623.832335,109.063563 640,92.881625 640,73.0317814 C640,53.3976969 623.832335,37 604,37 L604,37 Z M632.023952,73.2475406 C632.023952,76.9154464 631.377246,80.3675932 630.083832,83.8197399 L611.976048,73.2475406 L611.976048,73.2475406 C611.976048,70.4426713 610.251497,67.8535613 607.88024,66.3432471 L607.88024,45.6303668 C621.461078,47.3564402 632.023952,59.0074353 632.023952,73.2475406 L632.023952,73.2475406 Z M600.11976,45.1988485 L600.11976,65.9117288 C597.748503,67.422043 596.023952,70.011153 596.023952,72.8160222 L596.023952,72.8160222 L577.916168,83.3882215 C576.622754,80.3675932 575.976048,76.6996873 575.976048,72.8160222 C575.976048,59.0074353 586.538922,47.3564402 600.11976,45.1988485 L600.11976,45.1988485 Z M604,101.080473 C595.161677,101.080473 587.185629,96.7652901 582.011976,90.292515 L600.11976,79.7203157 C601.413174,80.3675932 602.706587,81.0148707 604.215569,81.0148707 C605.724551,81.0148707 607.017964,80.5833523 608.311377,79.7203157 L626.419162,90.292515 C620.814371,97.1968084 612.838323,101.080473 604,101.080473 L604,101.080473 Z" id="valve" stroke="none" fill="#777777" fillRule="evenodd"></path>
+    <g id="screw-copy" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(23.000000, 161.500000) rotate(75.000000) translate(-23.000000, -161.500000) translate(19.000000, 158.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw-copy-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(271.000000, 161.500000) rotate(15.000000) translate(-271.000000, -161.500000) translate(267.000000, 158.000000)">
+    <g id="screw-copy-2" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(271.000000, 161.500000) rotate(15.000000) translate(-271.000000, -161.500000) translate(267.000000, 158.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw-copy-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(23.000000, 385.500000) rotate(-10.000000) translate(-23.000000, -385.500000) translate(19.000000, 382.000000)">
+    <g id="screw-copy-3" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(23.000000, 385.500000) rotate(-10.000000) translate(-23.000000, -385.500000) translate(19.000000, 382.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw-copy-4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(270.000000, 385.500000) rotate(120.000000) translate(-270.000000, -385.500000) translate(266.000000, 382.000000)">
+    <g id="screw-copy-4" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(270.000000, 385.500000) rotate(120.000000) translate(-270.000000, -385.500000) translate(266.000000, 382.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw-copy-8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(297.000000, 182.500000) rotate(-80.000000) translate(-297.000000, -182.500000) translate(293.000000, 179.000000)">
+    <g id="screw-copy-8" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(297.000000, 182.500000) rotate(-80.000000) translate(-297.000000, -182.500000) translate(293.000000, 179.000000)">
       <path d="M-2.26485497e-14,6.94452854 L-2.26485497e-14,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,-1.13686838e-13 -2.26485497e-14,-1.13686838e-13" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw-copy-7" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(544.000000, 182.500000) rotate(47.000000) translate(-544.000000, -182.500000) translate(540.000000, 179.000000)">
+    <g id="screw-copy-7" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(544.000000, 182.500000) rotate(47.000000) translate(-544.000000, -182.500000) translate(540.000000, 179.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw-copy-6" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(296.000000, 386.500000) rotate(15.000000) translate(-296.000000, -386.500000) translate(292.000000, 383.000000)">
+    <g id="screw-copy-6" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(296.000000, 386.500000) rotate(15.000000) translate(-296.000000, -386.500000) translate(292.000000, 383.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw-copy-5" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(542.000000, 385.500000) rotate(-111.000000) translate(-542.000000, -385.500000) translate(538.000000, 382.000000)">
+    <g id="screw-copy-5" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(542.000000, 385.500000) rotate(-111.000000) translate(-542.000000, -385.500000) translate(538.000000, 382.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw-copy-11" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(568.000000, 173.500000) rotate(69.000000) translate(-568.000000, -173.500000) translate(564.000000, 170.000000)">
+    <g id="screw-copy-11" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(568.000000, 173.500000) rotate(69.000000) translate(-568.000000, -173.500000) translate(564.000000, 170.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw-copy-10" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(797.000000, 174.500000) rotate(-66.000000) translate(-797.000000, -174.500000) translate(793.000000, 171.000000)">
+    <g id="screw-copy-10" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(797.000000, 174.500000) rotate(-66.000000) translate(-797.000000, -174.500000) translate(793.000000, 171.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw-copy-9" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(797.000000, 385.500000) rotate(-5.000000) translate(-797.000000, -385.500000) translate(793.000000, 382.000000)">
+    <g id="screw-copy-9" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(797.000000, 385.500000) rotate(-5.000000) translate(-797.000000, -385.500000) translate(793.000000, 382.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
-    <g id="screw" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(569.000000, 385.500000) rotate(122.000000) translate(-569.000000, -385.500000) translate(565.000000, 382.000000)">
+    <g id="screw" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(569.000000, 385.500000) rotate(122.000000) translate(-569.000000, -385.500000) translate(565.000000, 382.000000)">
       <path d="M0,6.94452854 L0,6.94452854 C2.00269884,6.94452854 3.62620702,5.38994288 3.62620702,3.47226427 C3.62620702,1.55458567 2.00269884,0 0,0" id="screw_left" fill="#666666" transform="translate(1.813104, 3.472264) scale(-1, 1) translate(-1.813104, -3.472264) "></path>
       <path d="M4.27586207,6.94452854 L4.27586207,6.94452854 C6.27856091,6.94452854 7.90206909,5.38994288 7.90206909,3.47226427 C7.90206909,1.55458567 6.27856091,0 4.27586207,0" id="screw_right" fill="#666666"></path>
     </g>
