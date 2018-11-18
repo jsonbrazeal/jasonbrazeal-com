@@ -409,18 +409,28 @@
 }
 
 .modalWrap h2 {
-  color: #343434;
-  margin-bottom: 1em;
+  font-size: 2.5rem;
+  margin-bottom: 0;
   text-transform: uppercase;
+  text-align: center;
 }
 
-.modalWrap p {
-  color: #343434;
-  text-align: justify;
+.modalWrap h3 {
+  font-size: 1.5rem;
+}
+
+.modalWrap time {
+  font-size: 1rem;
+}
+
+.modalWrap ul {
+  list-style-type: disc;
 }
 
 .modalWrap * {
   color: #343434;
+  text-align: left;
+  font-size: 1rem
 }
 
 .modalTriggerInput:focus ~ label {
@@ -520,6 +530,11 @@ html.popupActive, body.popupActive {
 
 .popupContainer .popupBackground .popupContent .popupSnippet {
   width: 100%;
+  text-align: left;
+}
+
+.popupContainer .popupBackground .popupContent .popupSnippet ul {
+  list-style-type: square;
 }
 
 .popupContainer .popupBackground .popupContent .popupSnippet pre[class*="language-"], .popupContainer .popupBackground .popupContent .popupSnippet code[class*="language-"], .popupContainer .popupBackground .popupContent .popupSnippet code[class*="language-"] * {

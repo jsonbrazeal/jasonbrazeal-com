@@ -43,15 +43,15 @@ var snippets = {
   \`\`\`
 
   # how to create a new mysql database user
-    * login as root or other user with sufficient privileges \`bash mysql -h localhost -u root -p \`
-    * create new user \`sql CREATE USER username@localhost IDENTIFIED BY 'password'; \`
-    * give new user privileges
-      * all privileges, all databases, ability to grant further privileges \`sql GRANT ALL ON *.* TO username@localhost WITH GRANT OPTION; \`
-      * some privileges, all databases \`sql GRANT INSERT, DELETE, UPDATE ON *.* TO username@localhost; \`
-      * all privileges, one database called "db" \`sql GRANT ALL ON db.* TO username@localhost; \`
-      * all privileges, one database called "db", one table called "tb" \`sql GRANT ALL ON db.tb TO username@localhost; \`
-    * see which privileges a user has been granted \`sql SHOW GRANTS FOR ghb_user@localhost; \`
-    * see all possible privileges you can grant \`sql SHOW PRIVILEGES; \`
+  * login as root or other user with sufficient privileges \`bash mysql -h localhost -u root -p \`
+  * create new user \`sql CREATE USER username@localhost IDENTIFIED BY 'password'; \`
+  * give new user privileges
+    * all privileges, all databases, ability to grant further privileges \`sql GRANT ALL ON *.* TO username@localhost WITH GRANT OPTION; \`
+    * some privileges, all databases \`sql GRANT INSERT, DELETE, UPDATE ON *.* TO username@localhost; \`
+    * all privileges, one database called "db" \`sql GRANT ALL ON db.* TO username@localhost; \`
+    * all privileges, one database called "db", one table called "tb" \`sql GRANT ALL ON db.tb TO username@localhost; \`
+  * see which privileges a user has been granted \`sql SHOW GRANTS FOR ghb_user@localhost; \`
+  * see all possible privileges you can grant \`sql SHOW PRIVILEGES; \`
   `,
 
 
