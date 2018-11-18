@@ -638,9 +638,9 @@ export class SnippetTiles extends React.Component {
   handleTileClick(topic) {
 
     let popupTitle = document.querySelector(`.${animations.popupTitle}`);
-    popupTitle.innerHTML = topic;
+    popupTitle.innerHTML = snippets.snippets[topic]["title"];
     let popup = document.querySelector(`.${animations.popupSnippet}`);
-    popup.innerHTML = md.render(snippets.snippets[topic]) || "";
+    popup.innerHTML = md.render(snippets.snippets[topic]["content"]) || "";
     Prism.highlightAllUnder(popup);
 
     var hexagons = document.querySelectorAll("." + graphics.hexagon);
@@ -673,65 +673,27 @@ export class SnippetTiles extends React.Component {
   }
 
   render() {
+    let numRows = Math.floor(Object.keys(snippets.snippets).length / 8);
+    let snipsContainers = [];
+    for (let i = 0; i < numRows + 1; i++) {
+      let snipsSlice = Object.keys(snippets.snippets).slice(i * 8, i * 8 + 8);
+      let snips = snipsSlice.map((elem, i) => {
+        return <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic={elem} />
+      });
+      if (snips.length !== 8) {
+        let nones = [...Array(8 - snips.length).keys()].map((elem, i) => {
+          return <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
+        });
+        snipsContainers.push(<HexagonGroup>{snips}{nones}</HexagonGroup>);
+      } else {
+        snipsContainers.push(<HexagonGroup>{snips}</HexagonGroup>);
+      }
+    }
+    console.log(snipsContainers)
     return (
-      // TODO: refactor into individual tile components
       <div className={graphics.honeycomb}>
-        <div className={graphics.ibwsFix}>
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="grep" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="sed" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="awk" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="wc" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="sort" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="ps" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="catt" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="unixTime" />
-        </div>
-        <div className={graphics.ibwsFix}>
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="pythonCli" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="mysql" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="requests" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="sql" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="flask" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="asyncio" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="bash" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="xargs" />
-        </div>
-        <div className={graphics.ibwsFix}>
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="nc" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="socat" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="top" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="vi" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="file" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="rm" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="docker" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="tr" />
-        </div>
-        <div className={graphics.ibwsFix}>
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="ssh" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="zip" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="tar" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="systemctl" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="cut" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="unzip" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="mount" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="pyenv" />
-        </div>
-        <div className={graphics.ibwsFix}>
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="nvm" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="rvm" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="rabbitmq" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="kill" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="trap" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="set" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
-        </div>
-        <div className={graphics.ibwsFix}>
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="env" />
-          <SnippetTile activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
-        </div>
+
+        {snipsContainers}
 
         <div className={animations.popupContainer}>
           <div className={animations.popupBackground}>
@@ -746,8 +708,16 @@ export class SnippetTiles extends React.Component {
           </div>
         </div>
 
-      </div>
+      </div> /* graphics.honeycomb */
 
+    ) // return
+  } // render
+} // class
+
+export class HexagonGroup extends React.Component {
+  render() {
+    return (
+      <div className={graphics.ibwsFix}>{this.props.children}</div>
     )
   }
 }
