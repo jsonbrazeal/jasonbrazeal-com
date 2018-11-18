@@ -427,6 +427,11 @@
   list-style-type: disc;
 }
 
+.modalWrap img {
+  margin: 0 auto;
+  display: block;
+}
+
 .modalWrap a {
   color: #346D98;
 }
