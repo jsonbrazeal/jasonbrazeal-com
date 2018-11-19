@@ -1,12 +1,12 @@
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var ManifestRevisionPlugin = require('manifest-revision-webpack-plugin');
 
-var rootAssetPath = './jasonbrazeal_com/assets';
+var rootAssetPath = __dirname + '/jasonbrazeal_com/ui';
 const getLocalIdent = require('css-loader/lib/getLocalIdent');
 
 module.exports = {
     mode: 'development',
+    devtool: 'inline-source-map',
     // context: __dirname,
     entry: {
         app: [
@@ -17,17 +17,18 @@ module.exports = {
         // ]
     },
     output: {
-        path: __dirname + '/build/assets/',
-        publicPath: 'http://localhost:8000/assets/',
-        filename: '[name].[chunkhash].js',
-        chunkFilename: '[id].[chunkhash].js'
+        path: rootAssetPath + '/build/',
+        publicPath: 'http://localhost:8000/ui/',
+        filename: '[name].js',
+        chunkFilename: '[name].js'
     },
     devServer: {
-      contentBase: __dirname + '/build/',
+      publicPath: 'http://localhost:8000/ui/',
+      contentBase: rootAssetPath + '/build/',
       // compress: true,
       port: 8000,
       // go to http://localhost:8000 for development
-      // this proxy setting will forward requests to the flask dev server
+      // this proxy setting will forward requests to '/' the flask dev server
       proxy: {
         '/': {
          target: 'http://localhost:5000',
@@ -101,11 +102,5 @@ module.exports = {
             },
 
         ]
-    },
-    plugins: [
-        new ManifestRevisionPlugin(path.join('build', 'manifest.json'), {
-            rootAssetPath: rootAssetPath,
-            ignorePaths: ['/css', '/js']
-        })
-    ]
+    }
 };

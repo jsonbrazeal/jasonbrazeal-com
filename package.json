@@ -13,9 +13,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node_modules/.bin/webpack-dev-server --progress --inline --colors",
-    "build": "node_modules/.bin/webpack --display-error-details --config webpack.config.js --progress --profile --colors",
-    "clean": "rimraf build/*"
+    "start": "node_modules/.bin/webpack-dev-server --progress --inline --colors --config webpack.dev.js",
+    "build": "rimraf nginx/build/* && node_modules/.bin/webpack --display-error-details --config webpack.prod.js --progress --profile --colors",
+    "clean": "rimraf jasonbrazeal_com/ui/build/*"
   },
   "repository": {
     "type": "git",
@@ -50,7 +50,6 @@
     "image-webpack-loader": "*",
     "less": "*",
     "less-loader": "*",
-    "manifest-revision-webpack-plugin": "*",
     "postcss-icss-keyframes": "*",
     "postcss-loader": "*",
     "rimraf": "*",

@@ -2,13 +2,23 @@ FROM python:3-alpine
 
 WORKDIR /app
 
-COPY . /app
-RUN pip install --no-cache-dir -e /app
+COPY ./Pipfile /app
+COPY ./Pipfile.lock /app
+
+RUN pip install pipenv
+RUN pipenv install --system --deploy
+
+COPY ./templates /app/templates
+COPY ./app.py /app
 
 EXPOSE 5000
 
-CMD ["python"]
+ENV NGINX_HOST=http://localhost:8000
+ENV JS_BUNDLE=$NGINX_HOST/app.1548a5bfa791bdebaddb.js
 
+# CMD ["/bin/sh"]
+CMD ["pipenv", "run", "gunicorn", "-w", "4", "app:app", "-b", "0.0.0.0:5000", "--access-logfile", "-", "--error-logfile", "-", "--log-level", "DEBUG"]
+# CMD ["pipenv", "run", "gunicorn", "-w", "4", "app:app", "-b", "unix:/socket/gunicorn.sock", "--access-logfile", "-", "--error-logfile", "-", "--log-level", "DEBUG"]
 
 # docker build -t jasonbrazeal.com .
 # docker run --rm -it -p 8000:8000 --name=jasonbrazeal.com jasonbrazeal.com
