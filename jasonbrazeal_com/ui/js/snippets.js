@@ -98,12 +98,6 @@ catt /path/to/file
   pythoncli: {title: "Command Line Python",
               content: `# how to run python code from the command line
 
-\`\`\`python
-import this
-test = "a test string"
-test3 = 1 + 2
-\`\`\`
-
 * run python code from the command line with the \`-c\` flag; put the code in single quotes and use double quotes in the Python code
 \`\`\`python
 python -c 'print("hi")'
