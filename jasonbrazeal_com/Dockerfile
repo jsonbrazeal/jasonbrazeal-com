@@ -14,7 +14,7 @@ COPY ./app.py /app
 EXPOSE 5000
 
 ENV NGINX_HOST=http://localhost:8000
-ENV JS_BUNDLE=$NGINX_HOST/app.1548a5bfa791bdebaddb.js
+ENV JS_BUNDLE=$NGINX_HOST/app.ee6ce40cb9e4550c52f4.js
 
 # CMD ["/bin/sh"]
 CMD ["pipenv", "run", "gunicorn", "-w", "4", "app:app", "-b", "0.0.0.0:5000", "--access-logfile", "-", "--error-logfile", "-", "--log-level", "DEBUG"]

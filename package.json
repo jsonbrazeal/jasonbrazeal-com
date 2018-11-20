@@ -14,7 +14,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node_modules/.bin/webpack-dev-server --progress --inline --colors --config webpack.dev.js",
-    "build": "rimraf nginx/build/* && node_modules/.bin/webpack --display-error-details --config webpack.prod.js --progress --profile --colors",
+    "build": "scripts/build.sh",
     "clean": "rimraf jasonbrazeal_com/ui/build/*"
   },
   "repository": {

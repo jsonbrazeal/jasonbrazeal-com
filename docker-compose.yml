@@ -2,18 +2,67 @@ version: '3.5'
 
 networks:
   jbnet:
-    name: jbnet
 
 services:
   flask:
-    build: ./jasonbrazeal_com
+    # build: ./jasonbrazeal_com
+    image: jsonbrazeal/jasonbrazeal.com:flask
+    deploy:
+      replicas: 2
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: 50M
+    #   reservations:
+    #     cpus: "0.1"
+    #     memory: 50M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 5
+        window: 60s
     ports:
       - '5000:5000'
     networks:
       - jbnet
   nginx:
-    build: ./nginx
+    depends_on:
+      - flask # because nginx config uses "flask" hostname
+    # build: ./nginx
+    image: jsonbrazeal/jasonbrazeal.com:nginx
+    deploy:
+      replicas: 1
+      # resources:
+      #   limits:
+      #     cpus: "0.1"
+      #     memory: 50M
+      #   reservations:
+      #     cpus: "0.1"
+      #     memory: 50M
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+        window: 30s
     ports:
       - '8000:8000'
     networks:
       - jbnet
+    # secrets:
+    #   - ssl
+    #   - ssl
+
+# secrets:
+#   ssl:
+#     external: true
+#   ssl:
+#     external: true
+
+# docker stack deploy -c docker-compose.yml jasonbrazeal_com
+
+
+
+# condition: One of none, on-failure or any (default: any).
+# delay: How long to wait between restart attempts, specified as a duration (default: 0).
+# max_attempts: How many times to attempt to restart a container before giving up (default: never give up). If the restart does not succeed within the configured window, this attempt doesn’t count toward the configured max_attempts value. For example, if max_attempts is set to ‘2’, and the restart fails on the first attempt, more than two restarts may be attempted.
+# window: How long to wait before deciding if a restart has succeeded, specified as a duration (default: decide immediately).
