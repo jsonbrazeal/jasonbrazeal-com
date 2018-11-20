@@ -17,7 +17,7 @@ module.exports = {
     },
     output: {
         path: __dirname + '/nginx/build/',
-        publicPath: 'http://localhost:8000/',
+        publicPath: 'http://jasonbrazeal.com/', // trailing slask required
         filename: '[name].[contenthash].js',
     },
     // Automatically resolve certain extensions.

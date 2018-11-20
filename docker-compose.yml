@@ -5,6 +5,8 @@ networks:
 
 services:
   flask:
+    depends_on:
+      - jbnet
     # build: ./jasonbrazeal_com
     image: jsonbrazeal/jasonbrazeal.com:flask
     deploy:
@@ -45,7 +47,8 @@ services:
         max_attempts: 5
         window: 30s
     ports:
-      - '8000:8000'
+      - '80:80'
+      - '443:443'
     networks:
       - jbnet
     # secrets:

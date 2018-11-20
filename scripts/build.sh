@@ -13,3 +13,11 @@ node_modules/.bin/webpack --display-error-details --config webpack.prod.js --pro
 scriptdir="$( cd "$(dirname "$0")" ; pwd -P )"
 newbundle=$(basename -- $(ls $scriptdir/../nginx/build/app*))
 sed -i "s/app.*\.js/$newbundle/g" $scriptdir/../jasonbrazeal_com/Dockerfile
+
+# build, tag, and push new images
+docker build -t jsonbrazeal/jasonbrazeal.com:nginx $scriptdir/../nginx
+docker push jsonbrazeal/jasonbrazeal.com:nginx
+
+# build, tag, and push new images
+docker build -t jsonbrazeal/jasonbrazeal.com:flask $scriptdir/../jasonbrazeal_com
+docker push jsonbrazeal/jasonbrazeal.com:flask
