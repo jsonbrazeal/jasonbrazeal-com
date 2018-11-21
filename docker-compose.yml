@@ -3,6 +3,9 @@ version: '3.5'
 networks:
   jbnet:
 
+volumes:
+ webroot:
+
 secrets:
   key:
     external: true
@@ -41,6 +44,8 @@ services:
       - flask # because nginx config uses "flask" hostname
     # build: ./nginx
     image: jsonbrazeal/jasonbrazeal.com:nginx
+    volumes:
+      - webroot:/usr/share/nginx/html # for letsencrypt certbot challenges
     deploy:
       replicas: 1
       # resources:

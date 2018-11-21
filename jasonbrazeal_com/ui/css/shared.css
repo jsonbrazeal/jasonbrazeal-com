@@ -1,4 +1,21 @@
-@import url("https://fonts.googleapis.com/css?family=Raleway:200,100,400");
+@font-face {
+  font-family: "Raleway";
+  font-weight: 100;
+  src: url('../font/Raleway100.woff2') format('woff2'),
+       url('../font/Raleway100.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Raleway";
+  font-weight: 200;
+  src: url('../font/Raleway200.woff2') format('woff2'),
+       url('../font/Raleway200.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Raleway";
+  font-weight: 400;
+  src: url('../font/Raleway400.woff2') format('woff2'),
+       url('../font/Raleway400.ttf') format('truetype');
+}
 
 a {
   text-decoration: none;

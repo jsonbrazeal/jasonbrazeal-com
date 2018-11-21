@@ -4,7 +4,9 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var rootAssetPath = __dirname + '/jasonbrazeal_com/ui';
 const getLocalIdent = require('css-loader/lib/getLocalIdent');
 
-module.exports = {
+module.exports = env => {
+
+  return {
     mode: 'development',
     devtool: 'inline-source-map',
     // context: __dirname,
@@ -18,13 +20,13 @@ module.exports = {
     },
     output: {
         path: rootAssetPath + '/build/',
-        publicPath: 'http://localhost:8000/ui/',
+        publicPath: 'http://localhost:8000/',
         filename: '[name].js',
         chunkFilename: '[name].js'
     },
     devServer: {
-      publicPath: 'http://localhost:8000/ui/',
-      contentBase: rootAssetPath + '/build/',
+      publicPath: 'http://localhost:8000/',
+      contentBase: rootAssetPath,
       // compress: true,
       port: 8000,
       // go to http://localhost:8000 for development
@@ -103,4 +105,6 @@ module.exports = {
 
         ]
     }
+  };
+
 };

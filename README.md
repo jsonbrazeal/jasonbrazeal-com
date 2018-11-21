@@ -42,13 +42,16 @@ chown -R jsonbrazeal: /home/jsonbrazeal/.ssh
 vi /etc/ssh/sshd_config
 # change yes to no --> PermitRootLogin no
 
+# set up SSL certs using my letsencrypt-nginx image
+# if already set up, scp to machine and fix symlinks (see letsencrypt-nginx README)
+
 vi docker-compose.yml
 # copy in contents
 docker swarm init --listen-addr lo:2377 --advertise-addr lo:2377
-openssl dhparam -out /root/jason.ninja/dhparam-2048.pem 2048
-cat /root/jason.ninja/privkey.pem | docker secret create key -
-cat /root/jason.ninja/fullchain.pem | docker secret create crt -
-cat /root/jason.ninja/dhparam-2048.pem | docker secret create dh -
+openssl dhparam -out /etc/letsencrypt/live/jason.ninja/dhparam-2048.pem 2048
+cat /etc/letsencrypt/live/jason.ninja/privkey.pem | docker secret create key -
+cat /etc/letsencrypt/live/jason.ninja/fullchain.pem | docker secret create crt -
+cat /etc/letsencrypt/live/jason.ninja/dhparam-2048.pem | docker secret create dh -
 docker login
 docker pull jsonbrazeal/jasonbrazeal.com:nginx
 docker pull jsonbrazeal/jasonbrazeal.com:flask
