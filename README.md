@@ -25,9 +25,11 @@ FLASK_DEBUG=1 FLASK_APP=/path/to/project/folder/project/app.py flask run --host=
 * create docker one-click app/node $5/month, with ssh key
 ssh root@<IPADDR>
 rm -rf /etc/update-motd.d/99-one-click
-apt-get update && apt-get upgrade
+apt-get update && apt-get upgrade -y
+# update ssh config to package maintainer's default
 ufw allow proto tcp from any to any port 80,443
 adduser jsonbrazeal
+# enter info
 usermod -aG sudo jsonbrazeal
 update-alternatives --config editor
 # select (3) vim.basic
@@ -35,7 +37,19 @@ mkdir /home/jsonbrazeal/.ssh
 vi /home/jsonbrazeal/.ssh/authorized_keys
 # add id_rsa.mbp-json.pub
 chmod 600 /home/jsonbrazeal/.ssh/authorized_keys
-chown -R jsonbrazeal: .ssh
+chown -R jsonbrazeal: /home/jsonbrazeal/.ssh
 # test ssh login as jsonbrazeal
 vi /etc/ssh/sshd_config
 # change yes to no --> PermitRootLogin no
+
+vi docker-compose.yml
+# copy in contents
+docker swarm init --listen-addr lo:2377 --advertise-addr lo:2377
+openssl dhparam -out /root/jason.ninja/dhparam-2048.pem 2048
+cat /root/jason.ninja/privkey.pem | docker secret create key -
+cat /root/jason.ninja/fullchain.pem | docker secret create crt -
+cat /root/jason.ninja/dhparam-2048.pem | docker secret create dh -
+docker login
+docker pull jsonbrazeal/jasonbrazeal.com:nginx
+docker pull jsonbrazeal/jasonbrazeal.com:flask
+docker stack deploy -c docker-compose.yml jasonbrazeal_com

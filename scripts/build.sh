@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-set -eux
-set -o pipefail
+set -euxo pipefail
 
 # ensure HOST environment variable is set
 : "${HOST:?Build argument HOST needs to be set and non-empty.}"
