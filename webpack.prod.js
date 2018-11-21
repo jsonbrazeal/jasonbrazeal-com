@@ -1,10 +1,13 @@
-var path = require('path');
+// var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var rootAssetPath = './jasonbrazeal_com/ui';
 const getLocalIdent = require('css-loader/lib/getLocalIdent');
 
-module.exports = {
+module.exports = env => {
+  console.log('creating production ui build for', env.HOST, '...');
+
+  return {
     mode: 'production',
     // context: __dirname,
     entry: {
@@ -17,7 +20,7 @@ module.exports = {
     },
     output: {
         path: __dirname + '/nginx/build/',
-        publicPath: 'http://jasonbrazeal.com/', // trailing slask required
+        publicPath: 'https://' + env.HOST + '/', // trailing slask required
         filename: '[name].[contenthash].js',
     },
     // Automatically resolve certain extensions.
@@ -95,5 +98,5 @@ module.exports = {
     },
     plugins: [
     ]
-};
-
+}; // return
+}; // module.exports = env => {

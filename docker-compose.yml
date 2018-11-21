@@ -3,6 +3,14 @@ version: '3.5'
 networks:
   jbnet:
 
+secrets:
+  key:
+    external: true
+  crt:
+    external: true
+  dh:
+    external: true
+
 services:
   flask:
     depends_on:
@@ -23,8 +31,9 @@ services:
         delay: 10s
         max_attempts: 5
         window: 60s
-    ports:
-      - '5000:5000'
+    # ports:
+      # since we have a user-defined network, all ports will be open to that network
+      # - '5000:5000'
     networks:
       - jbnet
   nginx:
@@ -51,18 +60,22 @@ services:
       - '443:443'
     networks:
       - jbnet
-    # secrets:
-    #   - ssl
-    #   - ssl
+    secrets:
+      - source: key
+        target: /etc/nginx/key
+      - source: crt
+        target: /etc/nginx/crt
+      - source: dh
+        target: /etc/nginx/dh
 
-# secrets:
-#   ssl:
-#     external: true
-#   ssl:
-#     external: true
 
+# docker swarm init --listen-addr lo:2377 --advertise-addr lo:2377
+
+# openssl dhparam -out /etc/letsencrypt/live/jason.ninja/dhparam-2048.pem 2048
+# cat /etc/letsencrypt/live/jason.ninja/privkey.pem | docker secret create key -
+# cat /etc/letsencrypt/live/jason.ninja/fullchain.pem | docker secret create crt -
+# cat /etc/letsencrypt/live/jason.ninja/dhparam-2048.pem | docker secret create dh -
 # docker stack deploy -c docker-compose.yml jasonbrazeal_com
-
 
 
 # condition: One of none, on-failure or any (default: any).
