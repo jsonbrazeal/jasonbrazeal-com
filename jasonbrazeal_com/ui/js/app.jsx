@@ -1212,7 +1212,7 @@ export class ProjectCardContainer extends React.Component {
             <li>Python, Requests</li>
           </ul>
         </ProjectCard>
-        <ProjectCard title="jasonbrazeal.com" cardClass="jasonBrazeal" githubLink="https://github.com/jsonbrazeal/jasonbrazeal-com-2.0.0" externalLink="https://jasonbrazeal.com">
+        <ProjectCard title="jasonbrazeal.com" cardClass="jasonBrazeal" githubLink="https://github.com/jsonbrazeal/jasonbrazeal-com-2.0.0">
           <ul>
             <li>Personal Website Redesign (<a href="/v1/index.html" target="_blank">see old site</a>)</li>
             <li>Python, Flask</li>

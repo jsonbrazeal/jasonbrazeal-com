@@ -18,6 +18,6 @@ COPY ./app.py /app
 
 EXPOSE 5000
 
-ENV JS_BUNDLE=https://$HOST/app.3e86f79032696336ac6b.js
+ENV JS_BUNDLE=https://$HOST/app.0becc21aefc78872254e.js
 
 CMD ["pipenv", "run", "gunicorn", "-w", "4", "app:app", "-b", "0.0.0.0:5000", "--access-logfile", "-", "--error-logfile", "-", "--log-level", "DEBUG"]
