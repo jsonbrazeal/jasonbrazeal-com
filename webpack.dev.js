@@ -52,6 +52,13 @@ module.exports = env => {
                 exclude: /node_modules/
             },
             {
+              test: /\.(pdf)(\?.*)?$/,
+              loader: 'file-loader',
+              options: {
+                name: '[name]_[hash:8].[ext]'
+              }
+            },
+            {
                 test: /\.(jpe?g|png|gif|svg([\?]?.*))$/i,
                 use: [
                     'file-loader?&name=[name]_[hash:8].[ext]',

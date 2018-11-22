@@ -43,6 +43,13 @@ module.exports = env => {
                 exclude: /node_modules/
             },
             {
+              test: /\.(pdf)(\?.*)?$/,
+              loader: 'file-loader',
+              options: {
+                name: '[name]_[hash:8].[ext]'
+              }
+            },
+            {
                 test: /\.(jpe?g|png|gif|svg([\?]?.*))$/i,
                 use: [
                     'file-loader?&name=[name]_[hash:8].[ext]',
@@ -61,37 +68,37 @@ module.exports = env => {
               ]
             },
             {
-                test: /\.css$/i,
-                use: [
-                  {
-                    loader: 'style-loader',
-                  },
-                  {
-                    loader: 'css-loader',
-                    options: {
-                      modules: true,
-                      importLoaders: 1,
-                      localIdentName: '[name]__[local]___[hash:base64:5]',
-                      getLocalIdent: (loaderContext, localIdentName, localName, options) => {
-                        // include modules here that need to be loaded as global css, i.e. without
-                        // all class names as localIdentName
-                        return loaderContext.resourcePath.includes('prism') ?
-                          localName :
-                          getLocalIdent(loaderContext, localIdentName, localName, options);
-                      }
-                    }
-                  },
-                  {
-                    loader: 'postcss-loader',
-                    options: {
-                      ident: 'postcss',
-                      plugins: [
-                        require('autoprefixer'),
-                        require('postcss-icss-keyframes')
-                      ]
+              test: /\.css$/i,
+              use: [
+                {
+                  loader: 'style-loader',
+                },
+                {
+                  loader: 'css-loader',
+                  options: {
+                    modules: true,
+                    importLoaders: 1,
+                    localIdentName: '[name]__[local]___[hash:base64:5]',
+                    getLocalIdent: (loaderContext, localIdentName, localName, options) => {
+                      // include modules here that need to be loaded as global css, i.e. without
+                      // all class names as localIdentName
+                      return loaderContext.resourcePath.includes('prism') ?
+                        localName :
+                        getLocalIdent(loaderContext, localIdentName, localName, options);
                     }
                   }
-                ],
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    ident: 'postcss',
+                    plugins: [
+                      require('autoprefixer'),
+                      require('postcss-icss-keyframes')
+                    ]
+                  }
+                }
+              ],
             },
 
         ]

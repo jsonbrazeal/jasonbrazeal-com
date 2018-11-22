@@ -5,6 +5,8 @@ import nav from "../css/nav.css";
 import graphics from "../css/graphics.css";
 import animations from "../css/animations.css";
 import icons from "font-awesome/css/font-awesome.css";
+import brazeal from "../pdf/brazeal.pdf";
+import brazeal_long from "../pdf/brazeal_long.pdf";
 
 import { toTitleCase, typewriter, BubbleChart } from "./utils.js";
 import snippets from "./snippets.js";
@@ -1155,9 +1157,9 @@ export class ResumeContainer extends React.Component {
 
   handleClick(version) {
     if (version === 'full') {
-      window.open('http://localhost:8888/res.pdf', '_blank');
+      window.open(brazeal_long, '_blank');
     } else if (version === 'short') {
-      window.open('http://localhost:8888/res_short.pdf', '_blank');
+      window.open(brazeal, '_blank');
     }
   }
 
