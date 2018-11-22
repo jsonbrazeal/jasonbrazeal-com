@@ -3,7 +3,7 @@
 .DS_Store
 *.sublime-*
 img
-doc
+doc/
 .vscode
 
 #################### python ####################
