@@ -6,7 +6,17 @@ import graphics from "../css/graphics.css";
 import animations from "../css/animations.css";
 import icons from "font-awesome/css/font-awesome.css";
 import brazeal from "../pdf/brazeal.pdf";
-import brazeal_long from "../pdf/brazeal_long.pdf";
+import brazealLong from "../pdf/brazeal_long.pdf";
+import favicon from "../icon/favicon.ico"
+import manifest from "../icon/site.webmanifest"
+import browserconfig from "../icon/browserconfig.xml"
+import favicon16 from "../icon/favicon-16x16.png"
+import favicon32 from "../icon/favicon-32x32.png"
+import appleTouchIcon from "../icon/apple-touch-icon.png"
+import androidChromeIcon192 from "../icon/android-chrome-192x192.png"
+import androidChromeIcon512 from "../icon/android-chrome-512x512.png"
+import safariPinnedTab from "../icon/safari-pinned-tab.svg"
+import mstile from "../icon/mstile-150x150.png"
 
 import { toTitleCase, typewriter, BubbleChart } from "./utils.js";
 import snippets from "./snippets.js";
@@ -1157,7 +1167,7 @@ export class ResumeContainer extends React.Component {
 
   handleClick(version) {
     if (version === 'full') {
-      window.open(brazeal_long, '_blank');
+      window.open(brazealLong, '_blank');
     } else if (version === 'short') {
       window.open(brazeal, '_blank');
     }

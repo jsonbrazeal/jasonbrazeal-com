@@ -19,7 +19,7 @@ services:
     depends_on:
       - jbnet
     # build: ./jasonbrazeal_com
-    image: jsonbrazeal/jasonbrazeal.com:flask
+    image: jsonbrazeal/jasonbrazeal.com:flask-jason.ninja
     deploy:
       replicas: 2
     #   resources:
@@ -43,7 +43,7 @@ services:
     depends_on:
       - flask # because nginx config uses "flask" hostname
     # build: ./nginx
-    image: jsonbrazeal/jasonbrazeal.com:nginx
+    image: jsonbrazeal/jasonbrazeal.com:nginx-jason.ninja
     volumes:
       - webroot:/usr/share/nginx/html # for letsencrypt certbot challenges
     deploy:

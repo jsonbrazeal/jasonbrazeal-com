@@ -50,11 +50,32 @@ module.exports = env => {
               }
             },
             {
-                test: /\.(jpe?g|png|gif|svg([\?]?.*))$/i,
-                use: [
-                    'file-loader?&name=[name]_[hash:8].[ext]',
-                    'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                ],
+              test: /(favicon|browserconfig|webmanifest|mstile|apple\-touch|android\-chrome|safari\-pinned)/,
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]'
+              }
+            },
+            {
+              test: /\.(jpe?g|png|gif|svg([\?]?.*))$/i,
+              exclude: /(favicon|browserconfig|webmanifest|mstile|apple\-touch|android\-chrome|safari\-pinned)/,
+              use: [
+                'file-loader?&name=[name]_[hash:8].[ext]',
+                  {
+                    loader: 'image-webpack-loader',
+                    options: {
+                      mozjpeg: {
+                        progressive: true,
+                      },
+                      gifsicle: {
+                        interlaced: false,
+                      },
+                      optipng: {
+                        optimizationLevel: 7,
+                      }
+                    }
+                  }
+                ]
             },
             {
               test: /\.(eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
@@ -101,7 +122,7 @@ module.exports = env => {
               ],
             },
 
-        ]
+        ] // rules
     },
     plugins: [
     ]

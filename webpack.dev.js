@@ -42,75 +42,96 @@ module.exports = env => {
         extensions: ['.js', '.jsx']
     },
     module: {
-        rules: [
+      rules: [
+        {
+            test: /\.js[x]?$/,
+            loader: 'babel-loader',
+            query: {
+              'presets': ['@babel/preset-env', '@babel/preset-react']
+            },
+            exclude: /node_modules/
+        },
+        {
+          test: /\.(pdf)(\?.*)?$/,
+          loader: 'file-loader',
+          options: {
+            name: '[name]_[hash:8].[ext]'
+          }
+        },
+        {
+          test: /(favicon|browserconfig|webmanifest|mstile|apple\-touch|android\-chrome|safari\-pinned)/,
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]'
+          }
+        },
+        {
+          test: /\.(jpe?g|png|gif|svg([\?]?.*))$/i,
+          exclude: /(favicon|browserconfig|webmanifest|mstile|apple\-touch|android\-chrome|safari\-pinned)/,
+          use: [
+            'file-loader?&name=[name]_[hash:8].[ext]',
+              {
+                loader: 'image-webpack-loader',
+                options: {
+                  mozjpeg: {
+                    progressive: true,
+                  },
+                  gifsicle: {
+                    interlaced: false,
+                  },
+                  optipng: {
+                    optimizationLevel: 7,
+                  }
+                }
+              }
+            ]
+        },
+        {
+          test: /\.(eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
             {
-                test: /\.js[x]?$/,
-                loader: 'babel-loader',
-                query: {
-                  'presets': ['@babel/preset-env', '@babel/preset-react']
-                },
-                exclude: /node_modules/
+              loader: "file-loader",
+              options: {
+                name: "[name]_[hash:8].[ext]"
+              }
+            }
+          ]
+        },
+        {
+          test: /\.css$/i,
+          use: [
+            {
+              loader: 'style-loader',
             },
             {
-              test: /\.(pdf)(\?.*)?$/,
-              loader: 'file-loader',
+              loader: 'css-loader',
               options: {
-                name: '[name]_[hash:8].[ext]'
+                modules: true,
+                importLoaders: 1,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+                getLocalIdent: (loaderContext, localIdentName, localName, options) => {
+                  // include modules here that need to be loaded as global css, i.e. without
+                  // all class names as localIdentName
+                  return loaderContext.resourcePath.includes('prism') ?
+                    localName :
+                    getLocalIdent(loaderContext, localIdentName, localName, options);
+                }
               }
             },
             {
-                test: /\.(jpe?g|png|gif|svg([\?]?.*))$/i,
-                use: [
-                    'file-loader?&name=[name]_[hash:8].[ext]',
-                    'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                ],
-            },
-            {
-              test: /\.(eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-              use: [
-                {
-                  loader: "file-loader",
-                  options: {
-                    name: "[name].[ext]"
-                  }
-                }
-              ]
-            },
-            {
-                test: /\.css$/i,
-                use: [
-                  {
-                    loader: 'style-loader',
-                  },
-                  {
-                    loader: 'css-loader',
-                    options: {
-                      modules: true,
-                      importLoaders: 1,
-                      localIdentName: '[name]__[local]___[hash:base64:5]',
-                      getLocalIdent: (loaderContext, localIdentName, localName, options) => {
-                        // include modules here that need to be loaded as global css, i.e. without
-                        // all class names as localIdentName
-                        return loaderContext.resourcePath.includes('prism') ?
-                          localName :
-                          getLocalIdent(loaderContext, localIdentName, localName, options);
-                      }
-                    }
-                  },
-                  {
-                    loader: 'postcss-loader',
-                    options: {
-                      ident: 'postcss',
-                      plugins: [
-                        require('autoprefixer'),
-                        require('postcss-icss-keyframes')
-                      ]
-                    }
-                  }
-                ],
-            },
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: [
+                  require('autoprefixer'),
+                  require('postcss-icss-keyframes')
+                ]
+              }
+            }
+          ],
+        },
 
-        ]
+      ] // rules
     }
   };
 

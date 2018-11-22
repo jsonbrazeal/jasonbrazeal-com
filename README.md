@@ -20,6 +20,7 @@ FLASK_DEBUG=1 FLASK_APP=/path/to/project/folder/project/app.py flask run --host=
 # license info
 
 * some icons from here: https://fontawesome.com/license
+* favicons/icons generated here: https://realfavicongenerator.net/
 
 # digital ocean setup:
 * create docker one-click app/node $5/month, with ssh key
