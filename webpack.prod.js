@@ -1,10 +1,11 @@
 // var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 var rootAssetPath = './jasonbrazeal_com/ui';
 const getLocalIdent = require('css-loader/lib/getLocalIdent');
 
-module.exports = env => {
+module.exports = (env) => {
   console.log('creating production ui build for', env.HOST, '...');
 
   return {
@@ -14,9 +15,6 @@ module.exports = env => {
         app: [
             rootAssetPath + '/js/main.js'
         ],
-        // app_css: [
-        //     rootAssetPath + '/css/main.css'
-        // ]
     },
     output: {
         path: __dirname + '/nginx/build/',
@@ -47,13 +45,6 @@ module.exports = env => {
               loader: 'file-loader',
               options: {
                 name: '[name]_[hash:8].[ext]'
-              }
-            },
-            {
-              test: /(favicon|browserconfig|webmanifest|mstile|apple\-touch|android\-chrome|safari\-pinned)/,
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]'
               }
             },
             {
@@ -125,6 +116,16 @@ module.exports = env => {
         ] // rules
     },
     plugins: [
-    ]
+      new CopyWebpackPlugin([
+        {
+          from: rootAssetPath + '/icon/*',
+          flatten: true
+        },
+        {
+          from:  '/Users/jsonbrazeal/Drive/Dev/web/jasonbrazeal.com-1.0.0-deploy/',
+          to: __dirname + '/nginx/build/v1/',
+        },
+      ], { debug: 'debug', ignore: ['.git/**'] }),
+    ] // plugins
 }; // return
-}; // module.exports = env => {
+}; // module.exports = (env) => {

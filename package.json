@@ -44,6 +44,7 @@
     "@babel/preset-react": "*",
     "autoprefixer": "*",
     "babel-loader": "*",
+    "copy-webpack-plugin": "^4.6.0",
     "css-loader": "*",
     "extract-text-webpack-plugin": "*",
     "file-loader": "*",

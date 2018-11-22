@@ -1,22 +1,11 @@
 import "normalize.css";
 import css from "../css/shared.css";
-import loader from "../css/loader.css";
 import nav from "../css/nav.css";
 import graphics from "../css/graphics.css";
 import animations from "../css/animations.css";
 import icons from "font-awesome/css/font-awesome.css";
 import brazeal from "../pdf/brazeal.pdf";
 import brazealLong from "../pdf/brazeal_long.pdf";
-import favicon from "../icon/favicon.ico"
-import manifest from "../icon/site.webmanifest"
-import browserconfig from "../icon/browserconfig.xml"
-import favicon16 from "../icon/favicon-16x16.png"
-import favicon32 from "../icon/favicon-32x32.png"
-import appleTouchIcon from "../icon/apple-touch-icon.png"
-import androidChromeIcon192 from "../icon/android-chrome-192x192.png"
-import androidChromeIcon512 from "../icon/android-chrome-512x512.png"
-import safariPinnedTab from "../icon/safari-pinned-tab.svg"
-import mstile from "../icon/mstile-150x150.png"
 
 import { toTitleCase, typewriter, BubbleChart } from "./utils.js";
 import snippets from "./snippets.js";
@@ -24,7 +13,6 @@ import writing from "./writing.js";
 import React from "react";
 import { CSSTransition } from "react-transition-group";
 import { select as d3Select } from 'd3-selection';
-import { selectAll as d3SelectAll } from 'd3-selection-multi';
 
 import Prism from "prismjs"; // includes defaults
 // import Prism from "prismjs/components/prism-core"
@@ -1188,7 +1176,7 @@ export class ProjectCardContainer extends React.Component {
     return(
       <div className={this.props.active ? `${graphics.projectCardContainer} ${css.slidIn}` : `${graphics.projectCardContainer} ${css.slidOut}`}>
         <div className={graphics.projectCardWrapper}>
-        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="http://jasonbrazeal.com/tictactoe">
+        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
           <ul>
             <li>Online Game</li>
             <li>Python, Django</li>
@@ -1224,9 +1212,9 @@ export class ProjectCardContainer extends React.Component {
             <li>Python, Requests</li>
           </ul>
         </ProjectCard>
-        <ProjectCard title="jasonbrazeal.com" cardClass="jasonBrazeal" githubLink="https://github.com/jsonbrazeal/jasonbrazeal-com-2.0.0" externalLink="http://jasonbrazeal.com">
+        <ProjectCard title="jasonbrazeal.com" cardClass="jasonBrazeal" githubLink="https://github.com/jsonbrazeal/jasonbrazeal-com-2.0.0" externalLink="https://jasonbrazeal.com">
           <ul>
-            <li>Personal Website Redesign (<a href="http://jasonbrazeal.com">see old site</a>)</li>
+            <li>Personal Website Redesign (<a href="/v1/index.html" target="_blank">see old site</a>)</li>
             <li>Python, Flask</li>
             <li>Javascript, React, Webpack</li>
             <li>Digital Ocean, Nginx, Gunicorn</li>
@@ -1270,7 +1258,7 @@ export class ProjectCard extends React.Component {
   render() {
     if (this.props.externalLink) {
       var externalLink = (
-        <a href={this.props.externalLink} target="blank">
+        <a href={this.props.externalLink} target="_blank">
           <i className={[icons.fa, icons['fa-external-link']].join(" ")}></i>
         </a>
       )
@@ -1284,13 +1272,13 @@ export class ProjectCard extends React.Component {
         </div>
         <div className={graphics.cardBody}>
           <div className={graphics.controls}>
-            <a href="#">
+            <a>
               <span onClick={(e) => this.handleClick()} className={this.state.active ? [graphics.projectCardNav, graphics.projectCardNavActive].join(" ") : graphics.projectCardNav} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)}></span>
               <i className={[graphics.up, icons.fa, icons['fa-chevron-up']].join(" ")}></i>
               <i className={[graphics.down, icons.fa, icons['fa-chevron-down']].join(" ")}></i>
             </a>
             {externalLink}
-            <a href={this.props.githubLink} target="blank">
+            <a href={this.props.githubLink} target="_blank">
               <i className={[icons.fa, icons['fa-github']].join(" ")}></i>
             </a>
           </div>

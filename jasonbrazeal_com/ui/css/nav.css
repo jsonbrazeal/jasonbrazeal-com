@@ -130,10 +130,6 @@
 
 @media only screen and (min-width: 1500px) {
 
-  .menu {
-    width: 30%;
-   }
-
    .pageIn {
     transform: translateX(170%);
   }
@@ -206,8 +202,6 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  /*-webkit-clip-path: circle(50% at 50% 50%);
-  clip-path: circle(50% at 50% 50%);  */
   margin-top: 10%;
 }
 
@@ -291,8 +285,8 @@ header * {
 }
 
 footer {
-  position: relative;
-  bottom: 7.75rem;
+  position: absolute;
+  top: 82%;
   width: 100%;
 }
 

@@ -1,10 +1,11 @@
 var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 var rootAssetPath = __dirname + '/jasonbrazeal_com/ui';
 const getLocalIdent = require('css-loader/lib/getLocalIdent');
 
-module.exports = env => {
+module.exports = (env) => {
 
   return {
     mode: 'development',
@@ -14,9 +15,6 @@ module.exports = env => {
         app: [
             rootAssetPath + '/js/main.js'
         ],
-        // app_css: [
-        //     rootAssetPath + '/css/main.css'
-        // ]
     },
     output: {
         path: rootAssetPath + '/build/',
@@ -56,13 +54,6 @@ module.exports = env => {
           loader: 'file-loader',
           options: {
             name: '[name]_[hash:8].[ext]'
-          }
-        },
-        {
-          test: /(favicon|browserconfig|webmanifest|mstile|apple\-touch|android\-chrome|safari\-pinned)/,
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]'
           }
         },
         {
@@ -130,9 +121,20 @@ module.exports = env => {
             }
           ],
         },
-
-      ] // rules
-    }
+      ] // rule
+    },
+    // plugins: [
+    //   new CopyWebpackPlugin([
+    //     {
+    //       from: rootAssetPath + '/icon/**',
+    //       flatten: true
+    //     },
+    //     {
+    //       from: rootAssetPath + '/v1/',
+    //       to: rootAssetPath + '/build/',
+    //     }
+    //   ], { debug: 'debug' }),
+    // ]
   };
 
 };
