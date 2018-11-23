@@ -49,8 +49,8 @@
 .adjustedHeight {
   animation: fadeOutHeight ease-in 1;
   animation-fill-mode: forwards;
-  animation-duration: .4s;
-  animation-delay: 0.1s;
+  animation-duration: .1s;
+  animation-delay: 0s;
 }
 
 .blurry {

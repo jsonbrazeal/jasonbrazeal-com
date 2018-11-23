@@ -52,7 +52,7 @@
     opacity: 0;
   }
   75% {
-    opacity: .5;
+    opacity: 0;
   }
   100% {
     opacity: 1;
@@ -62,7 +62,7 @@
 .fadeOutIn {
   animation: fadeOutIn ease-in 1;
   animation-fill-mode: forwards;
-  animation-duration: 1s;
+  animation-duration: .5s;
   animation-delay: 0s;
 }
 
