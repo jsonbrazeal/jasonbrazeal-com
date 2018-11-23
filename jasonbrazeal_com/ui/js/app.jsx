@@ -326,12 +326,13 @@ export class Page extends React.Component {
     } else {
       var header = this.state.header;
     }
+
     return (
       <div className={this.state.classList.join(" ")} id={nav[`p${this.props.pageNum}`]}>
         <Header header={header} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)}>
           {this.state.header === "Home" && <Typewriter words={["Software", "Eng"]} />}
         </Header>
-        <section className={nav[`p${this.props.pageNum}`]}>
+        <section className={this.props.activeSubPage == "projects" ? [nav[`p${this.props.pageNum}`], nav.adjustedHeight].join(" ") : nav[`p${this.props.pageNum}`]} >
           {this.props.children}
         </section>
         <SubNavMenu subNavItems={this.props.subNavItems} pageNum={this.props.pageNum} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavMenu} />
