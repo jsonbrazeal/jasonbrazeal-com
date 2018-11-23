@@ -293,14 +293,12 @@
 
 .snippetContainer {
   width: 75%;
-  height: 600px;
   left: 7.5%;
   font-size: 32px;
   position: absolute;
   overflow: hidden;
   padding: 25px;
   z-index: 101;
-  /* position: relative; */
 }
 
 .gistFile, .gistData {
@@ -846,6 +844,13 @@ span.scrollNav {
   }
   .writingContainer p {
     font-size: .75rem;
+  }
+  .snippetContainer {
+    height: 100%
+  }
+  .snippetContainerInner {
+    width: 88%;
+    height: 100%;
   }
 }
 

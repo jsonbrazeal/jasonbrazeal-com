@@ -2,6 +2,73 @@ var exports = module.exports = {};
 
 var snippets = {
 
+  catt1: {title: "catt",
+  content: `# how to add syntax highlighting to command line output
+* install the Python syntax highlighter [Pygments](http://pygments.org/)
+
+\`\`\`bash
+sudo apt-get install python-pygments
+\`\`\`
+
+* choose an alias and assign the pygmentize command to it, customizing the style however you'd like
+
+\`\`\`bash
+alias catt='pygmentize -O style=monokai -f console256 -g'
+\`\`\`
+
+* add the alias line to your bash startup file (.bashrc, for example) to have it available every time you log on
+* enjoy your nicely highlighted command line output!
+
+\`\`\`bash
+catt /path/to/file
+\`\`\`
+`},
+
+catt2: {title: "catt",
+content: `# how to add syntax highlighting to command line output
+* install the Python syntax highlighter [Pygments](http://pygments.org/)
+
+\`\`\`bash
+sudo apt-get install python-pygments
+\`\`\`
+
+* choose an alias and assign the pygmentize command to it, customizing the style however you'd like
+
+\`\`\`bash
+alias catt='pygmentize -O style=monokai -f console256 -g'
+\`\`\`
+
+* add the alias line to your bash startup file (.bashrc, for example) to have it available every time you log on
+* enjoy your nicely highlighted command line output!
+
+\`\`\`bash
+catt /path/to/file
+\`\`\`
+`},
+
+catt3: {title: "catt",
+content: `# how to add syntax highlighting to command line output
+* install the Python syntax highlighter [Pygments](http://pygments.org/)
+
+\`\`\`bash
+sudo apt-get install python-pygments
+\`\`\`
+
+* choose an alias and assign the pygmentize command to it, customizing the style however you'd like
+
+\`\`\`bash
+alias catt='pygmentize -O style=monokai -f console256 -g'
+\`\`\`
+
+* add the alias line to your bash startup file (.bashrc, for example) to have it available every time you log on
+* enjoy your nicely highlighted command line output!
+
+\`\`\`bash
+catt /path/to/file
+\`\`\`
+`},
+
+
   catt: {title: "catt",
          content: `# how to add syntax highlighting to command line output
 * install the Python syntax highlighter [Pygments](http://pygments.org/)

@@ -690,6 +690,14 @@ export class SnippetTiles extends React.Component {
         snipsContainers.push(<HexagonGroup key={i}>{snips}{nones}</HexagonGroup>);
       } else {
         snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
+        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
+        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
+        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
+        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
+        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
+        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
+        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
+        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
       }
     }
     return (
