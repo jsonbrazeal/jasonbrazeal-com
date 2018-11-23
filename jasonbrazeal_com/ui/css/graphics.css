@@ -319,7 +319,7 @@ span.scrollNav {
 
 .writingContainerInner {
   width: 98%;
-  height: 560px;
+  height: 100%;
   font-size: 32px;
   overflow: hidden;
   overflow-y: auto;
@@ -341,7 +341,7 @@ span.scrollNav {
 
 .writingContainer {
   width: 75%;
-  height: 600px;
+  height: 100%;
   left: 7.5%;
   font-size: 32px;
   position: absolute;
@@ -802,10 +802,6 @@ span.scrollNav {
     height: 1180px;
   }
 
-  .projectCardWrapper {
-    /* height: 1200px; */
-  }
-
   .skillsContainer {
     left: 10%;
   }
@@ -843,6 +839,19 @@ span.scrollNav {
   }
   .projectCardContainer {
     left: 26%
+  }
+  .writingContainer {
+    width: 49%;
+    left: 21.5%;
+  }
+  .writingContainer p {
+    font-size: .75rem;
+  }
+}
+
+@media only screen and (min-width: 2200px) {
+  .writingContainer p {
+    font-size: 1rem;
   }
 }
 

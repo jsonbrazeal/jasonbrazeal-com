@@ -332,7 +332,7 @@ export class Page extends React.Component {
         <Header header={header} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)}>
           {this.state.header === "Home" && <Typewriter words={["Software", "Eng"]} />}
         </Header>
-        <section className={this.props.activeSubPage == "projects" ? [nav[`p${this.props.pageNum}`], nav.adjustedHeight].join(" ") : nav[`p${this.props.pageNum}`]} >
+        <section className={this.props.activeSubPage !== null ? [nav[`p${this.props.pageNum}`], nav.adjustedHeight].join(" ") : nav[`p${this.props.pageNum}`]} >
           {this.props.children}
         </section>
         <SubNavMenu subNavItems={this.props.subNavItems} pageNum={this.props.pageNum} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavMenu} />
@@ -840,8 +840,16 @@ export class WritingContainer extends React.Component {
     let texts = [];
     for (var i = 0; i < writing.writing.length; i++) {
       texts.push(
+        <>
         <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage}>
         </Writing>
+        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage}>
+        </Writing>
+        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage}>
+        </Writing>
+        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage}>
+        </Writing>
+        </>
       );
     }
     return(
