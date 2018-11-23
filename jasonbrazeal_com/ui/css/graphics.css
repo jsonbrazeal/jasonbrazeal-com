@@ -83,6 +83,10 @@
   padding-top: 25px;
 }
 
+.experience {
+
+}
+
 .education {
 
 }
@@ -436,7 +440,7 @@ span.scrollNav {
 }
 
 .projectCardWrapper {
-  height: 600px;
+  /* height: 600px; */
   overflow-y: scroll;
 }
 
@@ -799,7 +803,7 @@ span.scrollNav {
   }
 
   .projectCardWrapper {
-    height: 1200px;
+    /* height: 1200px; */
   }
 
   .skillsContainer {
@@ -818,6 +822,27 @@ span.scrollNav {
 @media only screen and (max-width: 500px) and (orientation: portrait) {
   .machine {
     top: -10%;
+  }
+}
+
+
+@media only screen and (min-width: 1500px) {
+  .workCardContainer {
+    width: 48%;
+  }
+  .workCardContainer.experience > div {
+    position: relative;
+    left: -14%;
+  }
+  .workCardContainer.education > div {
+    position: relative;
+    left: -1%;
+  }
+  .projectCardWrapper {
+    width: 56%;
+  }
+  .projectCardContainer {
+    left: 26%
   }
 }
 

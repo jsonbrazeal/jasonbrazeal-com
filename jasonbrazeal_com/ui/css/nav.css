@@ -43,6 +43,66 @@
   transform: scale(1.2) !important;
 }
 
+.hoverIcon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  position: absolute;
+  left: 1.5%;
+  top: 16px;
+  color: #FB9B51;
+}
+
+@import url('../../../node_modules/font-awesome/css/font-awesome.min.css');
+
+.hoverIcon::before {
+  content: "\F054";
+  font-family: FontAwesome;
+}
+
+.subNavList {
+  display: inline-block;
+}
+
+.subNavList li:hover {
+  cursor: pointer;
+}
+
+.skills {
+  top: 16px;
+  transition: top 500ms ease-out;
+}
+
+.experience {
+  top: 34px;
+  transition: top 500ms ease-out;
+}
+
+.education {
+  top: 51px;
+  transition: top 500ms ease-out;
+}
+
+.resume {
+  top: 70px;
+  transition: top 500ms ease-out;
+}
+
+.projects {
+  top: 16px;
+  transition: top 500ms ease-out;
+}
+
+.writing {
+  top: 34px;
+  transition: top 500ms ease-out;
+}
+
+.snippets {
+  top: 52px;
+  transition: top 500ms ease-out;
+}
+
 /* define ids here so they are accessible in js */
 .container#c1, .container#c2, .container#c3 {
 }
@@ -66,7 +126,7 @@
  }
 
  .pageIn {
-  transform: translateX(185%);
+  transform: translateX(184%);
   transition-delay: .25s !important;
 }
 
@@ -130,9 +190,9 @@
 
 @media only screen and (min-width: 1500px) {
 
-   .pageIn {
-    transform: translateX(170%);
-  }
+   /* .pageIn {
+    transform: translateX(150%);
+  } */
 
   .shiftedRight header, .shiftedRight section, .shiftedRight footer {
     left: 30%;
@@ -149,6 +209,12 @@
 }
 
 @media only screen and (min-width: 2000px) {
+  .hoverIcon {
+    left: 1%;
+  }
+}
+
+/* @media only screen and (min-width: 2000px) {
 
   .menu {
     width: 50%;
@@ -170,7 +236,7 @@
     margin-left: 30%;
   }
 
-}
+} */
 
 @media screen and (orientation:portrait) {
   .p1 {
@@ -337,64 +403,4 @@ footer hr {
 .thumbnail {
   width: 10%;
   text-align: center;
-}
-
-.hoverIcon {
-  width: 20px;
-  height: 20px;
-  display: block;
-  position: absolute;
-  left: 1.5%;
-  top: 16px;
-  color: #FB9B51;
-}
-
-@import url('../../../node_modules/font-awesome/css/font-awesome.min.css');
-
-.hoverIcon::before {
-  content: "\F054";
-  font-family: FontAwesome;
-}
-
-.subNavList {
-  display: inline-block;
-}
-
-.subNavList li:hover {
-  cursor: pointer;
-}
-
-.skills {
-  top: 16px;
-  transition: top 500ms ease-out;
-}
-
-.experience {
-  top: 34px;
-  transition: top 500ms ease-out;
-}
-
-.education {
-  top: 51px;
-  transition: top 500ms ease-out;
-}
-
-.resume {
-  top: 70px;
-  transition: top 500ms ease-out;
-}
-
-.projects {
-  top: 16px;
-  transition: top 500ms ease-out;
-}
-
-.writing {
-  top: 34px;
-  transition: top 500ms ease-out;
-}
-
-.snippets {
-  top: 52px;
-  transition: top 500ms ease-out;
 }

@@ -1184,6 +1184,62 @@ export class ProjectCardContainer extends React.Component {
             <li>Digital Ocean, Nginx, Gunicorn</li>
           </ul>
         </ProjectCard>
+        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
+          <ul>
+            <li>Online Game</li>
+            <li>Python, Django</li>
+            <li>Javascript, jQuery</li>
+            <li>Digital Ocean, Nginx, Gunicorn</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
+          <ul>
+            <li>Online Game</li>
+            <li>Python, Django</li>
+            <li>Javascript, jQuery</li>
+            <li>Digital Ocean, Nginx, Gunicorn</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
+          <ul>
+            <li>Online Game</li>
+            <li>Python, Django</li>
+            <li>Javascript, jQuery</li>
+            <li>Digital Ocean, Nginx, Gunicorn</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
+          <ul>
+            <li>Online Game</li>
+            <li>Python, Django</li>
+            <li>Javascript, jQuery</li>
+            <li>Digital Ocean, Nginx, Gunicorn</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
+          <ul>
+            <li>Online Game</li>
+            <li>Python, Django</li>
+            <li>Javascript, jQuery</li>
+            <li>Digital Ocean, Nginx, Gunicorn</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
+          <ul>
+            <li>Online Game</li>
+            <li>Python, Django</li>
+            <li>Javascript, jQuery</li>
+            <li>Digital Ocean, Nginx, Gunicorn</li>
+          </ul>
+        </ProjectCard>
+        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
+          <ul>
+            <li>Online Game</li>
+            <li>Python, Django</li>
+            <li>Javascript, jQuery</li>
+            <li>Digital Ocean, Nginx, Gunicorn</li>
+          </ul>
+        </ProjectCard>
         <ProjectCard title="pcapview" cardClass="pcapview" githubLink="https://github.com/jsonbrazeal/pcapview">
           <ul>
             <li>Network Traffic Visualization Tool</li>
