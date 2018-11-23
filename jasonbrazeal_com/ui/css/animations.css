@@ -91,6 +91,33 @@
   }
 }
 
+
+@keyframes fadeOutDelayed {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.fadeOutDelayed {
+  animation: fadeOutDelayed ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: .1s;
+  animation-delay: .5s;
+}
+
+@keyframes fadeOutFast {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+}
+
 .fadeOutFast {
   animation: fadeOutFast ease-in 1;
   animation-fill-mode: forwards;

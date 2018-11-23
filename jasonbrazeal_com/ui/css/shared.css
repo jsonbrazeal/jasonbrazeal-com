@@ -109,4 +109,8 @@ body, :global(.app) {
   margin: 0 auto;
 }
 
+.zIndex100 {
+  z-index: 100 !important;
+}
+
 /*1680×1050...MacBook Pro*/

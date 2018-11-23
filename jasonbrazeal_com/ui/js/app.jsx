@@ -32,7 +32,8 @@ export class App extends React.Component {
     super(props);
     this.state = {
       activePage: "Home",
-      activeSubPage: null
+      activeSubPage: null,
+      activeSubSubPage: null
     };
   }
 
@@ -48,15 +49,24 @@ export class App extends React.Component {
     }
     this.setState({
       activePage: page,
-      activeSubPage: null
+      activeSubPage: null,
+      activeSubSubPage: null
     });
   }
 
   handleSubPageNav(newSubPage) {
     this.setState({
-      activeSubPage: newSubPage
+      activeSubPage: newSubPage,
+      activeSubSubPage: null
     });
   }
+
+  handleSubSubPageNav(newSubSubPage) {
+    this.setState({
+      activeSubSubPage: newSubSubPage
+    });
+  }
+
 
   render() {
     return (
@@ -69,8 +79,10 @@ export class App extends React.Component {
                     pageNum="1"
                     pageTitle="Home"
                     onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
+                    onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}
                     subNavItems={[]}
-                    activeSubPage={this.state.activeSubPage}>
+                    activeSubPage={this.state.activeSubPage}
+                    activeSubSubPage={this.state.activeSubSubPage}>
                 <MachineGraphic />
                 <Footer />
               </Page>
@@ -78,8 +90,10 @@ export class App extends React.Component {
                     pageNum="2"
                     pageTitle="Work"
                     onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
+                    onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}
                     subNavItems={["skills", "experience", "education", "résumé"]}
-                    activeSubPage={this.state.activeSubPage}>
+                    activeSubPage={this.state.activeSubPage}
+                    activeSubSubPage={this.state.activeSubSubPage}>
                 <CSSTransition
                   timeout={1000}
                   classNames={{
@@ -137,8 +151,10 @@ export class App extends React.Component {
                     pageNum="3"
                     pageTitle="Portfolio"
                     onChangeSubPage={(newHeader) => this.handleSubPageNav(newHeader)}
+                    onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}
                     subNavItems={["projects", "writing", "snippets"]}
-                    activeSubPage={this.state.activeSubPage}>
+                    activeSubPage={this.state.activeSubPage}
+                    activeSubSubPage={this.state.activeSubSubPage}>
                 <CSSTransition
                   timeout={1000}
                   classNames={{
@@ -163,7 +179,7 @@ export class App extends React.Component {
                     exitActive: animations.slideExitActive
                   }}
                   in={this.state.activeSubPage === "writing"}>
-                  <WritingContainer active={this.state.activeSubPage === "writing"} activeSubPage={this.state.activeSubPage} />
+                  <WritingContainer active={this.state.activeSubPage === "writing"} activeSubPage={this.state.activeSubPage} activeSubSubPage={this.state.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)} />
                 </CSSTransition>
                 <CSSTransition
                   timeout={1000}
@@ -176,7 +192,7 @@ export class App extends React.Component {
                     exitActive: animations.slideExitActive
                   }}
                   in={this.state.activeSubPage === "snippets"}>
-                  <SnippetContainer active={this.state.activeSubPage === "snippets"} activeSubPage={this.state.activeSubPage}/>
+                  <SnippetContainer active={this.state.activeSubPage === "snippets"} activeSubPage={this.state.activeSubPage} activeSubSubPage={this.state.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)} />
                 </CSSTransition>
                </Page>
             </div>
@@ -230,11 +246,16 @@ export class Page extends React.Component {
       classList: props.pageTitle === "Home" ? [nav.page] : [nav.page, nav.shiftedRight],
       active: props.active,
       activeSubPage: props.activeSubPage,
+      activeSubSubPage: props.activeSubSubPage
     };
   }
 
   handleSubPageNav(newSubPage) {
     this.props.onChangeSubPage(newSubPage)
+  }
+
+  handleSubSubPageNav(newSubSubPage) {
+    this.props.onChangeSubSubPage(newSubSubPage)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -329,7 +350,7 @@ export class Page extends React.Component {
 
     return (
       <div className={this.state.classList.join(" ")} id={nav[`p${this.props.pageNum}`]}>
-        <Header header={header} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)}>
+        <Header header={header} activeSubSubPage={this.props.activeSubSubPage} onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)}>
           {this.state.header === "Home" && <Typewriter words={["Software", "Eng"]} />}
         </Header>
         <section className={this.props.activeSubPage !== null ? [nav[`p${this.props.pageNum}`], nav.adjustedHeight].join(" ") : nav[`p${this.props.pageNum}`]} >
@@ -429,7 +450,8 @@ export class Header extends React.Component {
     }
     this.state = {
       classList: [headerClass],
-      header: this.props.header
+      header: this.props.header,
+      activeSubSubPage: this.props.activeSubSubPage
     };
   }
 
@@ -445,7 +467,7 @@ export class Header extends React.Component {
         var showSubNavArrow = true;
       }
       this.setState({
-        classList: [animations.fadeOutIn, nav.pageHeader]
+        classList: [animations.fadeOutIn, nav.pageHeader],
       });
       setTimeout(() => {
         this.setState({
@@ -459,11 +481,23 @@ export class Header extends React.Component {
         });
       }, 1000);
     }
+    if (nextProps.activeSubSubPage !== this.props.activeSubSubPage) {
+      this.setState({
+        activeSubSubPage: nextProps.activeSubSubPage
+      });
+    }
   }
 
   render() {
+    if (this.state.activeSubSubPage === "writing") {
+      var cList = [...this.state.classList, animations.fadeOutDelayed];
+    } else if (this.state.activeSubSubPage === "snippetModal") {
+      var cList = [...this.state.classList, css.zIndex100];
+    } else {
+      var cList = [...this.state.classList];
+    }
     return (
-      <header className={this.state.classList.join(" ")}>
+      <header className={cList.join(" ")}>
         <h1>{this.state.header}</h1>
         {this.state.header === "Jason Brazeal" || <SubNavArrow onChangeSubPage={(newSubPage) => this.handleSubPageNav(newSubPage)} visible={this.state.showSubNavArrow} />}
         {this.props.children}
@@ -652,27 +686,41 @@ export class SnippetTiles extends React.Component {
     });
 
     var modalContainer = document.querySelector("." + animations.popupContainer);
+    this.props.onChangeSubSubPage("snippetModal");
     modalContainer.classList.remove(animations.out);
     if (!(modalContainer.classList.contains(animations.five))) {
       modalContainer.classList.add(animations.five);
     }
     document.querySelector("body").classList.add(animations.popupActive);
 
+    var self = this;
     // to close modal, click x, click background, or press escape
     var modalClose = document.querySelector("." + animations.popupContent + " span");
     modalClose.addEventListener("click", function () {
+      console.log('modal close click')
+      self.props.onChangeSubSubPage(null);
       modalContainer.classList.add(animations.out);
       document.querySelector("body").classList.remove(animations.popupActive);
       setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
     });
     var modalBackground = document.querySelector("." + animations.popupBackground);
     modalBackground.addEventListener("click", function (e) {
+      console.log('modal background click')
       if (e.target.classList.contains(animations.popupBackground)) {
+        self.props.onChangeSubSubPage(null);
         modalContainer.classList.add(animations.out);
         document.querySelector("body").classList.remove(animations.popupActive);
         setTimeout(function() { document.querySelector(`.${animations.popupContent}`).scrollTop = 0; }, 200);
       }
     });
+    document.addEventListener("keydown", this.handleKeyDown.bind(this));
+  }
+
+  handleKeyDown(event) {
+    if (event.keyCode == 27) {
+      this.props.onChangeSubSubPage(null);
+      document.removeEventListener("keydown", this.handleKeyDown);
+    }
   }
 
   render() {
@@ -681,11 +729,11 @@ export class SnippetTiles extends React.Component {
     for (let i = 0; i < numRows + 1; i++) {
       let snipsSlice = Object.keys(snippets.snippets).slice(i * 8, i * 8 + 8);
       let snips = snipsSlice.map((elem, j) => {
-        return <SnippetTile key={i * 8 + j} activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic={elem} />
+        return <SnippetTile key={i * 8 + j} activeSubPage={this.props.activeSubPage} handleClick={(e) => this.handleTileClick(elem)} topic={elem} />
       });
       if (snips.length !== 8) {
         let nones = [...Array(8 - snips.length).keys()].map((elem, k) => {
-          return <SnippetTile key={i * 8 + 8 - k} activeSubPage={this.props.activeSubPage} handleClick={this.handleTileClick} topic="none" />
+          return <SnippetTile key={i * 8 + 8 - k} activeSubPage={this.props.activeSubPage} handleClick={(e) => this.handleTileClick("none")} topic="none" />
         });
         snipsContainers.push(<HexagonGroup key={i}>{snips}{nones}</HexagonGroup>);
       } else {
@@ -813,6 +861,10 @@ export class SnippetContainer extends React.Component {
     }
   }
 
+  handleSubSubPageNav(newSubSubPage) {
+    this.props.onChangeSubSubPage(newSubSubPage)
+  }
+
   render() {
     return(
       <div className={this.props.active ? `${graphics.snippetContainer} ${css.slidIn}` : `${graphics.snippetContainer} ${css.slidOut}`}>
@@ -821,7 +873,7 @@ export class SnippetContainer extends React.Component {
           {/* <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" />
           <EmbeddedGist gist="jsonbrazeal/3c7edf1ced0b448d2e77" />
           <EmbeddedGist gist="jsonbrazeal/745e118b37479b875a8d" /> */}
-          <SnippetTiles activeSubPage={this.props.activeSubPage} />
+          <SnippetTiles activeSubPage={this.props.activeSubPage} activeSubSubPage={this.props.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)} />
         </div>
         {/* <span className={[icons.fa, icons["fa-chevron-down"], animations.bounceDown, graphics.scrollNav].join(" ")} onMouseOver={(e) => this.handleMouseOver(e, "down")} onMouseEnter={(e) => this.handleMouseEnter(e, "down")}></span> */}
       </div>
@@ -843,19 +895,23 @@ export class WritingContainer extends React.Component {
     }
   }
 
+  handleSubSubPageNav(newSubSubPage) {
+    this.props.onChangeSubSubPage(newSubSubPage)
+  }
+
   render() {
 
     let texts = [];
     for (var i = 0; i < writing.writing.length; i++) {
       texts.push(
         <>
-        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage}>
+        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage} activeSubSubPage={this.props.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}>
         </Writing>
-        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage}>
+        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage} activeSubSubPage={this.props.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}>
         </Writing>
-        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage}>
+        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage} activeSubSubPage={this.props.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}>
         </Writing>
-        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage}>
+        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage} activeSubSubPage={this.props.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}>
         </Writing>
         </>
       );
@@ -911,13 +967,13 @@ export class Writing extends React.Component {
         writingOpen: true
       });
       document.addEventListener("keydown", this.handleKeyDown.bind(this));
-      // document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'hidden';
+      this.props.onChangeSubSubPage("writing");
     } else {
       this.setState({
         writingOpen: false
       });
       document.removeEventListener("keydown", this.handleKeyDown.bind(this));
-      // document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'auto';
+      this.props.onChangeSubSubPage(null);
     }
   }
 
@@ -926,7 +982,7 @@ export class Writing extends React.Component {
       this.setState({
         writingOpen: false
       });
-      // document.querySelector(`.${graphics.writingContainerInner}`).style.overflowY = 'auto';
+      this.props.onChangeSubSubPage(null);
     }
   }
 
