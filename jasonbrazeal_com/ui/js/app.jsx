@@ -105,6 +105,7 @@ export class App extends React.Component {
                     activeSubSubPage={this.state.activeSubSubPage}>
                 <MachineGraphic />
                 <Footer />
+                <Contact mobile={true} />
               </Page>
               <Page active={this.state.activePage === "Work"}
                     pageNum="2"
@@ -1444,7 +1445,7 @@ export class Footer extends React.Component {
       <footer>
         <hr className={css.orangeBorder} />
         <div className={nav.footerWrapper}>
-          <Contact />
+          <Contact mobile={false} />
           <RoundThumbnail className={nav.footerImage} alt="photo of jason" />
           <Copyright />
         </div>
@@ -1454,9 +1455,12 @@ export class Footer extends React.Component {
 }
 
 export class Contact extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return(
-      <div className={nav.contact}>
+      <div className={this.props.mobile ? nav.contactMobile : nav.contact }>
         <a href="https://www.github.com/jsonbrazeal">
             <span className={[icons.fa, icons["fa-github"]].join(" ")}></span>
         </a>
