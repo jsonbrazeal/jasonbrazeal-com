@@ -361,9 +361,7 @@
 }
 
 
-/*====================================
-  Modal - https://codepen.io/pure-css/pen/qddOQK?depth=everything&order=popularity&page=2&q=css+modal&show_forks=false
-=====================================*/
+  /* based on pen forked here: https://codepen.io/pure-css/pen/qddOQK?depth=everything&order=popularity&page=2&q=css+modal&show_forks=false */
 
 .modal {
   /*background: #fff;*/
@@ -498,7 +496,7 @@
 
 
 
-
+/* based on pen forked here: https://codepen.io/jsonbrazeal/pen/XxYyWL */
 html.popupActive, body.popupActive {
   overflow: hidden;
 }

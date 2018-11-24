@@ -125,6 +125,10 @@ module.exports = (env) => {
     },
     // plugins: [
     //   new CopyWebpackPlugin([
+        // {
+        //   from: rootAssetPath + '/error/*',
+        //   flatten: true
+        // },
     //     {
     //       from: rootAssetPath + '/icon/**',
     //       flatten: true

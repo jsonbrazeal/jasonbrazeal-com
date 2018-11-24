@@ -297,7 +297,7 @@
   font-size: 32px;
   position: absolute;
   overflow: hidden;
-  padding: 25px;
+  padding-top: 1%;
   z-index: 101;
 }
 
@@ -316,8 +316,8 @@ span.scrollNav {
 }
 
 .writingContainerInner {
-  width: 98%;
-  height: 100%;
+  width: 92%;
+  height: 90%;
   font-size: 32px;
   overflow: hidden;
   overflow-y: auto;
@@ -333,7 +333,7 @@ span.scrollNav {
 }
 
 .writingContainer p {
-  font-size: 1rem;
+  font-size: .9rem;
   color: #393939;
 }
 
@@ -344,7 +344,7 @@ span.scrollNav {
   font-size: 32px;
   position: absolute;
   overflow: hidden;
-  padding: 25px 0 25px 0;
+  padding: 2% 3%;
 }
 
 .writing {
@@ -435,10 +435,11 @@ span.scrollNav {
   left: 8%;
   color: #393939;
   z-index: 101;
+  padding-top: 1.5%;
 }
 
 .projectCardWrapper {
-  height: 100%;
+  height: 90%;
   overflow-y: scroll;
 }
 
@@ -819,6 +820,11 @@ span.scrollNav {
   }
 }
 
+@media only screen and (max-width: 1000px) {
+  .writingContainer p {
+    font-size: .75rem;
+  }
+}
 
 @media only screen and (min-width: 1500px) {
   .workCardContainer {
@@ -841,9 +847,6 @@ span.scrollNav {
   .writingContainer {
     width: 49%;
     left: 21.5%;
-  }
-  .writingContainer p {
-    font-size: .75rem;
   }
   .snippetContainer {
     height: 100%

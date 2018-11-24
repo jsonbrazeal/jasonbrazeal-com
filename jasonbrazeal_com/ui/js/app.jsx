@@ -757,14 +757,6 @@ export class SnippetTiles extends React.Component {
         snipsContainers.push(<HexagonGroup key={i}>{snips}{nones}</HexagonGroup>);
       } else {
         snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
-        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
-        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
-        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
-        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
-        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
-        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
-        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
-        snipsContainers.push(<HexagonGroup key={i}>{snips}</HexagonGroup>);
       }
     }
     return (
@@ -924,12 +916,6 @@ export class WritingContainer extends React.Component {
     for (var i = 0; i < writing.writing.length; i++) {
       texts.push(
         <>
-        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage} activeSubSubPage={this.props.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}>
-        </Writing>
-        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage} activeSubSubPage={this.props.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}>
-        </Writing>
-        <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage} activeSubSubPage={this.props.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}>
-        </Writing>
         <Writing title={writing.writing[i].title} writingPreview={writing.writing[i].preview} key={i} md={writing.writing[i].md} slug={writing.writing[i].slug} date={writing.writing[i].date} activeSubPage={this.props.activeSubPage} activeSubSubPage={this.props.activeSubSubPage} onChangeSubSubPage={(subSubPage) => this.handleSubSubPageNav(subSubPage)}>
         </Writing>
         </>
@@ -1268,62 +1254,6 @@ export class ProjectCardContainer extends React.Component {
     return(
       <div className={this.props.active ? `${graphics.projectCardContainer} ${css.slidIn}` : `${graphics.projectCardContainer} ${css.slidOut}`}>
         <div className={graphics.projectCardWrapper}>
-        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
-          <ul>
-            <li>Online Game</li>
-            <li>Python, Django</li>
-            <li>Javascript, jQuery</li>
-            <li>Digital Ocean, Nginx, Gunicorn</li>
-          </ul>
-        </ProjectCard>
-        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
-          <ul>
-            <li>Online Game</li>
-            <li>Python, Django</li>
-            <li>Javascript, jQuery</li>
-            <li>Digital Ocean, Nginx, Gunicorn</li>
-          </ul>
-        </ProjectCard>
-        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
-          <ul>
-            <li>Online Game</li>
-            <li>Python, Django</li>
-            <li>Javascript, jQuery</li>
-            <li>Digital Ocean, Nginx, Gunicorn</li>
-          </ul>
-        </ProjectCard>
-        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
-          <ul>
-            <li>Online Game</li>
-            <li>Python, Django</li>
-            <li>Javascript, jQuery</li>
-            <li>Digital Ocean, Nginx, Gunicorn</li>
-          </ul>
-        </ProjectCard>
-        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
-          <ul>
-            <li>Online Game</li>
-            <li>Python, Django</li>
-            <li>Javascript, jQuery</li>
-            <li>Digital Ocean, Nginx, Gunicorn</li>
-          </ul>
-        </ProjectCard>
-        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
-          <ul>
-            <li>Online Game</li>
-            <li>Python, Django</li>
-            <li>Javascript, jQuery</li>
-            <li>Digital Ocean, Nginx, Gunicorn</li>
-          </ul>
-        </ProjectCard>
-        <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
-          <ul>
-            <li>Online Game</li>
-            <li>Python, Django</li>
-            <li>Javascript, jQuery</li>
-            <li>Digital Ocean, Nginx, Gunicorn</li>
-          </ul>
-        </ProjectCard>
         <ProjectCard title="django tic-tac-toe" cardClass="ticTacToe" githubLink="https://github.com/jsonbrazeal/tictactoe" externalLink="https://jasonbrazeal.com/tictactoe">
           <ul>
             <li>Online Game</li>
