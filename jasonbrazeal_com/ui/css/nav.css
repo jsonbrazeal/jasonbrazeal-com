@@ -367,12 +367,6 @@ header * {
   color: #FB9B51;
 }
 
-@media only screen and (max-width: 1000px) {
-  footer {
-    display: none
-  }
-}
-
 footer {
   position: absolute;
   top: 82%;
@@ -426,4 +420,16 @@ footer hr {
 .thumbnail {
   width: 10%;
   text-align: center;
+}
+
+@media only screen and (max-width: 1000px) {
+  footer {
+    display: none
+  }
+}
+
+@media only screen and (min-width: 2300px) {
+  footer {
+    top: 84%;
+  }
 }
