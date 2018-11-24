@@ -35,6 +35,7 @@ export class App extends React.Component {
       activeSubPage: null,
       activeSubSubPage: null
     };
+    document.addEventListener("keydown", this.handleKeyDown.bind(this));
   }
 
   handleNav(newPage) {
@@ -67,6 +68,29 @@ export class App extends React.Component {
     });
   }
 
+  handleKeyDown(event) {
+    if (event.keyCode == 8) {
+      if (this.state.activeSubSubPage) {
+        return;
+      }
+
+      if (this.state.activeSubPage) {
+        this.setState({
+          activeSubPage: null,
+        });
+      } else if (this.state.activePage) {
+        this.setState({
+          activePage: "Home",
+        });
+      }
+
+
+    } // else if (event.keyCode == 27) || (event.keyCode == 8) {
+    //   console.log('forward')
+    // }
+  //  console.log('keys pressed')
+  //  console.log(event.keyCode)
+  }
 
   render() {
     return (
