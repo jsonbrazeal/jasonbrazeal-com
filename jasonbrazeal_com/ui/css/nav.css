@@ -424,7 +424,13 @@ footer hr {
 
 @media only screen and (max-width: 1000px) {
   footer {
-    display: none
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 750px) {
+  footer {
+    display: none;
   }
 }
 
