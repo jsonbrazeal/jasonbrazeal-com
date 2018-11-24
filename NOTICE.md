@@ -20,7 +20,7 @@ This project incorporates components from the projects listed below. Their origi
 15. skills graphic based on code from https://github.com/phuonghuynh/bubble-chart
 16. favicon/icon generator - https://realfavicongenerator.net/
 
-============================================
+---
 
 1.  raleway - google fonts - https://github.com/google/fonts/blob/master/ofl/raleway
 
