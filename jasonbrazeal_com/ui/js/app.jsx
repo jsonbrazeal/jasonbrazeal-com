@@ -215,19 +215,19 @@ export class NavMenu extends React.Component {
         <a href="" onClick={(e) => this.handleClick(e, nav.uno)}>
           <li id={nav.uno} className={this.props.activePage === "Home" ? [nav.selected, nav.navElem].join(" ") : nav.navElem}>
             <span className={[nav.icon, nav.menuIcon, icons.fa, icons["fa-home"]].join(" ")}></span>
-            Home
+            <span className={nav.menuText}>Home</span>
           </li>
         </a>
         <a href="" onClick={(e) => this.handleClick(e, nav.dos)}>
           <li id={nav.dos} className={this.props.activePage === "Work" ? [nav.selected, nav.navElem].join(" ") : nav.navElem}>
             <span className={[nav.icon, nav.menuIcon, icons.fa, icons["fa-suitcase"]].join(" ")}></span>
-            Work
+            <span className={nav.menuText}>Work</span>
           </li>
         </a>
         <a href="" onClick={(e) => this.handleClick(e, nav.tres)}>
           <li id={nav.tres} className={this.props.activePage === "Portfolio" ? [nav.selected, nav.navElem].join(" ") : nav.navElem}>
             <span className={[nav.icon, nav.menuIcon, icons.fa, icons["fa-laptop"]].join(" ")}></span>
-            Portfolio
+            <span className={nav.menuText}>Portfolio</span>
           </li>
         </a>
       </ul>
