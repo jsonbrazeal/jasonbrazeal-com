@@ -1,11 +1,36 @@
-# notes
+# jasonbrazeal.com
+
+Hi! My name is Jason Brazeal, and I’m a software engineer based in San Francisco, California. I write efficient, maintainable code and emphasize the importance of well-designed systems with modern, user-friendly interfaces.
+
+This is my personal website that showcases some of my work and serves as an archive for my writing and code snippets.
+
+# technology used
+
+* sketch
+* google fonts - raleway, inconsolata
+* font-awesome icons
+* react
+* remarkable
+* primsmjs
+* d3.js
+* webpack
+* nodejs/npm
+* python
+* flask
+* nginx
+* letesencrypt
+* docker/docker swarm
+* ubuntu
+* digital ocean
+
+# development
 
 ```bash
 # install required nodejs modules
 npm install
 # clean webpack build dir
 npm run clean
-# run webpack build
+# run webpack build (runs build.sh)
 npm run build
 # start webpack static server (dev only)
 npm run start
@@ -15,31 +40,29 @@ cd build
 python -m http.server 8888
 # start flask server (dev only) or gunicorn
 FLASK_DEBUG=1 FLASK_APP=/path/to/project/folder/project/app.py flask run --host=0.0.0.0 --port=5000
+gunicorn app:app -b 0.0.0.0:5000 --log-level DEBUG # run from dir containing app.py
 ```
 
-# license info
+# deployment (Digital Ocean node running Docker):
 
-* some icons from here: https://fontawesome.com/license
-* favicons/icons generated here: https://realfavicongenerator.net/
-
-# digital ocean setup:
-* create docker one-click app/node $5/month, with ssh key
+```bash
+# create docker node (assumes root has ssh access)
 ssh root@<IPADDR>
 rm -rf /etc/update-motd.d/99-one-click
 apt-get update && apt-get upgrade -y
 # update ssh config to package maintainer's default
 ufw allow proto tcp from any to any port 80,443
-adduser jsonbrazeal
+adduser <user>
 # enter info
-usermod -aG sudo jsonbrazeal
+usermod -aG sudo <user>
 update-alternatives --config editor
 # select (3) vim.basic
-mkdir /home/jsonbrazeal/.ssh
-vi /home/jsonbrazeal/.ssh/authorized_keys
+mkdir $HOME/.ssh
+vi $HOME/.ssh/authorized_keys
 # add id_rsa.mbp-json.pub
-chmod 600 /home/jsonbrazeal/.ssh/authorized_keys
-chown -R jsonbrazeal: /home/jsonbrazeal/.ssh
-# test ssh login as jsonbrazeal
+chmod 600 $HOME/.ssh/authorized_keys
+chown -R <user>: $HOME/.ssh
+# test ssh login as <user>
 vi /etc/ssh/sshd_config
 # change yes to no --> PermitRootLogin no
 
@@ -49,11 +72,16 @@ vi /etc/ssh/sshd_config
 vi docker-compose.yml
 # copy in contents
 docker swarm init --listen-addr lo:2377 --advertise-addr lo:2377
-openssl dhparam -out /etc/letsencrypt/live/jason.ninja/dhparam-2048.pem 2048
-cat /etc/letsencrypt/live/jason.ninja/privkey.pem | docker secret create key -
-cat /etc/letsencrypt/live/jason.ninja/fullchain.pem | docker secret create crt -
-cat /etc/letsencrypt/live/jason.ninja/dhparam-2048.pem | docker secret create dh -
+openssl dhparam -out /etc/letsencrypt/live/<domain>/dhparam-2048.pem 2048
+cat /etc/letsencrypt/live/<domain>/privkey.pem | docker secret create key -
+cat /etc/letsencrypt/live/<domain>/fullchain.pem | docker secret create crt -
+cat /etc/letsencrypt/live/<domain>/dhparam-2048.pem | docker secret create dh -
 docker login
-docker pull jsonbrazeal/jasonbrazeal.com:nginx
-docker pull jsonbrazeal/jasonbrazeal.com:flask
-docker stack deploy -c docker-compose.yml jasonbrazeal_com
+docker pull <repo>:nginx
+docker pull <repo>:flask
+docker stack deploy -c docker-compose.yml <stack>
+```
+
+# licensing
+
+See LICENSE.md for the MIT license that covers this project and NOTICE.md for licenses of software included in this project. All other registered brand names and logos used on this website (schools, businesses, software, etc.) are trademarks of their respective companies and owners.
