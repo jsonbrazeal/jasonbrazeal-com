@@ -50,33 +50,34 @@ gunicorn app:app -b 0.0.0.0:5000 --log-level DEBUG # run from dir containing app
 ssh root@<IPADDR>
 rm -rf /etc/update-motd.d/99-one-click
 apt-get update && apt-get upgrade -y
-# update ssh config to package maintainer's default
+# keep already installed ssh config if it asks
 ufw allow proto tcp from any to any port 80,443
+update-alternatives --config editor
+# select (3) vim.basic
 adduser <user>
 # enter info
 usermod -aG sudo <user>
-update-alternatives --config editor
-# select (3) vim.basic
+su <user> -
 mkdir $HOME/.ssh
 vi $HOME/.ssh/authorized_keys
 # add id_rsa.mbp-json.pub
 chmod 600 $HOME/.ssh/authorized_keys
-chown -R <user>: $HOME/.ssh
+exit
 # test ssh login as <user>
 vi /etc/ssh/sshd_config
 # change yes to no --> PermitRootLogin no
+# verify ssh login as root is notunsuccessful
 
 # set up SSL certs using my letsencrypt-nginx image
 # if already set up, scp to machine and fix symlinks (see letsencrypt-nginx README)
 
 vi docker-compose.yml
-# copy in contents
+# copy in contents, make sure hostname is correct
 docker swarm init --listen-addr lo:2377 --advertise-addr lo:2377
 openssl dhparam -out /etc/letsencrypt/live/<domain>/dhparam-2048.pem 2048
 cat /etc/letsencrypt/live/<domain>/privkey.pem | docker secret create key -
 cat /etc/letsencrypt/live/<domain>/fullchain.pem | docker secret create crt -
 cat /etc/letsencrypt/live/<domain>/dhparam-2048.pem | docker secret create dh -
-docker login
 docker pull <repo>:nginx
 docker pull <repo>:flask
 docker stack deploy -c docker-compose.yml <stack>
