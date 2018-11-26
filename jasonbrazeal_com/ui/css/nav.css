@@ -1,0 +1,459 @@
+.page {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #346d98;
+  position: absolute;
+  transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+}
+
+.pageFaded {
+  background: #434343 !important;
+}
+
+.page#p1 {
+  left: 0;
+  background: #346d98;
+}
+
+.page#p2 {
+  background: #397e6f;
+}
+
+.page#p3 {
+  background: #6a4f8e;
+}
+
+.page#p2, .page#p3 {
+  left: -200%;
+}
+
+.pageIn .page#p3 {
+  height: 100%;
+}
+
+@keyframes fadeOutHeight {
+  0% {
+    height: 0%;
+  }
+  99% {
+    height: 0%;
+  }
+  100% {
+    height: 85%;
+  }
+}
+
+.adjustedHeight {
+  animation: fadeOutHeight ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: .1s;
+  animation-delay: 0s;
+}
+
+.blurry {
+  -webkit-filter: blur(3px);
+}
+
+.scaleDown {
+  transform: scale(.6);
+  transition-delay: .25s;
+}
+
+.scaleUp {
+  transform: scale(1.2) !important;
+}
+
+.hoverIcon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  position: absolute;
+  left: 1.5%;
+  top: 16px;
+  color: #FB9B51;
+}
+
+@import url('../../../node_modules/font-awesome/css/font-awesome.min.css');
+
+.hoverIcon::before {
+  content: "\F054";
+  font-family: FontAwesome;
+}
+
+.subNavList {
+  display: inline-block;
+}
+
+.subNavList li:hover {
+  cursor: pointer;
+}
+
+.skills {
+  top: 16px;
+  transition: top 500ms ease-out;
+}
+
+.experience {
+  top: 34px;
+  transition: top 500ms ease-out;
+}
+
+.education {
+  top: 51px;
+  transition: top 500ms ease-out;
+}
+
+.resume {
+  top: 70px;
+  transition: top 500ms ease-out;
+}
+
+.projects {
+  top: 16px;
+  transition: top 500ms ease-out;
+}
+
+.writing {
+  top: 34px;
+  transition: top 500ms ease-out;
+}
+
+.snippets {
+  top: 52px;
+  transition: top 500ms ease-out;
+}
+
+/* define ids here so they are accessible in js */
+.container#c1, .container#c2, .container#c3 {
+}
+
+.navElem#uno, .navElem#dos, .navElem#tres {
+  display: block;
+  text-align: left;
+}
+
+.menu {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  right: 0rem;
+  margin: auto;
+  height: 280px;
+  width: 15%;
+  padding: 0;
+  text-align: center;
+ }
+
+ .pageIn {
+  transform: translateX(184%);
+  transition-delay: .25s !important;
+}
+
+.shiftedRight section, .shiftedRight footer {
+  position: relative;
+  left: 15%;
+}
+
+.shiftedRight header {
+  position: relative;
+  left: 15%;
+  z-index: 110;
+}
+
+.shiftedRight .subNav {
+  left: 50% !important;
+  bottom: -33%;
+  z-index: 100;
+}
+
+.pageHeader {
+  margin: 5% 0 0 8%;
+  max-width: 280px;
+}
+
+.pageHeaderWide {
+  margin: 5% 0 0 8%;
+  max-width: 700px;
+}
+
+.pageHeader h1 {
+  font-size: 48px;
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width: 800px) {
+
+  .pageHeaderWide h1 {
+    font-size: 24px;
+    margin-bottom: -1rem;
+  }
+  .pageHeaderWide h2 {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+
+  .menu {
+    display: none;
+   }
+}
+
+@media only screen and (max-width: 1100px) {
+
+  .menu {
+    width: 8%;
+    right: 3rem;
+   }
+   .menuText {
+    display: block;
+    text-align: center;
+    width: 78%;
+  }
+
+}
+
+@media only screen and (min-width: 1500px) {
+
+   /* .pageIn {
+    transform: translateX(150%);
+  } */
+
+  .shiftedRight header, .shiftedRight section, .shiftedRight footer {
+    left: 30%;
+  }
+
+  .shiftedRight .subNav {
+    left: 70% !important;
+  }
+
+  .pageHeader {
+    margin-left: 25%;
+  }
+
+}
+
+@media only screen and (min-width: 2000px) {
+  .hoverIcon {
+    left: 1%;
+  }
+}
+
+/* @media only screen and (min-width: 2000px) {
+
+  .menu {
+    width: 50%;
+   }
+
+   .pageIn {
+    transform: translateX(150%);
+  }
+
+  .shiftedRight header, .shiftedRight section, .shiftedRight footer {
+    left: 50%;
+  }
+
+  .shiftedRight .subNav {
+    left: 85% !important;
+  }
+
+  .pageHeader {
+    margin-left: 30%;
+  }
+
+} */
+
+@media screen and (orientation:portrait) {
+  .p1 {
+    margin-top: 33%
+  }
+}
+
+.menuIcon {
+  font-size: 32px !important;
+  margin: .5em .5em .5em 20%;
+  vertical-align: sub;
+  transition: all .5s ease-out !important;
+}
+
+.menuIcon:hover {
+  opacity: 0.5;
+}
+
+.shiftedRightElem {
+  position: relative;
+  left: 50%;
+}
+
+.footerImage {
+  display: inline-block;
+  background-image: url(../img/jason.jpeg);
+  background-size: cover;
+  background-position: center shiftedRight;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-top: 10%;
+}
+
+header * {
+  font-weight: normal;
+}
+
+.leftIcon {
+
+}
+
+.experienceNavPrev {
+}
+.experienceNavNext {
+}
+
+.experienceNavContainer:first-child {
+  position: relative;
+  bottom: 10rem;
+  right: 11%;
+}
+
+.experienceNavContainer:last-child {
+  position: relative;
+  bottom: 12.75rem;
+  right: 0;
+  left: 78.5%;
+}
+
+
+.experienceNavContainer:first-child .experienceNavArrowCircle {
+  top: 1.25rem;
+  right: 0.37rem;
+}
+
+.experienceNavContainer:last-child .experienceNavArrowCircle {
+  top: 1.25rem;
+  right: .55rem;
+}
+
+.experienceNavArrowCircle {
+  background-color: #000;
+  opacity: 0;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  position: relative;
+  z-index: 102;
+  display: block;
+}
+
+.navArrowCircle {
+  background-color: #000;
+  opacity: 0;
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  bottom: -21px;
+  left: -5px;
+  z-index: 111;
+}
+
+.navArrowCircleActive {
+  opacity: .1;
+}
+
+.subNavArrow {
+  position: absolute;
+  left: 0;
+}
+
+.selected, .selected span {
+  color: #FB9B51;
+}
+
+footer {
+  position: absolute;
+  top: 82%;
+  width: 100%;
+}
+
+footer * {
+}
+
+footer div {
+  display: inline-block;
+  width: 30%;
+}
+
+footer hr {
+  width: 70%;
+  z-index: 2;
+  position: relative;
+  left: -2rem;
+  top: .5rem;
+}
+
+.footerWrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.contact {
+  text-align: right;
+  margin-right: 5%;
+  position: relative;
+  bottom: 40px;
+  font-size: 20px;
+}
+
+.contact a {
+  margin: 0 .5em;
+}
+
+.copyright {
+  text-align: left;
+  margin-left: 4%;
+  position: relative;
+  bottom: 40px;
+}
+
+.copyright span {
+  margin-right: .5em;
+}
+
+.thumbnail {
+  width: 10%;
+  text-align: center;
+}
+
+.contactMobile {
+  display: none;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  left: 0%;
+  bottom: 2.5%;
+}
+
+@media only screen and (max-width: 1000px) {
+  footer {
+    display: none;
+  }
+  .contactMobile {
+    display: block;
+  }
+  .contactMobile a {
+    margin: 1rem;
+  }
+}
+
+@media only screen and (min-width: 2300px) {
+  footer {
+    top: 84%;
+  }
+  .contactMobile {
+    left: 38%;
+  }
+}

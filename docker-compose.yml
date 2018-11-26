@@ -1,0 +1,105 @@
+version: '3.5'
+
+networks:
+  jbnet:
+
+volumes:
+  webroot:
+
+secrets:
+  key:
+    external: true
+  crt:
+    external: true
+  dh:
+    external: true
+
+services:
+  flask:
+    depends_on:
+      - jbnet
+    # build: ./jasonbrazeal_com
+    image: jsonbrazeal/jasonbrazeal.com:flask-jasonbrazeal.com
+    deploy:
+      replicas: 2
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: 50M
+    #   reservations:
+    #     cpus: "0.1"
+    #     memory: 50M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 5
+        window: 60s
+    # ports:
+      # since we have a user-defined network, all ports will be open to that network
+      # - '5000:5000'
+    networks:
+      - jbnet
+  tictactoe:
+    depends_on:
+      - jbnet
+    # build: ./jasonbrazeal_com
+    image: jsonbrazeal/jasonbrazeal.com:tictactoe
+    deploy:
+      replicas: 1 # this is required
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: 50M
+    #   reservations:
+    #     cpus: "0.1"
+    #     memory: 50M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 5
+        window: 60s
+    # ports:
+      # since we have a user-defined network, all ports will be open to that network
+      # - '5000:5000'
+    networks:
+      - jbnet
+  nginx:
+    depends_on:
+      - flask # because nginx config uses "flask" hostname
+      - tictactoe # because nginx config uses "tictactoe" hostname
+    # build: ./nginx
+    image: jsonbrazeal/jasonbrazeal.com:nginx-jasonbrazeal.com
+    volumes:
+      - webroot:/usr/share/nginx/html # for letsencrypt certbot challenges
+    deploy:
+      replicas: 1
+      # resources:
+      #   limits:
+      #     cpus: "0.1"
+      #     memory: 50M
+      #   reservations:
+      #     cpus: "0.1"
+      #     memory: 50M
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+        window: 30s
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - jbnet
+    secrets:
+      - source: key
+        target: /etc/nginx/key
+      - source: crt
+        target: /etc/nginx/crt
+      - source: dh
+        target: /etc/nginx/dh
+
+
+# condition: One of none, on-failure or any (default: any).
+# delay: How long to wait between restart attempts, specified as a duration (default: 0).
+# max_attempts: How many times to attempt to restart a container before giving up (default: never give up). If the restart does not succeed within the configured window, this attempt doesn’t count toward the configured max_attempts value. For example, if max_attempts is set to ‘2’, and the restart fails on the first attempt, more than two restarts may be attempted.
+# window: How long to wait before deciding if a restart has succeeded, specified as a duration (default: decide immediately).

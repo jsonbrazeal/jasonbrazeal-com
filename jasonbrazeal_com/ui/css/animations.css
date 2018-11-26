@@ -1,0 +1,933 @@
+@font-face {
+  font-family: Inconsolata;
+  src: url('../font/Inconsolata.woff2') format('woff2'),
+       url('../font/Inconsolata.ttf') format('truetype');
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  animation: fadeIn ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: .4s;
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeInSlow {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeInSlow {
+  opacity: 0;
+  animation: fadeInSlow ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: .4s;
+  animation-delay: 0;
+}
+
+@keyframes fadeOutIn {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: .5;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeOutIn {
+  animation: fadeOutIn ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: .5s;
+  animation-delay: 0s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  animation: fadeOut ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: .4s;
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeOutFast {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+}
+
+
+@keyframes fadeOutDelayed {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.fadeOutDelayed {
+  animation: fadeOutDelayed ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: .1s;
+  animation-delay: .5s;
+}
+
+@keyframes fadeOutFast {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+}
+
+.fadeOutFast {
+  animation: fadeOutFast ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: .4s;
+  animation-delay: 0;
+}
+
+@keyframes slideIn {
+  0% {
+    top: 4000px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+.slideIn {
+  animation: slideIn ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  animation-delay: .5s;
+}
+
+@keyframes slideOut {
+  0% {
+    top: 0px;
+  }
+  100% {
+    top: 4000px;
+  }
+}
+
+.slideOut {
+  animation: slideOut ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  animation-delay: .5s;
+}
+
+.squareToCircle {
+  width: 200px;
+  height: 200px;
+  background-color: coral;
+  animation: squareToCircle 2s .5s infinite cubic-bezier(1,.015,.295,1.225) alternate;
+}
+
+@keyframes squareToCircle {
+  0%  {
+    border-radius: 0 0 0 0;
+    background: coral;
+    transform: rotate(0deg);
+  }
+  25%  {
+    border-radius: 50% 0 0 0;
+    background: darksalmon;
+    transform: rotate(45deg);
+  }
+  50%  {
+    border-radius: 50% 50% 0 0;
+    background: indianred;
+    transform: rotate(90deg);
+  }
+  75%  {
+    border-radius: 50% 50% 50% 0;
+    background: lightcoral;
+    transform: rotate(135deg);
+  }
+  100% {
+    border-radius: 50%;
+    background: darksalmon;
+    transform: rotate(180deg);
+  }
+}
+
+.bounceUp {
+  animation: bounceUp 2s infinite;
+}
+
+.bounceDown {
+  animation: bounceDown 2s infinite;
+}
+
+.bounceLeft {
+  animation: bounceLeft 2s infinite;
+}
+
+.bounceRight {
+  animation: bounceRight 2s infinite;
+}
+
+@keyframes bounceUp {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-2.5px);
+  }
+}
+
+@keyframes bounceDown {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(5px);
+  }
+  60% {
+    transform: translateY(2.5px);
+  }
+}
+
+@keyframes bounceLeft {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-5px);
+  }
+  60% {
+    transform: translateX(-2.5px);
+  }
+}
+
+@keyframes bounceRight {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(2.5px);
+  }
+}
+
+/* used with CSSTransition component */
+
+.slideAppear {
+  top: 4000px;
+  visibility: visible;
+}
+
+.slideAppear.slideAppearActive {
+  top: 0;
+  transition: top 1000ms ease-out;
+}
+
+.slideEnter {
+  top: 4000px;
+  visibility: visible;
+}
+
+.slideEnter.slideEnterActive {
+  top: 0;
+  transition: top 1000ms ease-out;
+}
+
+.slideExit {
+  top: 0;
+}
+
+.slideExit.slideExitActive {
+  top: 4000px;
+  transition: top 800ms ease-out;
+}
+
+
+.fadeAppear {
+  opacity: 0.01;
+  visibility: visible;
+}
+
+.fadeAppear.fadeAppearActive {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.fadeEnter {
+  opacity: 0.01;
+  visibility: visible;
+}
+
+.fadeEnter.fadeEnterActive {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.fadeExit {
+  opacity: 1;
+}
+
+.fadeExit.fadeExitActive {
+  opacity: 0.01;
+  transition: opacity 800ms ease-in;
+}
+
+.blinkingOrange {
+  color: #FB9B51;
+  animation: blinkingOrange 1s step-end infinite;
+}
+
+@keyframes blinkingOrange {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: #FB9B51;
+  }
+}
+
+.blinkingOrangeAppear {
+  opacity: 0.01;
+  visibility: visible;
+}
+
+.blinkingOrangeAppear.blinkingOrangeAppearActive {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.blinkingOrangeEnter {
+  opacity: 0.01;
+  visibility: visible;
+}
+
+.blinkingOrangeEnter.blinkingOrangeEnterActive {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.blinkingOrangeExit {
+  opacity: 1;
+}
+
+.blinkingOrangeExit.blinkingOrangeExitActive {
+  opacity: 0.01;
+  transition: opacity 800ms ease-in;
+}
+
+
+  /* based on pen forked here: https://codepen.io/pure-css/pen/qddOQK?depth=everything&order=popularity&page=2&q=css+modal&show_forks=false */
+
+.modal {
+  /*background: #fff;*/
+  /*box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);*/
+  /*display: inline-block;*/
+  /*padding: 1em;*/
+}
+
+.modalLabel {
+  background: #343434;
+  border: 1px solid #343434;
+  border-radius: .2em;
+  color: #d8d8d8;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.75em 1.5em;
+  text-shadow: 1px 1px 1px #fff;
+  transition: all 0.55s;
+}
+
+.modalLabel:hover {
+  transform: scale(0.97);
+}
+
+.modalOverlay {
+  background: #d8d8d8;
+  bottom: 0;
+  left: 15%;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  text-shadow: none;
+  top: -1000px;
+  opacity: 0;
+  transform: scale(0.5);
+  /*transition: all 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55);*/
+  /*transition: all 0.75s cubic-bezier(.64,.54,.57,.44);*/
+  transition: all 0.75s cubic-bezier(0.68, 0, 0.265, 1);
+  z-index: -11;
+  overflow: scroll;
+}
+
+.modalWrap {
+  padding: 1em 0;
+  position: relative;
+  left: 2%;
+  margin: 0 auto;
+  max-width: 600px;
+  width: 90%;
+}
+
+.modalWrap .modalCloseX {
+  color: #343434;
+  font-size: 20px;
+}
+
+.modalWrap .modalCloseActive {
+  opacity: .1 !important;
+}
+
+.modalWrap .modalCloseCircle {
+  opacity: 0;
+  background: #000;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1.5;
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  right: 47.45%;
+  top: 2.45rem;
+}
+
+.modalWrap h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.modalWrap h3 {
+  font-size: 1.5rem;
+}
+
+.modalWrap time, .modalWrap p {
+  font-size: 1rem;
+}
+
+.modalWrap ul {
+  list-style-type: disc;
+}
+
+.modalWrap img {
+  margin: 0 auto;
+  display: block;
+}
+
+.modalWrap a {
+  color: #346D98;
+}
+
+.modalWrap a:hover {
+  font-weight: bolder;
+}
+
+.modalWrap * {
+  color: #343434;
+  text-align: left;
+  font-size: 1rem
+}
+
+.modalTriggerInput:focus ~ label {
+  transform: scale(0.97);
+}
+
+.modalTriggerInput {
+  position: absolute;
+  top: -1000px;
+}
+
+.modalTriggerInput:checked ~ .modalOverlay {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1001;
+  top: 0;
+}
+
+
+
+
+
+
+/* based on pen forked here: https://codepen.io/jsonbrazeal/pen/XxYyWL */
+html.popupActive, body.popupActive {
+  overflow: hidden;
+}
+
+.popupContainer {
+  position: fixed;
+  display: block;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  transform: scale(0);
+  z-index: 201;
+}
+.popupContainer.five {
+  transform: scale(1);
+}
+.popupContainer.five .popupBackground {
+  background: rgba(0, 0, 0, 0);
+  animation: popupFadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+.popupContainer.five .popupBackground .popup {
+  transform: translateX(-1500px);
+  animation: roadRunnerIn 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+.popupContainer.five.out {
+  animation: quickScaleDown 0s .5s linear forwards;
+}
+.popupContainer.five.out .popupBackground {
+  animation: popupFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+.popupContainer.five.out .popupBackground .popup {
+  animation: roadRunnerOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+.popupContainer .popupBackground {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  vertical-align: middle;
+  z-index: 202;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+.popupContainer .popupBackground .popup {
+  background: white;
+  padding: 50px;
+  display: inline-block;
+  border-radius: 3px;
+  position: relative;
+  top: 75px;
+  left: 200px;
+  height: 500px;
+  width: 500px;
+  z-index: 203;
+}
+.popupContainer .popupBackground .popupContent {
+  overflow: scroll;
+  height: 100%;
+  width: 100%;
+}
+.popupContainer * {
+  font-size: 18px;
+  line-height: 22px;
+  color: #737373;
+}
+
+.popupContainer .popupBackground .popup .popupClose:hover, .popupContainer .popupBackground .popup .popupCloseIcon:hover {
+  cursor: pointer;
+}
+
+.popupContainer .popupBackground .popupContent .popupSnippet {
+  width: 100%;
+  text-align: left;
+}
+
+.popupContainer .popupBackground .popupContent .popupSnippet ul {
+  list-style-type: square;
+}
+
+.popupContainer .popupBackground .popupContent .popupSnippet a {
+  color: #346D98;
+}
+
+.popupContainer .popupBackground .popupContent .popupSnippet a:hover {
+  font-weight: bolder;
+}
+
+.popupContainer .popupBackground .popupContent .popupSnippet pre[class*="language-"], .popupContainer .popupBackground .popupContent .popupSnippet code[class*="language-"], .popupContainer .popupBackground .popupContent .popupSnippet code[class*="language-"] * {
+  font-family: Inconsolata, monospace;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.popupContainer .popupBackground .popupContent .popupTitle {
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 2rem;
+}
+
+.popupContainer .popupBackground .popupContent .popupCloseIcon {
+  position: absolute;
+  top: 12px;
+  left: 18px;
+  z-index: 111;
+}
+
+.popupClose {
+  opacity: 0;
+  background-color: #000;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: block;
+  position: absolute;
+  top: 6.4px;
+  left: 10px;
+  z-index: 112;
+}
+
+.popupCloseActive {
+  opacity: .1;
+}
+
+@keyframes popupFadeIn {
+  0% {
+    background: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background: rgba(0, 0, 0, 0.7);
+  }
+}
+@keyframes popupFadeOut {
+  0% {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  100% {
+    background: rgba(0, 0, 0, 0);
+  }
+}
+@keyframes quickScaleDown {
+  0% {
+    transform: scale(1);
+  }
+  99.9% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes roadRunnerIn {
+  0% {
+    transform: translateX(-1500px) skewX(30deg) scaleX(1.3);
+  }
+  70% {
+    transform: translateX(30px) skewX(0deg) scaleX(0.9);
+  }
+  100% {
+    transform: translateX(0px) skewX(0deg) scaleX(1);
+  }
+}
+@keyframes roadRunnerOut {
+  0% {
+    transform: translateX(0px) skewX(0deg) scaleX(1);
+  }
+  30% {
+    transform: translateX(-30px) skewX(-5deg) scaleX(0.9);
+  }
+  100% {
+    transform: translateX(1500px) skewX(30deg) scaleX(1.3);
+  }
+}
+
+@keyframes lightBulbFall {
+  0% {
+    transform: translate(7.8%, -19%) scale(.6);
+    opacity: 0;
+  }
+  10% {
+    transform: translate(7.8%, -19%) scale(.6);
+    opacity: 1
+  }
+  90% {
+    opacity: 1
+  }
+  100% {
+    transform: translate(7.8%, 10%) scale(.6);
+    opacity: 0;
+  }
+}
+
+.lightBulbFall {
+  animation: lightBulbFall 5s infinite ease-in-out;
+}
+
+@keyframes rotation {
+  0%  {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes rotationCounter {
+  0%  {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-359deg);
+  }
+}
+
+.rotateFidgetSpinner {
+  animation: rotation 1s infinite linear;
+  transform-origin: 5% 7.9%;
+}
+
+.rotateValve {
+  animation: rotation .3s infinite linear;
+  transform-origin: 50.34% 9.15%;
+}
+
+.rotateGear1 {
+  animation: rotation 1.5s infinite linear;
+  transform-origin: 2.4% 11%;
+}
+
+.rotateGear2 {
+  animation: rotationCounter 3s infinite linear;
+  transform-origin: 6% 6.5%;
+}
+
+@keyframes swooshCode {
+  0%  {
+    transform: translate(250px, 224px);
+  }
+  100% {
+    transform: translate(525px, 224px);
+  }
+}
+
+.code {
+  animation: swooshCode 1s infinite linear;
+}
+
+@keyframes needleRock {
+  0% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(140deg);
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
+}
+
+@keyframes needleSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes needleRockFast {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.needle1 {
+  animation: needleRock 1s infinite linear;
+}
+
+.needle2 {
+  animation: needleSpin 2s infinite linear;
+}
+
+.needle3 {
+  animation: needleRockFast .25s infinite linear;
+}
+
+@keyframes bubbleUp1 {
+  0% {
+    transform: translateY(-1%);
+    opacity: .3;
+  }
+  50% {
+    transform: translateY(-2%);
+    opacity: .1;
+  }
+  100% {
+    transform: translateY(-1%);
+    opacity: .3;
+  }
+}
+
+@keyframes bubbleUp2 {
+  0% {
+    transform: translateY(1%);
+    opacity: .3;
+  }
+  50% {
+    transform: translateY(-3%);
+    opacity: .1;
+  }
+  100% {
+    transform: translateY(1%);
+    opacity: .3;
+  }
+}
+
+@keyframes bubbleUp3 {
+  0% {
+    transform: translateY(0%);
+    opacity: .1;
+  }
+  50% {
+    transform: translateY(-4%);
+    opacity: .3;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: .1;
+  }
+}
+
+@keyframes bubbleUp4 {
+  0% {
+    transform: translateY(1%);
+    opacity: .3;
+  }
+  50% {
+    transform: translateY(-3%);
+    opacity: .1;
+  }
+  100% {
+    transform: translateY(1%);
+    opacity: .3;
+  }
+}
+
+.bubbleUp1 {
+  animation: bubbleUp1 2s 0s infinite;
+}
+
+.bubbleUp2 {
+  animation: bubbleUp2 3s 1s infinite;
+}
+
+.bubbleUp3 {
+  animation: bubbleUp3 4s 2s infinite;
+}
+
+.bubbleUp4 {
+  animation: bubbleUp4 4s .5s infinite;
+}
+
+@keyframes redFlash {
+  0% {
+    border: 1px solid #ee2819;
+    fill: #FF8379;
+    box-shadow: 0px 0px 100px 25px #ff4444;
+  }
+  12% {
+    border: 1px solid white;
+    fill: #ff4444;
+    box-shadow: 0px 0px 100px 25px transparent;
+  }
+  25% {
+    border: 1px solid #ee2819;
+    fill: #FF8379;
+    box-shadow: 0px 0px 100px 25px #ff4444;
+  }
+  37% {
+    border: 1px solid white;
+    fill: #ff4444;
+    box-shadow: 0px 0px 100px 25px transparent;
+  }
+}
+.redFlash {
+  fill: #ff4444;
+  border: 1px solid white;
+  animation: redFlash 1s infinite;
+}
+
+
+.electricFlow {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: dash 3s linear forwards infinite;
+  opacity: 1;
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -200;
+  }
+}
+
+
+.cloudApp {
+  animation: cloudApp 3s linear forwards infinite;
+}
+
+@keyframes cloudApp {
+  0% {
+    transform: scale(.9) translate(1rem, 1.5rem);
+  }
+  50% {
+    transform: scale(.9) translate(18rem, 1.5rem);
+  }
+  100% {
+    transform: scale(.9) translate(18rem, -100rem);
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "name": "jasonbrazeal_com",
+  "version": "2.0.0",
+  "description": "Jason Brazeal's website",
+  "keywords": [
+    "web"
+  ],
+  "license": "",
+  "author": {
+    "name": "Jason Brazeal",
+    "email": "dev@jasonbrazeal.com",
+    "url": "https://jasonbrazeal.com/"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node_modules/.bin/webpack-dev-server --progress --inline --colors --config webpack.dev.js",
+    "build": "scripts/build.sh",
+    "clean": "rimraf jasonbrazeal_com/ui/build/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsonbrazeal/jasonbrazeal-com-2.0.0.git"
+  },
+  "homepage": "https://github.com/jsonbrazeal/jasonbrazeal-com-2.0.0#readme",
+  "bugs": {
+    "url": "https://github.com/jsonbrazeal/jasonbrazeal-com-2.0.0/issues"
+  },
+  "dependencies": {
+    "d3-scale": "*",
+    "d3-scale-chromatic": "*",
+    "d3-selection": "*",
+    "d3-selection-multi": "*",
+    "font-awesome": "*",
+    "normalize.css": "*",
+    "prismjs": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-transition-group": "*",
+    "remarkable": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "*",
+    "@babel/preset-env": "*",
+    "@babel/preset-react": "*",
+    "autoprefixer": "*",
+    "babel-loader": "*",
+    "copy-webpack-plugin": "^4.6.0",
+    "css-loader": "*",
+    "extract-text-webpack-plugin": "*",
+    "file-loader": "*",
+    "image-webpack-loader": "*",
+    "less": "*",
+    "less-loader": "*",
+    "postcss-icss-keyframes": "*",
+    "postcss-loader": "*",
+    "rimraf": "*",
+    "script-loader": "*",
+    "style-loader": "*",
+    "sync-exec": "*",
+    "url-loader": "*",
+    "webpack": "*",
+    "webpack-cli": "*",
+    "webpack-dev-server": "*"
+  }
+}
