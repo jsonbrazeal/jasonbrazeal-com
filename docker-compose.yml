@@ -4,7 +4,7 @@ networks:
   jbnet:
 
 volumes:
- webroot:
+  webroot:
 
 secrets:
   key:
@@ -39,9 +39,34 @@ services:
       # - '5000:5000'
     networks:
       - jbnet
+  tictactoe:
+    depends_on:
+      - jbnet
+    # build: ./jasonbrazeal_com
+    image: jsonbrazeal/jasonbrazeal.com:tictactoe
+    deploy:
+      replicas: 1 # this is required
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: 50M
+    #   reservations:
+    #     cpus: "0.1"
+    #     memory: 50M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 5
+        window: 60s
+    # ports:
+      # since we have a user-defined network, all ports will be open to that network
+      # - '5000:5000'
+    networks:
+      - jbnet
   nginx:
     depends_on:
       - flask # because nginx config uses "flask" hostname
+      - tictactoe # because nginx config uses "tictactoe" hostname
     # build: ./nginx
     image: jsonbrazeal/jasonbrazeal.com:nginx-jasonbrazeal.com
     volumes:
