@@ -863,6 +863,12 @@ span.scrollNav {
   }
 }
 
+@media only screen and (min-width: 2500px) {
+  .machine {
+    top: -20%;
+  }
+}
+
 .lightBulb {
   transform: translate(7.8%, -19%) scale(.6);
   opacity: 0;

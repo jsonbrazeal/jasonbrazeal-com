@@ -1059,7 +1059,7 @@ export class EducationContent extends React.Component {
         <a href="https://www.uga.edu/" target="_blank"><div className={[graphics.educationLogo, graphics.ugaLogo].join(" ")}></div></a>
       </div>
       <div className={graphics.educationTextContainer}>
-        <span className={graphics.degree}>Networking Certificate <span className={graphics.year}>(in progress)</span></span>
+        <span className={graphics.degree}>Introduction to Networking <span className={graphics.year}>(2018)</span></span>
         <span className={graphics.org}>City College of San Francisco</span>
         <span className={[graphics.location, graphics.locationSf].join(" ")}>San Francisco, CA</span>
 
