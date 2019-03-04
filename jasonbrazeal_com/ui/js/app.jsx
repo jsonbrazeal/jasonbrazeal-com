@@ -24,7 +24,7 @@ import "prismjs/themes/prism-tomorrow.css"
 
 import Remarkable from "remarkable";
 
-var md = new Remarkable({html: true});
+var md = new Remarkable({html: true, breaks: true});
 
 
 export class App extends React.Component {

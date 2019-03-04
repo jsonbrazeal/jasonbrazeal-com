@@ -38,9 +38,9 @@ pyenv global 3.7.1
 # set version for that dir (and containing dirs unless a different versions is specified in those…saves this info in .python-version…this can be overridden by setting the PYENV_VERSION environment variable directly or with pyenv shell X.X.X
 pyenv local 3.7.1
 # unset local python version
--pyenv local --unset
+pyenv local --unset
 # install python 3.7.1 to ~/.pyenv/versions, where all pyenv installs go
--pyenv install 3.7.1
+pyenv install 3.7.1
 # install with Framework support on MacOS (analogous to enabling shared library support on Linux) - required for some tools like pyinstaller:
 CFLAGS="-I$(brew --prefix openssl)/include" \
 LDFLAGS="-L$(brew --prefix openssl)/lib" \
@@ -428,6 +428,197 @@ print(inspect.getsource(package.subpackage.module))
 \`\`\`
 `},
 
+  trees: {title: "Trees",
+          content: `
+* recursive data structure composed of linked nodes that simulates a hierarchical tree structure, with a root node and subtrees of children each having one parent node
+* any data type may be associated with each node (attribute often called key, value, name, payload, cargo, etc.)
+* no cycles
+* nodes may or may not have links to parent
+* leaf node = node with no children
+
+## types of trees
+
+* binary tree - tree whose nodes have 2 or fewer children
+* binary search tree - binary tree ordered such that each node's value is greater than all values in its left subtree and less than all values in its right subtree; if a binary search tree can have duplicate values, they are often in the left subtree (left <= n < right), but they may also be in the right subtree (left < n <= right) or either subtree (left <= n <= right)...clarification required
+* balanced trees - a tree is balanced if the height of its left and right subtrees are close (no need to be exact, just need to ensure O(log n) finds and inserts); height is the length of the longest path from the root to a leaf, measured in the number of edges; note that a totally unbalanced tree is just a linked list
+* complete binary tree - binary tree in which every level of the tree is fully filled, except for perhaps the last level; to the extent that the last level is filled, it is filled left to right
+* full binary tree - binary tree in which every node has either zero or two children
+* perfect binary tree - binary tree that's both full and complete; all leaf nodes will be at the same level, and this level has the maximum number of nodes
+
+## representing trees
+
+\`\`\`
+
+        5
+      /   \\
+     3     8
+    / \\   / \\
+   2   4 6  10
+
+\`\`\`
+
+### node objects and references
+
+\`\`\`python
+class Node:
+    '''Class representing a binary tree node'''
+    def __init__(self, value=None):
+        self.value = value
+        self.left = None
+        self.right = None
+
+
+root = Node(5)
+root.left = Node(3)
+root.right = Node(8)
+root.left.left = Node(2)
+root.left.right = Node(4)
+root.right.left = Node(6)
+root.right.right = Node(10)
+\`\`\`
+
+### list of lists
+
+\`\`\`python
+tree = [
+    5, # root value
+    [
+        3, # left subtree
+        [2, [], []], # leaf node (both subtrees = empty lists)
+        [4, [], []]
+    ],
+    [
+        8, # right subtree
+        [6, [], []],
+        [10, [], []]
+    ]
+]
+\`\`\`
+
+### dictionary
+
+\`\`\`python
+tree = {
+    'value': 5, # root value
+    'left': { # left subtree
+        'value': 3,
+        'left': {
+            'value': 2 # leaf node (no left or right subtrees)
+        },
+        'right': {
+            'value': 4
+        }
+    },
+    'right': { # right subtree
+        'value': 8,
+        'left': {
+            'value': 6
+        },
+        'right': {
+            'value': 10
+        }
+    }
+}
+\`\`\`
+
+## traversing trees
+
+* in-order (nodes visited in ascending order in a binary search tree)
+* pre-order (root node visited first)
+* post-order (root node visited last)
+
+* visited = processed = printed (in the examples below)
+
+### node objects and references
+
+\`\`\`python
+def in_order(node):
+    if node is None:
+        return
+    in_order(node.left)
+    print(node.value)
+    in_order(node.right)
+
+
+def pre_order(node):
+    if node is None:
+        return
+    print(node.value)
+    pre_order(node.left)
+    pre_order(node.right)
+
+
+def post_order(node):
+    if node is None:
+        return
+    post_order(node.left)
+    post_order(node.right)
+    print(node.value)
+\`\`\`
+
+### list of lists
+
+\`\`\`python
+def in_order(tree):
+    '''Performs an in order traversal on a tree represented as a list of lists.'''
+    if not tree:
+        return
+    in_order(tree[1]) # left subtree
+    print(tree[0]) # root value
+    in_order(tree[2]) # right subtree
+
+
+def pre_order(tree):
+    '''Performs a pre order traversal on a tree represented as a list of lists.'''
+    if not tree:
+        return
+    print(tree[0]) # root value
+    pre_order(tree[1]) # left subtree
+    pre_order(tree[2]) # right subtree
+
+
+def post_order(tree):
+    '''Performs a post order traversal on a tree represented as a list of lists.'''
+    if not tree:
+        return
+    post_order(tree[1]) # left subtree
+    post_order(tree[2]) # right subtree
+    print(tree[0]) # root value
+\`\`\`
+
+### dictionary
+
+\`\`\`python
+def in_order(tree):
+    '''Performs an in order traversal on a tree represented as a dictionary.'''
+    if 'left' in tree:
+        in_order(tree['left'])
+    print(tree['value'])
+    if 'right' in tree:
+        in_order(tree['right'])
+
+
+def pre_order(tree):
+    '''Performs a pre order traversal on a tree represented as a dictionary.'''
+    print(tree['value'])
+    if 'left' in tree:
+        pre_order(tree['left'])
+    if 'right' in tree:
+        pre_order(tree['right'])
+
+
+def post_order(tree):
+    '''Performs a post order traversal on a tree represented as a dictionary.'''
+    if 'left' in tree:
+        post_order(tree['left'])
+    if 'right' in tree:
+        post_order(tree['right'])
+    print(tree['value'])
+\`\`\`
+
+* sources: [Cracking the Coding Interview, 6th edition](http://www.crackingthecodinginterview.com/), [Wikipedia](https://en.wikipedia.org/wiki/Tree_(data_structure)), [Practical Algorithms and Data Structures](https://bradfieldcs.com/algos)
+`},
+
   gpg: {title: "gpg",
         content: `
 \`\`\`bash
@@ -734,21 +925,78 @@ print(args)
 
   bigO: {title: "Big O",
          content: `
-* time complexity of an algorithm (O = order of magnitude)
-* it approximates the number of steps/computations needed to perform an algorithm on an input set
-* you can talk about average, best, and worst case scenarios
-* how to compute - add up the all the code blocks' big-Os and reduce to one of the common ones
+* used to describe time or space complexity of an algorithm as a way to describe its efficiency
+* explains how the algorithm's time or space requirements will grow as its inputs grows (asymptotic computational complexity)
 
-* common (best to worst)
-  * O(1) - constant
-  * O(log n) - logarithmic
-  * O(n) - linear
-  * O(n log n) - loglinear
-  * O(n**2) - quadratic
-  * O(n**3) - cubic
-  * O(2**n) - exponential
+## academic definitions
 
-* how to reduce
+* big O - upper bound on runtime, algorithm is at least this fast, no slower
+* big Ω - lower bound on runtime, algorithm is at least this slow, no faster
+* big Θ - tight bound on runtime, combination of big O and big Ω
+
+* example: iterate through and print each value in an array
+  * big O = O(n) [technically it's also O(n²), O(n³), O(2ⁿ)]
+  * big Ω = O(n) [technically it's also O(1), O(log n)]
+  * big Θ = O(n)
+
+* for non-academic settings, big O alone is usually used to describe runtimes, and the tightest description possible is the correct one [so, big O is O(n) in the above example and O(n²) would be considered incorrect]
+
+## best/worst/expected cases
+
+* example: quicksort
+  * best case - O(n) - all elements are equal, one traversal (depends on implementation)
+  * worst case - O(n²) - pivot element is repeatedly biggest element, so algorithm doesn't split array in half, it reduces subarray size by 1
+  * expected case - O(n log n) - sometimes pivot element will be very low or high, but not every time
+
+## space complexity and big O
+
+* examples
+  * data structure: array of size n = O(n)
+  * data structure: 2d array of size n = O(n²)
+  * algorithm: for loop that calls a function on each iteration = O(1)
+  * algorithm: simple recursive function that calls itself once each call = O(n) (stack space counts!)
+
+## common big O runtimes
+
+* O(1) - constant
+* O(log n) - logarithmic - example: find element in balanced binary search tree (and others that involve halving the problem space on each iteration/recursive call)
+* O(n) - linear
+* O(n log n) - loglinear
+* O(n²) - quadratic
+* O(n³) - cubic
+* O(2ⁿ) - exponential
+* O(n!) - factorial - example: list all permutations of an array
+
+## how to calculate time complexity
+
+* identify steps in algorithm, add or multiply their runtimes
+* add runtimes if steps are sequential (i.e. non-nested for loops)
+* multiply if one step is done once for each iteration of other step (i.e. nested for loops)
+* reduce expression as much as possible, often to one of the common values listed above
+* drop constants - O(2n) reduces to O(n)
+* drop non-dominant terms - O(n² + n) reduces to O(n²)
+
+## amortized time
+
+* describes time complexity taking into account frequency of worst case runs and expected/best case runs
+* example: appending onto a dynamic array
+* expected/best case big O = O(1) [normal array appending]
+* worst case big O = O(n) [array is full, so must create a new one and copy all existing elements over]
+* amortized big O = O(1) [worse case happens every now and then, but once it does, we know that case won't come up for a while]
+
+
+## big O with recursion
+
+* often recursive runtimes can be calculated as O(bᵈ), where b = branches and d = depth
+* generally speaking, when you see an algorithm with multiple recursive calls, you're looking at exponential runtime
+* example: O(n) - sum all values in a balanced binary search tree (if there are n total nodes, then depth is roughly log n)
+* example: O(n) - compute n factorial
+* example: O(2ⁿ) - compute nth fibonacci number
+* example: O(n) - compute nth fibonacci number with memoization
+* example: O(log n) - compute powers of 2 from 1 to n (inclusive)
+
+
+* source: [Cracking the Coding Interview, 6th edition](http://www.crackingthecodinginterview.com/)
 `},
 
   unixTime: {title: "Unix Time",

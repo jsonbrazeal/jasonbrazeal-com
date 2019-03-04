@@ -47,7 +47,7 @@ gunicorn app:app -b 0.0.0.0:5000 --log-level DEBUG # run from dir containing app
 
 ```bash
 # create docker node (assumes root has ssh access)
-ssh root@<IPADDR>
+ssh root@<ipaddr>
 rm -rf /etc/update-motd.d/99-one-click
 apt-get update && apt-get upgrade -y
 # keep already installed ssh config if it asks
@@ -80,6 +80,23 @@ cat /etc/letsencrypt/live/<domain>/fullchain.pem | docker secret create crt -
 cat /etc/letsencrypt/live/<domain>/dhparam-2048.pem | docker secret create dh -
 docker pull <repo>:nginx
 docker pull <repo>:flask
+docker stack deploy -c docker-compose.yml <stack>
+```
+
+# update SSL certs:
+
+```bash
+# after certs are renewed, must add new certs as docker secret:
+
+docker stack rm <stack>
+docker secret rm key
+docker secret rm crt
+docker secret rm dh
+
+cat /etc/letsencrypt/live/<domain>/privkey.pem | docker secret create key -
+cat /etc/letsencrypt/live/<domain>/fullchain.pem | docker secret create crt -
+cat /etc/letsencrypt/live/<domain>/dhparam-2048.pem | docker secret create dh -
+
 docker stack deploy -c docker-compose.yml <stack>
 ```
 
