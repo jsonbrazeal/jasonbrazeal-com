@@ -93,6 +93,7 @@ docker secret rm key
 docker secret rm crt
 docker secret rm dh
 
+openssl dhparam -out /etc/letsencrypt/live/<domain>/dhparam-2048.pem 2048
 cat /etc/letsencrypt/live/<domain>/privkey.pem | docker secret create key -
 cat /etc/letsencrypt/live/<domain>/fullchain.pem | docker secret create crt -
 cat /etc/letsencrypt/live/<domain>/dhparam-2048.pem | docker secret create dh -
