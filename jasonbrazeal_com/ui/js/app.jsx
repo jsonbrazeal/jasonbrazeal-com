@@ -1089,9 +1089,10 @@ export class ExperienceContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 0,
+      currentPage: 5,
       prevActive: false,
-      nextActive: false
+      nextActive: false,
+      last_page: 5 // there are 6 pages because the first job is page 0
     };
   }
 
@@ -1120,7 +1121,7 @@ export class ExperienceContent extends React.Component {
 
   handleNav(direction) {
     if (direction === "next") {
-      if (this.state.currentPage === 4) {
+      if (this.state.currentPage === this.state.last_page) {
         this.setState({
           currentPage: 0
         });
@@ -1132,7 +1133,7 @@ export class ExperienceContent extends React.Component {
     } else if (direction === "prev") {
       if (this.state.currentPage === 0) {
         this.setState({
-          currentPage: 4
+          currentPage: this.state.last_page
         });
       } else {
         this.setState({
@@ -1147,18 +1148,29 @@ export class ExperienceContent extends React.Component {
   render() {
     return(
       <div>
-      <section className={[graphics.experienceSection, graphics.primer, this.state.currentPage === 0 ? graphics.activeExperienceSection : ""].join(" ")}>
+      <section className={[graphics.experienceSection, graphics.mya, this.state.currentPage === 5 ? graphics.activeExperienceSection : ""].join(" ")}>
+        <a href="https://mya.com/" target="_blank"><div className={[graphics.myaLogo].join(" ")}></div></a>
+          <p className={graphics.jobTitle}>Staff AI Engineer</p>
+        <p>April 2019-present</p>
+        <p>San Francisco, CA</p>
+        <ul>
+          <li>maintained and extended the conversation engine at the core of Mya's AI recruiting solutions (Python/Celery/Flask/Redis)</li>
+          <li>architected and developed new features such as robust foreign language support, language switching, and Elasticsearch-backed job searches in conversations</li>
+          <li>engineered creative solutions to conversational AI problems using natural language processing and machine learning tools such as nltk, spacy, scikit-learn, pytorch, and tensorflow</li>
+        </ul>
+      </section>
+      <section className={[graphics.experienceSection, graphics.primer, this.state.currentPage === 4 ? graphics.activeExperienceSection : ""].join(" ")}>
         <a href="https://primer.ai/" target="_blank"><div className={[graphics.experienceLogo, graphics.primerLogo].join(" ")}></div></a>
           <p className={graphics.jobTitle}>Senior Backend Engineer</p>
         <p>July 2018-January 2019</p>
         <p>San Francisco, CA</p>
         <ul>
-          <li>develop REST APIs and other infrastructure backing web-based interfaces to artificial intelligence software (Python/Flask/React)</li>
-          <li>deploy and maintain data ingestion pipelines that enable large scale machine learning analyses using a variety of technologies (Python/Docker/Kubernetes/AWS)</li>
-          <li>provide technical leadership and advisement as a member of the Platform Infrastructure team through code review, tech talks, interviewing, and mentoring</li>
+          <li>developed REST APIs and other infrastructure backing web-based interfaces to artificial intelligence software (Python/Flask/React)</li>
+          <li>deployed and maintained data ingestion pipelines that enable large scale machine learning analyses using a variety of technologies (Python/Docker/Kubernetes/AWS)</li>
+          <li>provided technical leadership and advisement as a member of the Platform Infrastructure team through code review, tech talks, interviewing, and mentoring</li>
         </ul>
       </section>
-      <section className={[graphics.experienceSection, graphics.medal, this.state.currentPage === 1 ? graphics.activeExperienceSection : ""].join(" ")}>
+      <section className={[graphics.experienceSection, graphics.medal, this.state.currentPage === 3 ? graphics.activeExperienceSection : ""].join(" ")}>
           <a href="https://www.medal.com/" target="_blank"><div className={[graphics.experienceLogo, graphics.medalLogo].join(" ")}></div></a>
         <p className={graphics.jobTitle}>
           Full Stack Engineer
@@ -1186,7 +1198,7 @@ export class ExperienceContent extends React.Component {
           <li>created and maintained dynamic graphics for Rails application using d3.js, amcharts, and jQuery</li>
         </ul>
       </section>
-      <section className={[graphics.experienceSection, graphics.tyco, this.state.currentPage === 3 ? graphics.activeExperienceSection : ""].join(" ")}>
+      <section className={[graphics.experienceSection, graphics.tyco, this.state.currentPage === 1 ? graphics.activeExperienceSection : ""].join(" ")}>
             <a href="http://www.tyco.com/" target="_blank"><div className={[graphics.experienceLogo, graphics.tycoLogo].join(" ")}></div></a>
         <p className={graphics.jobTitle}>Python Developer</p>
         <p>September 2014-December 2015</p>
@@ -1199,7 +1211,7 @@ export class ExperienceContent extends React.Component {
           Javascript/d3.js)</li>
         </ul>
       </section>
-      <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 4 ? graphics.activeExperienceSection : ""].join(" ")}>
+      <section className={[graphics.experienceSection, graphics.ut, this.state.currentPage === 0 ? graphics.activeExperienceSection : ""].join(" ")}>
         <a href="https://www.utexas.edu/"><div className={[graphics.experienceLogo, graphics.utLogo].join(" ")}></div></a>
         <p className={graphics.jobTitle}>
           Software Developer

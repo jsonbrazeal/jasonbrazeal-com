@@ -212,6 +212,18 @@
   left: 90px;
 }
 
+.mya .myaLogo {
+  background-image: url(../img/mya_logo.svg);
+  width: 200px;
+  height: 115px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 25px;
+  left: 180px;
+}
+
 .promotion {
   padding: 0 .5em;
 }
