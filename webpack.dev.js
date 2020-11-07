@@ -3,7 +3,7 @@ var path = require('path');
 // const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 var rootAssetPath = __dirname + '/jasonbrazeal_com/ui';
-const getLocalIdent = require('css-loader/lib/getLocalIdent');
+// const getLocalIdent = require('css-loader/lib/getLocalIdent');
 
 module.exports = (env) => {
 
@@ -44,8 +44,8 @@ module.exports = (env) => {
         {
             test: /\.js[x]?$/,
             loader: 'babel-loader',
-            query: {
-              'presets': ['@babel/preset-env', '@babel/preset-react']
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-react']
             },
             exclude: /node_modules/
         },
@@ -97,16 +97,17 @@ module.exports = (env) => {
             {
               loader: 'css-loader',
               options: {
-                modules: true,
+                modules: {
+                  localIdentName: "[name]__[local]___[hash:base64:5]",
+                },
                 importLoaders: 1,
-                localIdentName: '[name]__[local]___[hash:base64:5]',
-                getLocalIdent: (loaderContext, localIdentName, localName, options) => {
-                  // include modules here that need to be loaded as global css, i.e. without
-                  // all class names as localIdentName
-                  return loaderContext.resourcePath.includes('prism') ?
-                    localName :
-                    getLocalIdent(loaderContext, localIdentName, localName, options);
-                }
+                // getLocalIdent: (loaderContext, localIdentName, localName, options) => {
+                //   // include modules here that need to be loaded as global css, i.e. without
+                //   // all class names as localIdentName
+                //   return loaderContext.resourcePath.includes('prism') ?
+                //     localName :
+                //     getLocalIdent(loaderContext, localIdentName, localName, options);
+                // }
               }
             },
             {

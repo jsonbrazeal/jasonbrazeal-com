@@ -22,7 +22,8 @@ import "prismjs/components/prism-bash"
 import "prismjs/components/prism-sql"
 import "prismjs/themes/prism-tomorrow.css"
 
-import Remarkable from "remarkable";
+import { Remarkable, utils } from 'remarkable';
+
 
 var md = new Remarkable({html: true, breaks: true});
 
@@ -1149,7 +1150,7 @@ export class ExperienceContent extends React.Component {
       <section className={[graphics.experienceSection, graphics.primer, this.state.currentPage === 0 ? graphics.activeExperienceSection : ""].join(" ")}>
         <a href="https://primer.ai/" target="_blank"><div className={[graphics.experienceLogo, graphics.primerLogo].join(" ")}></div></a>
           <p className={graphics.jobTitle}>Senior Backend Engineer</p>
-        <p>July 2018-present</p>
+        <p>July 2018-January 2019</p>
         <p>San Francisco, CA</p>
         <ul>
           <li>develop REST APIs and other infrastructure backing web-based interfaces to artificial intelligence software (Python/Flask/React)</li>
@@ -1204,7 +1205,7 @@ export class ExperienceContent extends React.Component {
           Software Developer
           <span className={`${[icons.fa, icons["fa-arrow-right"], graphics.promotion].join(" ")}`}></span>
           Software Developer / Analyst</p>
-        <p>July 2013-May 2014</p>
+        <p>February 2012-May 2014</p>
         <p>Austin, TX</p>
         <ul>
           <li>gathered requirements, designed, and coded extension of student web registration available to 50,000+ students for canceling their registration for the upcoming semester (Python/Django, IBM z/OS mainframe back end with Natural/Adabas data store)</li>

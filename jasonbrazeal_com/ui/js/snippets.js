@@ -430,9 +430,9 @@ print(inspect.getsource(package.subpackage.module))
 
   trees: {title: "Trees",
           content: `
-* recursive data structure composed of linked nodes that simulates a hierarchical tree structure, with a root node and subtrees of children each having one parent node
+* recursive, nonlinear data structure composed of linked nodes that simulates a hierarchical tree structure, with a root node and subtrees of children each having one parent node
+* can be described as special type of graph: connected acyclic rooted graph
 * any data type may be associated with each node (attribute often called key, value, name, payload, cargo, etc.)
-* no cycles
 * nodes may or may not have links to parent
 * leaf node = node with no children
 
@@ -533,6 +533,7 @@ tree = {
 
 \`\`\`python
 def in_order(node):
+    '''Performs an in-order traversal on a tree represented as node objects and references.'''
     if node is None:
         return
     in_order(node.left)
@@ -541,6 +542,7 @@ def in_order(node):
 
 
 def pre_order(node):
+    '''Performs a pre-order traversal on a tree represented as node objects and references.'''
     if node is None:
         return
     print(node.value)
@@ -549,6 +551,7 @@ def pre_order(node):
 
 
 def post_order(node):
+    '''Performs a post-order traversal on a tree represented as node objects and references.'''
     if node is None:
         return
     post_order(node.left)
@@ -560,7 +563,7 @@ def post_order(node):
 
 \`\`\`python
 def in_order(tree):
-    '''Performs an in order traversal on a tree represented as a list of lists.'''
+    '''Performs an in-order traversal on a tree represented as a list of lists.'''
     if not tree:
         return
     in_order(tree[1]) # left subtree
@@ -569,7 +572,7 @@ def in_order(tree):
 
 
 def pre_order(tree):
-    '''Performs a pre order traversal on a tree represented as a list of lists.'''
+    '''Performs a pre-order traversal on a tree represented as a list of lists.'''
     if not tree:
         return
     print(tree[0]) # root value
@@ -578,7 +581,7 @@ def pre_order(tree):
 
 
 def post_order(tree):
-    '''Performs a post order traversal on a tree represented as a list of lists.'''
+    '''Performs a post-order traversal on a tree represented as a list of lists.'''
     if not tree:
         return
     post_order(tree[1]) # left subtree
@@ -590,7 +593,7 @@ def post_order(tree):
 
 \`\`\`python
 def in_order(tree):
-    '''Performs an in order traversal on a tree represented as a dictionary.'''
+    '''Performs an in-order traversal on a tree represented as a dictionary.'''
     if 'left' in tree:
         in_order(tree['left'])
     print(tree['value'])
@@ -599,7 +602,7 @@ def in_order(tree):
 
 
 def pre_order(tree):
-    '''Performs a pre order traversal on a tree represented as a dictionary.'''
+    '''Performs a pre-order traversal on a tree represented as a dictionary.'''
     print(tree['value'])
     if 'left' in tree:
         pre_order(tree['left'])
@@ -608,7 +611,7 @@ def pre_order(tree):
 
 
 def post_order(tree):
-    '''Performs a post order traversal on a tree represented as a dictionary.'''
+    '''Performs a post-order traversal on a tree represented as a dictionary.'''
     if 'left' in tree:
         post_order(tree['left'])
     if 'right' in tree:
@@ -1441,6 +1444,39 @@ diskutil eject /dev/diskN # click ignore after running this command if a dialog 
 \`\`\`
 `},
 
+  graphs: {title: "Graphs",
+           content: `
+* nonlinear data structure composed of vertices (nodes) and edges (links) between them
+* any data type may be associated with each vertex (attribute often called key, value, name, payload, cargo, etc.)
+* often used to represent a set of states or entities and a set of transitions or connections between them, for example a social or telephone network or a map of cities with distances between them
+
+## types of graphs
+
+* connected/disconnected - In connected graphs, all vertices have a path through one or more edges to all other vertices. Disconnected graphs contain 2 or more isolated subgraphs.
+* directed/undirected - Edges may be directed and only allow movement in one direction, or undirected and allow movement in either directions.
+* cyclic/acyclic - A cycle is a path that starts and ends at the same vertex. Acyclic graphs have no cycles
+* weighted/unweighted - Graph edges may be weighted to represent the cost to go from one vertex to another. For example, a graph representing a map of cities and roads, the weighted edges could denote the distance between the cities.
+* tree - connected acyclic rooted graph
+
+## representing graphs
+
+
+### adjacency list: node objects and references
+
+### adjacency list: dictionary
+
+### adjacency matrix: list of lists
+
+### adjacency matrix: dictionary
+
+
+
+
+
+* sources: [Cracking the Coding Interview, 6th edition](http://www.crackingthecodinginterview.com/), [Wikipedia](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)), [vevurka-dev](https://vevurka.github.io/dsp17/python/cs/graph_in_python_matrix/), [Practical Algorithms and Data Structures](https://bradfieldcs.com/algos)
+
+`},
+
   mqttPub: {title: "MQTT Publisher",
             content: `
 \`\`\`python
@@ -1469,6 +1505,85 @@ mqttc.on_publish = on_publish
 mqttc.connect(host='localhost', port=1883)
 mqttc.loop_forever()
 \`\`\`
+`},
+
+  heaps: {title: "Binary Heaps",
+          content: `
+* data structure based on a complete binary tree that satisfies a heap ordering property
+* commonly used to implement priority queues and heapsort
+
+## types of heaps
+
+* max-heap: node's value <= parent's value, root = maximum element
+\`\`\`
+
+        9
+      /   \\
+     8     4
+    / \\  /
+   2   7 3
+
+\`\`\`
+
+* min-heap: node's value >= parent's value, root = minimum element
+\`\`\`
+
+        2
+      /   \\
+     7     5
+    / \\  /
+   12  9 8
+
+\`\`\`
+
+## common heap operations
+
+* build/create/heapify - create new heap, often from a list of values
+    * start with empty heap and insert each element (append it then percolate it up to where it belongs) - O(n log n)
+    * start with unordered list, going in reverse from halfway point, percolate each element down to where it belongs in heap - O(n)
+* add/insert/push - add item to heap, maintaining heap ordering property
+    * add value to end of heap, percolate that value up heap until heap ordering property is restored
+* remove/delete/pop - remove (root, max or min) item from heap, maintaining heap ordering property
+    * replace root with last value in heap, percolate that value down heap until heap ordering property is restored, return value of original heap root
+* find/peek - look for item in heap but do not remove it
+    * return value of heap root
+
+## representing heaps
+
+* arrays are often used as a compact, efficient way to represent heaps (complete binary trees)
+* each element of the array represents a node, and the parent and children of each node can be found by using simple math
+* the min-heap above could be represented as:
+
+\`\`\`python
+# the first element is not part of the heap; we could use that slot
+# too but the parent/child math would change a little
+min_heap = [0, 2, 7, 5, 12, 9, 8]
+ROOT_INDEX = 1
+root = min_heap[ROOT_INDEX] # root element
+left_child = min_heap[2 * ROOT_INDEX] # root element's left child
+right_child = min_heap[2 * ROOT_INDEX + 1] # root element's right child
+\`\`\`
+
+## Python heapq
+
+* easily represent a priority queue with the heapq module in Python
+* this module implements a min-heap and exposes the following methods:
+
+\`\`\`python
+# push element into heap maintaining min-heap property
+heapq.heappush(heap, item)
+# pop the minimum element off the heap, IndexError if heap is empty
+heapq.heappop(heap)
+# efficiently push an element then pop the minimum element
+heapq.heappushpop(heap, item)
+# transform a list into a heap
+heapq.heapify(items)
+# efficiently pop the minimum element off the heap and push new item
+# IndexError if heap is empty
+heapq.heapreplace(heap, item)
+\`\`\`
+
+* sources: [Cracking the Coding Interview, 6th edition](http://www.crackingthecodinginterview.com/), [Python 3 documentation](https://docs.python.org/3/library/heapq.html), [Wikipedia](https://en.wikipedia.org/wiki/Heap_(data_structure))
 `},
 
   mysqldump: {title: "MySQL backup/restore",

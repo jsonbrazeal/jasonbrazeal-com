@@ -1,7 +1,7 @@
 import graphics from "../css/graphics.css";
 import animations from "../css/animations.css";
+import * as d3 from 'd3';
 import { select as d3Select } from 'd3-selection';
-import { selectAll as d3SelectAll } from 'd3-selection-multi';
 import { scaleOrdinal } from 'd3-scale';
 import { schemePaired } from 'd3-scale-chromatic';
 import 'd3-transition';
@@ -176,23 +176,30 @@ export class BubbleChart  {
   setup() {
     var fnColor = scaleOrdinal(schemePaired);
 
-    this.svg = d3Select(this.container).append("svg");
-    this.svg.attrs({preserveAspectRatio: "xMidYMid",
-                   width: this.size,
-                   height: this.size,
-                   class: "bubbleChartSvg"});
+    this.svg = d3.select(this.container).append("svg");
+    // this.svg.attrs({preserveAspectRatio: "xMidYMid",
+    //                width: this.size,
+    //                height: this.size,
+    //                class: "bubbleChartSvg"});
+    this.svg.attr('preserveAspectRatio', "xMidYMid")
+            .attr('width', this.size)
+            .attr('height', this.size)
+            .attr('class', "bubbleChartSvg")
     this.svg.attr("viewBox", (d) => {return ["0 0", this.viewBoxSize, this.viewBoxSize].join(" ");});
     this.circlePositions = this.randomCirclesPositions(this.intersectDelta);
-    var node = this.svg.selectAll(".node")
+    this.svg.selectAll(".node")
       .data(this.circlePositions)
     .enter().append("g")
       .attr("class", (d) => {return ["node", this.data.classed(d.item)].join(" ");})
     .append("circle")
       .attr("opacity", "0.8")
-      .attrs({ r: (d) => { return d.r; },
-               cx: (d) => { return d.cx; },
-               cy: (d) => { return d.cy; }
-      })
+      .attr('r', (d) => { return d.r; })
+      .attr('cx', (d) => { return d.cx; })
+      .attr('cy', (d) => { return d.cy; })
+      // .attrs({ r: (d) => { return d.r; },
+      //          cx: (d) => { return d.cx; },
+      //          cy: (d) => { return d.cy; }
+      // })
       .style("fill", (d) => {
         return this.data.color !== undefined ? this.data.color(d.item) : fnColor(d.item.text);
       })

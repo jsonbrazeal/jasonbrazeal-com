@@ -14,16 +14,17 @@ rimraf nginx/build/*
 $scriptdir/generate_snippets.py ~/Drive/Notes/ex
 
 # run webpack to create build with prod config
-node_modules/.bin/webpack --env.HOST=$HOST --display-error-details --config webpack.prod.js --progress --profile --colors
+node_modules/.bin/webpack --env HOST=$HOST --progress --config webpack.prod.js --profile
 
 # update flask Dockerfile with newly built js bundle
 newbundle=$(basename -- $(ls $scriptdir/../nginx/build/app*.js))
-sed -E "s/app\.[0-9a-f]{20}\.js/$newbundle/g" -i $scriptdir/../jasonbrazeal_com/Dockerfile
+echo $newbundle
+# sed -E "s/app\.[0-9a-f]{20}\.js/$newbundle/g" -i $scriptdir/../jasonbrazeal_com/Dockerfile
 
 # build, tag, and push new images
-docker build --build-arg HOST=$HOST -t jsonbrazeal/jasonbrazeal.com:nginx-$HOST $scriptdir/../nginx
-docker push jsonbrazeal/jasonbrazeal.com:nginx-$HOST
+# docker build --build-arg HOST=$HOST -t jsonbrazeal/jasonbrazeal.com:nginx-$HOST $scriptdir/../nginx
+# docker push jsonbrazeal/jasonbrazeal.com:nginx-$HOST
 
 # build, tag, and push new images
-docker build --build-arg HOST=$HOST -t jsonbrazeal/jasonbrazeal.com:flask-$HOST $scriptdir/../jasonbrazeal_com
-docker push jsonbrazeal/jasonbrazeal.com:flask-$HOST
+# docker build --build-arg HOST=$HOST -t jsonbrazeal/jasonbrazeal.com:flask-$HOST $scriptdir/../jasonbrazeal_com
+# docker push jsonbrazeal/jasonbrazeal.com:flask-$HOST

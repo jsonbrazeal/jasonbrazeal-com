@@ -3,7 +3,7 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 var rootAssetPath = './jasonbrazeal_com/ui';
-const getLocalIdent = require('css-loader/lib/getLocalIdent');
+// const getLocalIdent = require('css-loader/lib/getLocalIdent');
 
 module.exports = (env) => {
   console.log('creating production ui build for', env.HOST, '...');
@@ -33,12 +33,12 @@ module.exports = (env) => {
     module: {
         rules: [
             {
-                test: /\.js[x]?$/,
-                loader: 'babel-loader',
-                query: {
-                  'presets': ['@babel/preset-env', '@babel/preset-react']
-                },
-                exclude: /node_modules/
+              test: /\.js[x]?$/,
+              loader: 'babel-loader',
+              options: {
+                presets: ['@babel/preset-env', '@babel/preset-react']
+              },
+              exclude: /node_modules/
             },
             {
               test: /\.(pdf)(\?.*)?$/,
@@ -88,16 +88,17 @@ module.exports = (env) => {
                 {
                   loader: 'css-loader',
                   options: {
-                    modules: true,
+                    modules: {
+                      localIdentName: "[name]__[local]___[hash:base64:5]",
+                    },
                     importLoaders: 1,
-                    localIdentName: '[name]__[local]___[hash:base64:5]',
-                    getLocalIdent: (loaderContext, localIdentName, localName, options) => {
-                      // include modules here that need to be loaded as global css, i.e. without
-                      // all class names as localIdentName
-                      return loaderContext.resourcePath.includes('prism') ?
-                        localName :
-                        getLocalIdent(loaderContext, localIdentName, localName, options);
-                    }
+                    // getLocalIdent: (loaderContext, localIdentName, localName, options) => {
+                    //   // include modules here that need to be loaded as global css, i.e. without
+                    //   // all class names as localIdentName
+                    //   return loaderContext.resourcePath.includes('prism') ?
+                    //     localName :
+                    //     getLocalIdent(loaderContext, localIdentName, localName, options);
+                    // }
                   }
                 },
                 {
@@ -116,20 +117,31 @@ module.exports = (env) => {
         ] // rules
     },
     plugins: [
-      new CopyWebpackPlugin([
+      new CopyWebpackPlugin({
+        patterns: [
         {
           from: rootAssetPath + '/error/*',
-          flatten: true
+          flatten: true,
+          globOptions: {
+            ignore: ['.git/**']
+          }
         },
         {
           from: rootAssetPath + '/icon/*',
-          flatten: true
+          flatten: true,
+          globOptions: {
+            ignore: ['.git/**']
+          }
         },
         {
           from:  '/Users/jsonbrazeal/Drive/Dev/web/jasonbrazeal.com-1.0.0-deploy/',
           to: __dirname + '/nginx/build/v1/',
+          globOptions: {
+            ignore: ['.git/**']
+          }
         },
-      ], { debug: 'debug', ignore: ['.git/**'] }),
+      ]
+      }), // new CopyWebpackPlugin
     ] // plugins
 }; // return
 }; // module.exports = (env) => {
